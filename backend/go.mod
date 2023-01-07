@@ -3,6 +3,7 @@ module github.com/sut65/team14
 go 1.19
 
 require (
+	github.com/asaskevich/govalidator v0.0.0-20210307081110-f21760c49a8d
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.8.1
 	golang.org/x/crypto v0.0.0-20221012134737-56aed061732a
