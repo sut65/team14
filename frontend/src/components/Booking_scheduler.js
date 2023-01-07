@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { ViewState } from '@devexpress/dx-react-scheduler';
+import moment from "moment";
 import {
   Scheduler,
   WeekView,
@@ -13,11 +14,13 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 
 
+const now = moment().format('YYYY-MM-DD');
 const appointments = [
   {
-    title: 'Website Re-Design Plan',
-    startDate: new Date(2023, 0, 7, 9, 30),
-    endDate: new Date(2023, 0, 7, 11, 30),
+    title: 'B4101',
+    startDate: moment("2023-01-08T09:00:00.000Z").utc().format('YYYY-MM-DDTHH:mm'),
+    endDate:   moment("2023-01-08T10:00:00.0182752Z").utc().format('YYYY-MM-DDTHH:mm'),
+    Note: "เพื่อนอน",
   }, {
     title: 'Book Flights to San Fran for Sales Trip',
     startDate: new Date(2023, 0, 23, 12, 0),
@@ -31,11 +34,11 @@ export class BookingScheduler extends React.PureComponent {
 
     this.state = {
       data: appointments,
-      currentDate: '2023-01-07',
+      currentDate: now,
     };
     this.currentDateChange = (currentDate) => { this.setState({ currentDate }); };
   }
-
+  
   render() {
     const { data, currentDate } = this.state;
 

@@ -7,6 +7,9 @@ import Box from "@mui/material/Box";
 import { BookingsInterface } from "../models/IBooking";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { BookingScheduler } from "./Booking_scheduler";
+import { 
+    ListBookingbyRoom, ListBookings, 
+  } from "../services/HttpClientService";
 
 
 function Bookings() {
