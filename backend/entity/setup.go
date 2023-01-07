@@ -26,8 +26,10 @@ func SetupDatabase() {
 
 	// Migrate the schema
 	database.AutoMigrate(&User{})
+	database.AutoMigrate(&Approve{})
 	database.AutoMigrate(&Booking{})
 	database.AutoMigrate(&Room{})
+	database.AutoMigrate(&StatusBook{})
 	database.AutoMigrate(&Objective{})
 
 	db = database

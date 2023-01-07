@@ -24,6 +24,8 @@ type Booking struct {
 	// ห้องที่จอง
 	Room   Room `gorm:"references:id" valid:"-"`
 	RoomID *uint
+
+	Approve []Approve `gorm:"foreignKey:BookingID"`
 }
 
 func init() {

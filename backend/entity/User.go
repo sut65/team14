@@ -11,5 +11,6 @@ type User struct {
 	Email     string `gorm:"uniqueIndex"`
 	Age       uint8
 
+	Approve []Approve `gorm:"foreignKey:UserID"`
 	Booking []Booking `gorm:"foreignKey:UserID"`
 }
