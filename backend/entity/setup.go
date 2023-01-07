@@ -1,6 +1,7 @@
 package entity
 
 import (
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
 	"gorm.io/driver/sqlite"
@@ -33,5 +34,32 @@ func SetupDatabase() {
 	database.AutoMigrate(&Objective{})
 
 	db = database
+
+	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+
+	db.Model(&Room{}).Create(&Room{Detail: "B4101"})
+	db.Model(&Room{}).Create(&Room{Detail: "B4102"})
+	db.Model(&Objective{}).Create(&Objective{Detail: "เรียน"})
+	db.Model(&Objective{}).Create(&Objective{Detail: "เล่น"})
+	db.Model(&User{}).Create(&User{
+		FirstName: "A", LastName: "B",
+		Email: "test@gmail.com", Age: 21, Password: string(password),
+	})
+
+	var r1, r2 Room
+	db.Raw("SELECT * FROM rooms WHERE detail = ?", "B4101").Scan(&r1)
+	db.Raw("SELECT * FROM rooms WHERE detail = ?", "B4102").Scan(&r2)
+
+	var u1 User
+	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
+
+	var obj1, obj2 Objective
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เรียน").Scan(&obj1)
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เล่น").Scan(&obj2)
+
+	// db.Model(&Booking{}).Create(&Booking{
+	// 	Date_Start: time.Now().UTC().Local(), Date_End: time.Now().AddDate(0, 0, 1),
+	// 	User: u1, Room: r1, Objective: obj1,
+	// })
 
 }
