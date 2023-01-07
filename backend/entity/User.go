@@ -10,6 +10,7 @@ type User struct {
 	LastName  string
 	Email     string `gorm:"uniqueIndex"`
 	Age       uint8
+	Password  string `json:"-"`
 
 	Approve []Approve `gorm:"foreignKey:UserID"`
 	Booking []Booking `gorm:"foreignKey:UserID"`
