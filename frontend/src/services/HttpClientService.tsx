@@ -34,8 +34,9 @@ async function ListBookings() {
         "Content-Type": "application/json",
       },
     };
+    
   
-    let res = await fetch(`${apiUrl}/buildings`, requestOptions)
+    let res = await fetch(`${apiUrl}/bookings`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
