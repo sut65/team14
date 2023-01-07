@@ -69,9 +69,51 @@ async function CreateBooking(data: BookingsInterface) {
       });
   
     return res;
-  }
-  
+}
+async function GetBooking(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}  
+
+async function ListBookingbyRoom(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/bookings/room/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}  
 export{
     Login,
-    ListBookings, CreateBooking,
+    ListBookings, CreateBooking, GetBooking, ListBookingbyRoom
 }
