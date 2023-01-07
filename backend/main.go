@@ -21,6 +21,7 @@ func main() {
 	r.POST("/booking", controller.CreateBooking)
 	r.PATCH("/booking", controller.UpdateBooking)
 	r.DELETE("/booking/:id", controller.DeleteBooking)
+	r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
 
 	// Run the server
 

@@ -25,19 +25,19 @@ func CreateBooking(c *gin.Context) {
 
 	// ค้นหา user ด้วย id
 	if tx := entity.DB().Where("id = ?", booking.UserID).First(&user); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
 		return
 	}
 
 	// ค้นหา objective ด้วย id
 	if tx := entity.DB().Where("id = ?", booking.ObjectiveID).First(&objective); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Objective not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรายละเอียดการจอง"})
 		return
 	}
 
 	// ค้นหา room ด้วย id
 	if tx := entity.DB().Where("id = ?", booking.RoomID).First(&Room); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Room not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบห้อง"})
 		return
 	}
 
@@ -69,35 +69,33 @@ func CreateBooking(c *gin.Context) {
 func GetBooking(c *gin.Context) {
 	var Booking entity.Booking
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Raw("SELECT * FROM bookings WHERE id = ?", id).Find(&Booking).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE id = ?", id).Find(&Booking).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": Booking})
 }
 
 // GET /bookings
 func ListBookings(c *gin.Context) {
 	var Bookings []entity.Booking
-	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Raw("SELECT * FROM bookings").Find(&Bookings).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings").Find(&Bookings).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": Bookings})
 }
 
-// // GET /Booking/User/:id
-// func GetBookTitleByTypeID(c *gin.Context) {
-// 	var id []entity.Booking
-// 	id := c.Param("id")
-// 	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Raw("SELECT * FROM bookings WHERE id = ?", id).Find(&id).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"data": id})
-// }
+// GET /bookings/room/:id
+func ListBookingsbyRoom(c *gin.Context) {
+	var bookings []entity.Booking
+	room_id := c.Param("id")
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE room_id = ?", room_id).Find(&bookings).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": bookings})
+}
 
 // function สำหรับลบ customer ด้วย ID
 // DELETE /bookings/:id
