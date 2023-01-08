@@ -89,11 +89,21 @@ func ListBookings(c *gin.Context) {
 // GET /bookings/room/:id
 func ListBookingsbyRoom(c *gin.Context) {
 	var bookings []entity.Booking
-	room_id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE room_id = ?", room_id).Find(&bookings).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	detail := c.Param("id")
+	if detail != "0" {
+		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").
+			Raw("SELECT * FROM bookings b inner join rooms r WHERE b.room_id = r.id and datetime(date_end) > datetime('now', 'localtime')  and r.Detail = ?", detail).Find(&bookings).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
 	}
+	if detail == "0" {
+		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings").Find(&bookings).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
 	c.JSON(http.StatusOK, gin.H{"data": bookings})
 }
 

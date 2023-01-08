@@ -79,7 +79,6 @@ async function GetBooking(id: any) {
       "Content-Type": "application/json",
     },
   };
-
   let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
@@ -101,7 +100,9 @@ async function ListBookingbyRoom(id: any) {
       "Content-Type": "application/json",
     },
   };
-
+  if (id == ""){
+    id = "0";
+  }
   let res = await fetch(`${apiUrl}/bookings/room/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {

@@ -7,9 +7,11 @@ import Box from "@mui/material/Box";
 import { BookingsInterface } from "../models/IBooking";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { BookingScheduler } from "./Booking_scheduler";
+import SeachBooking from "./SeachBooking";
 import { 
     ListBookingbyRoom, ListBookings, 
   } from "../services/HttpClientService";
+import { Grid, Paper } from "@mui/material";
 
 
 function Bookings() {
@@ -25,7 +27,6 @@ function Bookings() {
     fetch(apiUrl, requestOptions)
         .then((response) => response.json())
         .then((res) => {
-        console.log(res.data);
         if (res.data) {
             setBookings(res.data);
         }
@@ -66,70 +67,67 @@ function Bookings() {
 
    <div>
      <Container maxWidth="lg">
-        <Box
-            display="flex"
-            sx={{
-                marginTop: 2,
-            }}
-        >
+        <Paper>
+        <Grid container spacing={1} sx={{ padding: 2 }}>
+            <Grid item xs={12}>
+            <Paper>
+                <Grid container spacing={1} sx={{ padding: 2 }}>
+                    <Grid item xs={6}>
+                        <Typography
+                            component="h2"
+                            variant="h6"
+                            color="primary"
+                            gutterBottom
+                        >
+                            แสดงการจองใช้ห้อง
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button
+                            component={RouterLink}
+                            to="/booking/create"
+                            variant="contained"
+                            color="primary"
+                        >
+                            Create Booking
+                        </Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Button
+                            component={RouterLink}
+                            to="/booking/update"
+                            variant="contained"
+                            color="primary"
+                        >
+                            Update Booking
+                        </Button>
+                    </Grid>
 
-            <Box flexGrow={30}>
-                <Typography
-                    component="h2"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                >
-                    แสดงการจองใช้ห้อง
-                </Typography>
-            </Box>
+                    <Grid item xs={2}>
+                        <Button
+                            component={RouterLink}
+                            to="/booking/delete"
+                            variant="contained"
+                            color="primary"
+                        >
+                            Delete Booking
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Paper>
+            </Grid>
 
-            <Box flexGrow={1}>
-                <Button
-                    component={RouterLink}
-                    to="/booking/create"
-                    variant="contained"
-                    color="primary"
-                >
-                    Create Booking
-                </Button>
-            </Box>
-
-            <Box flexGrow={1}>
-                <Button
-                    component={RouterLink}
-                    to="/booking/update"
-                    variant="contained"
-                    color="primary"
-                >
-                    Update Booking
-                </Button>
-            </Box>
-
-            <Box flexGrow={1}>
-                <Button
-                    component={RouterLink}
-                    to="/booking/delete"
-                    variant="contained"
-                    color="primary"
-                >
-                    Delete Booking
-                </Button>
-            </Box>
-
-        </Box>
-
-       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-         {/* <DataGrid
-           rows={bookings}
-           getRowId={(row) => row.ID}
-           columns={columns}
-           pageSize={5}
-           rowsPerPageOptions={[5]}
-         /> */}
-         <BookingScheduler />
-       </div>
-       
+            
+            <Grid item xs={12}>
+                <Paper>
+                    <SeachBooking />
+                </Paper>
+            </Grid>
+            <Grid item xs={12}>
+                <BookingScheduler />
+            </Grid>
+        </Grid>
+    </Paper>
      </Container>
    </div>
 
