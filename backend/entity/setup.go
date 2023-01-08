@@ -59,8 +59,8 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เรียน").Scan(&obj1)
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เล่น").Scan(&obj2)
 
-	t1, _ := time.Parse(time.RFC3339, "2023-01-12T14:00:00Z")
-	t2, _ := time.Parse(time.RFC3339, "2023-01-12T16:00:00Z")
+	t1, _ := time.Parse(time.RFC3339, "2023-01-12T14:00:00+07:00")
+	t2, _ := time.Parse(time.RFC3339, "2023-01-12T16:00:00+07:00")
 	db.Model(&Booking{}).Create(&Booking{
 		Date_Start: t1, Date_End: t2,
 		User: u1, Room: r2, Objective: obj2,
