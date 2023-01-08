@@ -1,6 +1,8 @@
 package entity
 
 import (
+	// "time"
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
@@ -35,7 +37,7 @@ func SetupDatabase() {
 
 	db = database
 
-	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
 	db.Model(&Room{}).Create(&Room{Detail: "B4101"})
 	db.Model(&Room{}).Create(&Room{Detail: "B4102"})
@@ -56,10 +58,11 @@ func SetupDatabase() {
 	var obj1, obj2 Objective
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เรียน").Scan(&obj1)
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เล่น").Scan(&obj2)
-
+	// var t1, _ = time.Parse(time.RFC3339, "2023-01-09T15:00:00Z")
+	// var t2, _ = time.Parse(time.RFC3339, "2023-01-09T16:00:00Z")
 	// db.Model(&Booking{}).Create(&Booking{
-	// 	Date_Start: time.Now().UTC().Local(), Date_End: time.Now().AddDate(0, 0, 1),
-	// 	User: u1, Room: r1, Objective: obj1,
+	// 	Date_Start: t1, Date_End: t2,
+	// 	User: u1, Room: r2, Objective: obj2,
 	// })
 
 }
