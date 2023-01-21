@@ -22,6 +22,8 @@ type Approve struct {
 	// สถานะการจองใช้ห้อง
 	StatusBook   StatusBook `gorm:"references:id" valid:"-"`
 	StatusBookID *uint
+	
+	Adding_Friend []Adding_Friend `gorm:"foreignKey:ApproveID"`
 
 	Borrow []Borrow `gorm:"foreignKey:ApproveID"`
 	/* // ถูกลบหรือยัง
