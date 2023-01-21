@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -13,17 +13,17 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-import { CreateBooking,ListRoomsbyBuilding} from "../services/HttpClientService";
-import { BuildingsInterface } from "../models/IBuilding";
+import { CreateBooking,ListDevices,ListRoomsbyBuilding} from "../services/HttpClientService";
+import { UsersInterface } from "../models/IUser";
 import { BookingsInterface } from "../models/IBooking";
-import { RoomsInterface } from "../models/IRoom";
+import { DevicesInterface } from "../models/IDevice";
+import { BorrowsInterface } from "../models/IBorrow";
+import { containerClasses } from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -32,6 +32,91 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BorrowCreate() {
-    
-    
+    const [borrow, setBorrow] = React.useState<BorrowsInterface>({
+        Timeofborrow: new Date(),       //timeeeeee
+      });
+    const [success, setSuccess] = React.useState(false);
+    const [error, setError] = React.useState(false);
+  
+    const [devices, setDevices] = React.useState<DevicesInterface[]>([]); 
+    //const [device, setRoom] = React.useState<DevicesInterface[]>([]); ---------------set approve
+  
+    const handleClose = (
+        event?: React.SyntheticEvent | Event,
+        reason?: string
+    ) => {
+        if (reason === "clickaway") 
+        {
+            return;
+        }
+        setSuccess(false);
+        setError(false);
+    };  
+    const handleInputChange = (
+        event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+        const id = event.target.id as keyof typeof BorrowCreate;
+        const { value } = event.target;
+        setBorrow({ ...borrow , [id]: value });
+    };
+    // const onChangeBuilding = async (e: SelectChangeEvent) =>{   ////////////////////device
+    //     const bid = e.target.value;
+    //     let res = await ListRoomsbyBuilding(bid);
+    //     if (res) {
+    //       setRoom(res);
+    //       console.log("Load Room Complete");
+    //     }
+    //     else{
+    //       console.log("Load Room Incomplete!!!");
+    //     }
+        
+    //   }
+    const listDevices = async () => {
+      let res = await ListDevices();
+      if (res) {
+        setDevices(res);
+        console.log("Load Buildings Complete");
+      }
+      else{
+        console.log("Load Buildings InComplete!!!!");
+      }
+    };
+    async function submit() {
+        let data = {
+            //Date_Start: format(borrow?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
+            Timeofborrow: borrow.Timeofborrow,
+
+            AdminID: (borrow.User),
+            DeviceID: (borrow.DeviceID),
+            //RoomID: (borrow.RoomID),    //////////approve***
+        };
+        console.log(data)
+        // let res = await CreateBorrow(data);
+        // console.log(res);
+        // if (res) {
+        //     setSuccess(true);
+        // } else {
+        //     setError(true);
+        // }
+    }
+
+    useEffect(() => {
+        listDevices();
+    }, []);
+
+    return (
+        <Container maxWidth="md">
+
+
+
+
+
+
+
+
+        </Container>
+    );
+
 }
+
+export default BorrowCreate;
