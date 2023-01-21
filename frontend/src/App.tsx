@@ -93,6 +93,7 @@ const menu = [
 const mdTheme = createTheme();
 
 export default function App() {
+  localStorage.setItem("userID", "1")
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
   // const roleLevel = parseInt(localStorage.getItem("role_id")+"");

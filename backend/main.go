@@ -2,11 +2,14 @@ package main
 
 import (
 	"github.com/sut65/team14/controller"
+	"github.com/sut65/team14/middlewares"
 
 	"github.com/sut65/team14/entity"
 
 	"github.com/gin-gonic/gin"
 )
+
+const PORT = "8080"
 
 func main() {
 
@@ -15,9 +18,10 @@ func main() {
 	r := gin.Default()
 	r.Use(CORSMiddleware())
 
-	// router := r.Group("/")
+	api := r.Group("/")
 	{
-		// router.Use(middlewares.Authorizes())
+		// protected :=
+		api.Use(middlewares.Authorizes())
 		{
 			// Booking Routes
 			r.GET("/bookings", controller.ListBookings)
@@ -47,7 +51,7 @@ func main() {
 	}
 	// Run the server
 
-	r.Run()
+	r.Run("localhost: " + PORT)
 
 }
 

@@ -33,32 +33,6 @@ function Bookings() {
         });
     };
 
-
-    const columns: GridColDef[] = [
-        { field: "ID", headerName: "ID", width: 50 },
-        { 
-            field: "Date_Start", headerName: "Date Start", width: 150, type: 'dateTime',
-            valueGetter: ({ value }) => value && new Date(value),
-        },
-        { 
-            field: "Date_End", headerName: "Date End", width: 150 , type: 'dateTime',
-            valueGetter: ({ value }) => value && new Date(value),
-        },
-        {
-            field: "User", headerName: "ชื่อผู้จองใช้ห้อง", width: 150,
-            valueFormatter: (params) => params.value.FirstName + " " + params.value.LastName,
-        },
-        {
-            field: "Room", headerName: "ห้องที่จอง", width: 150,
-            valueFormatter: (params) => params.value.Detail,
-        },
-        {
-            field: "Objective", headerName: "รายละเอียดการจอง", width: 150,
-            valueFormatter: (params) => params.value.Detail,
-        },
-
-    ];
-
     useEffect(() => {
         getBookings();
     }, []);

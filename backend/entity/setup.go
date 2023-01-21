@@ -1,8 +1,6 @@
 package entity
 
 import (
-	"time"
-
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 
@@ -77,11 +75,11 @@ func SetupDatabase() {
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
 
-	t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
-	t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
-	db.Model(&Booking{}).Create(&Booking{
-		Date_Start: t1, Date_End: t2,
-		User: u1, Room: r2, Objective: obj2,
-	})
+	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
+	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
+	// db.Model(&Booking{}).Create(&Booking{
+	// 	Date_Start: t1, Date_End: t2,
+	// 	User: u1, Room: r2, Objective: obj2,
+	// })
 
 }

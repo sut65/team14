@@ -47,7 +47,7 @@ function SeachBooking() {
   }, [key]);
 
   useEffect(() => {
-    // console.log(bookings)
+    console.log(bookings)
     schedule(bookings);
   }, [bookings]);
 
@@ -58,22 +58,22 @@ function SeachBooking() {
       const data = {
         ID: item.ID,
         title: item.Room?.Detail,
-        startDate: moment((String(item.Date_Start).split("+"))[0]+"Z").utc().format('YYYY-MM-DDTHH:mm'),
-        endDate: moment((String(item.Date_End).split("+"))[0]+"Z").utc().format('YYYY-MM-DDTHH:mm'),
+        startDate: String(moment(item.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
+        endDate: String(moment(item.Date_End, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
         Note: item.Objective?.Detail,
       };
       test.push(data);
+      // console.log(moment((String(item.Date_Start))+"").utc().format('YYYY-MM-DDTHH:mm'));
+      
     });
     
     localStorage.setItem('schedule', JSON.stringify(test));
-    // console.log(localStorage.getItem('schedule'));
+    //console.log(localStorage.getItem('schedule'));
   }
   
   async function submit() {
     localStorage.setItem('roomName', roomName);
     setKey(!key);
-    
-    
   }
 
  return (
