@@ -7,25 +7,24 @@ import (
 	"gorm.io/gorm"
 )
 
-type Borrow struct {
+type Payback struct {
 	gorm.Model
 	// เวลาที่ยืม
-	Timeofborrow time.Time `valid:"IsPresent~เวลาไม่ใช่ปัจจุปัน"` // เวลาปัจจุบัน
+	Timeofpayback time.Time `valid:"IsPresent~เวลาไม่ใช่ปัจจุปัน"` // เวลาปัจจุบัน
 
 	// ผู้จองใช้ห้อง
 	Admin   User `gorm:"references:id" valid:"-"`
 	AdminID *uint
 
 	// การจองใช้ห้องไปหาห้อง
-	Approve   Approve `gorm:"references:id" valid:"-"`
-	ApproveID *uint
+	Borrow   Borrow `gorm:"references:id" valid:"-"`
+	BorrowID *uint
 
 	// อุปกรณ์
 	Device   Device `gorm:"references:id" valid:"-"`
 	DeviceID *uint
 
-	Payback        []Payback    `gorm:"foreignKey:BorrowID"`
-
+	
 }
 
 func init() {
