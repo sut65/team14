@@ -40,6 +40,7 @@ func SetupDatabase() {
 	database.AutoMigrate(&Borrow{})
 	database.AutoMigrate(&Food_and_Drink{})
 	database.AutoMigrate(&Order_Food{})
+	database.AutoMigrate(&Payback{})
 
 	db = database
 
