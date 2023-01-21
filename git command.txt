@@ -6,6 +6,7 @@ git add .
 git commit -m "  - close #"
 git checkout main
 git remote update
+git pull
 git rebase origin/main
 git merge issue- --no-ff
 git push origin main
