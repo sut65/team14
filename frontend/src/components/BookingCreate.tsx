@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -14,9 +14,8 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { BookingsInterface } from "../models/IBooking";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { 
-    CreateBooking,ListRoomsbyBuilding
+    CreateBooking, ListBuildings, ListRoomsbyBuilding
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import format from "date-fns/format";
@@ -68,7 +67,6 @@ function BookingCreate() {
       let res = await ListRoomsbyBuilding(bid);
       if (res) {
         setRoom(res);
-        
         console.log("Load Room Complete");
       }
       else{
@@ -76,6 +74,17 @@ function BookingCreate() {
       }
       
     }
+
+    const listBuildings = async () => {
+      let res = await ListBuildings();
+      if (res) {
+        setBuildings(res);
+        console.log("Load Buildings Complete");
+      }
+      else{
+        console.log("Load Buildings InComplete!!!!");
+      }
+    };
 
     async function submit() {
         let data = {
@@ -96,6 +105,9 @@ function BookingCreate() {
         // }
     }
 
+    useEffect(() => {
+      listBuildings();
+    }, []);
 
  return (
    <Container maxWidth="md">
