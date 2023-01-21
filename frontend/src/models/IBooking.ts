@@ -4,8 +4,8 @@ import { UsersInterface } from "./IUser";
 
 export interface BookingsInterface {
     ID?: string,
-    Date_Start?: Date | null;
-    Date_End?: Date | null;
+    Date_Start: Date | null;
+    Date_End: Date | null;
 
     UserID?: string | null;
     ObjectiveID?: string | null;
