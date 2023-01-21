@@ -27,7 +27,7 @@ func GetRoom(c *gin.Context) {
 	var room entity.Room
 	id := c.Param("id")
 
-	if tx := entity.DB().Where("id = ?", id).First(&room); tx.RowsAffected == 0 {
+	if tx := entity.DB().Preload("Building").Where("id = ?", id).First(&room); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "room not found"})
 		return
 	}
