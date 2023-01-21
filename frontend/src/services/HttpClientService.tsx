@@ -59,7 +59,7 @@ async function CreateBooking(data: BookingsInterface) {
       body: JSON.stringify(data),
     };
   
-    let res = await fetch(`${apiUrl}/bookings`, requestOptions)
+    let res = await fetch(`${apiUrl}/booking`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
@@ -127,7 +127,7 @@ async function ListRoomsbyBuilding(id: any) {
   };
   
 
-  let res = await fetch(`${apiUrl}/bookings`, requestOptions)
+  let res = await fetch(`${apiUrl}/rooms/building/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -162,9 +162,56 @@ async function ListBuildings() {
 
   return res;
 }
+
+async function ListObjectives() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/objectives`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetUser(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}  
+
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom,
     ListRoomsbyBuilding,
     ListBuildings,
+    ListObjectives,
+    GetUser,
 }
