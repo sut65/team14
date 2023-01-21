@@ -9,3 +9,7 @@
 </br> - B6306663 นายเทพฤทธิ์ วงศ์กนก </br>
 </br> - B6318604 นายปฏิพัทธ์ พันชาด </br>
 </br> - B6311230 นายธนากร พรหมกูล </br>
+
+<br> การสร้างสร้าง UI </br>
+npm i --save @devexpress/dx-react-core @devexpress/dx-react-scheduler
+npm i --save @devexpress/dx-react-scheduler-material-ui
