@@ -18,6 +18,12 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { 
     CreateBooking 
 } from "../services/HttpClientService";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import format from "date-fns/format";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import { BuildingsInterface } from "../models/IBuilding";
+import MenuItem from "@mui/material/MenuItem";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -27,10 +33,14 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 
 function BookingCreate() {
-    const [date, setDate] = React.useState<Date | null>(null);
-    const [booking, setBooking] = React.useState<BookingsInterface>({});
+    const [booking, setBooking] = React.useState<BookingsInterface>({
+      Date_Start: new Date(),
+      Date_End: new Date(),
+    });
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+
+    const [buildings, setBuildings] = React.useState<BuildingsInterface[]>([]);
 
     const handleClose = (
         event?: React.SyntheticEvent | Event,
@@ -51,23 +61,37 @@ function BookingCreate() {
         setBooking({ ...booking, [id]: value });
     };
 
+    // const onChangeBuilding = async (e: SelectChangeEvent) =>{
+    //   const bid = e.target.value;
+    //   let res = await ListRoombyBuildings(bid);
+    //   if (res) {
+    //     setRoom(res);
+        
+    //     console.log("Load Room Complete");
+    //   }
+    //   else{
+    //     console.log("Load Room Incomplete!!!");
+    //   }
+      
+    // }
+
     async function submit() {
         let data = {
-            Date_Start: date,
-            Date_End: date,
+            Date_Start: format(booking?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
+            Date_End: booking.Date_End,
 
             UserID: (booking.UserID),
-            ObjectiveID: booking.ObjectiveID,
-            RoomID: booking.RoomID,
+            ObjectiveID: (booking.ObjectiveID),
+            RoomID: (booking.RoomID),
         };
-
-        let res = await CreateBooking(data);
-        console.log(res);
-        if (res) {
-            setSuccess(true);
-        } else {
-            setError(true);
-        }
+        console.log(data)
+        // let res = await CreateBooking(data);
+        // console.log(res);
+        // if (res) {
+        //     setSuccess(true);
+        // } else {
+        //     setError(true);
+        // }
     }
 
 
@@ -112,35 +136,62 @@ function BookingCreate() {
        <Divider />
 
        <Grid container spacing={3} sx={{ padding: 2 }}>
-         <Grid item xs={6}>
-           <FormControl fullWidth variant="outlined">
-             <p>เวลาเริ่มต้นการจอง</p>
-             <LocalizationProvider dateAdapter={AdapterDateFns}>
-               <DatePicker
-                 value={date}
-                 onChange={(newValue) => {
-                   setDate(newValue);
-                 }}
-                 renderInput={(params) => <TextField {...params} />}
-               />
-             </LocalizationProvider>
-           </FormControl>
+        <Grid item xs={6}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              label="เวลาเริ่มต้นการจอง"
+              value={booking.Date_Start}
+              onChange={(newValue) => {
+                setBooking({
+                ...booking,
+                Date_Start: newValue,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
          </Grid>
 
          <Grid item xs={6}>
-           <FormControl fullWidth variant="outlined">
-             <p>เวลาสิ้นสุดการจอง</p>
-             <LocalizationProvider dateAdapter={AdapterDateFns}>
-               <DatePicker
-                 value={date}
-                 onChange={(newValue) => {
-                   setDate(newValue);
-                 }}
-                 renderInput={(params) => <TextField {...params} />}
-               />
-             </LocalizationProvider>
-           </FormControl>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              label="เวลาสิ้นสุดการจอง"
+              value={booking.Date_End}
+              onChange={(newValue) => {
+                setBooking({
+                ...booking,
+                Date_End: newValue,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
          </Grid>
+
+         <Grid item xs={6} >
+          <p>ตึก</p>
+          <FormControl required fullWidth >
+            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
+            <Select
+              labelId="BuildingID"
+              label="กรุณาเลือกตึก *"
+              onChange={ (onChangeBuilding) }
+              inputProps={{
+                name: "BuildingID",
+              }}
+            >
+              {buildings.map((item: BuildingsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
+
 
          <Grid item xs={12}>
            <Button component={RouterLink} to="/bookings" variant="contained">
