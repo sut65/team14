@@ -23,8 +23,8 @@ type Approve struct {
 	StatusBook   StatusBook `gorm:"references:id" valid:"-"`
 	StatusBookID *uint
 	
-	Adding_Friend []Adding_Friend `gorm:"foreignKey:ApproveID"`
-
+	Adding_Friend []Adding_Friend `gorm:"foreignKey:ApproveID"` //ของเพิ่มเพื่อน
+	Order_Food []Order_Food `gorm:"foreignKey:ApproveID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
 	Borrow []Borrow `gorm:"foreignKey:ApproveID"`
 	/* // ถูกลบหรือยัง
 	Status bool

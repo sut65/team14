@@ -14,8 +14,10 @@ type User struct {
 
 	Approve []Approve `gorm:"foreignKey:UserID"`
 	Booking []Booking `gorm:"foreignKey:UserID"`
-	// ID เพื่อนที่เพิ่ม
+	//  เพื่อนที่เพิ่ม
 	Friend []Adding_Friend `gorm:"foreignKey:UserID"`
-	// ID ผู้ที่เพิ่ม
+	//  ผู้ที่เพิ่ม
 	Admin_add []Adding_Friend `gorm:"foreignKey:AminID"`
+	// ของจัดการร้องขออาหารและเครื่องดื่ม
+	Order_Food []Order_Food `gorm:"foreignKey:AdminID"`
 }
