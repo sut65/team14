@@ -16,14 +16,15 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { 
-    CreateBooking 
+    CreateBooking,ListRoomsbyBuilding
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
+import { RoomsInterface } from "../models/IRoom";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -41,6 +42,7 @@ function BookingCreate() {
     const [error, setError] = React.useState(false);
 
     const [buildings, setBuildings] = React.useState<BuildingsInterface[]>([]);
+    const [room, setRoom] = React.useState<RoomsInterface[]>([]);
 
     const handleClose = (
         event?: React.SyntheticEvent | Event,
@@ -61,19 +63,19 @@ function BookingCreate() {
         setBooking({ ...booking, [id]: value });
     };
 
-    // const onChangeBuilding = async (e: SelectChangeEvent) =>{
-    //   const bid = e.target.value;
-    //   let res = await ListRoombyBuildings(bid);
-    //   if (res) {
-    //     setRoom(res);
+    const onChangeBuilding = async (e: SelectChangeEvent) =>{
+      const bid = e.target.value;
+      let res = await ListRoomsbyBuilding(bid);
+      if (res) {
+        setRoom(res);
         
-    //     console.log("Load Room Complete");
-    //   }
-    //   else{
-    //     console.log("Load Room Incomplete!!!");
-    //   }
+        console.log("Load Room Complete");
+      }
+      else{
+        console.log("Load Room Incomplete!!!");
+      }
       
-    // }
+    }
 
     async function submit() {
         let data = {
@@ -185,7 +187,7 @@ function BookingCreate() {
                   key={item.ID}
                   value={item.ID}
                 >
-                  {item.Name}
+                  {item.Detail}
                 </MenuItem>
               ))}
             </Select>
@@ -218,3 +220,7 @@ function BookingCreate() {
 
 
 export default BookingCreate;
+
+function ListRoombyBuildings(bid: any) {
+  throw new Error("Function not implemented.");
+}
