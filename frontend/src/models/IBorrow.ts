@@ -6,11 +6,13 @@ export interface BorrowsInterface {
     ID?: string,
     Timeofborrow: Date | null;
 
-    UserID?: string | null;
+    Admin?: string | null;
     DeviceID?: string | null;
     BookingID?: string | null;
 
     User?: UsersInterface;
     Device?: DevicesInterface;
     Booking?: BookingsInterface;
+
+    //change user to admin & booking to approve
 }
