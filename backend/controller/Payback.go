@@ -15,7 +15,7 @@ func CreatePayback(c *gin.Context) {
 	var borrow entity.Borrow
 	var device entity.Device
 	var admin entity.User
-	
+
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร Payback
 	if err := c.ShouldBindJSON(&borrow); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -61,6 +61,9 @@ func CreatePayback(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": bod})
 }
 
+
+
+
 // GET /Payback/:id
 func GetPayback(c *gin.Context) {
 	var Payback entity.Payback
@@ -73,6 +76,9 @@ func GetPayback(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Payback})
 }
 
+
+
+
 // GET /Paybacks
 func ListPaybacks(c *gin.Context) {
 	var Paybacks []entity.Payback
@@ -83,6 +89,9 @@ func ListPaybacks(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": Paybacks})
 }
+
+
+
 // DELETE /Paybacks/:id
 func DeletePayback(c *gin.Context) {
 	id := c.Param("id")
@@ -93,6 +102,10 @@ func DeletePayback(c *gin.Context) {
 	
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
+
+
+
+
 // PATCH /Paybacks
 func UpdatePayback(c *gin.Context) {
 	var Payback entity.Borrow
