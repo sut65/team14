@@ -47,6 +47,19 @@ func main() {
 			// User Routes
 			r.GET("/users", controller.ListUsers)
 			r.GET("/user/:id", controller.GetUser)
+
+			// Appprove Routes
+			r.GET("/approves", controller.ListApproves)
+			r.GET("/approve/:id", controller.GetApprove)
+			r.POST("/approve", controller.CreateApprove)
+			r.PATCH("/approve", controller.UpdateApprove)
+			r.DELETE("/approve/:id", controller.DeleteApprove)
+			// r.POST("/approveCode", controller.GetApproveByCode)
+
+			// Status Book
+			r.GET("/statusBooks", controller.ListStatusBooks)
+			r.GET("/statusBook/:id", controller.GetStatusBook)
+
 		}
 	}
 	// Run the server

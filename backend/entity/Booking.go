@@ -25,7 +25,7 @@ type Booking struct {
 	Room   Room `gorm:"references:id" valid:"-"`
 	RoomID *uint
 
-	Approve []Approve `gorm:"foreignKey:BookingID"`
+	Approve *Approve `gorm:"foreignKey:BookingID"`
 }
 
 func init() {

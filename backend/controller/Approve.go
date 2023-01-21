@@ -44,9 +44,9 @@ func CreateApprove(c *gin.Context) {
 	//สร้าง Approve
 	bod := entity.Approve{
 
-		User:      user,
+		User:       user,
 		StatusBook: statusBook,
-		Booking:      Booking,
+		Booking:    Booking,
 	}
 
 	// ขั้นตอนการ validate
@@ -75,6 +75,29 @@ func GetApprove(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Approve})
 }
 
+// type ApprovePayload struct {
+// 	ApproveCode string `json:"approveCode"`
+// }
+
+// // GET /approves
+// func GetApproveByCode(c *gin.Context) {
+// 	var payload ApprovePayload
+// 	var approve entity.Approve
+
+// 	if err := c.ShouldBindJSON(&payload); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	// ค้นหา Approve ด้วย ApproveCode ที่ผู้ใช้กรอกเข้ามา
+// 	if err := entity.DB().Raw("SELECT * FROM Approves WHERE Approve_Code = ?", payload.ApproveCode).Scan(&approve).Error; err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	c.JSON(http.StatusOK, gin.H{"data": approve})
+// }
+
 // GET /approves
 func ListApproves(c *gin.Context) {
 	var Approves []entity.Approve
@@ -86,18 +109,6 @@ func ListApproves(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Approves})
 }
 
-// // GET /Approve/User/:id
-// func GetBookTitleByTypeID(c *gin.Context) {
-// 	var id []entity.Approve
-// 	id := c.Param("id")
-// 	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Raw("SELECT * FROM approves WHERE id = ?", id).Find(&id).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"data": id})
-// }
-
-// function สำหรับลบ customer ด้วย ID
 // DELETE /approves/:id
 func DeleteApprove(c *gin.Context) {
 	id := c.Param("id")

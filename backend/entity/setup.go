@@ -44,6 +44,9 @@ func SetupDatabase() {
 
 	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
+	db.Model(&StatusBook{}).Create(&StatusBook{Detail: "อนุมัติ"})
+	db.Model(&StatusBook{}).Create(&StatusBook{Detail: "ไม่อนุมัติ"})
+
 	db.Model(&Building{}).Create(&Building{Detail: "ตึกA"})
 	db.Model(&Building{}).Create(&Building{Detail: "ตึกB"})
 	var building1, building2 Building
