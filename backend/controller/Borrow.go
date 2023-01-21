@@ -3,25 +3,26 @@ package controller
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"github.com/asaskevich/govalidator"
+	"github.com/gin-gonic/gin"
 	"github.com/sut65/team14/entity"
 )
+
 // POST /Borrow
 func CreateBorrow(c *gin.Context) {
 
 	var borrow entity.Borrow
 	var device entity.Device
-	var booking entity.Approve
-	var user entity.Approve
+	var approve entity.Approve
+	var admin entity.User
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร borrow
 	if err := c.ShouldBindJSON(&borrow); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// ค้นหา user ด้วย id
-	if tx := entity.DB().Where("id = ?", borrow.UserID).First(&user); tx.RowsAffected == 0 {
+	// ค้นหา admin ด้วย id
+	if tx := entity.DB().Where("id = ?", borrow.AdminID).First(&admin); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
 		return
 	}
@@ -32,17 +33,17 @@ func CreateBorrow(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา booking ด้วย id
-	if tx := entity.DB().Where("id = ?", borrow.BookingID).First(&booking); tx.RowsAffected == 0 {
+	// ค้นหา Approve ด้วย id
+	if tx := entity.DB().Where("id = ?", borrow.ApproveID).First(&approve); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบการจองนี้"})
 		return
 	}
 
 	//สร้าง borrow
 	bod := entity.Borrow{
-		User:      	user,
-		Device: 	device,
-		Booking:	booking,
+		Admin:   admin,
+		Device:  device,
+		Approve: approve,
 	}
 
 	// ขั้นตอนการ validate
@@ -57,6 +58,7 @@ func CreateBorrow(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": bod})
 }
+
 // GET /Borrow/:id
 func GetBorrow(c *gin.Context) {
 	var Borrow entity.Borrow
@@ -68,6 +70,7 @@ func GetBorrow(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": Borrow})
 }
+
 // GET /Borrows
 func ListBorrows(c *gin.Context) {
 	var Borrows []entity.Borrow

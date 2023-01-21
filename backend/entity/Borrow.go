@@ -2,6 +2,7 @@ package entity
 
 import (
 	"time"
+
 	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
 )
@@ -12,18 +13,18 @@ type Borrow struct {
 	Timeofborrow time.Time `valid:"IsPresent~เวลาไม่ใช่ปัจจุปัน"` // เวลาปัจจุบัน
 
 	// ผู้จองใช้ห้อง
-	User   Approve `gorm:"references:id" valid:"-"`
-	UserID *uint
+	Admin   User `gorm:"references:id" valid:"-"`
+	AdminID *uint
 
 	// การจองใช้ห้องไปหาห้อง
-	Booking   Approve `gorm:"references:id" valid:"-"`
-	BookingID *uint
+	Approve   Approve `gorm:"references:id" valid:"-"`
+	ApproveID *uint
 
 	// อุปกรณ์
-	Device	Device	`gorm:"references:id" valid:"-"`
-	DeviceID	*uint
-
+	Device   Device `gorm:"references:id" valid:"-"`
+	DeviceID *uint
 }
+
 func init() {
 	govalidator.CustomTypeTagMap.Set("IsFuture", func(i interface{}, context interface{}) bool {
 		t := i.(time.Time)
