@@ -139,8 +139,32 @@ async function ListRoomsbyBuilding(id: any) {
 
   return res;
 }
+
+async function ListBuildings() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/buildings`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom,
     ListRoomsbyBuilding,
+    ListBuildings,
 }

@@ -35,7 +35,9 @@ func SetupDatabase() {
 	database.AutoMigrate(&Building{})
 	database.AutoMigrate(&StatusBook{})
 	database.AutoMigrate(&Objective{})
+	database.AutoMigrate(&Device{})
 	database.AutoMigrate(&Adding_Friend{})
+	database.AutoMigrate(&Borrow{})
 	database.AutoMigrate(&Food_and_Drink{})
 	database.AutoMigrate(&Order_Food{})
 
