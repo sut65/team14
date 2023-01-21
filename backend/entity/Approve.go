@@ -9,8 +9,8 @@ import (
 
 type Approve struct {
 	gorm.Model
-	// เวลาที่อนุมัติ
-	Time time.Time `valid:"IsPresent~เวลาไม่ใช่ปัจจุปัน"` // เวลาปัจจุบัน
+
+	// ApproveCode string `gorm:"uniqueIndex"` //`gorm:"uniqueIndex" valid:"matches(^\\d{13}$)~ApproveCode Invalid format,required~ApproveCode cannot be blank"`
 
 	// ผู้อนุมัติ
 	User   User `gorm:"references:id" valid:"-"`
@@ -27,9 +27,6 @@ type Approve struct {
 	Adding_Friend []Adding_Friend `gorm:"foreignKey:ApproveID"` //ของเพิ่มเพื่อน
 	Order_Food    []Order_Food    `gorm:"foreignKey:ApproveID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
 	Borrow        []Borrow        `gorm:"foreignKey:ApproveID"`
-	/* // ถูกลบหรือยัง
-	Status bool
-	*/
 }
 
 func init() {

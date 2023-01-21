@@ -1,3 +1,4 @@
+import { ApprovesInterface } from "./IApprove";
 import { ObjectivesInterface } from "./IObjective";
 import { RoomsInterface } from "./IRoom";
 import { UsersInterface } from "./IUser";
@@ -14,4 +15,6 @@ export interface BookingsInterface {
     User?: UsersInterface;
     Objective?: ObjectivesInterface;
     Room?: RoomsInterface;
+
+    Approve? : ApprovesInterface;
 }

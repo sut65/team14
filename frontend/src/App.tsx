@@ -33,8 +33,10 @@ import Home from "./components/SeachBooking";
 import UserCreate from "./components/UserCreate";
 import User from "./components/Users";
 import BookingCreate from "./components/BookingCreate";
+import Approve from "./components/Approve";
+import ApproveCreate from "./components/ApproveCreate";
 
-const drawerWidth = 240;
+const drawerWidth = 260;
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -87,6 +89,7 @@ const Drawer = styled(MuiDrawer, {
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
   { name: "ข้อมูลการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/bookings"},
+  { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
 ];
 
@@ -206,9 +209,11 @@ return (
                 <Route path="/booking/create" element={<BookingCreate />} />
 
                 <Route path="/users" element={<User />} />
-                <Route path="/users/create" element={<UserCreate />} />
+                <Route path="/user/create" element={<UserCreate />} />
 
-                
+                <Route path="/approves" element={<Approve />} />
+                <Route path="/approve/create" element={<ApproveCreate />} />
+
               </Routes> 
             </Container>
           </Box>

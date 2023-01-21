@@ -6,41 +6,31 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { UsersInterface } from "../models/IUser";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-
+import { 
+  ListUsers, 
+} from "../services/HttpClientService";
 
 function Users() {
+  const [users, setUsers] = React.useState<UsersInterface[]>([]);
+  const listUsers = async () => {
+    let res = await ListUsers();
+    if (res) {
+      setUsers(res);
+    }
+  };
 
-    const [users, setUsers] = React.useState<UsersInterface[]>([]);
-    const getUsers = async () => {
-    const apiUrl = "http://localhost:8080/users";
-    const requestOptions = {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-    };
+  const columns: GridColDef[] = [
+      { field: "ID", headerName: "ID", width: 50 },
+      { field: "FirstName", headerName: "First name", width: 150 },
+      { field: "LastName", headerName: "Last name", width: 150 },
+      { field: "Email", headerName: "Email", width: 200 },
+      { field: "Age", headerName: "Age", width: 100 },
+      { field: "BirthDay", headerName: "BirthDay", width: 200 },
+  ];
 
-    fetch(apiUrl, requestOptions)
-        .then((response) => response.json())
-        .then((res) => {
-        console.log(res.data);
-        if (res.data) {
-            setUsers(res.data);
-        }
-        });
-    };
-
-
-    const columns: GridColDef[] = [
-        { field: "ID", headerName: "ID", width: 50 },
-        { field: "FirstName", headerName: "First name", width: 150 },
-        { field: "LastName", headerName: "Last name", width: 150 },
-        { field: "Email", headerName: "Email", width: 200 },
-        { field: "Age", headerName: "Age", width: 100 },
-        { field: "BirthDay", headerName: "BirthDay", width: 200 },
-    ];
-
-    useEffect(() => {
-        getUsers();
-    }, []);
+  useEffect(() => {
+    listUsers();
+  }, []);
 
  return (
 

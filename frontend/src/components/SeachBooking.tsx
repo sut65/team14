@@ -25,9 +25,7 @@ function SeachBooking() {
     const id = localStorage.getItem('roomName') + "";
     let res = await ListBookingbyRoom(id);
     if (res) {
-      
       setBookings(res);
-
     }
   };
 
