@@ -11,5 +11,5 @@
 </br> - B6311230 นายธนากร พรหมกูล </br>
 
 <br> การสร้างสร้าง UI </br>
-npm i --save @devexpress/dx-react-core @devexpress/dx-react-scheduler
+npm i --save @devexpress/dx-react-core @devexpress/dx-react-scheduler <hr/>
 npm i --save @devexpress/dx-react-scheduler-material-ui
