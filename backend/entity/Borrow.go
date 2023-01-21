@@ -10,6 +10,10 @@ type Borrow struct {
 	gorm.Model
 	// เวลาที่ยืม
 	Timeofborrow time.Time `valid:"IsPresent~เวลาไม่ใช่ปัจจุปัน"` // เวลาปัจจุบัน
+	
+	// ห้องที่จอง-เมื่อกี้เพิ่มผิดissue
+	Room   Room `gorm:"references:id" valid:"-"`
+	RoomID *uint
 
 	// ผู้จองใช้ห้อง
 	User   Approve `gorm:"references:id" valid:"-"`
