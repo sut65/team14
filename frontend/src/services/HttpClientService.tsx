@@ -1,4 +1,5 @@
 import { BookingsInterface } from "../models/IBooking";
+import { BorrowsInterface } from "../models/IBorrow";
 import { SigninInterface } from "../models/ISignin";
 import { UsersInterface } from "../models/IUser";
 
@@ -206,12 +207,101 @@ async function GetUser(id: any) {
 
   return res;
 }  
+////////////////////////////////////borrow///////////////////////////////////////////
+async function ListBorrows() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
 
+  let res = await fetch(`${apiUrl}/bookings`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreateBorrow(data: BorrowsInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: { 
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/borrows`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetBorrow(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/borrow/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListDevices() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/devices`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom,
     ListRoomsbyBuilding,
     ListBuildings,
     ListObjectives,
-    GetUser,
+    GetUser,ListBorrows,CreateBorrow,GetBorrow,ListDevices,
 }
