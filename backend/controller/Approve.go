@@ -75,6 +75,30 @@ func GetApprove(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Approve})
 }
 
+// GET /approve/Booking/:id
+func GetApprovebyBookingID(c *gin.Context) {
+	var approve entity.Approve
+	id := c.Param("id")
+	if err := entity.DB().Preload("Booking").Raw("SELECT * FROM bookings WHERE id = ?", id).Find(&approve).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": approve})
+}
+
+// GET /approve/User/:id
+func GetApprovebyUserID(c *gin.Context) {
+	var approve entity.Approve
+	id := c.Param("id")
+	if err := entity.DB().Preload("Booking").Raw("SELECT * FROM bookings WHERE id = ?", id).Find(&approve).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": approve})
+}
+
 // GET /approves
 func ListApproves(c *gin.Context) {
 	var Approves []entity.Approve

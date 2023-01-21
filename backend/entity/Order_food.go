@@ -7,8 +7,8 @@ import (
 )
 
 type Order_Food struct {
-	gorm.Model
-
+	gorm.Model	
+	Totold *uint
 	// การอนุมัติ .
 	Approve Approve `gorm:"references:id" valid:"-"`
 	ApproveID *uint		
