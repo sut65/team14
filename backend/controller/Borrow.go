@@ -50,7 +50,6 @@ func CreateBorrow(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
 	// บันทึก
 	if err := entity.DB().Create(&bod).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -69,7 +68,6 @@ func GetBorrow(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": Borrow})
 }
-
 // GET /Borrows
 func ListBorrows(c *gin.Context) {
 	var Borrows []entity.Borrow
@@ -88,7 +86,6 @@ func DeleteBorrow(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Borrow not found"})
 		return
 	}
-
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
