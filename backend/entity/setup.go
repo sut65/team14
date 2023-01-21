@@ -35,6 +35,7 @@ func SetupDatabase() {
 	database.AutoMigrate(&Building{})
 	database.AutoMigrate(&StatusBook{})
 	database.AutoMigrate(&Objective{})
+	database.AutoMigrate(&Adding_Friend{})
 
 	db = database
 
