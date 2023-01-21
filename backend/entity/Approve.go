@@ -23,6 +23,7 @@ type Approve struct {
 	StatusBook   StatusBook `gorm:"references:id" valid:"-"`
 	StatusBookID *uint
 
+	Borrow []Borrow `gorm:"foreignKey:ApproveID"`
 	/* // ถูกลบหรือยัง
 	Status bool
 	*/
