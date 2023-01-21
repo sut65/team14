@@ -1,9 +1,10 @@
 package entity
 
 import (
+	"time"
+
 	"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
-	"time"
 )
 
 type Approve struct {
@@ -22,10 +23,10 @@ type Approve struct {
 	// สถานะการจองใช้ห้อง
 	StatusBook   StatusBook `gorm:"references:id" valid:"-"`
 	StatusBookID *uint
-	
+
 	Adding_Friend []Adding_Friend `gorm:"foreignKey:ApproveID"` //ของเพิ่มเพื่อน
-	Order_Food []Order_Food `gorm:"foreignKey:ApproveID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
-	Borrow []Borrow `gorm:"foreignKey:ApproveID"`
+	Order_Food    []Order_Food    `gorm:"foreignKey:ApproveID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
+	Borrow        []Borrow        `gorm:"foreignKey:ApproveID"`
 	/* // ถูกลบหรือยัง
 	Status bool
 	*/

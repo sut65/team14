@@ -8,5 +8,5 @@ type Device struct {
 	gorm.Model
 	Detail string `gorm:"uniqueIndex"`
 
-	Borrow []Borrow `gorm:"foreignKey:ObjectiveID"`
+	Borrow []Borrow `gorm:"foreignKey:DeviceID"`
 }
