@@ -6,18 +6,18 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
-    ListApproves, 
+    ListBorrows, 
 } from "../services/HttpClientService";
-import { ApprovesInterface } from "../models/IApprove";
+import { BorrowsInterface } from "../models/IBorrow";
 
 function Borrows() {
 
-    const [approves, setApproves] = React.useState<ApprovesInterface[]>([]);
+    const [borrows, setBorrows] = React.useState<BorrowsInterface[]>([]);
 
-    const listApproves = async () => {
-        let res = await ListApproves();
+    const listBorrows = async () => {
+        let res = await ListBorrows();
         if (res) {
-            setApproves(res);
+            setBorrows(res);
         }
     };
 
@@ -31,22 +31,28 @@ function Borrows() {
             valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
         },
         {
-            field: "StatusBook",
-            headerName: "สถานะการจอง",
+            field: "DeviceID",
+            headerName: "อุปกรณ์",
+            width: 120,
+            valueFormatter: (params) => params.value.Detail,
+        },
+        {
+            field: "StatusDevice",
+            headerName: "สถานะอุปกรณ์",
             width: 120,
             valueFormatter: (params) => params.value.Detail,
         },
     ];
 
     useEffect(() => {
-        listApproves();
+        ListBorrows();
     }, []);
 
  return (
 
    <div>
      <Container maxWidth="md">
-       {/* <Box
+       <Box
          display="flex"
          sx={{
            marginTop: 2,
@@ -60,31 +66,31 @@ function Borrows() {
              color="primary"
              gutterBottom
            >
-             อนุมัติการจองใช้ห้อง
+             อนุมัติการยืมอุปกรณ์
            </Typography>
          </Box>
 
          <Box>
            <Button
              component={RouterLink}
-             to="/approve/create"
+             to="/borrow/create"
              variant="contained"
              color="primary"
            >
-             Create Approve
+             Create Borrow
            </Button>
          </Box>
        </Box>
 
        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
-           rows={approves}
+           rows={borrows}
            getRowId={(row) => row.ID}
            columns={columns}
            pageSize={5}
            rowsPerPageOptions={[5]}
          />
-       </div> */}
+       </div>
        
      </Container>
    </div>

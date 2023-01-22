@@ -39,7 +39,8 @@ function BorrowCreate() {
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
-    const [devices, setDevices] = React.useState<DevicesInterface[]>([]); 
+    const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
+
     const [approves, setApproves] = React.useState<ApprovesInterface[]>([]); 
 
     const [success, setSuccess] = React.useState(false);
@@ -80,16 +81,16 @@ function BorrowCreate() {
         
     //   }
 
-    // const ListApproves = async () => {
-    //     let res = await ListApproves();
-    //     if (res) {
-    //         setApproves(res);
-    //         console.log("Load Approves Complete");
-    //     }
-    //     else{
-    //       console.log("Load Approves InComplete!!!!");
-    //     }
-    //   };
+    const listApproves = async () => {
+        let res = await ListApproves();
+        if (res) {
+            setApproves(res);
+            console.log("Load Approves Complete");
+        }
+        else{
+          console.log("Load Approves InComplete!!!!");
+        }
+      };
 
     const listDevices = async () => {
       let res = await ListDevices();
@@ -138,7 +139,7 @@ function BorrowCreate() {
 
     useEffect(() => {
         listDevices();
-        ListApproves();
+        listApproves();
         getUser();
     }, []);
 
