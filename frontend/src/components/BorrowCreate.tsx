@@ -258,7 +258,7 @@ function BorrowCreate() {
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <p>หมดจองเวลา</p>
+                      <p>หมดจองเวลาkkkk</p>
                       <TextField
                         value={approves?.Booking?.Date_End || ""}
                         InputProps={{
