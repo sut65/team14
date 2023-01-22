@@ -35,6 +35,8 @@ import User from "./components/Users";
 import BookingCreate from "./components/BookingCreate";
 import Approve from "./components/Approve";
 import ApproveCreate from "./components/ApproveCreate";
+import Borrow from "./components/Borrow";
+import BorrowCreate from "./components/BorrowCreate";
 
 const drawerWidth = 260;
 
@@ -91,6 +93,7 @@ const menu = [
   { name: "ข้อมูลการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/bookings"},
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
+  { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
 ];
 
 const mdTheme = createTheme();
@@ -213,6 +216,9 @@ return (
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
+
+                <Route path="/borrows" element={<Borrow />} />
+                <Route path="/borrow/create" element={<BorrowCreate />} />
 
               </Routes> 
             </Container>

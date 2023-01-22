@@ -17,9 +17,14 @@ type LoginPayload struct {
 
 // SignUpPayload signup body
 type SignUpPayload struct {
-	FirstName string `json:"firstName"`
-	Email     string `json:"email"`
-	Password  string `json:"password"`
+	FirstName   string `json:"firstName"`
+	Email       string `json:"email"`
+	Password    string `json:"password"`
+	Phonenumber string `json:"Phonenumber"`
+
+	RoleID           uint `json:"RoleID"`
+	GenderID         uint `json:"GenderID"`
+	EducationLevelID uint `json:"EducationLevelID"`
 }
 
 // LoginResponse token response
@@ -78,28 +83,55 @@ func Login(c *gin.Context) {
 // POST /create
 func CreateUser(c *gin.Context) {
 	var payload SignUpPayload
-	var user entity.User
+	var gender entity.Gender
+	var role entity.Role
+	var educationlevel entity.EducationLevel
 
+	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร User
 	if err := c.ShouldBindJSON(&payload); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	// x: ค้นหา gender ด้วย id
+	if tx := entity.DB().Where("id = ?", payload.GenderID).First(&gender); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	// x: ค้นหา role ด้วย id
+	if tx := entity.DB().Where("id = ?", payload.RoleID).First(&role); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "role not found"})
+		return
+	}
+
+	// x: ค้นหา EducationLevel ด้วย id
+	if tx := entity.DB().Where("id = ?", payload.EducationLevelID).First(&educationlevel); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "educationLevel not found"})
+		return
+	}
 	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(payload.Password), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 		return
 	}
+	//x: สร้าง User
+	us := entity.User{
+		Role:           role,           // โยงความสัมพันธ์กับ Entity Role
+		Gender:         gender,         // โยงความสัมพันธ์กับ Entity Gender
+		EducationLevel: educationlevel, // โยงความสัมพันธ์กับ Entity EducationLevel
 
-	user.FirstName = payload.FirstName
-	user.Email = payload.Email
-	user.Password = string(hashPassword)
+		FirstName: payload.FirstName,
+		Email:     payload.Email,
+		Password:  string(hashPassword),
+	}
 
-	if err := entity.DB().Create(&user).Error; err != nil {
+	// x: บันทึก
+	if err := entity.DB().Create(&us).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"data": us})
 
-	c.JSON(http.StatusCreated, gin.H{"data": user})
 }

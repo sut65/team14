@@ -67,7 +67,7 @@ func CreateApprove(c *gin.Context) {
 func GetApprove(c *gin.Context) {
 	var Approve entity.Approve
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Raw("SELECT * FROM approves WHERE id = ?", id).Find(&Approve).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Preload("Booking.User").Raw("SELECT * FROM approves WHERE id = ?", id).Find(&Approve).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

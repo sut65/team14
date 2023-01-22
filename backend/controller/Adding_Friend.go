@@ -35,15 +35,15 @@ func CreateAdding_Friend(c *gin.Context) {
 
 	// ค้นหา user ด้วย id
 	if tx := entity.DB().Where("id = ?", add_friend.UserID).First(&user); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "approve ID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user ID not found"})
 		return
 	}
 
 	//สร้าง Adding Friend
 	bod := entity.Adding_Friend{
 		Approve: approve,
-		User:    admin,
-		Admin:   user,
+		User:    user,
+		Admin:   admin,
 	}
 
 	// ขั้นตอนการ validate
