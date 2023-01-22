@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const PORT = "8080"
+//const PORT = "8080"
 
 func main() {
 
@@ -78,7 +78,7 @@ func main() {
 	}
 	// Run the server
 
-	r.Run("localhost: " + PORT)
+	r.Run()
 
 }
 
