@@ -1,5 +1,5 @@
 import { DevicesInterface } from "./IDevice";
-import { BookingsInterface } from "./IBooking";
+import { ApprovesInterface } from "./IApprove";
 import { UsersInterface } from "./IUser";
 
 export interface BorrowsInterface {
@@ -8,11 +8,11 @@ export interface BorrowsInterface {
 
     Admin?: string | null;
     DeviceID?: string | null;
-    BookingID?: string | null;
+    ApproveID?: string | null;
 
     User?: UsersInterface;
     Device?: DevicesInterface;
-    Booking?: BookingsInterface;
+    Approve?: ApprovesInterface;
 
     //change user to admin & booking to approve
 }
