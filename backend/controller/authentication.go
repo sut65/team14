@@ -120,7 +120,7 @@ func CreateUser(c *gin.Context) {
 	us := entity.User{
 		Role:           role,           // โยงความสัมพันธ์กับ Entity Role
 		Gender:         gender,         // โยงความสัมพันธ์กับ Entity Gender
-		EducationLevel: educationlevel, // โยงความสัมพันธ์กับ Entity EducationalLevel
+		EducationLevel: educationlevel, // โยงความสัมพันธ์กับ Entity EducationLevel
 
 		FirstName: payload.FirstName,
 		Email:     payload.Email,
