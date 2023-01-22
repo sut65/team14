@@ -9,8 +9,6 @@ import (
 )
 
 
-
-
 // POST /buildings
 func CreateBuilding(c *gin.Context) {
 	var building entity.Building

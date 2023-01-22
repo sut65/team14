@@ -1,6 +1,7 @@
 git rebase --abort
 ลบ base ปัจจุบัน แล้ว ทำขั้นใหม่อีกรอบ
 
+git pull
 git checkout -b issue-
 
 git add .
