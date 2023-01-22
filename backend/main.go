@@ -60,6 +60,20 @@ func main() {
 			r.GET("/statusBooks", controller.ListStatusBooks)
 			r.GET("/statusBook/:id", controller.GetStatusBook)
 
+			// Add Friend Routes
+			r.GET("/add_friends", controller.ListAdd_friend)
+			r.GET("/add_friend/:id", controller.GetAdd_friend)
+			r.POST("/add_friend", controller.CreateAdding_Friend)
+			r.PATCH("/add_friend", controller.UpdateAddfriend)
+			r.DELETE("/add_friends/:id", controller.DeleteAdd_friend)
+
+			// Order food Routes
+			r.GET("/order_foods", controller.ListAdd_friend)
+			r.GET("/order_food/:id", controller.GetAdd_friend)
+			r.POST("/order_food", controller.CreateAdding_Friend)
+			r.PATCH("/order_food", controller.UpdateAddfriend)
+			r.DELETE("/order_foods/:id", controller.DeleteAdd_friend)
+
 		}
 	}
 	// Run the server
