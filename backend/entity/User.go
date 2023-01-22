@@ -18,5 +18,6 @@ type User struct {
 	Admin_add  []Adding_Friend `gorm:"foreignKey:AdminID"` //  ผู้ที่เพิ่ม
 	Order_Food []Order_Food    `gorm:"foreignKey:AdminID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
 	Borrow     []Borrow        `gorm:"foreignKey:AdminID"`
-	Payback    []Payback		`gorm:"foreignKey:AdminID"`
+	Payback    []Payback       `gorm:"foreignKey:AdminID"`
+	Building   []Building      `gorm:"foreignKey:AdminID"`
 }

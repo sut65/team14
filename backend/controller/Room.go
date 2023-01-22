@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 
 	"github.com/sut65/team14/entity"
@@ -11,11 +12,37 @@ import (
 // POST /rooms
 func CreateRoom(c *gin.Context) {
 	var room entity.Room
+	var admin entity.User
+	var typeroom entity.Typeroom
+	var building entity.Building
 	if err := c.ShouldBindJSON(&room); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if err := entity.DB().Create(&room).Error; err != nil {
+	if tx := entity.DB().Where("id = ?", room.AdminID).First(&admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", room.TyperoomID).First(&typeroom); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบประเภทห้อง"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", room.BuildingID).First(&building); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบตึก"})
+		return
+	}
+	bod := entity.Room{
+		Admin: admin,
+		Typeroom: typeroom,
+		Building: building,
+	}
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(bod); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// บันทึก
+	if err := entity.DB().Create(&bod).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -24,37 +51,36 @@ func CreateRoom(c *gin.Context) {
 
 // GET /room/:id
 func GetRoom(c *gin.Context) {
-	var room entity.Room
+	var Room entity.Room
 	id := c.Param("id")
-
-	if tx := entity.DB().Preload("Building").Where("id = ?", id).First(&room); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "room not found"})
+	if err := entity.DB().Preload("User").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM room WHERE id = ?", id).Find(&Room).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": room})
+	c.JSON(http.StatusOK, gin.H{"data": Room})
 }
 
 // GET /rooms/building/:id
 func ListRoomsbyBuilding(c *gin.Context) {
-	var room []entity.Room
-	building_id := c.Param("id")
-	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE building_id = ?", building_id).Find(&room).Error; err != nil {
+	var Room []entity.Room
+	if err := entity.DB().Preload("User").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM building").Find(&Room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": room})
+	c.JSON(http.StatusOK, gin.H{"data": Room})
 }
 
 // GET /rooms
 func ListRooms(c *gin.Context) {
-	var rooms []entity.Room
-	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms").Find(&rooms).Error; err != nil {
+	var Room []entity.Room
+	if err := entity.DB().Preload("User").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM room").Find(&Room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": rooms})
+
+	c.JSON(http.StatusOK, gin.H{"data": Room})
 }
 
 // DELETE /rooms/:id
