@@ -40,7 +40,7 @@ function BorrowCreate() {
     const [error, setError] = React.useState(false);
 
 
-    
+
     const handleClose = (
         event?: React.SyntheticEvent | Event,
         reason?: string
@@ -52,6 +52,7 @@ function BorrowCreate() {
         setSuccess(false);
         setError(false);
     };  
+
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
@@ -59,6 +60,7 @@ function BorrowCreate() {
         const { value } = event.target;
         setBorrow({ ...borrow , [id]: value });
     };
+
     const onChangeBuilding = async (e: SelectChangeEvent) =>{   ////////////////////device
         const bid = e.target.value;
         let res = await ListRoomsbyBuilding(bid);
@@ -88,7 +90,7 @@ function BorrowCreate() {
 
             AdminID: (borrow.User),
             DeviceID: (borrow.DeviceID),
-            //RoomID: (borrow.RoomID),    //////////approve***
+            ApproveID: (borrow.ApproveID),  
         };
         console.log(data)
         // let res = await CreateBorrow(data);
@@ -99,6 +101,8 @@ function BorrowCreate() {
         //     setError(true);
         // }
     }
+
+
 
     useEffect(() => {
         listDevices();
