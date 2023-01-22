@@ -8,6 +8,9 @@ import (
 	"github.com/sut65/team14/entity"
 )
 
+
+
+
 // POST /buildings
 func CreateBuilding(c *gin.Context) {
 	var building entity.Building

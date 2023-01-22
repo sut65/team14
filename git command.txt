@@ -2,6 +2,7 @@ git rebase --abort
 ลบ base ปัจจุบัน แล้ว ทำขั้นใหม่อีกรอบ
 
 git checkout -b issue-
+
 git add .
 git commit -m "  - close #"
 git checkout main
