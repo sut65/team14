@@ -10,7 +10,7 @@ type Food_and_Drink struct{
 	TypeID *uint
 	ShopID *uint
 	Menu *uint	`gorm:"uniqueIndex"`
-	// ผู้เพิ่มอาหาร
+	// Admin ผู้เพิ่มอาหาร
 	Admin   User `gorm:"references:id" valid:"-"`
 	AdminID *uint
 
