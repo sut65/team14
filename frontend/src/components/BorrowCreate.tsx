@@ -20,7 +20,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import { CreateBooking,ListDevices,ListRoomsbyBuilding} from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
-import { BookingsInterface } from "../models/IBooking";
+import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { containerClasses } from "@mui/material";
@@ -32,15 +32,15 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BorrowCreate() {
-    const [borrow, setBorrow] = React.useState<BorrowsInterface>({
-        Timeofborrow: new Date(),       //timeeeeee
-      });
+    const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
+    const [devices, setDevices] = React.useState<DevicesInterface[]>([]); 
+    const [approve, setApprove] = React.useState<ApprovesInterface[]>([]); 
+    const [user, setUser] = React.useState<UsersInterface[]>([]);
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
-  
-    const [devices, setDevices] = React.useState<DevicesInterface[]>([]); 
-    //const [device, setRoom] = React.useState<DevicesInterface[]>([]); ---------------set approve
-  
+
+
+    
     const handleClose = (
         event?: React.SyntheticEvent | Event,
         reason?: string
@@ -59,18 +59,18 @@ function BorrowCreate() {
         const { value } = event.target;
         setBorrow({ ...borrow , [id]: value });
     };
-    // const onChangeBuilding = async (e: SelectChangeEvent) =>{   ////////////////////device
-    //     const bid = e.target.value;
-    //     let res = await ListRoomsbyBuilding(bid);
-    //     if (res) {
-    //       setRoom(res);
-    //       console.log("Load Room Complete");
-    //     }
-    //     else{
-    //       console.log("Load Room Incomplete!!!");
-    //     }
+    const onChangeBuilding = async (e: SelectChangeEvent) =>{   ////////////////////device
+        const bid = e.target.value;
+        let res = await ListRoomsbyBuilding(bid);
+        if (res) {
+          setApprove(res);     //////////////
+          console.log("Load Approve Complete");
+        }
+        else{
+          console.log("Load Approve Incomplete!!!");
+        }
         
-    //   }
+      }
     const listDevices = async () => {
       let res = await ListDevices();
       if (res) {
