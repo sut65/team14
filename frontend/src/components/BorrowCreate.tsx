@@ -18,7 +18,11 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-import { CreateBooking,ListDevices,ListRoomsbyBuilding} from "../services/HttpClientService";
+import { CreateBorrow,
+    ListDevices,
+    GetUser,
+    ListApproves,
+    } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
@@ -33,9 +37,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function BorrowCreate() {
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
+    const [user, setUser] = useState<UsersInterface>({});    
+
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]); 
-    const [approve, setApprove] = React.useState<ApprovesInterface[]>([]); 
-    const [user, setUser] = React.useState<UsersInterface[]>([]);
+    const [approves, setApproves] = React.useState<ApprovesInterface[]>([]); 
+
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
 
@@ -61,28 +67,54 @@ function BorrowCreate() {
         setBorrow({ ...borrow , [id]: value });
     };
 
-    const onChangeBuilding = async (e: SelectChangeEvent) =>{   ////////////////////device
-        const bid = e.target.value;
-        let res = await ListRoomsbyBuilding(bid);
-        if (res) {
-          setApprove(res);     //////////////
-          console.log("Load Approve Complete");
-        }
-        else{
-          console.log("Load Approve Incomplete!!!");
-        }
+    // const onChangeBuilding = async (e: SelectChangeEvent) =>{   ///////////
+    //     const bid = e.target.value;
+    //     let res = await ListRoomsbyBuilding(bid);
+    //     if (res) {
+    //       setApprove(res);     //////////////
+    //       console.log("Load Approve Complete");
+    //     }
+    //     else{
+    //       console.log("Load Approve Incomplete!!!");
+    //     }
         
-      }
+    //   }
+
+    // const ListApproves = async () => {
+    //     let res = await ListApproves();
+    //     if (res) {
+    //         setApproves(res);
+    //         console.log("Load Approves Complete");
+    //     }
+    //     else{
+    //       console.log("Load Approves InComplete!!!!");
+    //     }
+    //   };
+
     const listDevices = async () => {
       let res = await ListDevices();
       if (res) {
         setDevices(res);
-        console.log("Load Buildings Complete");
+        console.log("Load Devices Complete");
       }
       else{
-        console.log("Load Buildings InComplete!!!!");
+        console.log("Load Devices InComplete!!!!");
       }
     };
+
+    const getUser = async () => {
+        const uid = localStorage.getItem("userID")
+        let res = await GetUser(uid);
+        if (res) {
+          setUser(res);
+          console.log("Load User Complete");
+          console.log(`UserName: ${res.FirstName} + ${res.LastName}`);    
+        }
+        else{
+          console.log("Load User InComplete!!!!");
+        }
+      };
+
     async function submit() {
         let data = {
             //Date_Start: format(borrow?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
@@ -106,11 +138,22 @@ function BorrowCreate() {
 
     useEffect(() => {
         listDevices();
+        ListApproves();
+        getUser();
     }, []);
 
     return (
         <Container maxWidth="md">
-
+            <Box
+      component="form"
+      sx={{
+        '& > :not(style)': { m: 1, width: '25ch' },
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField id="outlined-basic" label="No.Booking" variant="outlined" />
+    </Box>
 
 
 
