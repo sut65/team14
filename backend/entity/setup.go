@@ -46,13 +46,17 @@ func SetupDatabase() {
 
 	db.Model(&User{}).Create(&User{
 		FirstName: "A", LastName: "B",
-		Email: "test@gmail.com", Age: 21, Password: string(password),
+		Email: "test@gmail.com", PhoneNumber: "123456",
+		IdentificationNumber: "123456", StudentID: "123456",
+		Age:      21,
+		Password: string(password),
 	})
 	var u1 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
-		Email: "CD@gmail.com", Age: 50, Password: string(password),
+		Email: "CD@gmail.com", 
+		Age: 50, Password: string(password),
 	})
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
@@ -63,14 +67,14 @@ func SetupDatabase() {
 	db.Model(&Company{}).Create(&Company{Detail: "บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)"})
 	db.Model(&Company{}).Create(&Company{Detail: "บริษัท แสงฟ้า จำกัด"})
 	var company1, company2 Company
-	db.Raw("SELECT * FROM buildings WHERE detail = ?", "บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)").Scan(&company1)
-	db.Raw("SELECT * FROM buildings WHERE detail = ?", "บริษัท แสงฟ้า จำกัด").Scan(&company2)
+	db.Raw("SELECT * FROM companies WHERE detail = ?", "บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)").Scan(&company1)
+	db.Raw("SELECT * FROM companies WHERE detail = ?", "บริษัท แสงฟ้า จำกัด").Scan(&company2)
 
 	db.Model(&Guard{}).Create(&Guard{Detail: "นายส้ม เปรี้ยว"})
 	db.Model(&Guard{}).Create(&Guard{Detail: "นายมะม่วง หวาน"})
 	var guard1, guard2 Guard
-	db.Raw("SELECT * FROM buildings WHERE detail = ?", "นายส้ม เปรี้ยว").Scan(&guard1)
-	db.Raw("SELECT * FROM buildings WHERE detail = ?", "นายมะม่วง หวาน").Scan(&guard2)
+	db.Raw("SELECT * FROM guards WHERE detail = ?", "นายส้ม เปรี้ยว").Scan(&guard1)
+	db.Raw("SELECT * FROM guards WHERE detail = ?", "นายมะม่วง หวาน").Scan(&guard2)
 
 	db.Model(&Building{}).Create(&Building{
 		Admin: u1, Guard: guard1, Company: company1, Detail: "ตึกA"})

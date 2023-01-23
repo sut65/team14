@@ -8,7 +8,6 @@ import (
 	"github.com/sut65/team14/entity"
 )
 
-
 // POST /buildings
 func CreateBuilding(c *gin.Context) {
 	var building entity.Building
@@ -34,20 +33,20 @@ func CreateBuilding(c *gin.Context) {
 	}
 
 	bod := entity.Building{
-		Admin: admin,
+		Admin:   admin,
 		Company: company,
-		Guard: guard,
+		Guard:   guard,
 	}
-		// ขั้นตอนการ validate
-		if _, err := govalidator.ValidateStruct(bod); err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
-		// บันทึก
-		if err := entity.DB().Create(&bod).Error; err != nil {
-			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-			return
-		}
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(bod); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// บันทึก
+	if err := entity.DB().Create(&bod).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"data": building})
 }
 
@@ -55,7 +54,7 @@ func CreateBuilding(c *gin.Context) {
 func GetBuilding(c *gin.Context) {
 	var Building entity.Building
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Company").Preload("Guard").Raw("SELECT * FROM building WHERE id = ?", id).Find(&Building).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Company").Preload("Guard").Raw("SELECT * FROM buildings WHERE id = ?", id).Find(&Building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -63,11 +62,10 @@ func GetBuilding(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Building})
 }
 
-
 // GET /Buildings
 func ListBuildings(c *gin.Context) {
 	var Building []entity.Building
-	if err := entity.DB().Preload("User").Preload("Company").Preload("Guard").Raw("SELECT * FROM building").Find(&Building).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Company").Preload("Guard").Raw("SELECT * FROM buildings").Find(&Building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

@@ -10,14 +10,14 @@ type Adding_Friend struct {
 	gorm.Model
 
 	// การอนุมัติ .
-	Approve Approve `gorm:"references:id" valid:"-"`
+	Approve   Approve `gorm:"references:id" valid:"-"`
 	ApproveID *uint
-		
+
 	// เพื่อนที่เพิ่ม
-	User   User `gorm:"references:id" valid:"-"`
+	User   User `gorm:"references:id"  valid:"-"`
 	UserID *uint
 
 	// ผู้ที่เพิ่มเข้าระบบ
-	Admin User `gorm:"references:id" valid:"-"`
+	Admin   User `gorm:"references:id" valid:"-"`
 	AdminID *uint
 }
