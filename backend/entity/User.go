@@ -29,6 +29,7 @@ type User struct {
 	Borrow         []Borrow         `gorm:"foreignKey:AdminID"`
 	Payback        []Payback        `gorm:"foreignKey:AdminID"`
 	Building       []Building       `gorm:"foreignKey:AdminID"`
+	Room           []Room           `gorm:"foreignKey:AdminID"`
 	Food_and_Drink []Food_and_Drink `gorm:"foreignKey:AdminID"` //  ผู้ที่เพิ่ม
 }
 
