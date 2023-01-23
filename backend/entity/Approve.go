@@ -11,6 +11,8 @@ type Approve struct {
 	gorm.Model
 
 	// ApproveCode string `gorm:"uniqueIndex"` //`gorm:"uniqueIndex" valid:"matches(^\\d{13}$)~ApproveCode Invalid format,required~ApproveCode cannot be blank"`
+	Note      string    `valid:"required~ต้องกรอกหมายเหตุ ถ้าไม่มีให้'-'"`
+	CreatedAt time.Time `valid:""`
 
 	// ผู้อนุมัติ
 	User   User `gorm:"references:id" valid:"-"`

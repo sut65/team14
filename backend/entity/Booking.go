@@ -10,6 +10,7 @@ import (
 type Booking struct {
 	gorm.Model
 
+	Code       string    `gorm:"uniqueIndex" valid:"matches(^[Bk]\\d{5}$)~รหัสBooking ต้องขึ้นต้นด้วย Bk ตามด้วยตัวเลข 5 หลัก, required~กรุณากรอกรหัสBooking"`
 	Date_Start time.Time `valid:"IsFuture~กรุณาเลือกเวลาที่เริ่มต้นการจองล่วงหน้า"` // เวลาอนาคต A
 	Date_End   time.Time `valid:"IsFuture~กรุณาเลือกเวลาที่สิ้นสุดการจองล่วงหน้า"`  // เวลาอนาคต B โดย B > A ตรงเช็ดด้วย
 
