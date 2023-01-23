@@ -74,6 +74,15 @@ func main() {
 			r.PATCH("/order_food", controller.UpdateAddfriend)
 			r.DELETE("/order_foods/:id", controller.DeleteAdd_friend)
 
+			// Borrow
+			r.POST("/borrow", controller.CreateBorrow)
+			r.GET("/borrow", controller.GetBorrow)
+			r.GET("/borrow",controller.ListBorrows)
+			r.DELETE("/borrow", controller.DeleteBorrow)
+			r.PATCH("/borrow", controller.UpdateBorrow)
+
+
+			
 		}
 	}
 	// Run the server
