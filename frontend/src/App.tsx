@@ -15,6 +15,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import FlatwareIcon from '@mui/icons-material/Flatware';
+import GroupsIcon from '@mui/icons-material/Groups';
 import Button from "@mui/material/Button";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -37,6 +39,8 @@ import Approve from "./components/Approve";
 import ApproveCreate from "./components/ApproveCreate";
 import Borrow from "./components/Borrow";
 import BorrowCreate from "./components/BorrowCreate";
+import Add_friend from "./components/Add_friend";
+import Add_friendCreate from "./components/Add_friendCreate";
 
 const drawerWidth = 260;
 
@@ -90,8 +94,10 @@ const Drawer = styled(MuiDrawer, {
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "ข้อมูลการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/bookings"},
+  { name: "ข้อมูลการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/bookings"}, 
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
+  { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
+  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
   { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
 ];
@@ -213,6 +219,9 @@ return (
 
                 <Route path="/users" element={<User />} />
                 <Route path="/user/create" element={<UserCreate />} />
+
+                <Route path="/add_friends" element={<Add_friend />} />
+                <Route path="/add_friends/create" element={<Add_friendCreate />} />
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
