@@ -104,7 +104,7 @@ async function ListBookingbyRoom(id: any) {
       "Content-Type": "application/json",
     },
   };
-  if (id == ""){
+  if (id == "" || id == undefined) {
     id = "0";
   }
   let res = await fetch(`${apiUrl}/bookings/room/${id}`, requestOptions)
@@ -434,10 +434,31 @@ async function ListStatusBooks() {
   return res;
 }
 
+async function GetRoom(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/room/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom,
-    ListRoomsbyBuilding,
+    ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
     GetUser, ListUsers,
