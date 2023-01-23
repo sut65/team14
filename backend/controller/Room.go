@@ -9,8 +9,6 @@ import (
 	"github.com/sut65/team14/entity"
 )
 
-
-
 // POST /rooms
 func CreateRoom(c *gin.Context) {
 	var room entity.Room
@@ -34,7 +32,7 @@ func CreateRoom(c *gin.Context) {
 		return
 	}
 	bod := entity.Room{
-		Admin: admin,
+		Admin:    admin,
 		Typeroom: typeroom,
 		Building: building,
 	}
@@ -65,13 +63,14 @@ func GetRoom(c *gin.Context) {
 
 // GET /rooms/building/:id
 func ListRoomsbyBuilding(c *gin.Context) {
-	var Room []entity.Room
-	if err := entity.DB().Preload("User").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM buildings").Find(&Room).Error; err != nil {
+	var room []entity.Room
+	building_id := c.Param("id")
+	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE building_id = ?", building_id).Find(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": Room})
+	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 
 // GET /rooms
