@@ -73,18 +73,16 @@ function BorrowCreate() {
         }); console.log(`[${id}]: ${value}`);
     };
 
-    // const onChangeBuilding = async (e: SelectChangeEvent) =>{   ///////////
-    //     const bid = e.target.value;
-    //     let res = await listDevices(bid);
+    // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
+    //     const did = e.target.value;
+    //     let res = await listDevices(did);
     //     if (res) {
     //         setDevices(res);     //////////////
-    //       console.log("Load Approve Complete");
+    //       console.log("Load Device Complete");
     //     }
     //     else{
-    //       console.log("Load Approve Incomplete!!!");
-    //     }
-        
-    //   }
+    //       console.log("Load Device Incomplete!!!");
+    //     } }
 
     const listApproves = async () => {
         let res = await ListApproves();
@@ -120,7 +118,7 @@ function BorrowCreate() {
           console.log("Load User InComplete!!!!");
         }
       };
-
+      ////////////////////////////////////////search///////////////////
       async function searchAPID() {
         let res = await GetApprove(appid);
         console.log(res);
@@ -128,6 +126,15 @@ function BorrowCreate() {
             setApproves(res);
         } 
       }
+
+      // async function searchdtype() {
+      //   let res = await GetDevices(appid);
+      //   console.log(res);
+      //   if (res) {
+      //       setDevices(res);
+      //   } 
+      // }
+
     async function submit() {
         let data = {
             //Date_Start: format(borrow?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
@@ -147,13 +154,17 @@ function BorrowCreate() {
         // }
     }
 
-
+    ///////////////////////////////search/////////////////////////
 
     useEffect(() => {
         listDevices();
         listApproves();
         getUser();
     }, []);
+
+  function onChangedevice(e: SelectChangeEvent<string>) {
+    throw new Error("Function not implemented.");
+  }
 
     return (
         <Container maxWidth="md">
@@ -269,6 +280,40 @@ function BorrowCreate() {
                   </Grid>  
                 </Grid>   
 
+                {/* <FormControl fullWidth variant="outlined">     
+                <Typography
+                    component="h2"
+                    variant="h5"
+                    color="primary"
+                    gutterBottom
+                  >ประเภทของอุปกรณ์
+                </Typography>
+                  <Grid item xs={6}>
+                  <Select
+                    required
+                    defaultValue={"0"}
+                    onChange={(e) => {
+                      (handleInputChange(e));
+                      onChangedevice(e);
+                    }}
+                    inputProps={{
+                      name: "DeviceType",       ///////////////////////////device/
+                    }}
+                  >
+                    <MenuItem value={"0"}>เลือกประเภทของอุปกรณ์</MenuItem>
+                      {devices?.map((item: DevicesInterface) => {
+                        if (item.DeviceType == null) {
+                        return(<MenuItem
+                          key={item.ID}
+                          value={item.ID}
+                        >
+                          {item.ID}
+                        </MenuItem>)
+                        }
+                      })}  
+                  </Select>
+                  </Grid>
+              </FormControl>         /////////////device tpye/////// */}
 
                {/* <Grid item xs={12} >
                <p>รหัสการจองใช้ห้อง</p>
@@ -348,3 +393,7 @@ function BorrowCreate() {
 }
 
 export default BorrowCreate;
+
+function ListDevice(did: any) {
+  throw new Error("Function not implemented.");
+}
