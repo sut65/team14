@@ -41,6 +41,8 @@ import Borrow from "./components/Borrow";
 import BorrowCreate from "./components/BorrowCreate";
 import Add_friend from "./components/Add_friend";
 import Add_friendCreate from "./components/Add_friendCreate";
+import Food_and_Drink from "./components/Food_and_Drink";
+import Food_and_DrinkCreate from "./components/Food_and_DrinkCreate";
 
 const drawerWidth = 260;
 
@@ -100,6 +102,7 @@ const menu = [
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
   { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
+  { name: "รายการอาหาร", icon: <TextSnippetIcon />, path: "/food_and_drinks"},
 ];
 
 const mdTheme = createTheme();
@@ -228,6 +231,9 @@ return (
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
+
+                <Route path="/food_and_drinks" element={<Food_and_Drink />} />
+                <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />
 
               </Routes> 
             </Container>
