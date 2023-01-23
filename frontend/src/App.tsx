@@ -28,7 +28,7 @@ import HistoryIcon from '@mui/icons-material/History';
 
 import Booking from "./components/Booking";
 // import SignIn from "./components/SignIn";
-import Home from "./components/SeachBooking";
+import Home from "./components/Home";
 
 import UserCreate from "./components/UserCreate";
 import User from "./components/Users";
