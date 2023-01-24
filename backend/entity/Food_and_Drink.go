@@ -26,7 +26,7 @@ type Foodtype struct {
 	gorm.Model
 	Name string `gorm:"uniqueIndex"`
 
-	Food_and_Drink []Food_and_Drink `gorm:"foreignkey:TypeID"`
+	Food_and_Drink []Food_and_Drink `gorm:"foreignkey:FoodtypeID"`
 }
 
 type Shop struct {
