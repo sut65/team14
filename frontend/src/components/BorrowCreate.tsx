@@ -280,7 +280,7 @@ function BorrowCreate() {
                   </Grid>  
                 </Grid>   
 
-                {/* <FormControl fullWidth variant="outlined">     
+                <FormControl fullWidth variant="outlined">     
                 <Typography
                     component="h2"
                     variant="h5"
@@ -293,7 +293,7 @@ function BorrowCreate() {
                     required
                     defaultValue={"0"}
                     onChange={(e) => {
-                      (handleInputChange(e));
+                      //(handleInputChange(e));    /////////////////////  handle  ////////////////////
                       onChangedevice(e);
                     }}
                     inputProps={{
@@ -313,7 +313,7 @@ function BorrowCreate() {
                       })}  
                   </Select>
                   </Grid>
-              </FormControl>         /////////////device tpye/////// */}
+              </FormControl>   
 
                {/* <Grid item xs={12} >
                <p>รหัสการจองใช้ห้อง</p>
