@@ -106,6 +106,31 @@ func SetupDatabase() {
 	var r2 Room
 	db.Raw("SELECT * FROM rooms WHERE detail = ?", "B1101").Scan(&r2)
 
+	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน A"})
+	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน B"})
+	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท A"})
+	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท B"})
+
+	db.Model(&Role{}).Create(&Role{Name: "User"})
+	db.Model(&Role{}).Create(&Role{Name: "Admin"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
+	var r_user, r_admin Role
+	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
+
+	var male, female Gender
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
+
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
+	var e1, e2, e3 EducationLevel
+	db.Raw("SELECT * FROM EducationLevel WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
+	db.Raw("SELECT * FROM EducationLevel WHERE Name = ?", "ปริญญาโท").Scan(&e2)
+	db.Raw("SELECT * FROM EducationLevel WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
+
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
 	// db.Model(&Booking{}).Create(&Booking{

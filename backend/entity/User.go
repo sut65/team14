@@ -47,6 +47,6 @@ type Gender struct {
 
 type EducationLevel struct {
 	gorm.Model
-	EducationLevel string `gorm:"uniqueIndex"`
+	Name string `gorm:"uniqueIndex"`
 	User           []User `gorm:"foreignkey:EducationLevelID"`
 }
