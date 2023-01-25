@@ -19,7 +19,7 @@ import {
     ListStatusBooks, 
     ListBookings,
     GetUser,
-    GetBookingbyCode,
+    GetBookingbyCodeThatNotApprove,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import format from "date-fns/format";
@@ -46,6 +46,7 @@ function ApproveCreate() {
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [errorSearch, setErrorSearch] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
@@ -62,6 +63,7 @@ function ApproveCreate() {
       }
       setSuccess(false);
       setError(false);
+      setErrorSearch(false);
   };
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -139,15 +141,22 @@ function ApproveCreate() {
   }
 
   async function search(){
-    let res = await GetBookingbyCode(code);
-    if (res){
+    let res = await GetBookingbyCodeThatNotApprove(code);
+    if (res.status){
       setApprove({
         ...approve,
-        ["BookingID"]: res.ID,
+        ["BookingID"]: res.data.ID,
       });
-      setBooking(res);
+      setBooking(res.data);
+      setErrorMessage("");
+      console.log("ok");
+      console.log(res);
+    } else {
+      console.log("error");
       console.log(res);
       
+      setErrorSearch(true);
+      setErrorMessage(res.data);
     }
   }
 
@@ -173,6 +182,12 @@ function ApproveCreate() {
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+       </Alert>
+     </Snackbar>
+
+     <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}>
+       <Alert onClose={handleClose} severity="error">
+         ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
 

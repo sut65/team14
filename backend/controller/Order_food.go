@@ -11,7 +11,7 @@ import (
 // POST Order food
 func CreateOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
-	var approve entity.Approve
+	var booking entity.Booking
 	var food_and_drink entity.Food_and_Drink
 	var admin entity.User
 
@@ -27,9 +27,9 @@ func CreateOrder_food(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา Approve ด้วย id
-	if tx := entity.DB().Where("id = ?", order_food.ApproveID).First(&approve); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "approve ID not found"})
+	// ค้นหา Booking ด้วย id
+	if tx := entity.DB().Where("id = ?", order_food.BookingID).First(&booking); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "booking ID not found"})
 		return
 	}
 
@@ -41,7 +41,7 @@ func CreateOrder_food(c *gin.Context) {
 
 	//สร้าง Adding Friend
 	bod := entity.Order_Food{
-		Approve:        approve,
+		Booking:        booking,
 		Admin:          admin,
 		Food_and_Drink: food_and_drink,
 	}
@@ -65,7 +65,7 @@ func CreateOrder_food(c *gin.Context) {
 func GetOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
 	id := c.Param("id")
-	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_food WHERE id = ?", id).Find(&order_food).Error; err != nil {
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Booking").Raw("SELECT * FROM order_foods WHERE id = ?", id).Find(&order_food).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +75,7 @@ func GetOrder_food(c *gin.Context) {
 // GET /oder_foods
 func ListOrder_food(c *gin.Context) {
 	var order_foods []entity.Adding_Friend
-	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods ").Find(&order_foods).Error; err != nil {
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Booking").Raw("SELECT * FROM order_foods ").Find(&order_foods).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

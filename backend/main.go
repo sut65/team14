@@ -31,6 +31,7 @@ func main() {
 			r.DELETE("/booking/:id", controller.DeleteBooking)
 			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
 			r.GET("/booking/code/:code", controller.GetBookingbyCode)
+			r.GET("/booking/notapprove/code/:code", controller.GetBookingbyCodeThatNotApprove)
 
 			// Room Routes
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)

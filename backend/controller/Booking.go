@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/asaskevich/govalidator"
@@ -85,6 +86,19 @@ func GetBookingbyCode(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	c.JSON(http.StatusOK, gin.H{"data": Booking})
+}
+
+// GET /booking/notapprove/code/:code
+func GetBookingbyCodeThatNotApprove(c *gin.Context) {
+	var Booking entity.Booking
+	code := c.Param("code")
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Room.Building").Raw("SELECT * FROM bookings where code = ? and id not in ( Select b1.id as id from bookings b1 inner JOIN approves a1 on a1.booking_id = b1.id );", code).Find(&Booking).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		// รหัสการจองนี้ อาจจะถูกอนุมัติไปแล้ว หรือไม่ก็ ไม่พบรหัสการจองนี้
+		return
+	}
+	fmt.Print(Booking)
 	c.JSON(http.StatusOK, gin.H{"data": Booking})
 }
 
