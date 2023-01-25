@@ -312,7 +312,7 @@ function BorrowCreate() {
             <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
             <Select
               labelId="DeviceID"
-              label="กรุณาเลือกตึก *"
+              label="กรุณาเลือกอุปกรณ์ *"
               onChange={ (onChangeDeviceType) }
               inputProps={{
                 name: "DeviceID",
