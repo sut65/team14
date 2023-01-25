@@ -106,11 +106,52 @@ func SetupDatabase() {
 	var r2 Room
 	db.Raw("SELECT * FROM rooms WHERE detail = ?", "B1101").Scan(&r2)
 
+	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน A"})
+	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน B"})
+	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท A"})
+	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท B"})
+
+	db.Model(&Role{}).Create(&Role{Name: "User"})
+	db.Model(&Role{}).Create(&Role{Name: "Admin"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
+	var r_user, r_admin Role
+	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
+
+	var male, female Gender
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
+
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
+	var e1, e2, e3 EducationLevel
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
+
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
 	// db.Model(&Booking{}).Create(&Booking{
 	// 	Date_Start: t1, Date_End: t2,
 	// 	User: u1, Room: r2, Objective: obj2,
 	// })
+
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
+	var devicetype1, devicetype2,devicetype3 DeviceType
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
+
+	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
+	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
+	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
+	var brand1, brand2, brand3 Brand
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "FlashL").Scan(&brand1)
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "TripleA").Scan(&brand2)
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "Lazerz").Scan(&brand3)
 
 }

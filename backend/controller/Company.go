@@ -40,7 +40,7 @@ func GetCompany(c *gin.Context) {
 }
 
 // GET /companys
-func ListCompanys(c *gin.Context) {
+func ListCompanies(c *gin.Context) {
 	var companys []entity.Company
 	if err := entity.DB().Raw("SELECT * FROM companys").Find(&companys).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

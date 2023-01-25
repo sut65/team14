@@ -10,6 +10,9 @@ type Device struct {
 
 
 	StatusDevice	bool	`gorm:"uniqueIndex"`
+
+	Brand   Brand `gorm:"references:id" valid:"-"`
+	BrandID *uint
 	
 	DeviceType   DeviceType `gorm:"references:id" valid:"-"`
 	DeviceTypeID *uint
@@ -19,6 +22,13 @@ type Device struct {
 }
 
 type DeviceType struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	Device []Device `gorm:"foreignkey:DeviceTypeID"`
+
+}
+
+type Brand struct {
 	gorm.Model
 	Name string `gorm:"uniqueIndex"`
 	Device []Device `gorm:"foreignkey:DeviceTypeID"`

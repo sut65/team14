@@ -62,16 +62,16 @@ function BorrowCreate() {
         setError(false);
     };  
 
-    // const onChangeDeviceType = async (e: SelectChangeEvent) =>{
-    //   const did = e.target.value;
-    //   let res = await ListRoomsbyBuilding(did);
-    //   if (res) {
-    //     setRooms(res);
-    //     console.log("Load Room Complete");
-    //   }
-    //   else{
-    //     console.log("Load Room Incomplete!!!");
-    //   }
+    const onChangeDeviceType = async (e: SelectChangeEvent) =>{
+      const did = e.target.value;
+      let res = await ListTypebyDevice(did);
+      if (res) {
+        setDevices(res);
+        console.log("Load DeviceType Complete");
+      }
+      else{
+        console.log("Load DeviceType Incomplete!!!");
+      }
       
     // }
 
@@ -282,94 +282,53 @@ function BorrowCreate() {
                   </Grid>  
                 </Grid>   
 
-                {/* <FormControl fullWidth variant="outlined">     
-                <Typography
-                    component="h2"
-                    variant="h5"
-                    color="primary"
-                    gutterBottom
-                  >ประเภทของอุปกรณ์
-                </Typography>
-                  <Grid item xs={6}>
-                  <Select
-                    required
-                    defaultValue={"0"}
-                    onChange={(e) => {
-                      (handleInputChange(e));
-                      onChangedevice(e);
-                    }}
-                    inputProps={{
-                      name: "DeviceType",       ///////////////////////////device/
-                    }}
-                  >
-                    <MenuItem value={"0"}>ประเภทของอุปกรณ์</MenuItem>
-                      {devices?.map((item: DevicesInterface) => {
-                        if (item.DeviceType == null) {
-                        return(<MenuItem
-                          key={item.ID}
-                          value={item.ID}
-                        >
-                          {item.ID}
-                        </MenuItem>)
-                        }
-                      })}  
-                  </Select>
-                  </Grid>
-              </FormControl>         /////////////device tpye/////// */}
+          <Grid item xs={6} >
+          <p>ประเภทอุปกรณ์</p>
+          <FormControl required fullWidth >
+            <InputLabel id="device_type_id">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
+            <Select
+              labelId="device_type_id"
+              label="กรุณาเลือกประเภทอุปกรณ์ *"
+              onChange={ (onChangeDeviceType) }
+              inputProps={{
+                name: "device_type_id",
+              }}
+            >
+              {devices.map((item: DevicesInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>  
 
-               {/* <Grid item xs={12} >
-               <p>รหัสการจองใช้ห้อง</p>
-               <FormControl required fullWidth >
-                 <Select
-                     required
-                     onChange={handleInputChange}
-                     inputProps={{
-                       name: "BookingID",
-                     }}
-                   >
-                     {borrow?.map((item: BorrowsInterface) => {
-                         console.log(item.Borrow);
-                         if (item.Borrow == null) {
-                             console.log("A");
-                             
-                             console.log(item);
-                             return(
-                             <MenuItem
-                                 key={item.ID}
-                                 value={item.ID}
-                             > {item.ID} </MenuItem>
-                         )}
-                     })}
-                 </Select>
-               </FormControl>
-               </Grid>
-     
-               <Grid item xs={6}>
-                 <FormControl fullWidth variant="outlined">     
-                   <p>รายการแจ้งซ่อม</p>
-                   <Select
-                     required
-                     defaultValue={"0"}
-                     onChange={handleChange}
-                     inputProps={{
-                       name: "BookingID",
-                     }}
-                   >
-                     <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
-                       {bookings?.map((item: BookingsInterface) => {
-                         console.log(item.Approve);
-                         if (item.Approve == null) {
-                         return(<MenuItem
-                           key={item.ID}
-                           value={item.ID}
-                         >
-                           {item.ID}
-                         </MenuItem>)
-                         }
-                       })}
-                   </Select>
-                 </FormControl>
-               </Grid> */}
+               <Grid item xs={6} >
+          <p>อุปกรณ์</p>
+          <FormControl required fullWidth >
+            <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
+            <Select
+              labelId="DeviceID"
+              label="กรุณาเลือกอุปกรณ์ *"
+              onChange={ (onChangeDeviceType) }
+              inputProps={{
+                name: "DeviceID",
+              }}
+            >
+              {devices.map((item: DevicesInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>
      
                <Grid item xs={12}>
                 <Button component={RouterLink} to="/approves" variant="contained">
@@ -395,7 +354,3 @@ function BorrowCreate() {
 }
 
 export default BorrowCreate;
-
-function ListDevice(did: any) {
-  throw new Error("Function not implemented.");
-}

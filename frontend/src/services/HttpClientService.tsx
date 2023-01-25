@@ -1,6 +1,7 @@
 import { ApprovesInterface } from "../models/IApprove";
 import { BookingsInterface } from "../models/IBooking";
 import { BorrowsInterface } from "../models/IBorrow";
+import { BuildingsInterface } from "../models/IBuilding";
 import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { PaybacksInterface } from "../models/IPayback";
 import { SigninInterface } from "../models/ISignin";
@@ -591,6 +592,72 @@ async function CreateFood_and_Drink(data: Food_and_DrinksInterface) {
   return res;
 }
 
+async function ListGuards() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/guards`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListCompanies() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/companies`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreateBuilding(data: BuildingsInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/buildings`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 async function GetBookingbyCode(code: any) {
   const requestOptions = {
     method: "GET",
@@ -612,9 +679,30 @@ async function GetBookingbyCode(code: any) {
   return res;
 }
 
+async function GetBookingbyCodeThatNotApprove(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/booking/notapprove/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
 export{
     Login,
-    ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode,
+    ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove,
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
@@ -625,4 +713,5 @@ export{
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
+    ListGuards,ListCompanies,CreateBuilding,
 }

@@ -28,13 +28,13 @@ function Building() {
     ;
     const columns: GridColDef[] = [
 
-        { field: "User", headerName: "แอดมิน", width: 50 , 
+        { field: "User", headerName: "แอดมิน", width: 100 , 
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},
      
-        { field: "Building", headerName: "ตึก", width: 150 , 
+        { field: "Building", headerName: "ตึก", width: 100 , 
         valueFormatter: (params) => params.value.Detail,},
      
-        { field: "Guard", headerName: "ผู้รักษาความปลอดภัย", width: 150  ,
+        { field: "Guard", headerName: "ผู้รักษาความปลอดภัย", width: 200  ,
         valueFormatter: (params) => params.value.Detail,},
      
         { field: "Comapany", headerName: "บริษัทรับเหมา", width: 200 ,
