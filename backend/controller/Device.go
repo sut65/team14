@@ -52,7 +52,7 @@ func ListDevices(c *gin.Context) {
 func ListTypebyDevice(c *gin.Context) {
 	var device_id []entity.Device
 	devicetype := c.Param("id")
-	if err := entity.DB().Preload("Building").Raw("SELECT * FROM devices WHERE device_type_id = ?", devicetype).Find(&device_id).Error; err != nil {
+	if err := entity.DB().Preload("Device").Preload("Device.Device_type").Raw("SELECT * FROM devices WHERE device_type_id = ?", devicetype).Find(&device_id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
