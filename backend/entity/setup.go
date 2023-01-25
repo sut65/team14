@@ -120,20 +120,20 @@ func SetupDatabase() {
 		AdminEmail: "admin1@gmail.com", 
 	})
 	var ad1 Admin
-	db.Raw("SELECT * FROM admins WHERE Email = ?", "test@gmail.com").Scan(&ad1)
+	db.Raw("SELECT * FROM admins WHERE AdminEmail = ?", "test@gmail.com").Scan(&ad1)
 
 	db.Model(&Admin{}).Create(&Admin{
 		AdminName: "Admin2",
 		AdminEmail: "admin2@gmail.com", 
 	})
 	var ad2 Admin
-	db.Raw("SELECT * FROM admins WHERE Email = ?", "test@gmail.com").Scan(&ad2)
+	db.Raw("SELECT * FROM admins WHERE AdminEmail = ?", "test@gmail.com").Scan(&ad2)
 
 	db.Model(&Admin{}).Create(&Admin{
 		AdminName: "Admin3",
 		AdminEmail: "admin3@gmail.com", 
 	})
 	var ad3 Admin
-	db.Raw("SELECT * FROM admins WHERE Email = ?", "test@gmail.com").Scan(&ad3)
+	db.Raw("SELECT * FROM admins WHERE AdminEmail = ?", "test@gmail.com").Scan(&ad3)
 
 }

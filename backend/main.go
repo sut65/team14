@@ -77,11 +77,18 @@ func main() {
 
 			// Borrow
 			r.POST("/borrow", controller.CreateBorrow)
-			r.GET("/borrow", controller.GetBorrow)
+			r.GET("/borrow/:id", controller.GetBorrow)
 			r.GET("/borrows", controller.ListBorrows)
 			r.DELETE("/borrow", controller.DeleteBorrow)
-			r.PATCH("/borrow", controller.UpdateBorrow)
+			r.PATCH("/borrow/:id", controller.UpdateBorrow)
 
+			// Device
+			r.POST("/device", controller.CreateDevice)
+			r.GET("/decive/:id", controller.GetDevice)
+			r.GET("/devices", controller.ListDevices)
+			r.DELETE("/device/:id", controller.DeleteDevice)
+			r.GET("/devices/type/:id", controller.ListTypebyDevice)
+			r.PATCH("/device", controller.UpdateDevice)
 		}
 	}
 	// Run the server

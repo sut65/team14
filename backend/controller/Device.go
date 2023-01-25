@@ -50,14 +50,14 @@ func ListDevices(c *gin.Context) {
 }
 
 func ListTypebyDevice(c *gin.Context) {
-	var devicetype []entity.Device
-	device_id := c.Param("id")
-	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE device_id = ?", device_id).Find(&devicetype).Error; err != nil {
+	var device_id []entity.Device
+	devicetype := c.Param("id")
+	if err := entity.DB().Preload("Building").Raw("SELECT * FROM devices WHERE device_type_id = ?", devicetype).Find(&device_id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": devicetype})
+	c.JSON(http.StatusOK, gin.H{"data": device_id})
 }
 
 // DELETE /devices/:id

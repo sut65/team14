@@ -297,6 +297,28 @@ async function ListDevices() {
   return res;
 }
 
+async function ListTypebyDevice(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+  let res = await fetch(`${apiUrl}/devices/devicetype/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 ////////// ////////////////////Payback///// /////////////////////////////
 
 async function ListPaybacks() {
@@ -598,7 +620,7 @@ export{
     ListObjectives,
     GetUser, ListUsers,
     ListBorrows, CreateBorrow, GetBorrow,
-    ListDevices,
+    ListDevices,ListTypebyDevice,
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,

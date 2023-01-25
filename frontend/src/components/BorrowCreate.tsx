@@ -22,7 +22,7 @@ import { CreateBorrow,
     ListDevices,
     GetUser,
     ListApproves,
-    GetApprove,
+    GetApprove,ListTypebyDevice,
     } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
@@ -64,9 +64,9 @@ function BorrowCreate() {
 
     const onChangeDeviceType = async (e: SelectChangeEvent) =>{
       const did = e.target.value;
-      let res = await ListRoomsbyBuilding(did);
+      let res = await ListTypebyDevice(did);
       if (res) {
-        setRooms(res);
+        setDevices(res);
         console.log("Load Room Complete");
       }
       else{

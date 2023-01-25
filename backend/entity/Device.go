@@ -10,7 +10,17 @@ type Device struct {
 
 
 	StatusDevice	bool	`gorm:"uniqueIndex"`
-	devicetype	string	`gorm:"uniqueIndex"`
+	
+	DeviceType   DeviceType `gorm:"references:id" valid:"-"`
+	DeviceTypeID *uint
+	
 	Borrow []Borrow `gorm:"foreignKey:DeviceID"`
 	Payback	[]Payback	`gorm:"foreignKey:DeviceID"`
+}
+
+type DeviceType struct {
+	gorm.Model
+	Name string `gorm:"uniqueIndex"`
+	Device []Device `gorm:"foreignkey:DeviceTypeID"`
+
 }
