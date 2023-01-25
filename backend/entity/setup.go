@@ -127,9 +127,9 @@ func SetupDatabase() {
 	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
 	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
 	var e1, e2, e3 EducationLevel
-	db.Raw("SELECT * FROM educationLevels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
-	db.Raw("SELECT * FROM educationLevels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
-	db.Raw("SELECT * FROM educationLevels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
+	db.Raw("SELECT * FROM educationlevels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
+	db.Raw("SELECT * FROM educationlevels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
+	db.Raw("SELECT * FROM educationlevels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
 
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
@@ -142,9 +142,9 @@ func SetupDatabase() {
 	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
 	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
 	var devicetype1, devicetype2,devicetype3 DeviceType
-	db.Raw("SELECT * FROM devicetypes WHERE name = ?", "การศึกษา").Scan(&devicetype1)
-	db.Raw("SELECT * FROM devicetypes WHERE name = ?", "กีฬา").Scan(&devicetype2)
-	db.Raw("SELECT * FROM devicetypes WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
 
 	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
 	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
