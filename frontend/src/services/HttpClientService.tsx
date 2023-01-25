@@ -1,5 +1,4 @@
 import { ApprovesInterface } from "../models/IApprove";
-import { ApproveCodeInterface } from "../models/IApproveCode";
 import { BookingsInterface } from "../models/IBooking";
 import { BorrowsInterface } from "../models/IBorrow";
 import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
@@ -67,10 +66,10 @@ async function CreateBooking(data: BookingsInterface) {
     let res = await fetch(`${apiUrl}/booking`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        if (res.data) {
-          return res.data;
-        } else {
-          return false;
+        if (res.data) {       
+          return {data: res.data, status: true};
+        } else {     
+          return {data: res.error, status: false};
         }
       });
   
@@ -106,7 +105,7 @@ async function ListBookingbyRoom(id: any) {
       "Content-Type": "application/json",
     },
   };
-  if (id == "" || id == undefined) {
+  if (id === "" || id === undefined) {
     id = "0";
   }
   let res = await fetch(`${apiUrl}/bookings/room/${id}`, requestOptions)
@@ -381,9 +380,9 @@ async function CreateApprove(data: ApprovesInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
-      } else {
-        return false;
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -434,28 +433,6 @@ async function GetApprove(id: any) {
   return res;
 }
 
-async function GetApproveByCode(data: ApproveCodeInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: { 
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json" 
-    },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/approveCode`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
 
 async function ListUsers() {
   const requestOptions = {
@@ -602,7 +579,7 @@ export{
     ListBorrows, CreateBorrow, GetBorrow,
     ListDevices,
     CreatePayback,ListPaybacks,GetPayback,
-    CreateApprove, ListApproves, GetApprove, GetApproveByCode,
+    CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
 }

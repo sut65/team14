@@ -5,7 +5,9 @@ import { UsersInterface } from "./IUser";
 export interface ApprovesInterface {
     ID?: string,
 
-    // ApproveCode?: string | null;
+    Code?: string | null;
+    Note?: string | "";
+    ApproveTime?: Date | null;
 
     UserID?: string | null;
     StatusBookID?: string | null;

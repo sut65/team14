@@ -31,7 +31,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import Booking from "./components/Booking";
 // import SignIn from "./components/SignIn";
 import Home from "./components/Home";
-
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import UserCreate from "./components/UserCreate";
 import User from "./components/Users";
 import BookingCreate from "./components/BookingCreate";
@@ -96,7 +96,7 @@ const Drawer = styled(MuiDrawer, {
 
 const menu = [
   { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "ข้อมูลการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/bookings"}, 
+  { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings"}, 
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  

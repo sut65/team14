@@ -13,9 +13,9 @@ func TestApprovePass(t *testing.T) {
 
 	// ข้อมูลถูกต้องหมดทุก field
 	approve := Approve{
-		Code:        "Ap12345",                      // format: Ap + ตัวเลข5ตัว
-		Note:        "test",                         // Not Null
-		ApproveTime: time.Now().Add(22 * time.Hour), // เป็นอนาคตหรือปัจจุบันก็ได้
+		Code:        "Ap12345",  // format: Ap + ตัวเลข5ตัว
+		Note:        "test",     // Not Null
+		ApproveTime: time.Now(), // เป็นปัจจุบัน +- 3 นาที
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -117,5 +117,5 @@ func TestApprove_Time(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("เวลาการอนุมัติไม่สามารถเป็นอดีตได้"))
+	g.Expect(err.Error()).To(Equal("เวลาที่อนุมัติไม่ถูกต้อง"))
 }

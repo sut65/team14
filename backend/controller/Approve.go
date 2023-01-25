@@ -44,6 +44,10 @@ func CreateApprove(c *gin.Context) {
 	//สร้าง Approve
 	bod := entity.Approve{
 
+		Code:        approve.Code,
+		Note:        approve.Note,
+		ApproveTime: approve.ApproveTime,
+
 		User:       user,
 		StatusBook: statusBook,
 		Booking:    Booking,
@@ -74,29 +78,6 @@ func GetApprove(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": Approve})
 }
-
-// type ApprovePayload struct {
-// 	ApproveCode string `json:"approveCode"`
-// }
-
-// // GET /approves
-// func GetApproveByCode(c *gin.Context) {
-// 	var payload ApprovePayload
-// 	var approve entity.Approve
-
-// 	if err := c.ShouldBindJSON(&payload); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	// ค้นหา Approve ด้วย ApproveCode ที่ผู้ใช้กรอกเข้ามา
-// 	if err := entity.DB().Raw("SELECT * FROM Approves WHERE Approve_Code = ?", payload.ApproveCode).Scan(&approve).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"data": approve})
-// }
 
 // GET /approves
 func ListApproves(c *gin.Context) {

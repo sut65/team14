@@ -12,7 +12,7 @@ type Approve struct {
 
 	Code        string    `gorm:"uniqueIndex" valid:"matches(^[A][p]\\d{5}$)~รหัสการอนุมัติ ต้องขึ้นต้นด้วย Ap ตามด้วยตัวเลข 5 หลัก, required~กรุณากรอกรหัสการอนุมัติ"`
 	Note        string    `valid:"required~กรุณากรอกหมายเหตุ"`
-	ApproveTime time.Time `valid:"IsnotPast~เวลาการอนุมัติไม่สามารถเป็นอดีตได้"`
+	ApproveTime time.Time `valid:"IsPresent~เวลาที่อนุมัติไม่ถูกต้อง"` // เป็นปัจจุบัน +- 3 นาที
 
 	// ผู้อนุมัติ
 	User   User `gorm:"references:id" valid:"-"`
@@ -39,7 +39,8 @@ func init() {
 
 	govalidator.CustomTypeTagMap.Set("IsPresent", func(i interface{}, context interface{}) bool {
 		t := i.(time.Time)
-		return t.Equal(time.Now())
+		now := time.Now()
+		return t.After(now.Add(3-time.Minute)) && t.Before(now.Add(3+time.Minute))
 	})
 
 	govalidator.CustomTypeTagMap.Set("IsPast", func(i interface{}, context interface{}) bool {
@@ -50,5 +51,9 @@ func init() {
 		t := i.(time.Time)
 		// ย้อนหลังไม่เกิน 1 วัน
 		return t.After(time.Now().AddDate(0, 0, -1))
+	})
+	govalidator.CustomTypeTagMap.Set("DelayNow5Min", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.After(time.Now().Add(5 - time.Minute))
 	})
 }

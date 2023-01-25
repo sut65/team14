@@ -102,11 +102,13 @@ function Bookings() {
   function schedule(book: BookingsInterface[]){
     setData([]); // clear data
     book.map((item) => {
+      const notes = `รหัสการจอง: ${item.Code+""}\n` +
+                    `จุดประสงค์ในการจอง: ${item.Objective?.Detail+""}`
       const x = {
         title: item.Room?.Detail +"",
         startDate: (moment(item.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
         endDate: (moment(item.Date_End, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
-        notes: item.Objective?.Detail +"",
+        notes:  notes,
       };
       setData((data) => [...data, x]) // push data
     });
@@ -117,80 +119,60 @@ function Bookings() {
   }
   
  return (
-   <div>
-     <Container maxWidth="lg">
-        <Paper>
-        <Grid container spacing={1} sx={{ padding: 2 }}>
-            <Grid item xs={12}>
-            <Paper>
-                <Grid container spacing={1} sx={{ padding: 2 }} >
-                    <Grid item xs={6}>
-                        <Typography
-                            component="h2"
-                            variant="h6"
-                            color="primary"
-                            gutterBottom
-                        >
-                            แสดงการจองใช้ห้อง
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Button
-                            component={RouterLink}
-                            to="/booking/create"
-                            variant="contained"
-                            color="primary"
-                        >
-                            Create Booking
-                        </Button>
-                    </Grid>
-                    <Grid item xs={2}>
-                        <Button
-                            component={RouterLink}
-                            to="/booking/update"
-                            variant="contained"
-                            color="primary"
-                        >
-                            Update Booking
-                        </Button>
-                    </Grid>
-
-                    <Grid item xs={2}>
-                        <Button
-                            component={RouterLink}
-                            to="/booking/delete"
-                            variant="contained"
-                            color="primary"
-                        >
-                            Delete Booking
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Paper>
-            </Grid>
-
-            
-            <Grid item xs={12}>
-                <Paper>
-                <Grid container spacing={1} sx={{ padding: 2 }}  alignItems="center">
-                    {/* <Grid item xs={12} >
-                    <p>ตึก</p>
-                    </Grid>
-                    <Grid item xs={6} >
-                    
-                    <FormControl fullWidth variant="outlined">
-                        <TextField
-                            variant="outlined"
-                            type="string"
-                            size="medium"
-                            label="ค้นหาห้อง"
-                            color="primary"
-                            value={roomName + ""}
-                            onChange={(e) => setRoomName(e.target.value)}
-                        />
-                    </FormControl>
-                    </Grid> */}
-                    <Grid item xs={6} >
+<div>
+  <Container maxWidth="lg">
+    <Paper>
+    <Grid container spacing={1} sx={{ padding: 2 }}>
+      <Grid item xs={12}>
+      <Paper>
+        <Grid container spacing={1} sx={{ padding: 2 }} >
+          <Grid item xs={6}>
+              <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+              >
+                  แสดงการจองใช้ห้อง
+              </Typography>
+          </Grid>
+          <Grid item xs={2}>
+              <Button
+                  component={RouterLink}
+                  to="/booking/create"
+                  variant="contained"
+                  color="primary"
+              >
+                  Create Booking
+              </Button>
+          </Grid>
+          <Grid item xs={2}>
+              <Button
+                  component={RouterLink}
+                  to="/booking/update"
+                  variant="contained"
+                  color="primary"
+              >
+                  Update Booking
+              </Button>
+          </Grid>
+          <Grid item xs={2}>
+              <Button
+                  component={RouterLink}
+                  to="/booking/delete"
+                  variant="contained"
+                  color="primary"
+              >
+                  Delete Booking
+              </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+      </Grid>
+      <Grid item xs={12}>
+      <Paper>
+      <Grid container spacing={1} sx={{ padding: 2 }}  alignItems="center">
+        <Grid item xs={6} >
           <p>ตึก</p>
           <FormControl required fullWidth >
             <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
@@ -212,80 +194,80 @@ function Bookings() {
               ))}
             </Select>
           </FormControl>
-          </Grid>
+        </Grid>
 
-          <Grid item xs={6} >
-          <p>ห้อง</p>
-          <FormControl required fullWidth> 
-            <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
-            <Select
-              labelId="RoomID"
-              label="กรุณาเลือกห้อง *"
-              onChange={onChangeRoom}
-              inputProps={{
-                name: "RoomID",
-              }}
+        <Grid item xs={6} >
+        <p>ห้อง</p>
+        <FormControl required fullWidth> 
+          <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
+          <Select
+            labelId="RoomID"
+            label="กรุณาเลือกห้อง *"
+            onChange={onChangeRoom}
+            inputProps={{
+              name: "RoomID",
+            }}
+          >
+            {rooms?.map((item: RoomsInterface) => 
+              <MenuItem
+                key={item.ID}
+                value={item.ID}
+              >
+                {item.Detail}
+              </MenuItem>
+            )}
+          </Select>
+        </FormControl>
+        </Grid>
+
+        <Grid item xs={6} justifyContent="center">
+            <Button
+                style={{ float: "right" }}
+                size="medium"
+                onClick= {ListBooking}
+                variant="contained"
+                color="primary"
             >
-              {rooms?.map((item: RoomsInterface) => 
-                <MenuItem
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              )}
-            </Select>
-          </FormControl>
-          </Grid>
-                    <Grid item xs={6} justifyContent="center">
-                        <Button
-                            style={{ float: "right" }}
-                            size="medium"
-                            onClick= {ListBooking}
-                            variant="contained"
-                            color="primary"
-                        >
-                            Search
-                        </Button>
+                Search
+            </Button>
+        </Grid>
+      </Grid>
+      </Paper>
+      </Grid>
 
-                    </Grid>
-                </Grid>
-          
-                </Paper>
-            </Grid>
-            <Grid item xs={12}>
-            <Paper>
+      <Grid item xs={12}>
+      <Paper>
         <Scheduler 
             data={data}
             height={660}
         >
-            <ViewState
-                currentDate={currentDate}
-                onCurrentDateChange={currentDateChange}
-                />
-            <WeekView
-                startDayHour={9}
-                endDayHour={19}
-            />
-            <Toolbar />
-            <DateNavigator />
-            <TodayButton />
-            <Appointments />
-            <AppointmentTooltip
-                showCloseButton
-                showOpenButton
-            />
-            <AppointmentForm
-                readOnly
-            />
+          <ViewState
+              currentDate={currentDate}
+              onCurrentDateChange={currentDateChange}
+              />
+          <WeekView
+              startDayHour={9}
+              endDayHour={19}
+          />
+          <Toolbar />
+          <DateNavigator />
+          <TodayButton />
+          <Appointments />
+          <AppointmentTooltip
+              showCloseButton
+              showOpenButton
+          />
+          <AppointmentForm
+              readOnly
+          />
         </Scheduler>
+      </Paper>
+      </Grid>
+    </Grid>
     </Paper>
-            </Grid>
-        </Grid>
-    </Paper>
-     </Container>
-   </div>
- );
+  </Container>
+</div>
+);
 
 }
 

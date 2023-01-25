@@ -43,6 +43,7 @@ func CreateBooking(c *gin.Context) {
 
 	//สร้าง Booking
 	bod := entity.Booking{
+		Code:       booking.Code,
 		Date_Start: booking.Date_Start,
 		Date_End:   booking.Date_End,
 

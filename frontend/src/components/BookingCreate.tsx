@@ -40,11 +40,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function BookingCreate() {
   const [user, setUser] = useState<UsersInterface>({});
   const [booking, setBooking] = useState<BookingsInterface>({
+    Code: "",
     Date_Start: new Date(),
     Date_End: new Date(),
   });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
@@ -60,6 +62,15 @@ function BookingCreate() {
       setSuccess(false);
       setError(false);
   };
+
+  const handleChange_Text = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof booking;
+    const { value } = event.target;
+    setBooking({ ...booking, [id]: value, });
+    console.log(`[${id}]: ${value}`);
+  }; 
 
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof booking;
@@ -121,9 +132,7 @@ function BookingCreate() {
 
   async function submit() {
       let data = {
-          // Date_Start: format(booking?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
-          // Date_End: format(booking?.Date_End as Date, 'yyyy-dd-MM HH:mm:ss zz'),
-
+          Code: booking.Code,
           Date_Start: booking.Date_Start,
           Date_End: booking.Date_End,
 
@@ -131,13 +140,14 @@ function BookingCreate() {
           ObjectiveID: (booking.ObjectiveID),
           RoomID: (booking.RoomID),
       };
-      console.log(data)
       let res = await CreateBooking(data);
-      console.log(res);
-      if (res) {
+      console.log(res.data);
+      if (res.status) {
           setSuccess(true);
+          setErrorMessage("");
       } else {
           setError(true);
+          setErrorMessage(res.data);
       }
   }
 
@@ -162,7 +172,7 @@ function BookingCreate() {
 
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ
+         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
 
@@ -187,6 +197,24 @@ function BookingCreate() {
 
        <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
+
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>รหัสการจองใช้ห้อง</p>
+                <TextField
+                     required
+                     id="Code"
+                     type="string"
+                     label="รหัสการจองใช้ห้อง (Bk ตามด้วยตัวเลข5ตัว)"
+                     inputProps={{
+                       name: "Code",
+                     }}
+                    value={booking.Code + ""}
+                    onChange={handleChange_Text}
+                />
+            </FormControl>
+          </Grid>
+
           <Grid item xs={6}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
@@ -197,7 +225,6 @@ function BookingCreate() {
                   ...booking,
                   Date_Start: newValue,
                 });
-                console.log(`Date End ${booking.Date_End}`);
               }}
               ampm={true}
               renderInput={(params) => <TextField {...params} />}
@@ -210,14 +237,13 @@ function BookingCreate() {
             <DateTimePicker
               label="เวลาสิ้นสุดการจอง"
               value={booking.Date_End}
-              inputFormat={"yyyy-dd-MM HH:mm:ss zz"}
+              minDateTime={booking.Date_Start}
+              // inputFormat={"yyyy-dd-MM HH:mm:ss zz"}
               onChange={(newValue) => {
                 setBooking({
                   ...booking,
                   Date_End: newValue,
-                });
-                console.log(`Date End ${booking.Date_End}`);
-                
+                });               
               }}
               renderInput={(params) => <TextField {...params} />}
             />
