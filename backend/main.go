@@ -29,7 +29,8 @@ func main() {
 			r.POST("/booking", controller.CreateBooking)
 			r.PATCH("/booking", controller.UpdateBooking)
 			r.DELETE("/booking/:id", controller.DeleteBooking)
-			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
+			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom) 
+			r.GET("/booking/code/:code", controller.GetBookingbyCode)
 
 			// Room Routes
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)
