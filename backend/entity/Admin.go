@@ -9,10 +9,12 @@ type Admin struct {
 	AdminName string `gorm:"uniqueIndex"`
 	AdminEmail  string `gorm:"uniqueIndex"`
 
-	BrandID		*uint
-	TypeID		*uint
-	//AdminID
-	
-	//Borrow []Borrow `gorm:"foreignKey:DeviceID"`
-	//Payback	[]Payback	`gorm:"foreignKey:DeviceID"`
+	UserID		*uint
+	GenderID	*uint
+	RoleID		*uint
+
+	User		User		`gorm:"references:id"`
+	Role		Role		`gorm:"references:id"`
+	Gender		Gender		`gorm:"references:id"`
+
 }
