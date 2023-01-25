@@ -19,6 +19,7 @@ import {
     ListStatusBooks, 
     ListBookings,
     GetUser,
+    GetBookingbyCode,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import format from "date-fns/format";
@@ -49,6 +50,8 @@ function ApproveCreate() {
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
   const [bookings, setBookings] = useState<BookingsInterface[]>([]);
+  const [booking, setBooking] = useState<BookingsInterface>({});
+  const [code, setCode] = useState("")
 
   const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -60,8 +63,6 @@ function ApproveCreate() {
       setSuccess(false);
       setError(false);
   };
-
-  
 
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof approve;
@@ -105,16 +106,16 @@ function ApproveCreate() {
     }
   };
 
-  const listBookings = async () => {
-    let res = await ListBookings();
-    if (res) {
-      setBookings(res);
-      console.log("Load Bookings Complete");
-    }
-    else{
-      console.log("Load Bookings InComplete!!!!");
-    }
-  };
+  // const listBookings = async () => {
+  //   let res = await ListBookings();
+  //   if (res) {
+  //     setBookings(res);
+  //     console.log("Load Bookings Complete");
+  //   }
+  //   else{
+  //     console.log("Load Bookings InComplete!!!!");
+  //   }
+  // };
 
   async function submit() {
       let data = {
@@ -137,11 +138,22 @@ function ApproveCreate() {
     }
   }
 
-  
+  async function search(){
+    let res = await GetBookingbyCode(code);
+    if (res){
+      setApprove({
+        ...approve,
+        ["BookingID"]: res.ID,
+      });
+      setBooking(res);
+      console.log(res);
+      
+    }
+  }
 
   useEffect(() => {
     listStatusBooks();
-    listBookings();
+    // listBookings();
     getUser();
   }, []);
 
@@ -182,7 +194,7 @@ function ApproveCreate() {
        </Box>
 
        <Divider />
-        <Grid container spacing={3} sx={{ padding: 2 }}>
+        <Grid container spacing={1} sx={{ padding: 2 }}>
           <Grid item xs={12} >
             <FormControl fullWidth variant="outlined">
               <p>รหัสการอนุมัติ</p>
@@ -199,9 +211,10 @@ function ApproveCreate() {
               />
             </FormControl>
           </Grid>
-
+          <Grid item xs={6} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
+          <Grid item xs={6} ><p>รหัสการจองใช้ห้อง</p></Grid>
           <Grid item xs={6} >
-          <p>กรุณาเลือกสถานะการจองใช้ห้อง</p>
+          
           <FormControl required fullWidth> 
             <InputLabel id="StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
             <Select
@@ -224,7 +237,7 @@ function ApproveCreate() {
           </FormControl>
           </Grid>
 
-          <Grid item xs={6} >
+          {/* <Grid item xs={6} >
           <p>รหัสการจองใช้ห้อง</p>
           <FormControl required fullWidth >
             <InputLabel id="BookingID">กรุณาเลือกรหัสการจองใช้ห้อง</InputLabel>
@@ -247,6 +260,35 @@ function ApproveCreate() {
               })}
             </Select>
           </FormControl>
+          </Grid> */}
+
+          <Grid item xs={3} >
+            <FormControl fullWidth variant="outlined">
+              
+              <TextField
+                required
+                id="Code"
+                type="string"
+                label="กรุณาเลือกรหัสการจองใช้ห้อง"
+                inputProps={{
+                  name: "Code",
+                }}
+                value={code + ""}
+                onChange={(e) => setCode(e.target.value)}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3} justifyContent="center">
+            <Button
+                style={{ float: "right" }}
+                size="medium"
+                onClick= {search}
+                variant="contained"
+                color="primary"
+            >
+                Search
+            </Button>
           </Grid>
 
           <Grid item xs={12} >
@@ -266,10 +308,11 @@ function ApproveCreate() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12}>
+          <p>เวลาที่อนุมัติ</p>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
-              label="เวลาที่อนุมัติ"
+              label="กรอกเวลาที่อนุมัติ"
               value={approve.ApproveTime}
               onChange={(newValue) => {
                 setApprove({
@@ -282,6 +325,64 @@ function ApproveCreate() {
             />
           </LocalizationProvider>
           </Grid>
+          
+          <Grid item xs={6} >
+            <FormControl fullWidth variant="outlined">
+              <p>ชื่อผู้จองใช้ห้อง</p>
+              <TextField
+                required
+                type="string"
+                inputProps={{
+                  readonly: true,
+                }}
+                value={booking.User?.FirstName + " " + booking.User?.LastName}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} >
+            <FormControl fullWidth variant="outlined">
+              <p>วัตถุประสงค์ในการจอง</p>
+              <TextField
+                required
+                type="string"
+                inputProps={{
+                  readonly: true,
+                }}
+                value={booking.Objective?.Detail + "" }
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} >
+            <FormControl fullWidth variant="outlined">
+              <p>ตึก</p>
+              <TextField
+                required
+                type="string"
+                inputProps={{
+                  readonly: true,
+                }}
+                value={booking.Room?.Building?.Detail + ""}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6} >
+            <FormControl fullWidth variant="outlined">
+              <p>ห้อง</p>
+              <TextField
+                required
+                type="string"
+                inputProps={{
+                  readonly: true,
+                }}
+                value={booking.Room?.Detail + ""}
+              />
+            </FormControl>
+          </Grid>
+
+          
 
           <Grid item xs={12}>
             <Button component={RouterLink} to="/approves" variant="contained">

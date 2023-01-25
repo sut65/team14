@@ -7,8 +7,8 @@ export interface BookingsInterface {
     ID?: string,
     
     Code?: string,
-    Date_Start: Date | null;
-    Date_End: Date | null;
+    Date_Start?: Date | null;
+    Date_End?: Date | null;
 
     UserID?: string | null;
     ObjectiveID?: string | null;

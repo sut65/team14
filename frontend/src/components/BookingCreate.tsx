@@ -345,9 +345,4 @@ function BookingCreate() {
 
 }
 
-
 export default BookingCreate;
-
-function ListRoombyBuildings(bid: any) {
-  throw new Error("Function not implemented.");
-}
