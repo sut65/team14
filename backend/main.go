@@ -77,12 +77,10 @@ func main() {
 			// Borrow
 			r.POST("/borrow", controller.CreateBorrow)
 			r.GET("/borrow", controller.GetBorrow)
-			r.GET("/borrow",controller.ListBorrows)
+			r.GET("/borrows", controller.ListBorrows)
 			r.DELETE("/borrow", controller.DeleteBorrow)
 			r.PATCH("/borrow", controller.UpdateBorrow)
 
-
-			
 		}
 	}
 	// Run the server
