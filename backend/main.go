@@ -29,7 +29,7 @@ func main() {
 			r.POST("/booking", controller.CreateBooking)
 			r.PATCH("/booking", controller.UpdateBooking)
 			r.DELETE("/booking/:id", controller.DeleteBooking)
-			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom) 
+			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
 			r.GET("/booking/code/:code", controller.GetBookingbyCode)
 
 			// Room Routes
@@ -81,6 +81,12 @@ func main() {
 			r.GET("/borrows", controller.ListBorrows)
 			r.DELETE("/borrow", controller.DeleteBorrow)
 			r.PATCH("/borrow", controller.UpdateBorrow)
+
+			// Guard
+			r.GET("/guards", controller.ListGuards)
+
+			// Company
+			r.GET("/companies", controller.ListCompanies)
 
 		}
 	}
