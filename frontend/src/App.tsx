@@ -45,6 +45,9 @@ import Food_and_Drink from "./components/Food_and_Drink";
 import Food_and_DrinkCreate from "./components/Food_and_DrinkCreate";
 import Building from "./components/Building";
 import BuildingCreate from "./components/BuildingCreate";
+import PaybackCreate from "./components/PaybackCreate";
+import Paybacks from "./components/Payback";
+
 
 const drawerWidth = 260;
 
@@ -106,6 +109,7 @@ const menu = [
   { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
   { name: "รายการอาหาร", icon: <TextSnippetIcon />, path: "/food_and_drinks"},
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
+  { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
 ];
 
 const mdTheme = createTheme();
@@ -241,6 +245,8 @@ return (
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />
 
+                <Route path="/paybacks" element={<Paybacks />} />
+                <Route path="/payback/create" element={<PaybackCreate />} />
 
               </Routes> 
             </Container>
