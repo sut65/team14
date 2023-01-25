@@ -81,7 +81,7 @@ func GetBooking(c *gin.Context) {
 func GetBookingbyCode(c *gin.Context) {
 	var Booking entity.Booking
 	code := c.Param("code")
-	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE code = ?", code).Find(&Booking).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Room.Building").Preload("Approve").Raw("SELECT * FROM bookings WHERE code = ?", code).Find(&Booking).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

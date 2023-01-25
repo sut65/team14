@@ -39,7 +39,6 @@ func SetupDatabase() {
 	database.AutoMigrate(&Food_and_Drink{})
 	database.AutoMigrate(&Order_Food{})
 	database.AutoMigrate(&Payback{})
-
 	db = database
 
 	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)

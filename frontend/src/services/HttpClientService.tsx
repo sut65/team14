@@ -298,6 +298,28 @@ async function ListDevices() {
   return res;
 }
 
+async function ListTypebyDevice(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+  let res = await fetch(`${apiUrl}/devices/devicetype/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 ////////// ////////////////////Payback///// /////////////////////////////
 
 async function ListPaybacks() {
@@ -636,16 +658,36 @@ async function CreateBuilding(data: BuildingsInterface) {
 
   return res;
 }
+async function GetBookingbyCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 
 export{
     Login,
-    ListBookings, CreateBooking, GetBooking, ListBookingbyRoom,
+    ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode,
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
     GetUser, ListUsers,
     ListBorrows, CreateBorrow, GetBorrow,
-    ListDevices,
+    ListDevices,ListTypebyDevice,
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,

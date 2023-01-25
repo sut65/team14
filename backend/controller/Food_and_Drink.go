@@ -27,7 +27,7 @@ func CreateFood_and_Drink(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา type ด้วย id
+	// ค้นหา foodtype ด้วย id
 	if tx := entity.DB().Where("id = ?", food_and_drink.FoodtypeID).First(&foodtype); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่ประเภทอาหาร"})
 		return
@@ -41,9 +41,9 @@ func CreateFood_and_Drink(c *gin.Context) {
 
 	//สร้าง food_and_drink
 	fad := entity.Food_and_Drink{
-		Admin: admin,
-		Foodtype:  foodtype,
-		Shop:  shop,
+		Admin:    admin,
+		Foodtype: foodtype,
+		Shop:     shop,
 	}
 
 	// ขั้นตอนการ validate
@@ -63,15 +63,15 @@ func CreateFood_and_Drink(c *gin.Context) {
 func GetFood_and_Drink(c *gin.Context) {
 	var food_and_drink entity.Food_and_Drink
 	id := c.Param("id")
-	// if err := entity.DB().Raw("SELECT * FROM objectives WHERE id = ?", id).Scan(&objective).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-
-	if tx := entity.DB().Where("id = ?", id).First(&food_and_drink); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "food_and_drink not found"})
+	if err := entity.DB().Preload("Admin").Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks WHERE id = ?", id).Scan(&food_and_drink).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	// if tx := entity.DB().Where("id = ?", id).First(&food_and_drink); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "food_and_drink not found"})
+	// 	return
+	// }
 
 	c.JSON(http.StatusOK, gin.H{"data": food_and_drink})
 }
@@ -79,7 +79,7 @@ func GetFood_and_Drink(c *gin.Context) {
 // GET /food_and_drinks
 func ListFood_and_Frink(c *gin.Context) {
 	var food_and_drinks []entity.Food_and_Drink
-	if err := entity.DB().Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

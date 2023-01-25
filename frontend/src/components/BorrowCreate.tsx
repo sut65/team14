@@ -22,7 +22,7 @@ import { CreateBorrow,
     ListDevices,
     GetUser,
     ListApproves,
-    GetApprove,
+    GetApprove,ListTypebyDevice,
     } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
@@ -62,16 +62,18 @@ function BorrowCreate() {
         setError(false);
     };  
 
-    const handleInputChange = (
-        event: React.ChangeEvent<{ id?: string; value: any }>
-    ) => {
-        const id = event.target.id as keyof typeof borrow;
-        const { value } = event.target.value;
-        setBorrow({ 
-            ...borrow , 
-            [id]: value 
-        }); console.log(`[${id}]: ${value}`);
-    };
+    const onChangeDeviceType = async (e: SelectChangeEvent) =>{
+      const did = e.target.value;
+      let res = await ListTypebyDevice(did);
+      if (res) {
+        setDevices(res);
+        console.log("Load Room Complete");
+      }
+      else{
+        console.log("Load Room Incomplete!!!");
+      }
+      
+    }
 
     // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
     //     const did = e.target.value;
@@ -269,7 +271,7 @@ function BorrowCreate() {
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <p>หมดจองเวลาkkkk</p>
+                      <p>หมดจองเวลา</p>
                       <TextField
                         value={approves?.Booking?.Date_End || ""}
                         InputProps={{
@@ -280,7 +282,7 @@ function BorrowCreate() {
                   </Grid>  
                 </Grid>   
 
-                <FormControl fullWidth variant="outlined">     
+                {/* <FormControl fullWidth variant="outlined">     
                 <Typography
                     component="h2"
                     variant="h5"
@@ -293,14 +295,14 @@ function BorrowCreate() {
                     required
                     defaultValue={"0"}
                     onChange={(e) => {
-                      //(handleInputChange(e));    /////////////////////  handle  ////////////////////
+                      (handleInputChange(e));
                       onChangedevice(e);
                     }}
                     inputProps={{
                       name: "DeviceType",       ///////////////////////////device/
                     }}
                   >
-                    <MenuItem value={"0"}>เลือกประเภทของอุปกรณ์</MenuItem>
+                    <MenuItem value={"0"}>ประเภทของอุปกรณ์</MenuItem>
                       {devices?.map((item: DevicesInterface) => {
                         if (item.DeviceType == null) {
                         return(<MenuItem
@@ -313,7 +315,7 @@ function BorrowCreate() {
                       })}  
                   </Select>
                   </Grid>
-              </FormControl>   
+              </FormControl>         /////////////device tpye/////// */}
 
                {/* <Grid item xs={12} >
                <p>รหัสการจองใช้ห้อง</p>
