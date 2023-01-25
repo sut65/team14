@@ -127,9 +127,9 @@ func SetupDatabase() {
 	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
 	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
 	var e1, e2, e3 EducationLevel
-	db.Raw("SELECT * FROM EducationLevel WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
-	db.Raw("SELECT * FROM EducationLevel WHERE Name = ?", "ปริญญาโท").Scan(&e2)
-	db.Raw("SELECT * FROM EducationLevel WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
+	db.Raw("SELECT * FROM educationLevels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
+	db.Raw("SELECT * FROM educationLevels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
+	db.Raw("SELECT * FROM educationLevels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
 
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
