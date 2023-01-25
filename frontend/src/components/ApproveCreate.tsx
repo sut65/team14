@@ -40,7 +40,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function ApproveCreate() {
   const [user, setUser] = useState<UsersInterface>({});
   const [approve, setApprove] = useState<ApprovesInterface>({
-    Code: "",
+    Code: "", Note: "",
     ApproveTime: new Date(),
   });
   const [success, setSuccess] = useState(false);
@@ -251,20 +251,36 @@ function ApproveCreate() {
 
           <Grid item xs={12} >
             <FormControl fullWidth variant="outlined">
-              <p>รหัสการอนุมัติ</p>
+              <p>หมายเหตุ</p>
               <TextField
                 required
-                id="Code"
+                id="Note"
                 type="string"
-                label="รหัสการอนุมัติ (Ap ตามด้วยตัวเลข5ตัว)"
+                label="กรุณากรอกหมายเหตุ"
                 inputProps={{
-                  name: "Code",
-                  readOnly: true,
+                  name: "Note",
                 }}
-                value={approve.Code + ""}
+                value={approve.Note + ""}
                 onChange={handleChange_Text}
               />
             </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              label="เวลาที่อนุมัติ"
+              value={approve.ApproveTime}
+              onChange={(newValue) => {
+                setApprove({
+                  ...approve,
+                  ApproveTime: newValue,
+                });
+              }}
+              ampm={true}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
           </Grid>
 
           <Grid item xs={12}>
