@@ -62,10 +62,10 @@ function BorrowCreate() {
         setError(false);
     };  
 
-    const handleInputChange = (
+    const handleDevice = (
         event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-        const id = event.target.id as keyof typeof borrow;
+        const id = event.target.id as keyof typeof devices;
         const { value } = event.target.value;
         setBorrow({ 
             ...borrow , 
@@ -269,7 +269,7 @@ function BorrowCreate() {
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <p>หมดจองเวลาkkkk</p>
+                      <p>หมดจองเวลา</p>
                       <TextField
                         value={approves?.Booking?.Date_End || ""}
                         InputProps={{
@@ -280,7 +280,9 @@ function BorrowCreate() {
                   </Grid>  
                 </Grid>   
 
-                {/* <FormControl fullWidth variant="outlined">     
+                {/* /////////////device tpye/////// */}
+
+                <FormControl fullWidth variant="outlined">     
                 <Typography
                     component="h2"
                     variant="h5"
@@ -293,14 +295,14 @@ function BorrowCreate() {
                     required
                     defaultValue={"0"}
                     onChange={(e) => {
-                      (handleInputChange(e));
+                      (handleDevice(e));
                       onChangedevice(e);
                     }}
                     inputProps={{
                       name: "DeviceType",       ///////////////////////////device/
                     }}
                   >
-                    <MenuItem value={"0"}>เลือกประเภทของอุปกรณ์</MenuItem>
+                    <MenuItem value={"0"}>ประเภทของอุปกรณ์</MenuItem>
                       {devices?.map((item: DevicesInterface) => {
                         if (item.DeviceType == null) {
                         return(<MenuItem
@@ -313,62 +315,46 @@ function BorrowCreate() {
                       })}  
                   </Select>
                   </Grid>
-              </FormControl>         /////////////device tpye/////// */}
+              </FormControl>     
 
-               {/* <Grid item xs={12} >
-               <p>รหัสการจองใช้ห้อง</p>
-               <FormControl required fullWidth >
-                 <Select
-                     required
-                     onChange={handleInputChange}
-                     inputProps={{
-                       name: "BookingID",
-                     }}
-                   >
-                     {borrow?.map((item: BorrowsInterface) => {
-                         console.log(item.Borrow);
-                         if (item.Borrow == null) {
-                             console.log("A");
-                             
-                             console.log(item);
-                             return(
-                             <MenuItem
-                                 key={item.ID}
-                                 value={item.ID}
-                             > {item.ID} </MenuItem>
-                         )}
-                     })}
-                 </Select>
-               </FormControl>
-               </Grid>
+
+              <FormControl fullWidth variant="outlined">     
+                <Typography
+                    component="h2"
+                    variant="h5"
+                    color="primary"
+                    gutterBottom
+                  >อุปกรณ์
+                </Typography>
+                  <Grid item xs={6}>
+                  <Select
+                    required
+                    defaultValue={"0"}
+                    onChange={(e) => {
+                      (handleDevice(e));
+                      onChangedevice(e);
+                    }}
+                    inputProps={{
+                      name: "DeviceType",       ///////////////////////////device/
+                    }}
+                  >
+                    <MenuItem value={"0"}>เลือกอุปกรณ์</MenuItem>
+                      {devices?.map((item: DevicesInterface) => {
+                        if (item.DeviceType == null) {
+                        return(<MenuItem
+                          key={item.ID}
+                          value={item.ID}
+                        >
+                          {item.ID}
+                        </MenuItem>)
+                        }
+                      })}  
+                  </Select>
+                  </Grid>
+              </FormControl>     
+              {/* /////////////device tpye///////  */}
      
-               <Grid item xs={6}>
-                 <FormControl fullWidth variant="outlined">     
-                   <p>รายการแจ้งซ่อม</p>
-                   <Select
-                     required
-                     defaultValue={"0"}
-                     onChange={handleChange}
-                     inputProps={{
-                       name: "BookingID",
-                     }}
-                   >
-                     <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
-                       {bookings?.map((item: BookingsInterface) => {
-                         console.log(item.Approve);
-                         if (item.Approve == null) {
-                         return(<MenuItem
-                           key={item.ID}
-                           value={item.ID}
-                         >
-                           {item.ID}
-                         </MenuItem>)
-                         }
-                       })}
-                   </Select>
-                 </FormControl>
-               </Grid> */}
-     
+
                <Grid item xs={12}>
                 <Button component={RouterLink} to="/approves" variant="contained">
                   Back
