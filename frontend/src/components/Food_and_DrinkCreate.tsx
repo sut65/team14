@@ -116,11 +116,7 @@ return (
           <Grid item xs={5} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
-                <Box component="form"
-                    sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
-                    noValidate autoComplete="off">
-                    <TextField id="outlined-basic" label="เมนู" variant="outlined"/>
-                </Box>
+              <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"/>
           </FormControl>
           </Grid>
           <Grid item xs={6}>
