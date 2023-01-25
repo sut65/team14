@@ -113,4 +113,20 @@ func SetupDatabase() {
 	// 	User: u1, Room: r2, Objective: obj2,
 	// })
 
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
+	var devicetype1, devicetype2,devicetype3 DeviceType
+	db.Raw("SELECT * FROM devicetypes WHERE name = ?", "การศึกษา").Scan(&devicetype1)
+	db.Raw("SELECT * FROM devicetypes WHERE name = ?", "กีฬา").Scan(&devicetype2)
+	db.Raw("SELECT * FROM devicetypes WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
+
+	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
+	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
+	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
+	var brand1, brand2, brand3 Brand
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "FlashL").Scan(&brand1)
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "TripleA").Scan(&brand2)
+	db.Raw("SELECT * FROM objectives WHERE detail = ?", "Lazerz").Scan(&brand3)
+
 }
