@@ -28,7 +28,7 @@ func CreateAdding_Friend(c *gin.Context) {
 	}
 
 	// ค้นหา Booking ด้วย id
-	if tx := entity.DB().Where("id = ?", add_friend.ApproveID).First(&approve); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", add_friend.BookingID).First(&booking); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "approve ID not found"})
 		return
 	}
