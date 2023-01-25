@@ -63,7 +63,7 @@ func CreateFood_and_Drink(c *gin.Context) {
 func GetFood_and_Drink(c *gin.Context) {
 	var food_and_drink entity.Food_and_Drink
 	id := c.Param("id")
-	if err := entity.DB().Preload("Admin").Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks WHERE id = ?", id).Scan(&food_and_drink).Error; err != nil {
+	if err := entity.DB().Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks WHERE id = ?", id).Scan(&food_and_drink).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -77,13 +77,31 @@ func GetFood_and_Drink(c *gin.Context) {
 }
 
 // GET /food_and_drinks
-func ListFood_and_Frink(c *gin.Context) {
+func ListFood_and_Drink(c *gin.Context) {
 	var food_and_drinks []entity.Food_and_Drink
-	if err := entity.DB().Preload("Admin").Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
+	if err := entity.DB().Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": food_and_drinks})
+}
+
+func ListShops(c *gin.Context) {
+	var shops []entity.Shop
+	if err := entity.DB().Raw("SELECT * FROM shops").Scan(&shops).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": shops})
+}
+
+func ListFoodtypes(c *gin.Context) {
+	var foodtypes []entity.Foodtype
+	if err := entity.DB().Raw("SELECT * FROM foodtypes").Scan(&foodtypes).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": foodtypes})
 }
 
 // DELETE /food_and_drinks/:id
