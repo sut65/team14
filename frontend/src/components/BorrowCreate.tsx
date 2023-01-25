@@ -22,7 +22,7 @@ import { CreateBorrow,
     ListDevices,
     GetUser,
     ListApproves,
-    GetApprove,
+    GetApprove,ListTypebyDevice,
     } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
