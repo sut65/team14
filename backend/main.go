@@ -89,6 +89,7 @@ func main() {
 			r.DELETE("/device/:id", controller.DeleteDevice)
 			r.GET("/devices/type/:id", controller.ListTypebyDevice)
 			r.PATCH("/device", controller.UpdateDevice)
+
 		}
 	}
 	// Run the server
