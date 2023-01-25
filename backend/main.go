@@ -82,12 +82,12 @@ func main() {
 			r.DELETE("/borrow", controller.DeleteBorrow)
 			r.PATCH("/borrow", controller.UpdateBorrow)
 
-			// Admin Routes
-			r.GET("/admins", controller.ListAdmins)
-			r.GET("/admin/:id", controller.GetAdmin)
-			r.POST("/admin", controller.CreateAdmin)
-			r.PATCH("/admin", controller.UpdateAdmin)
-			r.DELETE("/admins/:id", controller.DeleteAdmin)
+			// // Admin Routes
+			// r.GET("/admins", controller.ListAdmins)
+			// r.GET("/admin/:id", controller.GetAdmin)
+			// r.POST("/admin", controller.CreateAdmin)
+			// r.PATCH("/admin", controller.UpdateAdmin)
+			// r.DELETE("/admins/:id", controller.DeleteAdmin)
 
 		}
 	}
