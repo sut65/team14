@@ -22,8 +22,9 @@ function Approves() {
     };
 
     const columns: GridColDef[] = [
-        { field: "ID", headerName: "ID", width: 50 },
-        // { field: "ApproveCode", headerName: "Approve Code", width: 150 },
+        { field: "Code", headerName: "รหัสการอนุมัติ", width: 100 },
+        { field: "ApproveTime", headerName: "เวลาที่อนุมัติ", width: 150 },
+        { field: "Note", headerName: "เวลาที่อนุมัติ", width: 150 },
         {
             field: "User",
             headerName: "ผู้อนุมัติ",
