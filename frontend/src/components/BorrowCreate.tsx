@@ -62,18 +62,18 @@ function BorrowCreate() {
         setError(false);
     };  
 
-    const onChangeDeviceType = async (e: SelectChangeEvent) =>{
-      const did = e.target.value;
-      let res = await ListRoomsbyBuilding(did);
-      if (res) {
-        setRooms(res);
-        console.log("Load Room Complete");
-      }
-      else{
-        console.log("Load Room Incomplete!!!");
-      }
+    // const onChangeDeviceType = async (e: SelectChangeEvent) =>{
+    //   const did = e.target.value;
+    //   let res = await ListRoomsbyBuilding(did);
+    //   if (res) {
+    //     setRooms(res);
+    //     console.log("Load Room Complete");
+    //   }
+    //   else{
+    //     console.log("Load Room Incomplete!!!");
+    //   }
       
-    }
+    // }
 
     // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
     //     const did = e.target.value;
