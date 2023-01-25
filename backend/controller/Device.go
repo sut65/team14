@@ -49,6 +49,17 @@ func ListDevices(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": devices})
 }
 
+func ListTypebyDevice(c *gin.Context) {
+	var devicetype []entity.Device
+	device_id := c.Param("id")
+	if err := entity.DB().Preload("Building").Raw("SELECT * FROM rooms WHERE device_id = ?", device_id).Find(&devicetype).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": devicetype})
+}
+
 // DELETE /devices/:id
 func DeleteDevice(c *gin.Context) {
 	id := c.Param("id")

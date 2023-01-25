@@ -63,8 +63,8 @@ function BorrowCreate() {
     };  
 
     const onChangeDeviceType = async (e: SelectChangeEvent) =>{
-      const bid = e.target.value;
-      let res = await ListRoomsbyBuilding(bid);
+      const did = e.target.value;
+      let res = await ListRoomsbyBuilding(did);
       if (res) {
         setRooms(res);
         console.log("Load Room Complete");
