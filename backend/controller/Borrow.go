@@ -63,7 +63,7 @@ func CreateBorrow(c *gin.Context) {
 func GetBorrow(c *gin.Context) {
 	var Borrow entity.Borrow
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Device").Preload("Booking").Raw("SELECT * FROM borrows WHERE id = ?", id).Find(&Borrow).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Approve").Raw("SELECT * FROM borrows WHERE id = ?", id).Find(&Borrow).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -74,7 +74,7 @@ func GetBorrow(c *gin.Context) {
 // GET /Borrows
 func ListBorrows(c *gin.Context) {
 	var Borrows []entity.Borrow
-	if err := entity.DB().Preload("User").Preload("Device").Preload("Booking").Raw("SELECT * FROM borrows").Find(&Borrows).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Approve").Raw("SELECT * FROM borrows").Find(&Borrows).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

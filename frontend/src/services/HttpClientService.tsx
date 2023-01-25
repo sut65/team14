@@ -1,7 +1,8 @@
 import { ApprovesInterface } from "../models/IApprove";
-import { ApproveCodeInterface } from "../models/IApproveCode";
 import { BookingsInterface } from "../models/IBooking";
 import { BorrowsInterface } from "../models/IBorrow";
+import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
+import { PaybacksInterface } from "../models/IPayback";
 import { SigninInterface } from "../models/ISignin";
 import { UsersInterface } from "../models/IUser";
 
@@ -65,10 +66,10 @@ async function CreateBooking(data: BookingsInterface) {
     let res = await fetch(`${apiUrl}/booking`, requestOptions)
       .then((response) => response.json())
       .then((res) => {
-        if (res.data) {
-          return res.data;
-        } else {
-          return false;
+        if (res.data) {       
+          return {data: res.data, status: true};
+        } else {     
+          return {data: res.error, status: false};
         }
       });
   
@@ -104,7 +105,7 @@ async function ListBookingbyRoom(id: any) {
       "Content-Type": "application/json",
     },
   };
-  if (id == "" || id == undefined) {
+  if (id === "" || id === undefined) {
     id = "0";
   }
   let res = await fetch(`${apiUrl}/bookings/room/${id}`, requestOptions)
@@ -216,7 +217,7 @@ async function ListBorrows() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/bookings`, requestOptions)
+  let res = await fetch(`${apiUrl}/borrows`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -296,8 +297,75 @@ async function ListDevices() {
   return res;
 }
 
-////////// ////////////////////Borrow///// /////////////////////////////
+////////// ////////////////////Payback///// /////////////////////////////
 
+async function ListPaybacks() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/paybacks`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreatePayback(data: PaybacksInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: { 
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/paybacks`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetPayback(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/payback/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+//////////////////////////////////Payback/////////////////
 async function CreateApprove(data: ApprovesInterface) {
   const requestOptions = {
     method: "POST",
@@ -312,9 +380,9 @@ async function CreateApprove(data: ApprovesInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
-      } else {
-        return false;
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -365,28 +433,6 @@ async function GetApprove(id: any) {
   return res;
 }
 
-async function GetApproveByCode(data: ApproveCodeInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: { 
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json" 
-    },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/approveCode`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
 
 async function ListUsers() {
   const requestOptions = {
@@ -455,6 +501,74 @@ async function GetRoom(id: any) {
   return res;
 }
 
+//------------------------Food and Drink-------------------------//
+async function ListShops() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/shops`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListFoodtypes() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/foodtypes`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreateFood_and_Drink(data: Food_and_DrinksInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/food_and_drinks`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom,
@@ -464,6 +578,8 @@ export{
     GetUser, ListUsers,
     ListBorrows, CreateBorrow, GetBorrow,
     ListDevices,
-    CreateApprove, ListApproves, GetApprove, GetApproveByCode,
+    CreatePayback,ListPaybacks,GetPayback,
+    CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
+    ListFoodtypes, ListShops, CreateFood_and_Drink,
 }

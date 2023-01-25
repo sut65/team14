@@ -5,25 +5,31 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { 
-    ListBorrows, 
+import { ListBorrows, ListPaybacks,
 } from "../services/HttpClientService";
 import { BorrowsInterface } from "../models/IBorrow";
+import { PaybacksInterface } from "../models/IPayback";
 
-function Borrows() {
+function Paybacks() {
 
-    const [borrows, setBorrows] = React.useState<BorrowsInterface[]>([]);
+    const [paybacks, setPaybacks] = React.useState<PaybacksInterface[]>([]);
 
-    const listBorrows = async () => {
-        let res = await ListBorrows();
+    const listPaybacks = async () => {
+        let res = await ListPaybacks();
         if (res) {
-            setBorrows(res);
+            setPaybacks(res);
         }
     };
   
     const columns: GridColDef[] = [
         { field: "ID", headerName: "ID", width: 50 },
         // { field: "ApproveCode", headerName: "Approve Code", width: 150 },
+        {
+            field: "Borrow",
+            headerName: "การยืมที่",
+            width: 120,
+            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
+        },
         {
             field: "User",
             headerName: "ผู้อนุมัติ",
@@ -37,6 +43,18 @@ function Borrows() {
             valueFormatter: (params) => params.value.Detail,
         },
         {
+            field: "Date_Start",
+            headerName: "เริ่มจองเวลา",
+            width: 120,
+            valueFormatter: (params) => params.value.Detail,
+        },
+        {
+            field: "Date_End",
+            headerName: "หมดจองเวลา",
+            width: 120,
+            valueFormatter: (params) => params.value.Detail,
+        },
+        {
             field: "StatusDevice",
             headerName: "สถานะอุปกรณ์",
             width: 120,
@@ -45,7 +63,7 @@ function Borrows() {
     ];
 
     useEffect(() => {
-        ListBorrows();
+        ListPaybacks();
     }, []);
 
  return (
@@ -66,25 +84,25 @@ function Borrows() {
              color="primary"
              gutterBottom
            >
-             อนุมัติการยืมอุปกรณ์
+             อนุมัติการคืนอุปกรณ์
            </Typography>
          </Box>
 
          <Box>
            <Button
              component={RouterLink}
-             to="/borrow/create"
+             to="/payback/create"
              variant="contained"
              color="primary"
            >
-             Create Borrow
+             Create Payback
            </Button>
          </Box>
        </Box>
 
        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
-           rows={borrows}
+           rows={paybacks}
            getRowId={(row) => row.ID}
            columns={columns}
            pageSize={5}
@@ -100,4 +118,4 @@ function Borrows() {
 }
 
 
-export default Borrows;
+export default Paybacks;

@@ -9,9 +9,9 @@ import (
 type Adding_Friend struct {
 	gorm.Model
 
-	// การอนุมัติ .
-	Approve   Approve `gorm:"references:id" valid:"-"`
-	ApproveID *uint
+	// การจองห้อง .
+	Booking   Booking `gorm:"references:id" valid:"-"`
+	BookingID *uint
 
 	// เพื่อนที่เพิ่ม
 	User   User `gorm:"references:id"  valid:"-"`

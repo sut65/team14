@@ -39,9 +39,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function ApproveCreate() {
   const [user, setUser] = useState<UsersInterface>({});
-  const [approve, setApprove] = useState<ApprovesInterface>({ });
+  const [approve, setApprove] = useState<ApprovesInterface>({
+    Code: "", Note: "",
+    ApproveTime: new Date(),
+  });
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
   const [bookings, setBookings] = useState<BookingsInterface[]>([]);
@@ -57,6 +61,8 @@ function ApproveCreate() {
       setError(false);
   };
 
+  
+
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof approve;
     const value = event.target.value;
@@ -67,6 +73,14 @@ function ApproveCreate() {
     console.log(`[${name}]: ${value}`);
   };
 
+  const handleChange_Text = (
+    event: React.ChangeEvent<{ id?: string; value: any }>
+  ) => {
+    const id = event.target.id as keyof typeof approve;
+    const { value } = event.target;
+    setApprove({ ...approve, [id]: value, });
+    console.log(`[${id}]: ${value}`);
+  }; 
 
   const listStatusBooks = async () => {
     let res = await ListStatusBooks();
@@ -84,8 +98,7 @@ function ApproveCreate() {
     let res = await GetUser(uid);
     if (res) {
       setUser(res);
-      console.log("Load User Complete");
-      console.log(`UserName: ${res.FirstName} + ${res.LastName}`);    
+      console.log("Load User Complete");  
     }
     else{
       console.log("Load User InComplete!!!!");
@@ -105,29 +118,26 @@ function ApproveCreate() {
 
   async function submit() {
       let data = {
-          UserID: (user.ID),
-          BookingID: (approve.BookingID),
-          StatusBookID: (approve.StatusBookID),
+        Code: approve.Code,
+        Note: approve.Note,
+        ApproveTime: approve.ApproveTime,
+
+        UserID: (user.ID),
+        BookingID: (approve.BookingID),
+        StatusBookID: (approve.StatusBookID),
       };
       console.log(data)
       let res = await CreateApprove(data);
-      if (res) {
-          setSuccess(true);
-      } else {
-          setError(true);
-      }
+      if (res.status) {
+        setSuccess(true);
+        setErrorMessage("");
+    } else {
+        setError(true);
+        setErrorMessage(res.data);
+    }
   }
 
-//   const onChangeBooking = async (e: SelectChangeEvent) =>{
-//     let id = e.target.value;
-//     let res = await GetRequest(id);
-//     if (res) {
-//       setRequest(res);  
-//       console.log("Load Request ID Complete");
-//     }
-//     else{
-//       console.log("Load Request ID Incomplete!!!");
-//     }
+  
 
   useEffect(() => {
     listStatusBooks();
@@ -150,36 +160,50 @@ function ApproveCreate() {
 
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ
+         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
 
      <Paper>
         <Box
-            display="flex"
-            sx={{
-            marginTop: 2,
-            }}
+          display="flex"
+          sx={{marginTop: 2,}}
         >
-            <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                <Typography
-                    component="h2"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                >
-                    Create Approve
-                </Typography>
-            </Box>
+          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+            <Typography
+              component="h2"
+              variant="h6"
+              color="primary"
+              gutterBottom
+            >
+              Create Approve
+            </Typography>
+          </Box>
        </Box>
 
        <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>รหัสการอนุมัติ</p>
+              <TextField
+                required
+                id="Code"
+                type="string"
+                label="รหัสการอนุมัติ (Ap ตามด้วยตัวเลข5ตัว)"
+                inputProps={{
+                  name: "Code",
+                }}
+                value={approve.Code + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
 
           <Grid item xs={6} >
           <p>กรุณาเลือกสถานะการจองใช้ห้อง</p>
           <FormControl required fullWidth> 
-            <InputLabel id="RoomID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
+            <InputLabel id="StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
             <Select
               labelId="StatusBookID"
               label="กรุณาเลือกสถานะการจองใช้ห้อง *"
@@ -200,73 +224,78 @@ function ApproveCreate() {
           </FormControl>
           </Grid>
 
-          <Grid item xs={12} >
+          <Grid item xs={6} >
           <p>รหัสการจองใช้ห้อง</p>
           <FormControl required fullWidth >
+            <InputLabel id="BookingID">กรุณาเลือกรหัสการจองใช้ห้อง</InputLabel>
             <Select
-                required
-                onChange={handleChange}
-                inputProps={{
-                  name: "BookingID",
-                }}
-              >
-                {bookings?.map((item: BookingsInterface) => {
-                    console.log(item.Approve);
-                    if (item.Approve == null) {
-                        console.log("A");
-                        
-                        console.log(item);
-                        return(
-                        <MenuItem
-                            key={item.ID}
-                            value={item.ID}
-                        > {item.ID} </MenuItem>
-                    )}
-                })}
+              required
+              label="กรุณาเลือกรหัสการจองใช้ห้อง *"
+              onChange={handleChange}
+              inputProps={{
+                name: "BookingID",
+              }}
+            >
+              {bookings?.map((item: BookingsInterface) => {
+                if (item.Approve == null) {
+                  return(
+                    <MenuItem
+                      key={item.ID}
+                      value={item.ID}
+                    > {item.Code} </MenuItem>
+                )}
+              })}
             </Select>
           </FormControl>
           </Grid>
 
-          <Grid item xs={6}>
-            <FormControl fullWidth variant="outlined">     
-              <p>รายการแจ้งซ่อม</p>
-              <Select
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
                 required
-                defaultValue={"0"}
-                onChange={handleChange}
+                id="Note"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
                 inputProps={{
-                  name: "BookingID",
+                  name: "Note",
                 }}
-              >
-                <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
-                  {bookings?.map((item: BookingsInterface) => {
-                    console.log(item.Approve);
-                    if (item.Approve == null) {
-                    return(<MenuItem
-                      key={item.ID}
-                      value={item.ID}
-                    >
-                      {item.ID}
-                    </MenuItem>)
-                    }
-                  })}
-              </Select>
+                value={approve.Note + ""}
+                onChange={handleChange_Text}
+              />
             </FormControl>
           </Grid>
 
-          <Grid item xs={12}>
-           <Button component={RouterLink} to="/approves" variant="contained">
-             Back
-           </Button>
+          <Grid item xs={6}>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+              label="เวลาที่อนุมัติ"
+              value={approve.ApproveTime}
+              onChange={(newValue) => {
+                setApprove({
+                  ...approve,
+                  ApproveTime: newValue,
+                });
+              }}
+              ampm={true}
+              renderInput={(params) => <TextField {...params} />}
+            />
+          </LocalizationProvider>
+          </Grid>
 
-           <Button
-             style={{ float: "right" }}
-             onClick={submit}
-             variant="contained"
-             color="primary"
-           >
-             Submit
-           </Button>
+          <Grid item xs={12}>
+            <Button component={RouterLink} to="/approves" variant="contained">
+              Back
+            </Button>
+
+            <Button
+              style={{ float: "right" }}
+              onClick={submit}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
           </Grid>
          
         </Grid>

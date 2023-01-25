@@ -3,6 +3,7 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 
 	"github.com/sut65/team14/entity"
@@ -42,6 +43,7 @@ func CreateBooking(c *gin.Context) {
 
 	//สร้าง Booking
 	bod := entity.Booking{
+		Code:       booking.Code,
 		Date_Start: booking.Date_Start,
 		Date_End:   booking.Date_End,
 
@@ -50,11 +52,11 @@ func CreateBooking(c *gin.Context) {
 		Room:      Room,
 	}
 
-	// // ขั้นตอนการ validate
-	// if _, err := govalidator.ValidateStruct(bod); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(bod); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	// บันทึก
 	if err := entity.DB().Create(&bod).Error; err != nil {
@@ -69,6 +71,17 @@ func GetBooking(c *gin.Context) {
 	var Booking entity.Booking
 	id := c.Param("id")
 	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE id = ?", id).Find(&Booking).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Booking})
+}
+
+// GET /booking/code/:code
+func GetBookingbyCode(c *gin.Context) {
+	var Booking entity.Booking
+	code := c.Param("code")
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE code = ?", code).Find(&Booking).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

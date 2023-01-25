@@ -19,15 +19,17 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 import { CreateBorrow,
-    ListDevices,
+    ListDevices,ListBorrows,
     GetUser,
     ListApproves,
     GetApprove,
+    GetBorrow,
     } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
+import { PaybacksInterface } from "../models/IPayback";
 import { containerClasses } from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -36,14 +38,14 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function BorrowCreate() {
-    const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
+function PaybackCreate() {
+    const [payback, setPayback] = React.useState<PaybacksInterface>({Timeofpayback: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
 
-    const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
-    const [appid, setAppid] = React.useState("");
+    const [borrows, setBorrows] = React.useState<BorrowsInterface>(); 
+    const [borrowid, setborrowid] = React.useState("");
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
@@ -62,18 +64,16 @@ function BorrowCreate() {
         setError(false);
     };  
 
-    const onChangeDeviceType = async (e: SelectChangeEvent) =>{
-      const bid = e.target.value;
-      let res = await ListRoomsbyBuilding(bid);
-      if (res) {
-        setRooms(res);
-        console.log("Load Room Complete");
-      }
-      else{
-        console.log("Load Room Incomplete!!!");
-      }
-      
-    }
+    const handleInputChange = (
+        event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+        const id = event.target.id as keyof typeof payback;
+        const { value } = event.target.value;
+        setPayback({ 
+            ...payback , 
+            [id]: value 
+        }); console.log(`[${id}]: ${value}`);
+    };
 
     // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
     //     const did = e.target.value;
@@ -86,14 +86,14 @@ function BorrowCreate() {
     //       console.log("Load Device Incomplete!!!");
     //     } }
 
-    const listApproves = async () => {
-        let res = await ListApproves();
+    const listBorrows = async () => {
+        let res = await ListBorrows();
         if (res) {
-            setApproves(res);
-            console.log("Load Approves Complete");
+            setBorrows(res);
+            console.log("Load Borrows Complete");
         }
         else{
-          console.log("Load Approves InComplete!!!!");
+          console.log("Load Borrows InComplete!!!!");
         }
       };
 
@@ -120,12 +120,14 @@ function BorrowCreate() {
           console.log("Load User InComplete!!!!");
         }
       };
+
       ////////////////////////////////////////search///////////////////
-      async function searchAPID() {
-        let res = await GetApprove(appid);
+
+      async function searchBorrowid() {
+        let res = await GetBorrow(borrowid);
         console.log(res);
         if (res) {
-            setApproves(res);
+            setBorrows(res);
         } 
       }
 
@@ -139,12 +141,11 @@ function BorrowCreate() {
 
     async function submit() {
         let data = {
-            //Date_Start: format(borrow?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
-            Timeofborrow: borrow.Timeofborrow,
+            Timeofpayback: payback.Timeofpayback,
 
-            AdminID: (borrow.User),
-            DeviceID: (borrow.DeviceID),
-            ApproveID: (borrow.ApproveID),  
+            AdminID: (payback.User),
+            DeviceID: (payback.DeviceID),
+            BorrowID: (payback.BorrowID),  
         };
         console.log(data)
         // let res = await CreateBorrow(data);
@@ -160,7 +161,7 @@ function BorrowCreate() {
 
     useEffect(() => {
         listDevices();
-        listApproves();
+        listBorrows();
         getUser();
     }, []);
 
@@ -201,7 +202,7 @@ function BorrowCreate() {
                          color="primary"
                          gutterBottom
                      >
-                         Create Borrow
+                         Create Payback
                      </Typography>
                  </Box>
             </Box>
@@ -212,8 +213,8 @@ function BorrowCreate() {
                 <Box component="form"
                     sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
                     noValidate autoComplete="off">
-                    <TextField id="outlined-basic" label="No.Approve" variant="outlined" 
-                    onChange={(e) => {setAppid(e.target.value)
+                    <TextField id="outlined-basic" label="No.Borrow" variant="outlined" 
+                    onChange={(e) => {setborrowid(e.target.value)
                         }
                       }
                     />
@@ -224,11 +225,11 @@ function BorrowCreate() {
                 <Button
                     style={{ float: "right" }}
                      size="small"
-                     onClick= {searchAPID}
+                     onClick= {searchBorrowid}
                     variant="contained"
                     color="primary"
                 >
-                    Search ApproveID
+                    Search BorrowID
                 </Button>
                </Grid>
 
@@ -237,7 +238,7 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>ผู้ยืมอุปกรณ์</p>
                       <TextField
-                        value={approves?.User?.FirstName || ""}  
+                        value={borrows?.User?.FirstName || ""}  
                         InputProps={{
                           readOnly: true,
                         }}
@@ -248,7 +249,7 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>room</p>
                       <TextField
-                        value={approves?.Booking?.Room?.Detail || ""}
+                        //value={borrow?.approves?.Booking?.Room?.Detail || ""}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -262,7 +263,7 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>เริ่มจองเวลา</p>
                       <TextField
-                        value={approves?.Booking?.Date_Start || ""}  
+                       // value={borrow?.approves?.Booking?.Date_Start || ""}  
                         InputProps={{
                           readOnly: true,
                         }}
@@ -273,7 +274,7 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>หมดจองเวลา</p>
                       <TextField
-                        value={approves?.Booking?.Date_End || ""}
+                        //value={borrow?.approves?.Booking?.Date_End || ""}
                         InputProps={{
                           readOnly: true,
                         }}
@@ -282,7 +283,7 @@ function BorrowCreate() {
                   </Grid>  
                 </Grid>   
 
-                {/* <FormControl fullWidth variant="outlined">     
+                <FormControl fullWidth variant="outlined">     
                 <Typography
                     component="h2"
                     variant="h5"
@@ -295,14 +296,14 @@ function BorrowCreate() {
                     required
                     defaultValue={"0"}
                     onChange={(e) => {
-                      (handleInputChange(e));
+                      //(handleInputChange(e));    /////////////////////  handle  ////////////////////
                       onChangedevice(e);
                     }}
                     inputProps={{
                       name: "DeviceType",       ///////////////////////////device/
                     }}
                   >
-                    <MenuItem value={"0"}>ประเภทของอุปกรณ์</MenuItem>
+                    <MenuItem value={"0"}>เลือกประเภทของอุปกรณ์</MenuItem>
                       {devices?.map((item: DevicesInterface) => {
                         if (item.DeviceType == null) {
                         return(<MenuItem
@@ -315,7 +316,7 @@ function BorrowCreate() {
                       })}  
                   </Select>
                   </Grid>
-              </FormControl>         /////////////device tpye/////// */}
+              </FormControl>   
 
                {/* <Grid item xs={12} >
                <p>รหัสการจองใช้ห้อง</p>
@@ -394,7 +395,7 @@ function BorrowCreate() {
 
 }
 
-export default BorrowCreate;
+export default PaybackCreate;
 
 function ListDevice(did: any) {
   throw new Error("Function not implemented.");

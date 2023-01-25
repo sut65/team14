@@ -39,6 +39,7 @@ func SetupDatabase() {
 	database.AutoMigrate(&Food_and_Drink{})
 	database.AutoMigrate(&Order_Food{})
 	database.AutoMigrate(&Payback{})
+	database.AutoMigrate(&Admin{})
 
 	db = database
 
@@ -113,5 +114,26 @@ func SetupDatabase() {
 	// 	Date_Start: t1, Date_End: t2,
 	// 	User: u1, Room: r2, Objective: obj2,
 	// })
+
+	db.Model(&Admin{}).Create(&Admin{
+		AdminName: "Admin1",
+		AdminEmail: "admin1@gmail.com", 
+	})
+	var ad1 Admin
+	db.Raw("SELECT * FROM admins WHERE Email = ?", "test@gmail.com").Scan(&ad1)
+
+	db.Model(&Admin{}).Create(&Admin{
+		AdminName: "Admin2",
+		AdminEmail: "admin2@gmail.com", 
+	})
+	var ad2 Admin
+	db.Raw("SELECT * FROM admins WHERE Email = ?", "test@gmail.com").Scan(&ad2)
+
+	db.Model(&Admin{}).Create(&Admin{
+		AdminName: "Admin3",
+		AdminEmail: "admin3@gmail.com", 
+	})
+	var ad3 Admin
+	db.Raw("SELECT * FROM admins WHERE Email = ?", "test@gmail.com").Scan(&ad3)
 
 }

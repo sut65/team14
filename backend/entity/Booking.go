@@ -10,8 +10,9 @@ import (
 type Booking struct {
 	gorm.Model
 
-	Date_Start time.Time `valid:"IsFuture~กรุณาเลือกเวลาล่วงหน้า"` // เวลาอนาคต A
-	Date_End   time.Time `valid:"IsFuture~กรุณาเลือกเวลาล่วงหน้า"` // เวลาอนาคต B โดย B > A ตรงเช็ดด้วย
+	Code       string    `gorm:"uniqueIndex" valid:"matches(^[B][k]\\d{5}$)~รหัสการจอง ต้องขึ้นต้นด้วย Bk ตามด้วยตัวเลข 5 หลัก, required~กรุณากรอกรหัสการจอง"`
+	Date_Start time.Time `valid:"IsFuture~กรุณาเลือกเวลาที่เริ่มต้นการจองล่วงหน้า"` // เวลาอนาคต A
+	Date_End   time.Time `valid:"IsFuture~กรุณาเลือกเวลาที่สิ้นสุดการจองล่วงหน้า"`  // เวลาอนาคต B โดย B > A ตรงเช็ดด้วย
 
 	// ผู้จองใช้ห้อง
 	User   User `gorm:"references:id" valid:"-"`
@@ -26,6 +27,8 @@ type Booking struct {
 	RoomID *uint
 
 	Approve *Approve `gorm:"foreignKey:BookingID"`
+	Adding_Friend []Adding_Friend `gorm:"foreignKey:BookingID"` //ของเพิ่มเพื่อน
+	Order_Food    []Order_Food    `gorm:"foreignKey:BookingID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
 }
 
 func init() {
