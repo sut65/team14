@@ -77,7 +77,7 @@ func GetFood_and_Drink(c *gin.Context) {
 }
 
 // GET /food_and_drinks
-func ListFood_and_Drink(c *gin.Context) {
+func ListFood_and_Drinks(c *gin.Context) {
 	var food_and_drinks []entity.Food_and_Drink
 	if err := entity.DB().Preload("Foodtype").Preload("Shop").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

@@ -85,7 +85,7 @@ func main() {
 
 			// Device
 			r.POST("/device", controller.CreateDevice)
-			r.GET("/decive/:id", controller.GetDevice)
+			r.GET("/device/:id", controller.GetDevice)
 			r.GET("/devices", controller.ListDevices)
 			r.DELETE("/device/:id", controller.DeleteDevice)
 			r.GET("/devices/type/:id", controller.ListTypebyDevice)
@@ -97,6 +97,12 @@ func main() {
 			// Company
 			r.GET("/companies", controller.ListCompanies)
 
+			// Food_and_Drink
+			r.POST("/food_and_drink", controller.CreateFood_and_Drink)
+			r.GET("/food_and_drink/:id", controller.GetFood_and_Drink)
+			r.GET("/food_and_drinks", controller.ListFood_and_Drinks)
+			r.DELETE("/food_and_drink/:id", controller.DeleteFood_and_Drink)
+			r.PATCH("/food_and_drink", controller.UpdateFood_and_Drink)
 		}
 	}
 	// Run the server
