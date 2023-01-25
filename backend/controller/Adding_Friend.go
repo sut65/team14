@@ -11,7 +11,7 @@ import (
 // POST Adding Friend
 func CreateAdding_Friend(c *gin.Context) {
 	var add_friend entity.Adding_Friend
-	var approve entity.Approve
+	var booking entity.Booking
 	var user entity.User
 	var admin entity.User
 
@@ -27,8 +27,8 @@ func CreateAdding_Friend(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา Approve ด้วย id
-	if tx := entity.DB().Where("id = ?", add_friend.ApproveID).First(&approve); tx.RowsAffected == 0 {
+	// ค้นหา Booking ด้วย id
+	if tx := entity.DB().Where("id = ?", add_friend.BookingID).First(&booking); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "approve ID not found"})
 		return
 	}
@@ -41,7 +41,7 @@ func CreateAdding_Friend(c *gin.Context) {
 
 	//สร้าง Adding Friend
 	bod := entity.Adding_Friend{
-		Approve: approve,
+		Booking: booking,
 		User:    user,
 		Admin:   admin,
 	}
@@ -65,7 +65,7 @@ func CreateAdding_Friend(c *gin.Context) {
 func GetAdd_friend(c *gin.Context) {
 	var add_friend entity.Adding_Friend
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM add_friend WHERE id = ?", id).Find(&add_friend).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Booking").Raw("SELECT * FROM add_friend WHERE id = ?", id).Find(&add_friend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +75,7 @@ func GetAdd_friend(c *gin.Context) {
 // GET /add_friends
 func ListAdd_friend(c *gin.Context) {
 	var add_friends []entity.Adding_Friend
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM add_friends").Find(&add_friends).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Booking").Raw("SELECT * FROM add_friends").Find(&add_friends).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
