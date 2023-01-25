@@ -283,94 +283,17 @@ function PaybackCreate() {
                   </Grid>  
                 </Grid>   
 
-                <FormControl fullWidth variant="outlined">     
-                <Typography
-                    component="h2"
-                    variant="h5"
-                    color="primary"
-                    gutterBottom
-                  >ประเภทของอุปกรณ์
-                </Typography>
-                  <Grid item xs={6}>
-                  <Select
-                    required
-                    defaultValue={"0"}
-                    onChange={(e) => {
-                      //(handleInputChange(e));    /////////////////////  handle  ////////////////////
-                      onChangedevice(e);
-                    }}
-                    inputProps={{
-                      name: "DeviceType",       ///////////////////////////device/
-                    }}
-                  >
-                    <MenuItem value={"0"}>เลือกประเภทของอุปกรณ์</MenuItem>
-                      {devices?.map((item: DevicesInterface) => {
-                        if (item.DeviceType == null) {
-                        return(<MenuItem
-                          key={item.ID}
-                          value={item.ID}
-                        >
-                          {item.ID}
-                        </MenuItem>)
+                <Grid item xs={12} >  
+                <Box component="form"
+                    sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
+                    noValidate autoComplete="off">
+                    <TextField id="outlined-basic" label="หมายเหตุ 1" variant="outlined" 
+                    onChange={(e) => {setborrowid(e.target.value)
                         }
-                      })}  
-                  </Select>
-                  </Grid>
-              </FormControl>   
-
-               {/* <Grid item xs={12} >
-               <p>รหัสการจองใช้ห้อง</p>
-               <FormControl required fullWidth >
-                 <Select
-                     required
-                     onChange={handleInputChange}
-                     inputProps={{
-                       name: "BookingID",
-                     }}
-                   >
-                     {borrow?.map((item: BorrowsInterface) => {
-                         console.log(item.Borrow);
-                         if (item.Borrow == null) {
-                             console.log("A");
-                             
-                             console.log(item);
-                             return(
-                             <MenuItem
-                                 key={item.ID}
-                                 value={item.ID}
-                             > {item.ID} </MenuItem>
-                         )}
-                     })}
-                 </Select>
-               </FormControl>
+                      }
+                    />
+                </Box>
                </Grid>
-     
-               <Grid item xs={6}>
-                 <FormControl fullWidth variant="outlined">     
-                   <p>รายการแจ้งซ่อม</p>
-                   <Select
-                     required
-                     defaultValue={"0"}
-                     onChange={handleChange}
-                     inputProps={{
-                       name: "BookingID",
-                     }}
-                   >
-                     <MenuItem value={"0"}>เลือกงานที่ต้องการซ่อมบำรุง</MenuItem>
-                       {bookings?.map((item: BookingsInterface) => {
-                         console.log(item.Approve);
-                         if (item.Approve == null) {
-                         return(<MenuItem
-                           key={item.ID}
-                           value={item.ID}
-                         >
-                           {item.ID}
-                         </MenuItem>)
-                         }
-                       })}
-                   </Select>
-                 </FormControl>
-               </Grid> */}
      
                <Grid item xs={12}>
                 <Button component={RouterLink} to="/approves" variant="contained">

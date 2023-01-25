@@ -13,6 +13,8 @@ git rebase origin/main
 git merge issue- --no-ff
 git push origin main
 
+git pull origin main
+
 git fetch
 เช็คความต่าง ถ้าไม่มีอะไร = ข้อมูลเราล่าสุด ถ้ามีก็ทักถามคนในกลุ่มว่าอัพเดทอะไรมา
 
