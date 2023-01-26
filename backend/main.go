@@ -53,6 +53,11 @@ func main() {
 			// User Routes
 			r.GET("/users", controller.ListUsers)
 			r.GET("/user/:id", controller.GetUser)
+			r.GET("/educationlevels", controller.ListEducationLevels)
+			r.GET("/genders", controller.ListGenders)
+			r.GET("/roles", controller.ListRoles)
+			r.DELETE("/user/:id", controller.DeleteUser)
+			r.PATCH("/user", controller.UpdateUser)
 
 			// Appprove Routes
 			r.GET("/approves", controller.ListApproves)
