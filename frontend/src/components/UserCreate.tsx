@@ -326,7 +326,7 @@ function UserCreate() {
                 defaultValue={"0"}
                 onChange={handleChange}
                 inputProps={{
-                  name: "Educational_backgroundID",
+                  name: "EducationLevelID",
                 }}
               >
                 <MenuItem value={"0"}>กรุณาเลือกระดับการศึกษา</MenuItem>

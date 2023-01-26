@@ -825,7 +825,7 @@ async function ListEducationLevels() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/education_levels`, requestOptions)
+  let res = await fetch(`${apiUrl}/educationlevels`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
