@@ -303,6 +303,29 @@ async function ListDevices() {
   return res;
 }
 
+async function ListDeviceType() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/devicetypes`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function ListTypebyDevice(id: any) {
   const requestOptions = {
     method: "GET",
@@ -963,7 +986,7 @@ export{
     GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListBorrows, CreateBorrow, GetBorrow,
-    ListDevices,ListTypebyDevice,
+    ListDevices,ListTypebyDevice,ListDeviceType,
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,

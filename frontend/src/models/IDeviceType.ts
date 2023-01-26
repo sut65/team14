@@ -1,6 +1,6 @@
 export interface DeviceTypesInterface {
     ID?: string,
 
-    DeviceTypeDetail?: string,
+    Name?: string,
 
 }
