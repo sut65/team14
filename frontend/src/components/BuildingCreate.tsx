@@ -73,10 +73,10 @@ function BuildingCreate(){
       const getUser = async () => {
         const uid = localStorage.getItem("userID")
         let res = await GetUser(uid);
-        if (res) {
-          setUser(res);
+        if (res.status) {
+          setUser(res.data);
           console.log("Load User Complete");
-          console.log(`UserName: ${res.FirstName} + ${res.LastName}`);    
+          console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
         }
         else{
           console.log("Load User InComplete!!!!");
