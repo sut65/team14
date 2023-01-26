@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { CreateRooms, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
+import { CreateRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
 
@@ -27,7 +27,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function RoomCreate(){
-    const [room, setRoom] = React.useState<RoomsInterface>({});
+    const [room, setRoom] = React.useState<RoomsInterface>({Detail:""});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [typeroom, setTyperooms] = React.useState<TyperoomsInterface[]>([]);
@@ -36,6 +36,7 @@ function RoomCreate(){
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -120,18 +121,19 @@ function RoomCreate(){
       async function submit() {
         let data = {
 
-            AdminID: (room.User),
+            Detail: room.Detail,
+            AdminID: (user.ID),
             TyperoomID: (room.TyperoomID),
             BuildingID: (room.BuildingID),  
         };
-        let res = await CreateRooms(data);
-      console.log(res.data);
-      if (res.status) {
+        let res = await CreateRoom(data);
+      console.log(res);
+      if (res) {
           setSuccess(true);
           setErrorMessage("");
       } else {
           setError(true);
-          setErrorMessage(res.data);
+          setErrorMessage(res);
       }
 
     }
@@ -181,13 +183,13 @@ function RoomCreate(){
             </Box>
 
             <Grid item xs={6} >
-          <p>ตึก</p>
+          <p>ชื่อตึก</p>
           <FormControl required fullWidth >
             <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
               labelId="BuildingID"
               label="กรุณาเลือกตึก *"
-              onChange={ (onChangeBuilding) }
+              onChange={ (handleChange) }
               inputProps={{
                 name: "BuildingID",
               }}
@@ -202,7 +204,7 @@ function RoomCreate(){
               ))}
             </Select>
           </FormControl>
-          </Grid>
+          </Grid>  
      
 
             <Grid container spacing={2}>
@@ -278,7 +280,5 @@ function RoomCreate(){
 export default RoomCreate;
 
 
-function setErrorMessage(arg0: string) {
-    throw new Error("Function not implemented.");
-}
+
 

@@ -674,7 +674,7 @@ async function CreateBuilding(data: BuildingsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/buildings`, requestOptions)
+  let res = await fetch(`${apiUrl}/building`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -749,7 +749,7 @@ async function ListBookingbyUser(id: any) {
   return res;
 }
 
-async function CreateRooms(data: RoomsInterface) {
+async function CreateRoom(data: RoomsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -759,7 +759,7 @@ async function CreateRooms(data: RoomsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/rooms`, requestOptions)
+  let res = await fetch(`${apiUrl}/room`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1015,6 +1015,6 @@ export{
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
-    ListGuards,ListCompanies,CreateBuilding,CreateRooms,ListTyperooms,ListRooms,
+    ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend
 }
