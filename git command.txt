@@ -6,10 +6,10 @@ git checkout -b issue-
 
 git add .
 git commit -m "  - close #"
-git pull origin main
-git checkout main
 git remote update
 git rebase origin/main
+git pull origin main
+git checkout main
 git merge issue- --no-ff
 git push origin main
 
