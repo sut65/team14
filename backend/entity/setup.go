@@ -54,20 +54,43 @@ func SetupDatabase() {
 
 	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
 
+	db.Model(&Role{}).Create(&Role{Name: "User"})
+	db.Model(&Role{}).Create(&Role{Name: "Admin"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
+	var r_user, r_admin Role
+	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
+
+	var male, female Gender
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
+
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
+	var e1, e2, e3 EducationLevel
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
+
 	db.Model(&User{}).Create(&User{
 		FirstName: "A", LastName: "B",
 		Email: "test@gmail.com", PhoneNumber: "123456",
 		IdentificationNumber: "123456", StudentID: "123456",
-		Age:      21,
-		Password: string(password),
+		Age: 21, Password: string(password),
+		Role: r_user, Gender: male, EducationLevel: e3,
 	})
+
 	var u1 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
-		Email: "CD@gmail.com",
-		Age:   50, Password: string(password),
+		Email: "CD@gmail.com", 
+		Age: 50, Password: string(password),
+		Role: r_admin, Gender: male, EducationLevel: e3,
 	})
+
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
 
@@ -160,26 +183,6 @@ func SetupDatabase() {
 	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน B"})
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท A"})
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท B"})
-
-	db.Model(&Role{}).Create(&Role{Name: "User"})
-	db.Model(&Role{}).Create(&Role{Name: "Admin"})
-	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
-	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
-	var r_user, r_admin Role
-	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
-	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
-
-	var male, female Gender
-	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
-	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
-
-	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
-	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
-	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
-	var e1, e2, e3 EducationLevel
-	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
-	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
-	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
 
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
