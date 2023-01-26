@@ -117,7 +117,7 @@ return (
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+          <Grid item xs={10}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
             <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
@@ -127,13 +127,13 @@ return (
             </Select>
           </FormControl>
           </Grid>
-          <Grid item xs={5} >  
+          <Grid item xs={12} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
               <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"  value={food_and_drink.Name || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={10}>
           <FormControl fullWidth variant="outlined">   
               <p>ร้านค้า</p>
               <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "ShopID", }}>
@@ -144,14 +144,14 @@ return (
           </FormControl>
           </Grid>
           <Grid item xs={6}>
-          <FormControl fullWidth variant="outlined">  
+          {/* <FormControl fullWidth variant="outlined">  
               <p>สมาชิก</p>
               <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "UserID",}}>
               <MenuItem value={"0"}>กรุณาเลือกสมาชิก</MenuItem>
-                {users?.map((item: UsersInterface) => //{item.Name}
-                  <MenuItem key={item.ID} value={item.ID}> </MenuItem>)}
+                {users?.map((item: UsersInterface) =>
+                  <MenuItem key={item.ID} value={item.ID}> {item.FirstName}</MenuItem>)}
               </Select>
-          </FormControl>
+          </FormControl> */}
           </Grid>
           <Grid item xs={12}>
             <Button component={RouterLink} to="/food_and_drinks" variant="contained"> กลับ </Button>
