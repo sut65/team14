@@ -17,17 +17,14 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
     CreateApprove, 
     ListStatusBooks, 
-    ListBookings,
     GetUser,
     GetBookingbyCodeThatNotApprove,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { StatusBooksInterface } from "../models/IStatusBook";
 import MenuItem from "@mui/material/MenuItem";
-import { RoomsInterface } from "../models/IRoom";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
 
@@ -50,8 +47,11 @@ function ApproveCreate() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
-  const [bookings, setBookings] = useState<BookingsInterface[]>([]);
-  const [booking, setBooking] = useState<BookingsInterface>({});
+  const [booking, setBooking] = useState<BookingsInterface>({
+    Objective: {Detail: ""},
+    User: {FirstName: "", LastName: "",},
+    Room: {Detail: "", Building:{Detail: "",}}
+  });
   const [code, setCode] = useState("")
 
   const handleClose = (
@@ -108,17 +108,6 @@ function ApproveCreate() {
     }
   };
 
-  // const listBookings = async () => {
-  //   let res = await ListBookings();
-  //   if (res) {
-  //     setBookings(res);
-  //     console.log("Load Bookings Complete");
-  //   }
-  //   else{
-  //     console.log("Load Bookings InComplete!!!!");
-  //   }
-  // };
-
   async function submit() {
       let data = {
         Code: approve.Code,
@@ -141,6 +130,11 @@ function ApproveCreate() {
   }
 
   async function search(){
+    if (code === ""){
+      setErrorSearch(true);
+      setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
+      return
+    }
     let res = await GetBookingbyCodeThatNotApprove(code);
     if (res.status){
       setApprove({
@@ -148,13 +142,9 @@ function ApproveCreate() {
         ["BookingID"]: res.data.ID,
       });
       setBooking(res.data);
+      handleClose()
       setErrorMessage("");
-      console.log("ok");
-      console.log(res);
     } else {
-      console.log("error");
-      console.log(res);
-      
       setErrorSearch(true);
       setErrorMessage(res.data);
     }
@@ -162,7 +152,6 @@ function ApproveCreate() {
 
   useEffect(() => {
     listStatusBooks();
-    // listBookings();
     getUser();
   }, []);
 
@@ -194,16 +183,17 @@ function ApproveCreate() {
      <Paper>
         <Box
           display="flex"
-          sx={{marginTop: 2,}}
+          sx={{
+            marginTop: 2,
+          }}
         >
-          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+          <Box sx={{ paddingX: 2, paddingY: 2 }}>
             <Typography
               component="h2"
               variant="h6"
               color="primary"
-              gutterBottom
             >
-              Create Approve
+              บันทึกอนุมัติการจองใช้ห้อง
             </Typography>
           </Box>
        </Box>
@@ -229,57 +219,30 @@ function ApproveCreate() {
           <Grid item xs={6} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
           <Grid item xs={6} ><p>รหัสการจองใช้ห้อง</p></Grid>
           <Grid item xs={6} >
-          
-          <FormControl required fullWidth> 
-            <InputLabel id="StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
-            <Select
-              labelId="StatusBookID"
-              label="กรุณาเลือกสถานะการจองใช้ห้อง *"
-              onChange={handleChange}
-              inputProps={{
-                name: "StatusBookID",
-              }}
-            >
-              {statusBooks?.map((item: StatusBooksInterface) => 
-                <MenuItem
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              )}
-            </Select>
-          </FormControl>
+            <FormControl required fullWidth> 
+              <InputLabel id="StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
+              <Select
+                labelId="StatusBookID"
+                label="กรุณาเลือกสถานะการจองใช้ห้อง *"
+                onChange={handleChange}
+                inputProps={{
+                  name: "StatusBookID",
+                }}
+              >
+                {statusBooks?.map((item: StatusBooksInterface) => 
+                  <MenuItem
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Detail}
+                  </MenuItem>
+                )}
+              </Select>
+            </FormControl>
           </Grid>
 
-          {/* <Grid item xs={6} >
-          <p>รหัสการจองใช้ห้อง</p>
-          <FormControl required fullWidth >
-            <InputLabel id="BookingID">กรุณาเลือกรหัสการจองใช้ห้อง</InputLabel>
-            <Select
-              required
-              label="กรุณาเลือกรหัสการจองใช้ห้อง *"
-              onChange={handleChange}
-              inputProps={{
-                name: "BookingID",
-              }}
-            >
-              {bookings?.map((item: BookingsInterface) => {
-                if (item.Approve == null) {
-                  return(
-                    <MenuItem
-                      key={item.ID}
-                      value={item.ID}
-                    > {item.Code} </MenuItem>
-                )}
-              })}
-            </Select>
-          </FormControl>
-          </Grid> */}
-
-          <Grid item xs={3} >
+          <Grid item xs={4} >
             <FormControl fullWidth variant="outlined">
-              
               <TextField
                 required
                 id="Code"
@@ -294,7 +257,7 @@ function ApproveCreate() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={3} justifyContent="center">
+          <Grid item xs={2} justifyContent="center">
             <Button
                 style={{ float: "right" }}
                 size="medium"
@@ -324,46 +287,44 @@ function ApproveCreate() {
           </Grid>
 
           <Grid item xs={12}>
-          <p>เวลาที่อนุมัติ</p>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateTimePicker
-              label="กรอกเวลาที่อนุมัติ"
-              value={approve.ApproveTime}
-              onChange={(newValue) => {
-                setApprove({
-                  ...approve,
-                  ApproveTime: newValue,
-                });
-              }}
-              ampm={true}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+            <p>เวลาที่อนุมัติ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรอกเวลาที่อนุมัติ"
+                value={approve.ApproveTime}
+                onChange={(newValue) => {
+                  setApprove({
+                    ...approve,
+                    ApproveTime: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
           </Grid>
           
           <Grid item xs={6} >
             <FormControl fullWidth variant="outlined">
               <p>ชื่อผู้จองใช้ห้อง</p>
               <TextField
-                required
+                label="ชื่อ"
                 type="string"
-                inputProps={{
-                  readonly: true,
-                }}
+                disabled
+                variant="filled"
                 value={booking.User?.FirstName + " " + booking.User?.LastName}
               />
             </FormControl>
           </Grid>
-
+          
           <Grid item xs={6} >
             <FormControl fullWidth variant="outlined">
               <p>วัตถุประสงค์ในการจอง</p>
               <TextField
-                required
+                label="วัตถุประสงค์ในการจอง"
                 type="string"
-                inputProps={{
-                  readonly: true,
-                }}
+                disabled
+                variant="filled"
                 value={booking.Objective?.Detail + "" }
               />
             </FormControl>
@@ -373,11 +334,10 @@ function ApproveCreate() {
             <FormControl fullWidth variant="outlined">
               <p>ตึก</p>
               <TextField
-                required
+                label="ชื่อตึก"
                 type="string"
-                inputProps={{
-                  readonly: true,
-                }}
+                disabled
+                variant="filled"
                 value={booking.Room?.Building?.Detail + ""}
               />
             </FormControl>
@@ -387,17 +347,52 @@ function ApproveCreate() {
             <FormControl fullWidth variant="outlined">
               <p>ห้อง</p>
               <TextField
-                required
+                label="ชื่อห้อง"
                 type="string"
-                inputProps={{
-                  readonly: true,
-                }}
+                disabled
+                variant="filled"
                 value={booking.Room?.Detail + ""}
               />
             </FormControl>
           </Grid>
 
-          
+          <Grid item xs={6}>
+            <p>เวลาที่อนุมัติ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="เวลาวันที่เริ่มต้นการจอง"
+                value={booking.Date_Start}
+                disabled
+                onChange={(newValue) => {
+                  setBooking({
+                    ...booking,
+                    Date_Start: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
+
+          <Grid item xs={6}>
+            <p>เวลาที่อนุมัติ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="เวลาวันที่สิ้นสุดการจอง"
+                disabled
+                value={booking.Date_End}
+                onChange={(newValue) => {
+                  setBooking({
+                    ...booking,
+                    Date_End: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
 
           <Grid item xs={12}>
             <Button component={RouterLink} to="/approves" variant="contained">
@@ -413,9 +408,8 @@ function ApproveCreate() {
               Submit
             </Button>
           </Grid>
-         
-        </Grid>
-     </Paper>
+          </Grid>
+        </Paper>
    </Container>
 
  );
