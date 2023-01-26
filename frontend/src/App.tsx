@@ -49,6 +49,7 @@ import PaybackCreate from "./components/PaybackCreate";
 import Paybacks from "./components/Payback";
 import Room from "@mui/icons-material/Room";
 import RoomCreate from "./components/RoomCreate";
+import Device from "./components/Device";
 
 
 const drawerWidth = 260;
@@ -113,6 +114,7 @@ const menu = [
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
   { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
+  { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
 ];
 
 const mdTheme = createTheme();
