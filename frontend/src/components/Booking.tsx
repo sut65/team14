@@ -97,7 +97,10 @@ function Bookings() {
   const listBookingbyUser = async () => {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
+      console.log(res.data);
       schedule(res.data)
+      
+      
       console.log("Load Booking Complete");
     }
     else{

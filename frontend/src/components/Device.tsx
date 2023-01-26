@@ -8,12 +8,16 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { DevicesInterface } from "../models/IDevice";
+import { DeviceTypesInterface } from "../models/IDeviceType";
+import { BrandsInterface } from "../models/IBrand";
 import { ListDevices } from "../services/HttpClientService";
 
 
 function Devices() {
 
     const [device, setDevices] = React.useState<DevicesInterface[]>([]);
+    const [devicetype, setDeviceTypes] = React.useState<DeviceTypesInterface[]>([]);
+    const [brand, setBrands] = React.useState<BrandsInterface[]>([]);
    
    
     const listdevices = async () => {
@@ -28,20 +32,15 @@ function Devices() {
     ;
     const columns: GridColDef[] = [
 
-        { field: "DeviceID", headerName: "ไอดี", width: 100 , 
-        valueFormatter: (params) => params.value.ID,},
+        { field: "ID", headerName: "ไอดี", width: 100},
      
-        { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 100 , 
-        valueFormatter: (params) => params.value.Detail,},
+        { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 100},
      
-        { field: "StatusDevice", headerName: "สถานะ", width: 200  ,
-        valueFormatter: (params) => params.value.StatusDevice,},
+        { field: "StatusDevice", headerName: "สถานะ", width: 200},
      
-        { field: "Devicetype", headerName: "ประเภท", width: 200 ,
-        valueFormatter: (params) => params.value.DeviceTypeDetail,},
+        { field: "DevicetypeDetail", headerName: "ประเภท", width: 200},
 
-        { field: "Brand", headerName: "ยี่ห้อ", width: 200 ,
-        valueFormatter: (params) => params.value.BrandDetail,},
+        { field: "BrandDetail", headerName: "ยี่ห้อ", width: 200},
      
         
       ];
@@ -49,7 +48,7 @@ function Devices() {
      
       useEffect(() => {
      
-        ListDevices();
+        listdevices();
      
       }, [])
 
@@ -90,6 +89,26 @@ function Devices() {
             <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
               <DataGrid
                 rows={device}
+                getRowId={(row) => row.ID}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+              />
+            </div>
+
+            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+              <DataGrid
+                rows={devicetype}
+                getRowId={(row) => row.ID}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+              />
+            </div>
+
+            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+              <DataGrid
+                rows={brand}
                 getRowId={(row) => row.ID}
                 columns={columns}
                 pageSize={5}

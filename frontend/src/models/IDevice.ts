@@ -1,5 +1,5 @@
 import { DeviceTypesInterface } from "./IDeviceType";
-import { BraandsInterface } from "./IBrand";
+import { BrandsInterface } from "./IBrand";
 
 export interface DevicesInterface {
     ID?: string,
@@ -11,5 +11,5 @@ export interface DevicesInterface {
     BrandID?: string | null,
 
     DeviceType?: DeviceTypesInterface
-    BrandType?: BraandsInterface
+    BrandType?: BrandsInterface
 }

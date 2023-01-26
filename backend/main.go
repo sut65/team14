@@ -32,6 +32,7 @@ func main() {
 			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
 			r.GET("/booking/code/:code", controller.GetBookingbyCode)
 			r.GET("/booking/notapprove/code/:code", controller.GetBookingbyCodeThatNotApprove)
+			r.GET("/bookings/user/:id", controller.ListBookingsByUser)
 
 			// Room Routes
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)
@@ -105,8 +106,11 @@ func main() {
 			r.PATCH("/food_and_drink", controller.UpdateFood_and_Drink)
 		}
 	}
-	// Run the server
 
+	// login User Route
+	r.POST("/login", controller.Login)
+
+	// Run the server
 	r.Run()
 
 }

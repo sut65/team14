@@ -25,38 +25,72 @@ func SetupDatabase() {
 
 	}
 
-	// Migrate the schema
-	database.AutoMigrate(&User{})
+	// Migrate the schema 23 ตัว
+	database.AutoMigrate(&Adding_Friend{})
 	database.AutoMigrate(&Approve{})
 	database.AutoMigrate(&Booking{})
-	database.AutoMigrate(&Room{})
-	database.AutoMigrate(&Building{})
-	database.AutoMigrate(&StatusBook{})
-	database.AutoMigrate(&Objective{})
-	database.AutoMigrate(&Device{})
-	database.AutoMigrate(&Adding_Friend{})
 	database.AutoMigrate(&Borrow{})
+	database.AutoMigrate(&Building{})
+	database.AutoMigrate(&Company{})
+	database.AutoMigrate(&Device{})
+	database.AutoMigrate(&DeviceType{})
+	database.AutoMigrate(&Brand{})
 	database.AutoMigrate(&Food_and_Drink{})
+	database.AutoMigrate(&Foodtype{})
+	database.AutoMigrate(&Shop{})
+	database.AutoMigrate(&Guard{})
+	database.AutoMigrate(&Objective{})
 	database.AutoMigrate(&Order_Food{})
 	database.AutoMigrate(&Payback{})
+	database.AutoMigrate(&Room{})
+	database.AutoMigrate(&StatusBook{})
+	database.AutoMigrate(&Typeroom{})
+	database.AutoMigrate(&User{})
+	database.AutoMigrate(&Role{})
+	database.AutoMigrate(&Gender{})
+	database.AutoMigrate(&EducationLevel{})
+
 	db = database
 
 	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
+
+	db.Model(&Role{}).Create(&Role{Name: "User"})
+	db.Model(&Role{}).Create(&Role{Name: "Admin"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
+	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
+	var r_user, r_admin Role
+	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
+	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
+
+	var male, female Gender
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
+	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
+
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
+	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
+	var e1, e2, e3 EducationLevel
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
+	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
 
 	db.Model(&User{}).Create(&User{
 		FirstName: "A", LastName: "B",
 		Email: "test@gmail.com", PhoneNumber: "123456",
 		IdentificationNumber: "123456", StudentID: "123456",
-		Age:      21,
-		Password: string(password),
+		Age: 21, Password: string(password),
+		Role: r_user, Gender: male, EducationLevel: e3,
 	})
+
 	var u1 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
 		Email: "CD@gmail.com", 
 		Age: 50, Password: string(password),
+		Role: r_admin, Gender: male, EducationLevel: e3,
 	})
+
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
 
@@ -92,11 +126,11 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เล่น").Scan(&obj2)
 
 
-	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
-	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
-	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
-	db.Model(&Brand{}).Create(&Brand{Name: "penrai"})
-	db.Model(&Brand{}).Create(&Brand{Name: "pensri"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "FlashL"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "TripleA"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "Lazerz"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "penrai"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "pensri"})
 	var brand1, brand2, brand3,brand4,brand5 Brand
 	db.Raw("SELECT * FROM brands WHERE name = ?", "FlashL").Scan(&brand1)
 	db.Raw("SELECT * FROM brands WHERE name = ?", "TripleA").Scan(&brand2)
@@ -104,9 +138,9 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM brands WHERE name = ?", "penrai").Scan(&brand4)
 	db.Raw("SELECT * FROM brands WHERE name = ?", "pensri").Scan(&brand5)
 
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
+	db.Model(&DeviceType{}).Create(&DeviceType{DeviceTypeDetail: "การศึกษา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{DeviceTypeDetail: "กีฬา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{DeviceTypeDetail: "ความบันเทิง"})
 	var devicetype1, devicetype2,devicetype3 DeviceType
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
@@ -149,26 +183,6 @@ func SetupDatabase() {
 	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน B"})
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท A"})
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท B"})
-
-	db.Model(&Role{}).Create(&Role{Name: "User"})
-	db.Model(&Role{}).Create(&Role{Name: "Admin"})
-	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
-	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
-	var r_user, r_admin Role
-	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
-	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
-
-	var male, female Gender
-	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
-	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
-
-	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
-	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})
-	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาตรี"})
-	var e1, e2, e3 EducationLevel
-	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาเอก").Scan(&e1)
-	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาโท").Scan(&e2)
-	db.Raw("SELECT * FROM education_levels WHERE Name = ?", "ปริญญาตรี").Scan(&e3)
 
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
