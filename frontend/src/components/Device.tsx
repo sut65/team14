@@ -44,7 +44,7 @@ function Devices() {
      
       useEffect(() => {
      
-        ListDevices();
+        listdevices();
      
       }, [])
 
