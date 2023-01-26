@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
+import { CreateRooms, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
 
@@ -124,7 +124,15 @@ function RoomCreate(){
             TyperoomID: (room.TyperoomID),
             BuildingID: (room.BuildingID),  
         };
-        console.log(data)
+        let res = await CreateRooms(data);
+      console.log(res.data);
+      if (res.status) {
+          setSuccess(true);
+          setErrorMessage("");
+      } else {
+          setError(true);
+          setErrorMessage(res.data);
+      }
 
     }
 
@@ -202,10 +210,14 @@ function RoomCreate(){
                     <FormControl fullWidth variant="outlined">
                       <p>เลขห้อง</p>
                       <TextField
-                        value={room.Detail+""}  
-                        InputProps={{
-                          readOnly: true,
+                        required
+                        id="Detail"
+                        type="int"
+                        label="เลขห้อง"
+                        inputProps={{
+                          name: "Detail",
                         }}
+                        value={room.Detail + ""}
                         onChange={handleChange_Text}
                       />
                     </FormControl>
@@ -265,4 +277,8 @@ function RoomCreate(){
 
 export default RoomCreate;
 
+
+function setErrorMessage(arg0: string) {
+    throw new Error("Function not implemented.");
+}
 

@@ -52,7 +52,7 @@ function SignIn() {
   const submit = async () => {
     let res = await Login(signin);
     if (res) {
-      setSuccess(true);
+      setSuccess(true);  
       setTimeout(() => {
         window.location.reload();
       }, 1000);
@@ -157,6 +157,8 @@ function SignIn() {
               >
                 Sign In
               </Button>
+              <p>test@gmail.com 123456</p>
+              <p>CD@gmail.com 123456</p>
             </Box>
           </Box>
         </Grid>

@@ -18,7 +18,7 @@ import { BuildingsInterface } from "../models/IBuilding";
 import { GuardsInterface } from "../models/IGuard";
 import { CompaniesInterface } from "../models/ICompany";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
+import { CreateBuilding, GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -106,12 +106,22 @@ function BuildingCreate(){
 
       async function submit() {
         let data = {
+            
+            Detail: building.Detail,
 
             AdminID: (building.User),
             GuardID: (building.GuardID),
             CompanyID: (building.CompanyID),  
         };
-        console.log(data)
+        let res = await CreateBuilding(data);
+        console.log(res.data);
+        if (res.status) {
+            setSuccess(true);
+            setErrorMessage("");
+        } else {
+            setError(true);
+            setErrorMessage(res.data);
+        }
 
     }
 
@@ -121,6 +131,8 @@ function BuildingCreate(){
         getUser();
     }, []);
 
+
+    
 
       return (
         <Container maxWidth="md">
@@ -166,11 +178,15 @@ function BuildingCreate(){
                     <FormControl fullWidth variant="outlined">
                       <p>ชื่อตึก</p>
                       <TextField
-                        value={building.Detail+""}  
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        onChange={handleChange_Text}
+                       required
+                       id="Detail"
+                       type="string"
+                       label="ตึก"
+                       inputProps={{
+                         name: "Detail",
+                       }}
+                       value={building.Detail + ""}
+                       onChange={handleChange_Text}
                       />
                     </FormControl>
                   </Grid> 
@@ -251,4 +267,8 @@ function BuildingCreate(){
 }
 
 export default BuildingCreate;
+
+function setErrorMessage(arg0: string) {
+    throw new Error("Function not implemented.");
+}
 

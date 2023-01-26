@@ -51,14 +51,14 @@ func CreateRoom(c *gin.Context) {
 
 // GET /room/:id
 func GetRoom(c *gin.Context) {
-	var Room entity.Room
+	var room entity.Room
 	id := c.Param("id")
-	if err := entity.DB().Preload("Admin").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM rooms WHERE id = ?", id).Find(&Room).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM rooms WHERE id = ?", id).Find(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": Room})
+	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 
 // GET /rooms/building/:id
@@ -75,13 +75,13 @@ func ListRoomsbyBuilding(c *gin.Context) {
 
 // GET /rooms
 func ListRooms(c *gin.Context) {
-	var Room []entity.Room
-	if err := entity.DB().Preload("Admin").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM room").Find(&Room).Error; err != nil {
+	var room []entity.Room
+	if err := entity.DB().Preload("Admin").Preload("Typeroom").Preload("Building").Raw("SELECT * FROM rooms").Find(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": Room})
+	c.JSON(http.StatusOK, gin.H{"data": room})
 }
 
 // DELETE /rooms/:id

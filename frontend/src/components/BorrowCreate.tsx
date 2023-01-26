@@ -41,6 +41,7 @@ function BorrowCreate() {
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
+    const [devicetype, setDevicetypes] = useState<DevicesInterface[]>([]);
 
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
     const [appid, setAppid] = React.useState("");
@@ -66,11 +67,11 @@ function BorrowCreate() {
       const did = e.target.value;
       let res = await ListTypebyDevice(did);
       if (res) {
-        setDevices(res);
-        console.log("Load DeviceType Complete");
+        setDevicetypes(res);
+        console.log("Load Device_Type Complete");
       }
       else{
-        console.log("Load DeviceType Incomplete!!!");
+        console.log("Load Device_Type Incomplete!!!");
       }
       
   }
@@ -129,13 +130,15 @@ function BorrowCreate() {
         } 
       }
 
-      // async function searchdtype() {
-      //   let res = await GetDevices(appid);
-      //   console.log(res);
-      //   if (res) {
-      //       setDevices(res);
-      //   } 
-      // }
+      const handleChange = (event: SelectChangeEvent) => {
+        const name = event.target.name as keyof typeof borrow;
+        const value = event.target.value;
+        setBorrow({
+          ...borrow,
+          [name]: value,
+        });
+        console.log(`[${name}]: ${value}`);
+      };
 
     async function submit() {
         let data = {
@@ -188,7 +191,7 @@ function BorrowCreate() {
           </Snackbar>
      
           <Paper>
-             <Box
+              <Box
                  display="flex"
                  sx={{
                  marginTop: 2,
@@ -204,11 +207,11 @@ function BorrowCreate() {
                          Create Borrow
                      </Typography>
                  </Box>
-            </Box>
+              </Box>
      
             <Divider />
              <Grid container spacing={3} sx={{ padding: 2 }}>
-               <Grid item xs={12} >  
+                <Grid item xs={12} >  
                 <Box component="form"
                     sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
                     noValidate autoComplete="off">
@@ -230,7 +233,7 @@ function BorrowCreate() {
                 >
                     Search ApproveID
                 </Button>
-               </Grid>
+               
 
             <Grid container spacing={2}>
                   <Grid item xs={6}>
@@ -280,55 +283,55 @@ function BorrowCreate() {
                       /> 
                     </FormControl>
                   </Grid>  
-                </Grid>   
-
-          <Grid item xs={6} >
-          <p>ประเภทอุปกรณ์</p>
-          <FormControl required fullWidth >
-            <InputLabel id="device_type_id">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
-            <Select
-              labelId="device_type_id"
-              label="กรุณาเลือกประเภทอุปกรณ์ *"
-              onChange={ (onChangeDeviceType) }
-              inputProps={{
-                name: "device_type_id",
-              }}
-            >
-              {devices.map((item: DevicesInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </Grid>  
-
-               <Grid item xs={6} >
-          <p>อุปกรณ์</p>
-          <FormControl required fullWidth >
-            <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
-            <Select
-              labelId="DeviceID"
-              label="กรุณาเลือกอุปกรณ์ *"
-              onChange={ (onChangeDeviceType) }
-              inputProps={{
-                name: "DeviceID",
-              }}
-            >
-              {devices.map((item: DevicesInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </Grid>
+                </Grid>   </Grid>
+                          {/* //////////////////////////////devicetype////////////////////////////// */}
+                <Grid item xs={6} >
+                <p>ประเภทอุปกรณ์</p>
+                <FormControl required fullWidth >
+                  <InputLabel id="device_type_id">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
+                  <Select
+                    labelId="device_type_id"
+                    label="กรุณาเลือกประเภทอุปกรณ์ *"
+                    onChange={ (onChangeDeviceType) }
+                    inputProps={{
+                      name: "device_type_id",
+                    }}
+                  >
+                    {devices.map((item: DevicesInterface) => (
+                      <MenuItem 
+                        key={item.ID}
+                        value={item.ID}
+                      >
+                        {item.Detail}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                </Grid>  
+                    {/* //////////////////////////////device after choose ype//////////////////////// */}
+                <Grid item xs={6} >
+                <p>อุปกรณ์</p>
+                <FormControl required fullWidth >
+                  <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
+                    <Select
+                      labelId="DeviceID"
+                      label="กรุณาเลือกอุปกรณ์ *"
+                      onChange={ (handleChange) }
+                      inputProps={{
+                        name: "DeviceID",
+                      }}
+                    >
+                    {devices.map((item: DevicesInterface) => (
+                      <MenuItem 
+                        key={item.ID}
+                        value={item.ID}
+                      >
+                        {item.Detail}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                </Grid>
      
                <Grid item xs={12}>
                 <Button component={RouterLink} to="/approves" variant="contained">

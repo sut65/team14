@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -17,20 +17,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import FlatwareIcon from '@mui/icons-material/Flatware';
 import GroupsIcon from '@mui/icons-material/Groups';
-import Button from "@mui/material/Button";
-
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
-import PeopleIcon from "@mui/icons-material/People";
-import ComputerIcon from '@mui/icons-material/Computer';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import RoomIcon from '@mui/icons-material/Room';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import HistoryIcon from '@mui/icons-material/History';
 
 import Booking from "./components/Booking";
 // import SignIn from "./components/SignIn";
-import Home from "./components/Home";
+import Home from "./components/SignIn";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import UserCreate from "./components/UserCreate";
 import User from "./components/Users";
@@ -49,6 +42,7 @@ import PaybackCreate from "./components/PaybackCreate";
 import Paybacks from "./components/Payback";
 import Room from "./components/Room";
 import RoomCreate from "./components/RoomCreate";
+import Device from "./components/Device";
 
 
 const drawerWidth = 260;
@@ -113,12 +107,12 @@ const menu = [
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
   { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
+  { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
 ];
 
 const mdTheme = createTheme();
 
 export default function App() {
-  localStorage.setItem("userID", "1")
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
   // const roleLevel = parseInt(localStorage.getItem("role_id")+"");
@@ -253,6 +247,10 @@ return (
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />
+
+                <Route path="/devices" element={<Device />} />
+                {/* <Route path="/payback/create" element={<PaybackCreate />} /> */}
+
 
               </Routes> 
             </Container>
