@@ -8,6 +8,7 @@ import { RoomsInterface } from "../models/IRoom";
 import { SigninInterface } from "../models/ISignin";
 import { TyperoomsInterface } from "../models/ITyperoom";
 import { UsersInterface } from "../models/IUser";
+import { Add_friendInterface } from "../models/IAdd_friend";
 
 const apiUrl = "http://localhost:8080";
 
@@ -311,7 +312,7 @@ async function ListTypebyDevice(id: any) {
     },
   };
   
-  let res = await fetch(`${apiUrl}/devices/devicetype/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/devicetypes/device/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -711,7 +712,7 @@ async function ListBookingbyUser(id: any) {
       "Content-Type": "application/json",
     },
   };
-  let res = await fetch(`${apiUrl}/booking/notapprove/code/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/bookings/user/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
@@ -859,6 +860,76 @@ async function ListRoles() {
   return res;
 }
 
+/***************************** add friend ****************************************************/
+
+async function ListAdd_friends() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/add_friends`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreateAdd_friend(data: Add_friendInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/add_friend`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function DeleteAdd_friend(data: Add_friendInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/add_friends/:id`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+}
+
+
 
 export{
     Login,
@@ -874,4 +945,5 @@ export{
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
     ListGuards,ListCompanies,CreateBuilding,CreateRooms,ListTyperooms,ListRooms,
+    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend
 }
