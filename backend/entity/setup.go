@@ -150,8 +150,8 @@ func SetupDatabase() {
 	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
 	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
 	var brand1, brand2, brand3 Brand
-	db.Raw("SELECT * FROM objectives WHERE detail = ?", "FlashL").Scan(&brand1)
-	db.Raw("SELECT * FROM objectives WHERE detail = ?", "TripleA").Scan(&brand2)
-	db.Raw("SELECT * FROM objectives WHERE detail = ?", "Lazerz").Scan(&brand3)
+	db.Raw("SELECT * FROM Brands WHERE name = ?", "FlashL").Scan(&brand1)
+	db.Raw("SELECT * FROM Brands WHERE name = ?", "TripleA").Scan(&brand2)
+	db.Raw("SELECT * FROM Brands WHERE name = ?", "Lazerz").Scan(&brand3)
 
 }
