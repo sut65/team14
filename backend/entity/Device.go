@@ -9,7 +9,7 @@ type Device struct {
 	Detail string `gorm:"uniqueIndex"`
 
 
-	StatusDevice	bool	`gorm:"uniqueIndex"`
+	StatusDevice	bool	
 
 	Brand   Brand `gorm:"references:id" valid:"-"`
 	BrandID *uint
