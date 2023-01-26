@@ -43,6 +43,7 @@ import Paybacks from "./components/Payback";
 import Room from "./components/Room";
 import RoomCreate from "./components/RoomCreate";
 import Device from "./components/Device";
+import BookingUpdate from "./components/BookingUpdate";
 
 
 const drawerWidth = 260;
@@ -115,7 +116,7 @@ const mdTheme = createTheme();
 export default function App() {
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
-  // const roleLevel = parseInt(localStorage.getItem("role_id")+"");
+  const roleLevel = parseInt(localStorage.getItem("role_id")+"");
   const toggleDrawer = () => {
     setOpen(!open);
   };
@@ -223,6 +224,7 @@ return (
 
                 <Route path="/bookings" element={<Booking />} />
                 <Route path="/booking/create" element={<BookingCreate />} />
+                <Route path="/booking/update" element={<BookingUpdate />} />
 
                 <Route path="/users" element={<User />} />
                 <Route path="/user/create" element={<UserCreate />} />

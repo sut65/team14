@@ -22,9 +22,18 @@ function Approves() {
     };
 
     const columns: GridColDef[] = [
-        { field: "Code", headerName: "รหัสการอนุมัติ", width: 100 },
-        { field: "ApproveTime", headerName: "เวลาที่อนุมัติ", width: 150 },
-        { field: "Note", headerName: "เวลาที่อนุมัติ", width: 150 },
+        { field: "Code", headerName: "รหัสการอนุมัติ", width: 120 },
+        {
+          field: "Booking",
+          headerName: "รหัสการจองใช้ห้อง",
+          width: 140,
+          valueFormatter: (params) => `${(params.value.Code)}`,
+      },
+        { 
+          field: "ApproveTime", headerName: "เวลาที่อนุมัติ", width: 200,
+          valueFormatter: (params) => `${new Date(params.value)}`,
+        },
+        { field: "Note", headerName: "Note", width: 150 },
         {
             field: "User",
             headerName: "ผู้อนุมัติ",

@@ -53,9 +53,9 @@ function SignIn() {
     let res = await Login(signin);
     if (res) {
       setSuccess(true);  
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+      // setTimeout(() => {
+      //   window.location.reload();
+      // }, 1000);
     } else {
       setError(true);
     }
