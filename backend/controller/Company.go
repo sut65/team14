@@ -8,7 +8,7 @@ import (
 	"github.com/sut65/team14/entity"
 )
 
-// POST /companys
+// POST /companies
 func CreateCompany(c *gin.Context) {
 	var company entity.Company
 	if err := c.ShouldBindJSON(&company); err != nil {
@@ -26,7 +26,7 @@ func CreateCompany(c *gin.Context) {
 func GetCompany(c *gin.Context) {
 	var company entity.Company
 	id := c.Param("id")
-	// if err := entity.DB().Raw("SELECT * FROM companys WHERE id = ?", id).Scan(&company).Error; err != nil {
+	// if err := entity.DB().Raw("SELECT * FROM companies WHERE id = ?", id).Scan(&company).Error; err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	// 	return
 	// }
@@ -39,27 +39,27 @@ func GetCompany(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": company})
 }
 
-// GET /companys
+// GET /companies
 func ListCompanies(c *gin.Context) {
-	var companys []entity.Company
-	if err := entity.DB().Raw("SELECT * FROM companys").Find(&companys).Error; err != nil {
+	var companies []entity.Company
+	if err := entity.DB().Raw("SELECT * FROM companies").Find(&companies).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": companys})
+	c.JSON(http.StatusOK, gin.H{"data": companies})
 }
 
-// DELETE /companys/:id
+// DELETE /companies/:id
 func DeleteCompany(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM companys WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM companies WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "company not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /companys
+// PATCH /companies
 func UpdateCompany(c *gin.Context) {
 	var company entity.Company
 	if err := c.ShouldBindJSON(&company); err != nil {
