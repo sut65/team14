@@ -43,8 +43,6 @@ func main() {
 			// Building Routes
 			r.GET("/buildings", controller.ListBuildings)
 			r.GET("/building/:id", controller.GetBuilding)
-			r.GET("/companies", controller.ListCompanies)
-			r.GET("/guards", controller.ListGuards)
 
 			// Objective Routes
 			r.GET("/objectives", controller.ListObjectives)

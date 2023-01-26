@@ -25,7 +25,7 @@ async function Login(data: SigninInterface) {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userID", res.data.user_id);
-        localStorage.setItem("roleID", res.data.role_id);
+        
         console.log(res);
         
         return res.data;
@@ -840,6 +840,30 @@ async function CreateUser(data: UsersInterface) {
   return res;
 }
 
+async function GetUserRole() {
+  const id = localStorage.getItem('userID')
+  const requestOptions = {
+    method: "GET",
+    headers: { 
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        localStorage.setItem("roleID", res.data.role_id);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function ListEducationLevels() {
   const requestOptions = {
     method: "GET",
@@ -984,7 +1008,7 @@ export{
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
-    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListBorrows, CreateBorrow, GetBorrow,
     ListDevices,ListTypebyDevice,ListDeviceType,

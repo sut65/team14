@@ -116,10 +116,15 @@ const mdTheme = createTheme();
 export default function App() {
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
-  const roleLevel = parseInt(localStorage.getItem("role_id")+"");
+  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
+  const uid = parseInt(localStorage.getItem("userID")+"")
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  console.log(`User Role Level: ${roleLevel}`);
+  console.log(`User ID: ${uid}`);
+  
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
