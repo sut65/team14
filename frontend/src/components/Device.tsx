@@ -38,9 +38,9 @@ function Devices() {
      
         { field: "StatusDevice", headerName: "สถานะ", width: 200},
      
-        { field: "Devicetype", headerName: "ประเภท", width: 200},
+        { field: "DevicetypeDetail", headerName: "ประเภท", width: 200},
 
-        { field: "Brand", headerName: "ยี่ห้อ", width: 200},
+        { field: "BrandDetail", headerName: "ยี่ห้อ", width: 200},
      
         
       ];
@@ -89,6 +89,26 @@ function Devices() {
             <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
               <DataGrid
                 rows={device}
+                getRowId={(row) => row.ID}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+              />
+            </div>
+
+            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+              <DataGrid
+                rows={devicetype}
+                getRowId={(row) => row.ID}
+                columns={columns}
+                pageSize={5}
+                rowsPerPageOptions={[5]}
+              />
+            </div>
+
+            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+              <DataGrid
+                rows={brand}
                 getRowId={(row) => row.ID}
                 columns={columns}
                 pageSize={5}
