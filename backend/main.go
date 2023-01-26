@@ -35,12 +35,14 @@ func main() {
 			r.GET("/bookings/user/:id", controller.ListBookingsByUser)
 
 			// Room Routes
+			r.POST("/room", controller.CreateRoom)
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)
 			r.GET("/rooms", controller.ListRooms)
 			r.GET("/room/:id", controller.GetRoom)
 			r.GET("/typerooms", controller.ListTyperooms)
 
 			// Building Routes
+			r.POST("/building", controller.CreateBuilding)
 			r.GET("/buildings", controller.ListBuildings)
 			r.GET("/building/:id", controller.GetBuilding)
 			r.GET("/companies", controller.ListCompanies)

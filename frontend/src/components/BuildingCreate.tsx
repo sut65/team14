@@ -27,7 +27,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BuildingCreate(){
-    const [building, setBuilding] = React.useState<BuildingsInterface>({});
+    const [building, setBuilding] = React.useState<BuildingsInterface>({Detail:""});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [guards, setGuards] = React.useState<GuardsInterface[]>([]);
@@ -36,6 +36,7 @@ function BuildingCreate(){
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -109,18 +110,20 @@ function BuildingCreate(){
             
             Detail: building.Detail,
 
-            AdminID: (building.User),
+            AdminID: (user.ID),
             GuardID: (building.GuardID),
             CompanyID: (building.CompanyID),  
         };
+        console.log(data);
+        
         let res = await CreateBuilding(data);
-        console.log(res.data);
-        if (res.status) {
+        console.log(res);
+        if (res) {
             setSuccess(true);
             setErrorMessage("");
         } else {
             setError(true);
-            setErrorMessage(res.data);
+            setErrorMessage(res);
         }
 
     }
@@ -149,7 +152,7 @@ function BuildingCreate(){
      
           <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ
+              บันทึกข้อมูลไม่สำเร็จ  {errorMessage}
             </Alert>
           </Snackbar>
      
@@ -268,7 +271,5 @@ function BuildingCreate(){
 
 export default BuildingCreate;
 
-function setErrorMessage(arg0: string) {
-    throw new Error("Function not implemented.");
-}
+
 
