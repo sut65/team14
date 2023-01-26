@@ -19,7 +19,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 import { CreateBorrow,
-    ListDevices,
+    ListDevices,ListDeviceType,
     GetUser,
     ListApproves,
     GetApprove,ListTypebyDevice,
@@ -28,6 +28,7 @@ import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
+import { DeviceTypesInterface } from "../models/IDeviceType";
 import { containerClasses } from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -40,8 +41,8 @@ function BorrowCreate() {
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
-    const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
-    const [devicetype, setDevicetypes] = useState<DevicesInterface[]>([]);
+    const [devices, setDevices] = React.useState<DevicesInterface>({});
+    const [devicetypes, setDevicetypes] = useState<DeviceTypesInterface[]>([]);
 
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
     const [appid, setAppid] = React.useState("");
@@ -63,15 +64,15 @@ function BorrowCreate() {
         setError(false);
     };  
 
-    const onChangeDeviceType = async (e: SelectChangeEvent) =>{
+    const onChangeDevicebyType = async (e: SelectChangeEvent) =>{
       const did = e.target.value;
       let res = await ListTypebyDevice(did);
       if (res) {
-        setDevicetypes(res);
-        console.log("Load Device_Type Complete");
+        setDevices(res);
+        console.log("Load Device Complete");
       }
       else{
-        console.log("Load Device_Type Incomplete!!!");
+        console.log("Load Device Incomplete!!!");
       }
       
   }
@@ -98,6 +99,17 @@ function BorrowCreate() {
         }
       };
 
+      const listDeviceType = async () => {
+        let res = await ListDeviceType();  /////////////////////////
+        if (res) {
+          setDevicetypes(res);
+          console.log("Load DeviceTypes Complete");
+        }
+        else{
+          console.log("Load DeviceTypes InComplete!!!!");
+        }
+      };
+
     const listDevices = async () => {
       let res = await ListDevices();
       if (res) {
@@ -112,10 +124,10 @@ function BorrowCreate() {
     const getUser = async () => {
         const uid = localStorage.getItem("userID")
         let res = await GetUser(uid);
-        if (res) {
-          setUser(res);
+        if (res.status) {
+          setUser(res.data);
           console.log("Load User Complete");
-          console.log(`UserName: ${res.FirstName} + ${res.LastName}`);    
+          console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
         }
         else{
           console.log("Load User InComplete!!!!");
@@ -162,7 +174,7 @@ function BorrowCreate() {
     ///////////////////////////////search/////////////////////////
 
     useEffect(() => {
-        listDevices();
+        listDeviceType();
         listApproves();
         getUser();
     }, []);
@@ -288,35 +300,33 @@ function BorrowCreate() {
                 <Grid item xs={6} >
                 <p>ประเภทอุปกรณ์</p>
                 <FormControl required fullWidth >
-                  <InputLabel id="device_type_id">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
+                  <InputLabel id="DeviceTypeID">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
                   <Select
-                    labelId="device_type_id"
+                    labelId="DeviceTypeID"
                     label="กรุณาเลือกประเภทอุปกรณ์ *"
-                    onChange={ (onChangeDeviceType) }
-                    inputProps={{
-                      name: "device_type_id",
-                    }}
+                    onChange={ (handleChange) }
+                    inputProps={{name: "DeviceTypeID",}}
                   >
-                    {devices.map((item: DevicesInterface) => (
+                    {devicetypes.map((item: DeviceTypesInterface) => (
                       <MenuItem 
                         key={item.ID}
                         value={item.ID}
                       >
-                        {item.Detail}
+                        {item.Name}
                       </MenuItem>
                     ))}
                   </Select>
                 </FormControl>
                 </Grid>  
                     {/* //////////////////////////////device after choose ype//////////////////////// */}
-                <Grid item xs={6} >
+                {/* <Grid item xs={6} >
                 <p>อุปกรณ์</p>
                 <FormControl required fullWidth >
                   <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
                     <Select
                       labelId="DeviceID"
                       label="กรุณาเลือกอุปกรณ์ *"
-                      onChange={ (handleChange) }
+                      onChange={ (handlessssssChange) }
                       inputProps={{
                         name: "DeviceID",
                       }}
@@ -331,7 +341,7 @@ function BorrowCreate() {
                     ))}
                   </Select>
                 </FormControl>
-                </Grid>
+                </Grid> */}
      
                <Grid item xs={12}>
                 <Button component={RouterLink} to="/approves" variant="contained">

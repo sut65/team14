@@ -24,7 +24,8 @@ async function Login(data: SigninInterface) {
     .then((res) => {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userID", res.data.id);
+        localStorage.setItem("userID", res.data.user_id);
+        
         console.log(res);
         
         return res.data;
@@ -205,9 +206,9 @@ async function GetUser(id: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
-      } else {
-        return false;
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -291,6 +292,29 @@ async function ListDevices() {
   
 
   let res = await fetch(`${apiUrl}/devices`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListDeviceType() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/devicetypes`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -650,7 +674,7 @@ async function CreateBuilding(data: BuildingsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/buildings`, requestOptions)
+  let res = await fetch(`${apiUrl}/building`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -725,7 +749,7 @@ async function ListBookingbyUser(id: any) {
   return res;
 }
 
-async function CreateRooms(data: RoomsInterface) {
+async function CreateRoom(data: RoomsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -735,7 +759,7 @@ async function CreateRooms(data: RoomsInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/rooms`, requestOptions)
+  let res = await fetch(`${apiUrl}/room`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -816,6 +840,30 @@ async function CreateUser(data: UsersInterface) {
   return res;
 }
 
+async function GetUserRole() {
+  const id = localStorage.getItem('userID')
+  const requestOptions = {
+    method: "GET",
+    headers: { 
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        localStorage.setItem("roleID", res.data.role_id);
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function ListEducationLevels() {
   const requestOptions = {
     method: "GET",
@@ -825,7 +873,7 @@ async function ListEducationLevels() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/education_levels`, requestOptions)
+  let res = await fetch(`${apiUrl}/educationlevels`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -859,6 +907,29 @@ async function ListRoles() {
 
   return res;
 }
+
+async function ListGenders() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/genders`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 /***************************** add friend ****************************************************/
 
@@ -937,13 +1008,13 @@ export{
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
-    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListBorrows, CreateBorrow, GetBorrow,
-    ListDevices,ListTypebyDevice,
+    ListDevices,ListTypebyDevice,ListDeviceType,
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
-    ListGuards,ListCompanies,CreateBuilding,CreateRooms,ListTyperooms,ListRooms,
+    ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend
 }

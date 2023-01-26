@@ -18,7 +18,7 @@ import { BuildingsInterface } from "../models/IBuilding";
 import { GuardsInterface } from "../models/IGuard";
 import { CompaniesInterface } from "../models/ICompany";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
+import { CreateBuilding, GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -27,7 +27,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BuildingCreate(){
-    const [building, setBuilding] = React.useState<BuildingsInterface>({});
+    const [building, setBuilding] = React.useState<BuildingsInterface>({Detail:""});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [guards, setGuards] = React.useState<GuardsInterface[]>([]);
@@ -36,6 +36,7 @@ function BuildingCreate(){
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -72,10 +73,10 @@ function BuildingCreate(){
       const getUser = async () => {
         const uid = localStorage.getItem("userID")
         let res = await GetUser(uid);
-        if (res) {
-          setUser(res);
+        if (res.status) {
+          setUser(res.data);
           console.log("Load User Complete");
-          console.log(`UserName: ${res.FirstName} + ${res.LastName}`);    
+          console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
         }
         else{
           console.log("Load User InComplete!!!!");
@@ -106,12 +107,24 @@ function BuildingCreate(){
 
       async function submit() {
         let data = {
+            
+            Detail: building.Detail,
 
-            AdminID: (building.User),
+            AdminID: (user.ID),
             GuardID: (building.GuardID),
             CompanyID: (building.CompanyID),  
         };
-        console.log(data)
+        console.log(data);
+        
+        let res = await CreateBuilding(data);
+        console.log(res);
+        if (res) {
+            setSuccess(true);
+            setErrorMessage("");
+        } else {
+            setError(true);
+            setErrorMessage(res);
+        }
 
     }
 
@@ -139,7 +152,7 @@ function BuildingCreate(){
      
           <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ
+              บันทึกข้อมูลไม่สำเร็จ  {errorMessage}
             </Alert>
           </Snackbar>
      
@@ -168,11 +181,15 @@ function BuildingCreate(){
                     <FormControl fullWidth variant="outlined">
                       <p>ชื่อตึก</p>
                       <TextField
-                        value={building.Detail+""}  
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                        onChange={handleChange_Text}
+                       required
+                       id="Detail"
+                       type="string"
+                       label="ตึก"
+                       inputProps={{
+                         name: "Detail",
+                       }}
+                       value={building.Detail + ""}
+                       onChange={handleChange_Text}
                       />
                     </FormControl>
                   </Grid> 
@@ -253,4 +270,6 @@ function BuildingCreate(){
 }
 
 export default BuildingCreate;
+
+
 

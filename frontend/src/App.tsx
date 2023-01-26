@@ -20,6 +20,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 
 import Booking from "./components/Booking";
 // import SignIn from "./components/SignIn";
@@ -43,6 +44,7 @@ import Paybacks from "./components/Payback";
 import Room from "./components/Room";
 import RoomCreate from "./components/RoomCreate";
 import Device from "./components/Device";
+import BookingUpdate from "./components/BookingUpdate";
 
 
 const drawerWidth = 260;
@@ -103,7 +105,7 @@ const menu = [
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
   { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
-  { name: "รายการอาหาร", icon: <TextSnippetIcon />, path: "/food_and_drinks"},
+  { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
   { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
@@ -115,10 +117,15 @@ const mdTheme = createTheme();
 export default function App() {
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
-  // const roleLevel = parseInt(localStorage.getItem("role_id")+"");
+  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
+  const uid = parseInt(localStorage.getItem("userID")+"")
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
+  console.log(`User Role Level: ${roleLevel}`);
+  console.log(`User ID: ${uid}`);
+  
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
@@ -223,6 +230,7 @@ return (
 
                 <Route path="/bookings" element={<Booking />} />
                 <Route path="/booking/create" element={<BookingCreate />} />
+                <Route path="/booking/update" element={<BookingUpdate />} />
 
                 <Route path="/users" element={<User />} />
                 <Route path="/user/create" element={<UserCreate />} />

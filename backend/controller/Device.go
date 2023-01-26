@@ -49,6 +49,17 @@ func ListDevices(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": devices})
 }
 
+func ListDeviceType(c *gin.Context) {
+	var DeviceType []entity.DeviceType
+
+	if err := entity.DB().Raw("SELECT * FROM device_types").Find(&DeviceType).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": DeviceType})
+}
+
 func ListTypebyDevice(c *gin.Context) {
 	var device_id []entity.Device
 	devicetype := c.Param("id")
@@ -63,7 +74,7 @@ func ListTypebyDevice(c *gin.Context) {
 func ListBrandbyDevice(c *gin.Context) {
 	var brand_id []entity.Device
 	brand := c.Param("id")
-	if err := entity.DB().Preload("Building").Raw("SELECT * FROM devices WHERE brand_id = ?", brand).Find(&brand_id).Error; err != nil {
+	if err := entity.DB().Preload("Brand").Raw("SELECT * FROM devices WHERE brand_id = ?", brand).Find(&brand_id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

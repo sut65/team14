@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
+import { CreateRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
 
@@ -27,7 +27,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function RoomCreate(){
-    const [room, setRoom] = React.useState<RoomsInterface>({});
+    const [room, setRoom] = React.useState<RoomsInterface>({Detail:""});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [typeroom, setTyperooms] = React.useState<TyperoomsInterface[]>([]);
@@ -36,6 +36,7 @@ function RoomCreate(){
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -85,10 +86,10 @@ function RoomCreate(){
       const getUser = async () => {
         const uid = localStorage.getItem("userID")
         let res = await GetUser(uid);
-        if (res) {
-          setUser(res);
+        if (res.status) {
+          setUser(res.data);
           console.log("Load User Complete");
-          console.log(`UserName: ${res.FirstName} + ${res.LastName}`);    
+          console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
         }
         else{
           console.log("Load User InComplete!!!!");
@@ -120,11 +121,20 @@ function RoomCreate(){
       async function submit() {
         let data = {
 
-            AdminID: (room.User),
+            Detail: room.Detail,
+            AdminID: (user.ID),
             TyperoomID: (room.TyperoomID),
             BuildingID: (room.BuildingID),  
         };
-        console.log(data)
+        let res = await CreateRoom(data);
+      console.log(res);
+      if (res) {
+          setSuccess(true);
+          setErrorMessage("");
+      } else {
+          setError(true);
+          setErrorMessage(res);
+      }
 
     }
 
@@ -173,13 +183,13 @@ function RoomCreate(){
             </Box>
 
             <Grid item xs={6} >
-          <p>ตึก</p>
+          <p>ชื่อตึก</p>
           <FormControl required fullWidth >
             <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
               labelId="BuildingID"
               label="กรุณาเลือกตึก *"
-              onChange={ (onChangeBuilding) }
+              onChange={ (handleChange) }
               inputProps={{
                 name: "BuildingID",
               }}
@@ -194,7 +204,7 @@ function RoomCreate(){
               ))}
             </Select>
           </FormControl>
-          </Grid>
+          </Grid>  
      
 
             <Grid container spacing={2}>
@@ -202,10 +212,14 @@ function RoomCreate(){
                     <FormControl fullWidth variant="outlined">
                       <p>เลขห้อง</p>
                       <TextField
-                        value={room.Detail+""}  
-                        InputProps={{
-                          readOnly: true,
+                        required
+                        id="Detail"
+                        type="int"
+                        label="เลขห้อง"
+                        inputProps={{
+                          name: "Detail",
                         }}
+                        value={room.Detail + ""}
                         onChange={handleChange_Text}
                       />
                     </FormControl>
@@ -264,5 +278,7 @@ function RoomCreate(){
 }
 
 export default RoomCreate;
+
+
 
 
