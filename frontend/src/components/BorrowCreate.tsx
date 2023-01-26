@@ -41,6 +41,7 @@ function BorrowCreate() {
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
+    const [devicetype, setDevicetypes] = useState<DevicesInterface[]>([]);
 
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
     const [appid, setAppid] = React.useState("");
@@ -66,7 +67,7 @@ function BorrowCreate() {
       const did = e.target.value;
       let res = await ListTypebyDevice(did);
       if (res) {
-        setDevices(res);
+        setDevicetypes(res);
         console.log("Load Device_Type Complete");
       }
       else{
@@ -129,13 +130,15 @@ function BorrowCreate() {
         } 
       }
 
-      // async function searchdtype() {
-      //   let res = await GetDevices(appid);
-      //   console.log(res);
-      //   if (res) {
-      //       setDevices(res);
-      //   } 
-      // }
+      const handleChange = (event: SelectChangeEvent) => {
+        const name = event.target.name as keyof typeof borrow;
+        const value = event.target.value;
+        setBorrow({
+          ...borrow,
+          [name]: value,
+        });
+        console.log(`[${name}]: ${value}`);
+      };
 
     async function submit() {
         let data = {
@@ -313,7 +316,7 @@ function BorrowCreate() {
                     <Select
                       labelId="DeviceID"
                       label="กรุณาเลือกอุปกรณ์ *"
-                      onChange={ (onChangeDeviceType) }
+                      onChange={ (handleChange) }
                       inputProps={{
                         name: "DeviceID",
                       }}
