@@ -1,4 +1,4 @@
-export interface BraandsInterface {
+export interface BrandsInterface {
     ID?: string,
 
     BrandDetail?: string,

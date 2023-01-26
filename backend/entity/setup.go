@@ -126,11 +126,11 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เล่น").Scan(&obj2)
 
 
-	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
-	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
-	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
-	db.Model(&Brand{}).Create(&Brand{Name: "penrai"})
-	db.Model(&Brand{}).Create(&Brand{Name: "pensri"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "FlashL"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "TripleA"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "Lazerz"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "penrai"})
+	db.Model(&Brand{}).Create(&Brand{BrandDetail: "pensri"})
 	var brand1, brand2, brand3,brand4,brand5 Brand
 	db.Raw("SELECT * FROM brands WHERE name = ?", "FlashL").Scan(&brand1)
 	db.Raw("SELECT * FROM brands WHERE name = ?", "TripleA").Scan(&brand2)
@@ -138,9 +138,9 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM brands WHERE name = ?", "penrai").Scan(&brand4)
 	db.Raw("SELECT * FROM brands WHERE name = ?", "pensri").Scan(&brand5)
 
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
+	db.Model(&DeviceType{}).Create(&DeviceType{DeviceTypeDetail: "การศึกษา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{DeviceTypeDetail: "กีฬา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{DeviceTypeDetail: "ความบันเทิง"})
 	var devicetype1, devicetype2,devicetype3 DeviceType
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
