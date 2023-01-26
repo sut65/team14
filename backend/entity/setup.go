@@ -25,20 +25,31 @@ func SetupDatabase() {
 
 	}
 
-	// Migrate the schema
-	database.AutoMigrate(&User{})
+	// Migrate the schema 23 ตัว
+	database.AutoMigrate(&Adding_Friend{})
 	database.AutoMigrate(&Approve{})
 	database.AutoMigrate(&Booking{})
-	database.AutoMigrate(&Room{})
-	database.AutoMigrate(&Building{})
-	database.AutoMigrate(&StatusBook{})
-	database.AutoMigrate(&Objective{})
-	database.AutoMigrate(&Device{})
-	database.AutoMigrate(&Adding_Friend{})
 	database.AutoMigrate(&Borrow{})
+	database.AutoMigrate(&Building{})
+	database.AutoMigrate(&Company{})
+	database.AutoMigrate(&Device{})
+	database.AutoMigrate(&DeviceType{})
+	database.AutoMigrate(&Brand{})
 	database.AutoMigrate(&Food_and_Drink{})
+	database.AutoMigrate(&Foodtype{})
+	database.AutoMigrate(&Shop{})
+	database.AutoMigrate(&Guard{})
+	database.AutoMigrate(&Objective{})
 	database.AutoMigrate(&Order_Food{})
 	database.AutoMigrate(&Payback{})
+	database.AutoMigrate(&Room{})
+	database.AutoMigrate(&StatusBook{})
+	database.AutoMigrate(&Typeroom{})
+	database.AutoMigrate(&User{})
+	database.AutoMigrate(&Role{})
+	database.AutoMigrate(&Gender{})
+	database.AutoMigrate(&EducationLevel{})
+
 	db = database
 
 	password, _ := bcrypt.GenerateFromPassword([]byte("123456"), 14)
@@ -54,8 +65,8 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
-		Email: "CD@gmail.com", 
-		Age: 50, Password: string(password),
+		Email: "CD@gmail.com",
+		Age:   50, Password: string(password),
 	})
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
@@ -141,7 +152,7 @@ func SetupDatabase() {
 	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
 	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
 	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
-	var devicetype1, devicetype2,devicetype3 DeviceType
+	var devicetype1, devicetype2, devicetype3 DeviceType
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
 	db.Raw("SELECT * FROM device_types WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
