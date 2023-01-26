@@ -99,8 +99,8 @@ function ApproveCreate() {
   const getUser = async () => {
     const uid = localStorage.getItem("userID")
     let res = await GetUser(uid);
-    if (res) {
-      setUser(res);
+    if (res.status) {
+      setUser(res.data);
       console.log("Load User Complete");  
     }
     else{
