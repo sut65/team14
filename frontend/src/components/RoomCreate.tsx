@@ -15,10 +15,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
-import { GuardsInterface } from "../models/IGuard";
-import { CompaniesInterface } from "../models/ICompany";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
+import { GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
+import { RoomsInterface } from "../models/IRoom";
+import { TyperoomsInterface } from "../models/ITyperoom";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -26,13 +26,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function BuildingCreate(){
-    const [building, setBuilding] = React.useState<BuildingsInterface>({});
+function RoomCreate(){
+    const [room, setRoom] = React.useState<RoomsInterface>({});
     const [user, setUser] = useState<UsersInterface>({});    
 
-    const [guards, setGuards] = React.useState<GuardsInterface[]>([]);
+    const [typeroom, setTyperooms] = React.useState<TyperoomsInterface[]>([]);
 
-    const [companies, setCompanies] = React.useState<CompaniesInterface[]>([]); 
+    const [building, setBuildings] = React.useState<BuildingsInterface[]>([]); 
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
@@ -40,9 +40,9 @@ function BuildingCreate(){
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
       ) => {
-        const id = event.target.id as keyof typeof building;
+        const id = event.target.id as keyof typeof room;
         const { value } = event.target;
-        setBuilding({ ...building, [id]: value, });
+        setRoom({ ...room, [id]: value, });
         console.log(`[${id}]: ${value}`);
       };
 
@@ -59,14 +59,27 @@ function BuildingCreate(){
     };  
 
     const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof building;
+        const name = event.target.name as keyof typeof room;
         const value = event.target.value;
-        setBuilding({
-          ...building,
+        setRoom({
+          ...room,
           [name]: value,
         });
         console.log(`[${name}]: ${value}`);
       };
+
+      const onChangeBuilding = async (e: SelectChangeEvent) =>{
+        const bid = e.target.value;
+        let res = await ListRoomsbyBuilding(bid);
+        if (res) {
+          setRoom(res);
+          console.log("Load Room Complete");
+        }
+        else{
+          console.log("Load Room Incomplete!!!");
+        }
+        
+      }
 
 
       const getUser = async () => {
@@ -82,45 +95,44 @@ function BuildingCreate(){
         }
       };
 
-      const listGuards = async () => {
-        let res = await ListGuards();
+      const listTyperooms = async () => {
+        let res = await ListTyperooms();
         if (res) {
-            setGuards(res);
-            console.log("Load Guards Complete");
+            setTyperooms(res);
+            console.log("Load Typerooms Complete");
         }
         else{
-          console.log("Load Guards InComplete!!!!");
+          console.log("Load Typerooms InComplete!!!!");
         }
       };
 
-      const listCompanies = async () => {
-        let res = await ListCompanies();
+      const listBuildings = async () => {
+        let res = await ListBuildings();
         if (res) {
-          setCompanies(res);
-          console.log("Load Company Complete");
+          setBuildings(res);
+          console.log("Load Buildings Complete");
         }
         else{
-          console.log("Load Company InComplete!!!!");
+          console.log("Load Buildings InComplete!!!!");
         }
       };
 
       async function submit() {
         let data = {
 
-            AdminID: (building.User),
-            GuardID: (building.GuardID),
-            CompanyID: (building.CompanyID),  
+            AdminID: (room.User),
+            TyperoomID: (room.TyperoomID),
+            BuildingID: (room.BuildingID),  
         };
         console.log(data)
 
     }
 
     useEffect(() => {
-        listGuards();
-        listCompanies();
+        listTyperooms();
+        listBuildings();
         getUser();
     }, []);
-
 
       return (
         <Container maxWidth="md">
@@ -155,18 +167,42 @@ function BuildingCreate(){
                          color="primary"
                          gutterBottom
                      >
-                         Create Building
+                         Create Room
                      </Typography>
                  </Box>
             </Box>
+
+            <Grid item xs={6} >
+          <p>ตึก</p>
+          <FormControl required fullWidth >
+            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
+            <Select
+              labelId="BuildingID"
+              label="กรุณาเลือกตึก *"
+              onChange={ (onChangeBuilding) }
+              inputProps={{
+                name: "BuildingID",
+              }}
+            >
+              {building.map((item: BuildingsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>
      
 
             <Grid container spacing={2}>
                   <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <p>ชื่อตึก</p>
+                      <p>เลขห้อง</p>
                       <TextField
-                        value={building.Detail+""}  
+                        value={room.Detail+""}  
                         InputProps={{
                           readOnly: true,
                         }}
@@ -178,18 +214,18 @@ function BuildingCreate(){
                 
     
                 <Grid item xs={6} >
-          <p>ชื่อผู้รักษาความปลอดภัย</p>
+          <p>ประเภทห้อง</p>
           <FormControl required fullWidth >
-            <InputLabel id="GuardID">กรุณาเลือกผู้รักษาความปลอดภัย</InputLabel>
+            <InputLabel id="TyperoomID">กรุณาเลือกประเภทห้อง</InputLabel>
             <Select
-              labelId="GuardID"
-              label="กรุณาเลือกผู้รักษาความปลอดภัย *"
+              labelId="TyperoomID"
+              label="กรุณาเลือกประเภทห้อง *"
               onChange={ (handleChange) }
               inputProps={{
-                name: "GuardID",
+                name: "TyperoomID",
               }}
             >
-              {guards.map((item: GuardsInterface) => (
+              {typeroom.map((item: TyperoomsInterface) => (
                 <MenuItem 
                   key={item.ID}
                   value={item.ID}
@@ -201,34 +237,11 @@ function BuildingCreate(){
           </FormControl>
           </Grid>  
 
-          <Grid item xs={6} >
-          <p>ชื่อบริษัทรับเหมา</p>
-          <FormControl required fullWidth >
-            <InputLabel id="GuardID">กรุณาเลือกบริษัท</InputLabel>
-            <Select
-              labelId="CompanyID"
-              label="กรุณาเลือกบริษัท *"
-              onChange={ (handleChange) }
-              inputProps={{
-                name: "CompanyID",
-              }}
-            >
-              {companies.map((item: CompaniesInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </Grid> 
-
+          
               
      
                <Grid item xs={12}>
-                <Button component={RouterLink} to="/buildings" variant="contained">
+                <Button component={RouterLink} to="/rooms" variant="contained">
                   Back
                 </Button>
      
@@ -250,5 +263,6 @@ function BuildingCreate(){
      
 }
 
-export default BuildingCreate;
+export default RoomCreate;
+
 

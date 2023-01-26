@@ -7,19 +7,19 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { BuildingsInterface } from "../models/IBuilding";
-import { ListBuildings } from "../services/HttpClientService";
+import {  ListRooms } from "../services/HttpClientService";
+import { RoomsInterface } from "../models/IRoom";
 
 
-function Buildings() {
+function Rooms() {
 
-    const [building, setBuildings] = React.useState<BuildingsInterface[]>([]);
+    const [room, setRooms] = React.useState<RoomsInterface[]>([]);
    
    
-    const listBuildings = async () => {
-        let res = await ListBuildings();
+    const listRooms = async () => {
+        let res = await ListRooms();
         if (res) {
-            setBuildings(res);
+            setRooms(res);
         }
     };
    
@@ -34,10 +34,10 @@ function Buildings() {
         { field: "Building", headerName: "ตึก", width: 100 , 
         valueFormatter: (params) => params.value.Detail,},
      
-        { field: "Guard", headerName: "ผู้รักษาความปลอดภัย", width: 200  ,
+        { field: "Room", headerName: "ห้อง", width: 200  ,
         valueFormatter: (params) => params.value.Detail,},
      
-        { field: "Comapany", headerName: "บริษัทรับเหมา", width: 200 ,
+        { field: "Typeroom", headerName: "ประเภท", width: 200 ,
         valueFormatter: (params) => params.value.Detail,},
      
         
@@ -46,7 +46,7 @@ function Buildings() {
      
       useEffect(() => {
      
-        ListBuildings();
+        ListRooms();
      
       }, [])
 
@@ -68,25 +68,25 @@ function Buildings() {
                   color="primary"
                   gutterBottom
                 >
-                  การจัดการตึก
+                  การจัดการห้อง
                 </Typography>
               </Box>
      
               <Box>
                 <Button
                   component={RouterLink}
-                  to="/building/create"
+                  to="/room/create"
                   variant="contained"
                   color="primary"
                 >
-                  Create Building
+                  Create Room
                 </Button>
               </Box>
             </Box>
      
             <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
               <DataGrid
-                rows={building}
+                rows={room}
                 getRowId={(row) => row.ID}
                 columns={columns}
                 pageSize={5}
@@ -102,4 +102,4 @@ function Buildings() {
      
      
      
-     export default Buildings;
+     export default Rooms;
