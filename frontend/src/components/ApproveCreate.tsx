@@ -160,6 +160,12 @@ function ApproveCreate() {
     getUser();
   }, []);
 
+  function randomNumberInRange() {
+    const min = 10000, max = 99999;
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    setApprove({ ...approve, ["Code"]: `Ap${random}`, });
+  }
+
  return (
    <Container maxWidth="md">
      <Snackbar
@@ -205,9 +211,9 @@ function ApproveCreate() {
 
        <Divider />
         <Grid container spacing={1} sx={{ padding: 2 }}>
-          <Grid item xs={12} >
+          <Grid item xs={12}>รหัสการอนุมัติ</Grid>
+          <Grid item xs={10} >
             <FormControl fullWidth variant="outlined">
-              <p>รหัสการอนุมัติ</p>
               <TextField
                 required
                 id="Code"
@@ -220,6 +226,17 @@ function ApproveCreate() {
                 onChange={handleChange_Text}
               />
             </FormControl>
+          </Grid>
+          <Grid item xs={2} justifyContent="center">
+            <Button
+                style={{ float: "right" }}
+                size="medium"
+                onClick= {randomNumberInRange}
+                variant="contained"
+                color="primary"
+            >
+                Random
+            </Button>
           </Grid>
           <Grid item xs={6} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
           <Grid item xs={6} ><p>รหัสการจองใช้ห้อง</p></Grid>
