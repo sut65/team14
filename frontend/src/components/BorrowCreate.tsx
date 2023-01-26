@@ -73,7 +73,7 @@ function BorrowCreate() {
         console.log("Load DeviceType Incomplete!!!");
       }
       
-    // }
+  }
 
     // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
     //     const did = e.target.value;
@@ -353,4 +353,4 @@ function BorrowCreate() {
 
 }
 
-export default BorrowCreate;
+export default BorrowCreate
