@@ -526,7 +526,6 @@ async function GetRoom(id: any) {
   return res;
 }
 
-//------------------------Food and Drink-------------------------//
 async function ListShops() {
   const requestOptions = {
     method: "GET",
@@ -791,6 +790,73 @@ async function ListRooms() {
   return res;
 }
 
+async function CreateUser(data: UsersInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/users`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListEducationLevels() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/education_levels`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListRoles() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/roles`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 export{
     Login,
@@ -798,12 +864,12 @@ export{
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
-    GetUser, ListUsers,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels,
+    ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListBorrows, CreateBorrow, GetBorrow,
     ListDevices,ListTypebyDevice,
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
-    ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListGuards,ListCompanies,CreateBuilding,CreateRooms,ListTyperooms,ListRooms,
 }
