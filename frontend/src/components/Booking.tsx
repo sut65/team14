@@ -7,7 +7,7 @@ import { FormControl, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
 import { BookingsInterface } from "../models/IBooking";
 import { 
   GetRoom,
-  ListBookingbyRoom, ListBuildings, ListRoomsbyBuilding, 
+  ListBookingbyRoom, ListBookingbyUser, ListBuildings, ListRoomsbyBuilding, 
 } from "../services/HttpClientService";
 import moment from "moment";
 import { ViewState } from '@devexpress/dx-react-scheduler';
@@ -34,6 +34,7 @@ interface ScheduleInterface{
 
 
 function Bookings() {
+  const uid = localStorage.getItem("userID")
   const [data, setData] = useState<ScheduleInterface[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
@@ -90,6 +91,17 @@ function Bookings() {
     }
     else{
       console.log("Load Buildings InComplete!!!!");
+    }
+  };
+
+  const listBookingbyUser = async () => {
+    let res = await ListBookingbyUser(uid);
+    if (res.status) {
+      schedule(res.data)
+      console.log("Load Booking Complete");
+    }
+    else{
+      console.log("Load Booking InComplete!!!!");
     }
   };
 
@@ -220,15 +232,23 @@ function Bookings() {
         </FormControl>
         </Grid>
 
-        <Grid item xs={6} justifyContent="center">
+        <Grid item xs={12} justifyContent="center">
             <Button
-                style={{ float: "right" }}
                 size="medium"
                 onClick= {ListBooking}
                 variant="contained"
                 color="primary"
             >
                 Search
+            </Button>
+            <Button
+                style={{ float: "right" }}
+                size="medium"
+                onClick= {listBookingbyUser}
+                variant="contained"
+                color="primary"
+            >
+                เฉพาะของฉัน
             </Button>
         </Grid>
       </Grid>
