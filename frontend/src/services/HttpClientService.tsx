@@ -860,6 +860,29 @@ async function ListRoles() {
   return res;
 }
 
+async function ListGenders() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/genders`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+
 /***************************** add friend ****************************************************/
 
 async function ListAdd_friends() {
@@ -937,7 +960,7 @@ export{
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
-    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListBorrows, CreateBorrow, GetBorrow,
     ListDevices,ListTypebyDevice,
