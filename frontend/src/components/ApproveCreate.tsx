@@ -123,6 +123,11 @@ function ApproveCreate() {
       if (res.status) {
         setSuccess(true);
         setErrorMessage("");
+        setBooking({
+          Objective: {Detail: ""},
+          User: {FirstName: "", LastName: "",},
+          Room: {Detail: "", Building:{Detail: "",}}
+        })
     } else {
         setError(true);
         setErrorMessage(res.data);

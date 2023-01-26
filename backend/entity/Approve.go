@@ -26,8 +26,7 @@ type Approve struct {
 	StatusBook   StatusBook `gorm:"references:id" valid:"-"`
 	StatusBookID *uint
 
-	
-	Borrow        []Borrow        `gorm:"foreignKey:ApproveID"`
+	Borrow []Borrow `gorm:"foreignKey:ApproveID"`
 }
 
 func init() {
