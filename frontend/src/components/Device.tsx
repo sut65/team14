@@ -28,20 +28,15 @@ function Devices() {
     ;
     const columns: GridColDef[] = [
 
-        { field: "DeviceID", headerName: "ไอดี", width: 100 , 
-        valueFormatter: (params) => params.value.ID,},
+        { field: "DeviceID", headerName: "ไอดี", width: 100},
      
-        { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 100 , 
-        valueFormatter: (params) => params.value.Detail,},
+        { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 100},
      
-        { field: "StatusDevice", headerName: "สถานะ", width: 200  ,
-        valueFormatter: (params) => params.value.StatusDevice,},
+        { field: "StatusDevice", headerName: "สถานะ", width: 200},
      
-        { field: "Devicetype", headerName: "ประเภท", width: 200 ,
-        valueFormatter: (params) => params.value.DeviceTypeDetail,},
+        { field: "Devicetype", headerName: "ประเภท", width: 200},
 
-        { field: "Brand", headerName: "ยี่ห้อ", width: 200 ,
-        valueFormatter: (params) => params.value.BrandDetail,},
+        { field: "Brand", headerName: "ยี่ห้อ", width: 200},
      
         
       ];
