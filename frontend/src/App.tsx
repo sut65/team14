@@ -20,6 +20,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 
 import Booking from "./components/Booking";
 // import SignIn from "./components/SignIn";
@@ -103,7 +104,7 @@ const menu = [
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
   { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
-  { name: "รายการอาหาร", icon: <TextSnippetIcon />, path: "/food_and_drinks"},
+  { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
   { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
