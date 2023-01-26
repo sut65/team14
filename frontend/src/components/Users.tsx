@@ -22,7 +22,7 @@ function Users() {
       { field: "FirstName", headerName: "First name", width: 150 },
       { field: "LastName", headerName: "Last name", width: 150 },
       { field: "Email", headerName: "Email", width: 200 },
-      {field: "PhoneNumber", headerName: "PhoneNumber", width: 150 },
+      { field: "PhoneNumber", headerName: "PhoneNumber", width: 150 },
       { field: "IdentificationNumber", headerName: "IdentificationNumber", width: 150 },
       { field: "StudentID", headerName: "StudentID", width: 200 },
       { field: "Age", headerName: "Age", width: 100 },
@@ -62,7 +62,7 @@ function Users() {
          <Box>
            <Button
              component={RouterLink}
-             to="/create"
+             to="/user/create"
              variant="contained"
              color="primary"
            >

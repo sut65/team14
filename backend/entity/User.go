@@ -1,6 +1,8 @@
 package entity
 
 import (
+	"time"
+
 	"gorm.io/gorm"
 )
 
@@ -14,6 +16,7 @@ type User struct {
 	StudentID            string `gorm:"uniqueIndex"`
 	Age                  uint8
 	Password             string `json:"-"`
+	BirthDay			 time.Time
 	RoleID               *uint
 	GenderID             *uint
 	EducationLevelID     *uint

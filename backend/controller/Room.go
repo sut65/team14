@@ -15,6 +15,7 @@ func CreateRoom(c *gin.Context) {
 	var admin entity.User
 	var typeroom entity.Typeroom
 	var building entity.Building
+
 	if err := c.ShouldBindJSON(&room); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -35,6 +36,7 @@ func CreateRoom(c *gin.Context) {
 		Admin:    admin,
 		Typeroom: typeroom,
 		Building: building,
+		Detail: room.Detail,
 	}
 	// ขั้นตอนการ validate
 	if _, err := govalidator.ValidateStruct(bod); err != nil {

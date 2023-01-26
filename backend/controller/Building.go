@@ -36,6 +36,7 @@ func CreateBuilding(c *gin.Context) {
 		Admin:   admin,
 		Company: company,
 		Guard:   guard,
+		Detail: building.Detail,
 	}
 	// ขั้นตอนการ validate
 	if _, err := govalidator.ValidateStruct(bod); err != nil {

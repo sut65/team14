@@ -69,3 +69,33 @@ func UpdateUser(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
+
+// GET /Genders
+func ListGenders(c *gin.Context) {
+	var genders []entity.Gender
+	if err := entity.DB().Raw("SELECT * FROM genders").Scan(&genders).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": genders})
+}
+
+// GET /EducationLevels
+func ListEducationLevels(c *gin.Context) {
+	var educationlevels []entity.EducationLevel
+	if err := entity.DB().Raw("SELECT * FROM education_levels").Scan(&educationlevels).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": educationlevels})
+}
+
+// GET /Roles
+func ListRoles(c *gin.Context) {
+	var roles []entity.Role
+	if err := entity.DB().Raw("SELECT * FROM roles").Scan(&roles).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": roles})
+}

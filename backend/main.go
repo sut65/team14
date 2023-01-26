@@ -35,12 +35,14 @@ func main() {
 			r.GET("/bookings/user/:id", controller.ListBookingsByUser)
 
 			// Room Routes
+			r.POST("/room", controller.CreateRoom)
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)
 			r.GET("/rooms", controller.ListRooms)
 			r.GET("/room/:id", controller.GetRoom)
 			r.GET("/typerooms", controller.ListTyperooms)
 
 			// Building Routes
+			r.POST("/building", controller.CreateBuilding)
 			r.GET("/buildings", controller.ListBuildings)
 			r.GET("/building/:id", controller.GetBuilding)
 			r.GET("/companies", controller.ListCompanies)
@@ -53,6 +55,11 @@ func main() {
 			// User Routes
 			r.GET("/users", controller.ListUsers)
 			r.GET("/user/:id", controller.GetUser)
+			r.GET("/educationlevels", controller.ListEducationLevels)
+			r.GET("/genders", controller.ListGenders)
+			r.GET("/roles", controller.ListRoles)
+			r.DELETE("/user/:id", controller.DeleteUser)
+			r.PATCH("/user", controller.UpdateUser)
 
 			// Appprove Routes
 			r.GET("/approves", controller.ListApproves)
@@ -92,9 +99,17 @@ func main() {
 			r.GET("/device/:id", controller.GetDevice)
 			r.GET("/devices", controller.ListDevices)
 			r.DELETE("/device/:id", controller.DeleteDevice)
-			r.GET("/devices/type/:id", controller.ListTypebyDevice)
 			r.PATCH("/device", controller.UpdateDevice)
 
+			//DeviceType
+			r.GET("/device_types", controller.ListDeviceType)
+			r.GET("/devices/type/:id", controller.ListTypebyDevice)
+
+			// Guard
+			r.GET("/guards", controller.ListGuards)
+
+			// Company
+			r.GET("/companies", controller.ListCompanies)
 
 			// Food_and_Drink
 			r.POST("/food_and_drink", controller.CreateFood_and_Drink)
