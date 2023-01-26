@@ -37,10 +37,13 @@ func main() {
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)
 			r.GET("/rooms", controller.ListRooms)
 			r.GET("/room/:id", controller.GetRoom)
+			r.GET("/typerooms", controller.ListTyperooms)
 
 			// Building Routes
 			r.GET("/buildings", controller.ListBuildings)
 			r.GET("/building/:id", controller.GetBuilding)
+			r.GET("/companies", controller.ListCompanies)
+			r.GET("/guards", controller.ListGuards)
 
 			// Objective Routes
 			r.GET("/objectives", controller.ListObjectives)
@@ -91,11 +94,6 @@ func main() {
 			r.GET("/devices/type/:id", controller.ListTypebyDevice)
 			r.PATCH("/device", controller.UpdateDevice)
 
-			// Guard
-			r.GET("/guards", controller.ListGuards)
-
-			// Company
-			r.GET("/companies", controller.ListCompanies)
 
 			// Food_and_Drink
 			r.POST("/food_and_drink", controller.CreateFood_and_Drink)
