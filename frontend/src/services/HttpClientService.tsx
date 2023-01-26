@@ -711,7 +711,7 @@ async function ListBookingbyUser(id: any) {
       "Content-Type": "application/json",
     },
   };
-  let res = await fetch(`${apiUrl}/booking/notapprove/code/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/bookings/user/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       

@@ -32,6 +32,7 @@ func main() {
 			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
 			r.GET("/booking/code/:code", controller.GetBookingbyCode)
 			r.GET("/booking/notapprove/code/:code", controller.GetBookingbyCodeThatNotApprove)
+			r.GET("/bookings/user/:id", controller.ListBookingsByUser)
 
 			// Room Routes
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)

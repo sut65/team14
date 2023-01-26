@@ -88,6 +88,17 @@ func GetBookingbyCode(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Booking})
 }
 
+// GET /bookings/user/:id
+func ListBookingsByUser(c *gin.Context) {
+	var Booking []entity.Booking
+	id := c.Param("id")
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings WHERE user_id = ?", id).Find(&Booking).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Booking})
+}
+
 // GET /booking/notapprove/code/:code
 func GetBookingbyCodeThatNotApprove(c *gin.Context) {
 	var Booking entity.Booking
