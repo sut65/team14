@@ -107,8 +107,11 @@ func main() {
 			r.PATCH("/food_and_drink", controller.UpdateFood_and_Drink)
 		}
 	}
-	// Run the server
 
+	// login User Route
+	r.POST("/login", controller.Login)
+
+	// Run the server
 	r.Run()
 
 }

@@ -22,6 +22,8 @@ async function Login(data: SigninInterface) {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("uid", res.data.id);
+        console.log(res);
+        
         return res.data;
       } else {
         return false;
