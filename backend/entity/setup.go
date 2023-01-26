@@ -102,6 +102,45 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เรียน").Scan(&obj1)
 	db.Raw("SELECT * FROM objectives WHERE detail = ?", "เล่น").Scan(&obj2)
 
+
+	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
+	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
+	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
+	db.Model(&Brand{}).Create(&Brand{Name: "penrai"})
+	db.Model(&Brand{}).Create(&Brand{Name: "pensri"})
+	var brand1, brand2, brand3,brand4,brand5 Brand
+	db.Raw("SELECT * FROM brands WHERE name = ?", "FlashL").Scan(&brand1)
+	db.Raw("SELECT * FROM brands WHERE name = ?", "TripleA").Scan(&brand2)
+	db.Raw("SELECT * FROM brands WHERE name = ?", "Lazerz").Scan(&brand3)
+	db.Raw("SELECT * FROM brands WHERE name = ?", "penrai").Scan(&brand4)
+	db.Raw("SELECT * FROM brands WHERE name = ?", "pensri").Scan(&brand5)
+
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
+	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
+	var devicetype1, devicetype2,devicetype3 DeviceType
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
+	db.Raw("SELECT * FROM device_types WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
+
+	// db.Model(&Device{}).Create(&Device{StatusDevice: true})
+	// db.Model(&Device{}).Create(&Device{StatusDevice: true})
+	// var statusdevice1, statusdevice2 Device
+	// db.Raw("SELECT * FROM devices WHERE status_device = ?", "true").Scan(&statusdevice1)
+	// db.Raw("SELECT * FROM devices WHERE status_device = ?", "true").Scan(&statusdevice2)
+
+
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา1",StatusDevice: true , Brand: brand1, DeviceType: devicetype1})
+	var device1 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา1").Scan(&device1)
+	db.Model(&Device{}).Create(&Device{Detail: "กระดาน2",StatusDevice: true , Brand: brand2,DeviceType: devicetype2})
+	var device2 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "กระดาน2").Scan(&device2)
+	db.Model(&Device{}).Create(&Device{Detail: "กระดาษ3", StatusDevice: true ,Brand: brand3,DeviceType: devicetype3})
+	var device3 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "กระดาษ3").Scan(&device3)
+
+
 	db.Model(&Typeroom{}).Create(&Typeroom{Detail: "ห้องพัดลม"})
 	db.Model(&Typeroom{}).Create(&Typeroom{Detail: "ห้องแอร์"})
 	var typeroom1, typeroom2 Typeroom
@@ -148,21 +187,5 @@ func SetupDatabase() {
 	// 	Date_Start: t1, Date_End: t2,
 	// 	User: u1, Room: r2, Objective: obj2,
 	// })
-
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "การศึกษา"})
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "กีฬา"})
-	db.Model(&DeviceType{}).Create(&DeviceType{Name: "ความบันเทิง"})
-	var devicetype1, devicetype2, devicetype3 DeviceType
-	db.Raw("SELECT * FROM device_types WHERE name = ?", "การศึกษา").Scan(&devicetype1)
-	db.Raw("SELECT * FROM device_types WHERE name = ?", "กีฬา").Scan(&devicetype2)
-	db.Raw("SELECT * FROM device_types WHERE name = ?", "ความบันเทิง").Scan(&devicetype3)
-
-	db.Model(&Brand{}).Create(&Brand{Name: "FlashL"})
-	db.Model(&Brand{}).Create(&Brand{Name: "TripleA"})
-	db.Model(&Brand{}).Create(&Brand{Name: "Lazerz"})
-	var brand1, brand2, brand3 Brand
-	db.Raw("SELECT * FROM Brands WHERE name = ?", "FlashL").Scan(&brand1)
-	db.Raw("SELECT * FROM Brands WHERE name = ?", "TripleA").Scan(&brand2)
-	db.Raw("SELECT * FROM Brands WHERE name = ?", "Lazerz").Scan(&brand3)
 
 }

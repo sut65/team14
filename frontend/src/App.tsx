@@ -249,6 +249,10 @@ return (
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />
 
+                <Route path="/devices" element={<Device />} />
+                {/* <Route path="/payback/create" element={<PaybackCreate />} /> */}
+
+
               </Routes> 
             </Container>
           </Box>
