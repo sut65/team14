@@ -4,7 +4,9 @@ import { BorrowsInterface } from "../models/IBorrow";
 import { BuildingsInterface } from "../models/IBuilding";
 import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { PaybacksInterface } from "../models/IPayback";
+import { RoomsInterface } from "../models/IRoom";
 import { SigninInterface } from "../models/ISignin";
+import { TyperoomsInterface } from "../models/ITyperoom";
 import { UsersInterface } from "../models/IUser";
 
 const apiUrl = "http://localhost:8080";
@@ -721,6 +723,75 @@ async function ListBookingbyUser(id: any) {
   return res;
 }
 
+async function CreateRooms(data: RoomsInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/rooms`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListTyperooms() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/typerooms`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+
+async function ListRooms() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/rooms`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
@@ -734,5 +805,5 @@ export{
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
-    ListGuards,ListCompanies,CreateBuilding,
+    ListGuards,ListCompanies,CreateBuilding,CreateRooms,ListTyperooms,ListRooms,
 }

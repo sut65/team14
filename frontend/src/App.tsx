@@ -47,7 +47,7 @@ import Building from "./components/Building";
 import BuildingCreate from "./components/BuildingCreate";
 import PaybackCreate from "./components/PaybackCreate";
 import Paybacks from "./components/Payback";
-import Room from "@mui/icons-material/Room";
+import Room from "./components/Room";
 import RoomCreate from "./components/RoomCreate";
 
 
