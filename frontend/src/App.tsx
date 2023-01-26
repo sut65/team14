@@ -47,6 +47,8 @@ import Building from "./components/Building";
 import BuildingCreate from "./components/BuildingCreate";
 import PaybackCreate from "./components/PaybackCreate";
 import Paybacks from "./components/Payback";
+import Room from "@mui/icons-material/Room";
+import RoomCreate from "./components/RoomCreate";
 
 
 const drawerWidth = 260;
@@ -109,6 +111,7 @@ const menu = [
   { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
   { name: "รายการอาหาร", icon: <TextSnippetIcon />, path: "/food_and_drinks"},
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
+  { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
   { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
 ];
 
@@ -244,6 +247,9 @@ return (
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />
+
+                <Route path="/rooms" element={<Room />} />
+                <Route path="/room/create" element={<RoomCreate />} />
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />

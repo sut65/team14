@@ -1,11 +1,17 @@
 import { BuildingsInterface } from "./IBuilding";
+import { TyperoomsInterface } from "./ITyperoom";
+import { UsersInterface } from "./IUser";
 
 export interface RoomsInterface {
     ID?: string,
 
-    Detail?: string,
+    UserID?: string | null;
+    BuildingID?: string | null;
+    TyperoomID?: string | null;
 
-    BuildingID?: string,
+    Detail?: string,
     
+    User?: UsersInterface
     Building?: BuildingsInterface;
+    Typeroom?: TyperoomsInterface;
 }
