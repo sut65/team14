@@ -12,7 +12,7 @@ type Approve struct {
 
 	Code        string    `gorm:"uniqueIndex" valid:"matches(^[A][p]\\d{5}$)~รหัสการอนุมัติ ต้องขึ้นต้นด้วย Ap ตามด้วยตัวเลข 5 หลัก, required~กรุณากรอกรหัสการอนุมัติ"`
 	Note        string    `valid:"required~กรุณากรอกหมายเหตุ"`
-	ApproveTime time.Time `valid:"IsPresent~เวลาที่อนุมัติไม่ถูกต้อง"` // เป็นปัจจุบัน +- 3 นาที
+	ApproveTime time.Time `valid:"IsnotPast~เวลาที่อนุมัติไม่ถูกต้อง"` // เป็นปัจจุบัน +- 3 นาที
 
 	// ผู้อนุมัติ
 	User   User `gorm:"references:id" valid:"-"`
