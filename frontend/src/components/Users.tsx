@@ -6,9 +6,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { UsersInterface } from "../models/IUser";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { 
-  ListUsers, 
-} from "../services/HttpClientService";
+import { ListUsers, } from "../services/HttpClientService";
 
 function Users() {
   const [users, setUsers] = React.useState<UsersInterface[]>([]);
@@ -24,8 +22,15 @@ function Users() {
       { field: "FirstName", headerName: "First name", width: 150 },
       { field: "LastName", headerName: "Last name", width: 150 },
       { field: "Email", headerName: "Email", width: 200 },
+      {field: "PhoneNumber", headerName: "PhoneNumber", width: 150 },
+      { field: "IdentificationNumber", headerName: "IdentificationNumber", width: 150 },
+      { field: "StudentID", headerName: "StudentID", width: 200 },
       { field: "Age", headerName: "Age", width: 100 },
+      { field: "Password", headerName: "Password", width: 100 },
       { field: "BirthDay", headerName: "BirthDay", width: 200 },
+      { field: "Role", headerName: "Role", width: 100 },
+      { field: "Gender", headerName: "Gender", width: 100 },
+      { field: "EducationLevel", headerName: "EducationLevel", width: 200 },
   ];
 
   useEffect(() => {

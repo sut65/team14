@@ -197,7 +197,7 @@ function UserCreate() {
          </Grid>
 
          <Grid item xs={12}>
-           <Button component={RouterLink} to="/" variant="contained">
+           <Button component={RouterLink} to="/users" variant="contained">
              Back
            </Button>
 
