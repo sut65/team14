@@ -51,6 +51,20 @@ function Food_and_DrinkCreate() {
       });
     };
 
+    const handleInputChange = (
+      event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+      const id = event.target.id as keyof typeof Food_and_DrinkCreate;
+      const { value } = event.target;
+      setFood_and_Drink({ ...food_and_drink, [id]: value });
+      console.log(`[${id}]: ${value}`);
+    };
+  
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
+
     //ดึงข้อมูล Foodtypes
     const listFoodtypes = async () => {
       let res = await ListFoodtypes();
@@ -116,7 +130,7 @@ return (
           <Grid item xs={5} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
-              <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"/>
+              <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"  value={food_and_drink.Name || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={6}>
