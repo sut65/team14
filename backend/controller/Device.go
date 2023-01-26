@@ -74,7 +74,7 @@ func ListTypebyDevice(c *gin.Context) {
 func ListBrandbyDevice(c *gin.Context) {
 	var brand_id []entity.Device
 	brand := c.Param("id")
-	if err := entity.DB().Preload("Building").Raw("SELECT * FROM devices WHERE brand_id = ?", brand).Find(&brand_id).Error; err != nil {
+	if err := entity.DB().Preload("Brand").Raw("SELECT * FROM devices WHERE brand_id = ?", brand).Find(&brand_id).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
