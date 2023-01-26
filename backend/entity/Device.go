@@ -23,14 +23,14 @@ type Device struct {
 
 type DeviceType struct {
 	gorm.Model
-	Name string `gorm:"uniqueIndex"`
+	DeviceTypeDetail string `gorm:"uniqueIndex"`
 	Device []Device `gorm:"foreignkey:DeviceTypeID"`
 
 }
 
 type Brand struct {
 	gorm.Model
-	Name string `gorm:"uniqueIndex"`
+	BrandDetail string `gorm:"uniqueIndex"`
 	Device []Device `gorm:"foreignkey:DeviceTypeID"`
 
 }
