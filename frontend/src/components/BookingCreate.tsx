@@ -157,6 +157,12 @@ function BookingCreate() {
     getUser();
   }, []);
 
+  function randomNumberInRange() {
+    const min = 10000, max = 99999;
+    const random = Math.floor(Math.random() * (max - min + 1)) + min;
+    setBooking({ ...booking, ["Code"]: `Bk${random}`, });
+  }
+
  return (
    <Container maxWidth="md">
      <Snackbar
@@ -197,10 +203,9 @@ function BookingCreate() {
 
        <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-
-          <Grid item xs={12} >
+        <Grid item xs={12} >รหัสการจองใช้ห้อง</Grid>
+          <Grid item xs={10} >
             <FormControl fullWidth variant="outlined">
-              <p>รหัสการจองใช้ห้อง</p>
                 <TextField
                      required
                      id="Code"
@@ -213,6 +218,18 @@ function BookingCreate() {
                     onChange={handleChange_Text}
                 />
             </FormControl>
+          </Grid>
+
+          <Grid item xs={2} justifyContent="center">
+            <Button
+                style={{ float: "right" }}
+                size="medium"
+                onClick= {randomNumberInRange}
+                variant="contained"
+                color="primary"
+            >
+                Random
+            </Button>
           </Grid>
 
           <Grid item xs={6}>

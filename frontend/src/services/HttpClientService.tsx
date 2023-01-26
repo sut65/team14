@@ -24,7 +24,7 @@ async function Login(data: SigninInterface) {
     .then((res) => {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("uid", res.data.id);
+        localStorage.setItem("userID", res.data.id);
         console.log(res);
         
         return res.data;
@@ -291,6 +291,29 @@ async function ListDevices() {
   
 
   let res = await fetch(`${apiUrl}/devices`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListDeviceType() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/devicetypes`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -825,7 +848,7 @@ async function ListEducationLevels() {
     },
   };
 
-  let res = await fetch(`${apiUrl}/education_levels`, requestOptions)
+  let res = await fetch(`${apiUrl}/educationlevels`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -859,6 +882,29 @@ async function ListRoles() {
 
   return res;
 }
+
+async function ListGenders() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/genders`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 
 /***************************** add friend ****************************************************/
 
@@ -937,10 +983,10 @@ export{
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
-    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,
     ListFoodtypes, ListShops, CreateFood_and_Drink,
     ListBorrows, CreateBorrow, GetBorrow,
-    ListDevices,ListTypebyDevice,
+    ListDevices,ListTypebyDevice,ListDeviceType,
     CreatePayback,ListPaybacks,GetPayback,
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
