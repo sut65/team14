@@ -86,6 +86,7 @@ func ListFood_and_Drinks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": food_and_drinks})
 }
 
+// GET /Shops
 func ListShops(c *gin.Context) {
 	var shops []entity.Shop
 	if err := entity.DB().Raw("SELECT * FROM shops").Scan(&shops).Error; err != nil {
@@ -95,6 +96,7 @@ func ListShops(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": shops})
 }
 
+// GET /Foodtypes
 func ListFoodtypes(c *gin.Context) {
 	var foodtypes []entity.Foodtype
 	if err := entity.DB().Raw("SELECT * FROM foodtypes").Scan(&foodtypes).Error; err != nil {

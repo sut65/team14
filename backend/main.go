@@ -101,6 +101,8 @@ func main() {
 			r.POST("/food_and_drink", controller.CreateFood_and_Drink)
 			r.GET("/food_and_drink/:id", controller.GetFood_and_Drink)
 			r.GET("/food_and_drinks", controller.ListFood_and_Drinks)
+			r.GET("/shops", controller.ListShops)
+			r.GET("/foodtypes", controller.ListFoodtypes)
 			r.DELETE("/food_and_drink/:id", controller.DeleteFood_and_Drink)
 			r.PATCH("/food_and_drink", controller.UpdateFood_and_Drink)
 		}
