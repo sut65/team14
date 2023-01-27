@@ -106,10 +106,8 @@ function Food_and_DrinkCreate() {
       console.log(res);
       if (res) {
           setSuccess(true);
-          setErrorMessage("");
       } else {
           setError(true);
-          setErrorMessage(res);
       }
 
   }
@@ -130,7 +128,7 @@ return (
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
             <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
@@ -140,13 +138,13 @@ return (
             </Select>
           </FormControl>
           </Grid>
-          <Grid item xs={5} >  
+          <Grid item xs={12} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
               <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"  value={food_and_drink.Name || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
           <FormControl fullWidth variant="outlined">   
               <p>ร้านค้า</p>
               <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "ShopID", }}>
@@ -156,14 +154,14 @@ return (
               </Select>
           </FormControl>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
           <FormControl fullWidth variant="outlined">  
-              <p>สมาชิก</p>
-              <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "UserID",}}>
-              <MenuItem value={"0"}>กรุณาเลือกสมาชิก</MenuItem>
-                {user?.map((item: UsersInterface) => //{item.Name}
-                  <MenuItem key={item.ID} value={item.ID}> </MenuItem>)}
-              </Select>
+              {/* <p>แอดมิน</p>
+              <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "AdminID",}}>
+              <MenuItem value={"0"}>--ชื่อแอดมิน--</MenuItem>
+                {user?.map((item: UsersInterface) => 
+                  <MenuItem key={item.ID} value={item.ID}> {item.FirstName} </MenuItem>)}
+              </Select> */}
           </FormControl>
           </Grid>
           <Grid item xs={12}>
@@ -176,8 +174,4 @@ return (
 );
 }
 export default Food_and_DrinkCreate;
-
-function setErrorMessage(arg0: string) {
-  throw new Error("Function not implemented.");
-}
 
