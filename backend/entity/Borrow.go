@@ -20,6 +20,10 @@ type Borrow struct {
 	Approve   Approve `gorm:"references:id" valid:"-"`
 	ApproveID *uint
 
+	//ประเภทอุปกรณ์
+	DeviceType DeviceType	`gorm:"references:id" valid:"-"`
+	DeviceTypeID *uint
+
 	// อุปกรณ์
 	Device   Device `gorm:"references:id" valid:"-"`
 	DeviceID *uint
