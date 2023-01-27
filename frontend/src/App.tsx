@@ -50,6 +50,9 @@ import RoomCreate from "./components/RoomCreate";
 import Device from "./components/Device";
 import BookingUpdate from "./components/BookingUpdate";
 import Button from "@mui/material/Button";
+import Order_food from "./components/Order_food";
+
+
 
 
 const drawerWidth = 260;
@@ -107,7 +110,7 @@ const menu = [
   { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings"}, 
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
-  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
+  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/oder_food"},  
   { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users"},
   { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
   { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
@@ -252,6 +255,9 @@ return (
 
                 <Route path="/food_and_drinks" element={<Food_and_Drink />} />
                 <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />
+
+                <Route path="/oder_food" element={< Order_food />} />
+                
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />

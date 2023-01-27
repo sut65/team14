@@ -1020,8 +1020,9 @@ async function CreateAdd_friend(data: Add_friendInterface) {
 }
 
 async function DeleteAdd_friend(data: Add_friendInterface) {
+  const id = localStorage.getItem('add_freindID')
   const requestOptions = {
-    method: "POST",
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
@@ -1029,7 +1030,77 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/add_friends/:id`, requestOptions)
+  let res = await fetch(`${apiUrl}/add_friends/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+}
+
+/***************************** Order ****************************************************/
+
+async function ListOrders() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/order_foods`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function CreateOrder(data: Add_friendInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/order_food`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function DeleteOrder(data: Add_friendInterface) {
+  const id = localStorage.getItem('order_foodID')
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/order_foods/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1057,4 +1128,5 @@ export{
     ListStatusBooks,
     ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
+    ListOrders,CreateOrder,DeleteOrder,
 }
