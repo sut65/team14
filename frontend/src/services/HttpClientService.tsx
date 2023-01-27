@@ -1001,7 +1001,6 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
 }
 
 
-
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
@@ -1016,5 +1015,5 @@ export{
     CreateApprove, ListApproves, GetApprove,
     ListStatusBooks,
     ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
-    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend
+    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 }

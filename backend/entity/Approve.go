@@ -27,6 +27,8 @@ type Approve struct {
 	StatusBookID *uint
 
 	Borrow []Borrow `gorm:"foreignKey:ApproveID"`
+	Adding_Friend []Adding_Friend `gorm:"foreignKey:BookingID"` //ของเพิ่มเพื่อน
+	Order_Food    []Order_Food    `gorm:"foreignKey:BookingID"` // ของจัดการร้องขออาหารและเครื่องดื่ม
 }
 
 func init() {

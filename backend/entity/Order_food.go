@@ -10,8 +10,8 @@ type Order_Food struct {
 	gorm.Model	
 	Totold *uint
 	// การอนุมัติ .
-	Booking Booking `gorm:"references:id" valid:"-"`
-	BookingID *uint		
+	Approve Approve `gorm:"references:id" valid:"-"`
+	ApproveID *uint		
 	
 	// อาหารและเครื่องดื่ม
 	Food_and_Drink Food_and_Drink `gorm:"references:id" valid:"-"`
