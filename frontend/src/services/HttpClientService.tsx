@@ -1000,7 +1000,7 @@ async function CreateAdd_friend(data: Add_friendInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

@@ -26,9 +26,13 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function Add_friendCreate(){
-    const [user, setUser] = useState<UsersInterface>({});
-    const [admin, setAmin] = useState<UsersInterface>({});    
-    const [booking, setBooking] = useState<BookingsInterface>({       
+    const [user, setUser] = useState<UsersInterface>({
+      ID:"User ID",FirstName: "User name",LastName:  "",
+    });
+    const [admin, setAdmin] = useState<UsersInterface>({}); 
+    const [approve, setApprove] = useState<ApprovesInterface>({});   
+    const [booking, setBooking] = useState<BookingsInterface>({
+      ID: "Booking ID",       
        User: {FirstName: "Usesr name", LastName: "",}
       ,Room: {Detail: "", Building:{Detail: "",}}
      
@@ -61,9 +65,19 @@ function Add_friendCreate(){
       setError(false);
  };   
 
-  const getUser = async () => {
+  const getAdmin = async () => {
     const uid = localStorage.getItem("userID")
     let res = await GetUser(uid);
+    if (res.status) {
+      setAdmin(res.data);
+      console.log("Load Admin Complete");  
+    }
+    else{
+      console.log("Load Admin InComplete!!!!");
+    }
+  };   
+  const getUser = async () => {    
+    let res = await GetUser(userID);
     if (res.status) {
       setUser(res.data);
       console.log("Load User Complete");  
@@ -72,6 +86,7 @@ function Add_friendCreate(){
       console.log("Load User InComplete!!!!");
     }
   };   
+     
      
   async function search(){
     if (code === ""){
@@ -116,38 +131,53 @@ function Add_friendCreate(){
   }  
 
   async function Submit() {
+    let data = { 
+      AdminID: (admin.ID),     
+      ApproveID: (booking.Approve?.ID),
+      UserID: (user.ID),      
+      
+      
+    };
+    console.log(data)
+    let res = await CreateAdd_friend(data);
+    if (res) {
+      setSuccess(true);
+      setErrorMessage("");     
+  } else {
+      setError(true);
+      setErrorMessage(res.data);
+  }
    
 }
 
-useEffect(() => {  
+useEffect(() => { 
+  getAdmin(); 
   getUser();
 }, []);
 
 
 return (  
     <div>
+<Container maxWidth="md">
+     <Snackbar
+       open={success}
+       autoHideDuration={6000}
+       onClose={handleClose}
+       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+     >
+       <Alert onClose={handleClose} severity="success">
+         บันทึกข้อมูลสำเร็จ
+       </Alert>
+     </Snackbar>
 
-      <Container maxWidth="lg">
-        <Snackbar
-          open={success}
-          autoHideDuration={3000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-      >
-          <Alert onClose={handleClose} severity="success">
-            ค้นหาสำเร็จ
-          </Alert>
-        </Snackbar>
-        <Snackbar
-          open={error}
-          autoHideDuration={6000}
-          onClose={handleClose}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-        >
-          <Alert onClose={handleClose} severity="error">
-            ค้นหาไม่สำเร็จ
-          </Alert>
-        </Snackbar>
+     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+       <Alert onClose={handleClose} severity="error">
+         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+       </Alert>
+     </Snackbar>
+
+     
+
         <p>ระบบจัดการเพิ่มเพื่อนเข้าห้อง</p>
       <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={6}>          

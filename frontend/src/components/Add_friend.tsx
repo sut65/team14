@@ -21,10 +21,16 @@ function Add_friend() {
         }
     };  
     const columns: GridColDef[] = [
-        { field: "Approve ID", headerName: "Approve ID", width: 150  },
-        { field: "User ID", headerName: "User ID", width: 150 },
-        { field: "First name", headerName: "First name", width: 200 },
-        { field: "LastName", headerName: "Last name", width: 200 },
+        { field: "ApproveID", headerName: "Approve ID", width: 150  },
+        { field: "UserID", headerName: "User ID", width: 100 },
+        {field: "User",
+            headerName: "เพื่อนที่เพิ่มเข้า",
+            width: 200,
+            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
+        { field: "AdminID", headerName: "Admin ID", width: 150 },
+        { field: "Admin", headerName: "ผู้ที่เพิ่มเข้า",
+            width: 200,
+        valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
         
     ];
     useEffect(() => {
