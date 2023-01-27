@@ -81,18 +81,17 @@ func SetupDatabase() {
 		Age: 21, Password: string(password),
 		Role: r_user, Gender: male, EducationLevel: e3,
 	})
-
 	var u1 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
+
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
 		Email: "CD@gmail.com", 
 		Age: 50, Password: string(password),
 		Role: r_admin, Gender: male, EducationLevel: e3,
 	})
-
 	var u2 User
-	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
+	db.Raw("SELECT * FROM users WHERE Email = ?", "CD@gmail.com").Scan(&u2)
 
 	db.Model(&StatusBook{}).Create(&StatusBook{Detail: "อนุมัติ"})
 	db.Model(&StatusBook{}).Create(&StatusBook{Detail: "ไม่อนุมัติ"})
@@ -184,8 +183,19 @@ func SetupDatabase() {
 
 	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน A"})
 	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน B"})
+	var shop1, shop2 Shop
+	db.Raw("SELECT * FROM shops WHERE name = ?", "ร้าน A").Scan(&shop1)
+	db.Raw("SELECT * FROM shops WHERE name = ?", "ร้าน B").Scan(&shop2)
+
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท A"})
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท B"})
+	var foodtype1, foodtype2 Foodtype
+	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท A").Scan(&foodtype1)
+	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท B").Scan(&foodtype2)
+
+	db.Model(&Food_and_Drink{}).Create(&Food_and_Drink{Menu: "น้ำเปล่า",Foodtype: foodtype1 , Shop: shop1, Admin: u2})
+	var food_and_drink1 Food_and_Drink
+	db.Raw("SELECT * FROM food_and_drinks WHERE menu = ?", "น้ำเปล่า").Scan(&food_and_drink1)
 
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")

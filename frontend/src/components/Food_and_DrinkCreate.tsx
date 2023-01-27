@@ -147,7 +147,7 @@ return (
           <Grid item xs={12} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
-              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu + ""} onChange={handleInputChange}/>
+              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={8}>

@@ -25,8 +25,8 @@ console.log(food_and_drinks);
 
 const columns: GridColDef[] = [
     { field: "ID", headerName: "ID"},
-    { field: "Foodtype", headerName: "ประเภทอาหาร", width: 170, valueFormatter: (params) => params.value.Name},
     { field: "Menu", headerName: "ชื่ออาหาร", width: 170, valueFormatter: (params) => params.value.Name},
+    { field: "Foodtype", headerName: "ประเภทอาหาร", width: 170, valueFormatter: (params) => params.value.Name},
     { field: "Shop", headerName: "ร้านค้า", width: 170, valueFormatter: (params) => params.value.Name },
     { field: "Admin", headerName: "แอดมิน", width: 170, valueFormatter: (params) => params.value.Name },
 ];
