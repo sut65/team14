@@ -162,6 +162,9 @@ func SetupDatabase() {
 	db.Model(&Device{}).Create(&Device{Detail: "กระดาษ3", StatusDevice: true ,Brand: brand3,DeviceType: devicetype3})
 	var device3 Device
 	db.Raw("SELECT * FROM devices WHERE detail = ?", "กระดาษ3").Scan(&device3)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา4", StatusDevice: false ,Brand: brand4,DeviceType: devicetype1})
+	var device4 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา4").Scan(&device4)
 
 
 	db.Model(&Typeroom{}).Create(&Typeroom{Detail: "ห้องพัดลม"})
