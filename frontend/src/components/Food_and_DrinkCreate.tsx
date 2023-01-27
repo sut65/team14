@@ -16,7 +16,7 @@ import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { FoodtypesInterface } from "../models/IFood_and_Drink";
 import { ShopsInterface } from "../models/IFood_and_Drink";
 import { UsersInterface } from "../models/IUser";
-import { CreateFood_and_Drink } from "../services/HttpClientService";
+import { CreateFood_and_Drink, GetUser } from "../services/HttpClientService";
 import {ListFoodtypes, ListShops, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
 
@@ -28,7 +28,7 @@ function Food_and_DrinkCreate() {
     const [food_and_drink, setFood_and_Drink] = React.useState<Partial<Food_and_DrinksInterface>>({});
     const [foodtypes, setFoodtypes] = React.useState<FoodtypesInterface[]>([]);
     const [shops, setShops] = React.useState<ShopsInterface[]>([]);
-    const [user, setUser] = React.useState<UsersInterface[]>([]);
+    const [user, setUser] = React.useState<UsersInterface>({});
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
     const handleClose = (
@@ -79,24 +79,30 @@ function Food_and_DrinkCreate() {
       else{ console.log("Load Shop InComplete!!!!");}
     };
     
-    //ดึงข้อมูล Users
-    const listUsers = async () => {
-      let res = await ListUsers();
-      if (res) { setUser(res); console.log("Load User Complete");}
-      else{ console.log("Load User InComplete!!!!");}
+    const getUser = async () => {
+      const uid = localStorage.getItem("userID")
+      let res = await GetUser(uid);
+      if (res.status) {
+        setUser(res.data);
+        console.log("Load User Complete");
+        console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      }
+      else{
+        console.log("Load User InComplete!!!!");
+      }
     };
 
     React.useEffect(() => {
       listFoodtypes();
       listShops();
-      listUsers();
+      getUser();
     }, []);
 
     async function submit() {
       let data = {
           Name: food_and_drink.Name,
 
-          //AdminID: (user.ID),
+          AdminID: (user.ID),
           FoodtypeID: (food_and_drink.FoodtypeID),
           ShopID: (food_and_drink.ShopID),  
       };
