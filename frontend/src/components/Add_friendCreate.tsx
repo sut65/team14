@@ -15,7 +15,7 @@ import { CreateAdd_friend, ListApproves } from "../services/HttpClientService";
 import Approves from "./Approve";
 import {  
   
-  GetUser,GetBookingbyCodeThatNotApprove,
+  GetUser,GetBookingbyCodeThatNotApprove,GetBookingbyCode
  
 } from "../services/HttpClientService";
 
@@ -80,7 +80,7 @@ function Add_friendCreate(){
       setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
     }
-    let res = await GetBookingbyCodeThatNotApprove(code);
+    let res = await GetBookingbyCode(code);
     if (res.status){
       setApprove({
         ...approve,
