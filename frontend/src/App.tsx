@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -23,8 +23,8 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 
 import Booking from "./components/Booking";
-// import SignIn from "./components/SignIn";
-import Home from "./components/SignIn";
+import SignIn from "./components/SignIn";
+import Home from "./components/Home";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import UserCreate from "./components/UserCreate";
 import User from "./components/Users";
@@ -45,6 +45,7 @@ import Room from "./components/Room";
 import RoomCreate from "./components/RoomCreate";
 import Device from "./components/Device";
 import BookingUpdate from "./components/BookingUpdate";
+import Button from "@mui/material/Button";
 
 
 const drawerWidth = 260;
@@ -117,31 +118,32 @@ const mdTheme = createTheme();
 export default function App() {
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
-  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
-  const uid = parseInt(localStorage.getItem("userID")+"")
+  
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
+  const uid = parseInt(localStorage.getItem("userID")+"")
   console.log(`User Role Level: ${roleLevel}`);
   console.log(`User ID: ${uid}`);
   
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setToken(token);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
-  // if (!token) {
-  //   return <SignIn />;
-  // }
+  if (!token) {
+    return <SignIn />;
+  }
 
-  // const signout = () => {
-  //   localStorage.clear();
-  //   window.location.href = "/";
-  // };
+  const signout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
 return (
   <Router>
       <ThemeProvider theme={mdTheme}>
@@ -174,9 +176,9 @@ return (
               >
                 ระบบจองใช้ห้อง
               </Typography>
-              {/* <Button color="inherit" onClick={signout}>
+              <Button color="inherit" onClick={signout}>
                 ออกจากระบบ
-              </Button> */}
+              </Button>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>

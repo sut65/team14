@@ -25,7 +25,7 @@ import (
 func GetUser(c *gin.Context) {
 	var user entity.User
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM users WHERE id = ?", id).Scan(&user).Error; err != nil {
+	if err := entity.DB().Preload("Role").Preload("Gender").Preload("EducationLevel").Raw("SELECT * FROM users WHERE id = ?", id).Find(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

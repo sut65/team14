@@ -24,10 +24,7 @@ async function Login(data: SigninInterface) {
     .then((res) => {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userID", res.data.user_id);
-        
-        console.log(res);
-        
+        localStorage.setItem("userID", res.data.id);
         return res.data;
       } else {
         return false;
@@ -853,8 +850,8 @@ async function GetUserRole() {
   let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        localStorage.setItem("roleID", res.data.role_id);
+      if (res.data) {       
+        localStorage.setItem("roleID", res.data.RoleID);  
         return res.data;
       } else {
         return false;

@@ -51,9 +51,9 @@ function SignIn() {
 
   const submit = async () => {
     let res = await Login(signin);
-    if (res) {
+    let tmp = await GetUserRole();
+    if (res || tmp) {
       setSuccess(true);  
-      let tmp = await GetUserRole();
       setTimeout(() => {
         window.location.reload();
       }, 1000);
