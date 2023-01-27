@@ -23,6 +23,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
 import ShoppingCartCheckoutTwoToneIcon from '@mui/icons-material/ShoppingCartCheckoutTwoTone';
+import FolderSharedIcon from '@mui/icons-material/FolderShared';
 
 
 import Booking from "./components/Booking";
@@ -107,7 +108,7 @@ const menu = [
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
-  { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
+  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users"},
   { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
   { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
