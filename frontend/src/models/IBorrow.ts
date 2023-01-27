@@ -1,6 +1,7 @@
 import { DevicesInterface } from "./IDevice";
 import { ApprovesInterface } from "./IApprove";
 import { UsersInterface } from "./IUser";
+import { DeviceTypesInterface } from "./IDeviceType";
 
 export interface BorrowsInterface {
     ID?: string,
@@ -8,6 +9,7 @@ export interface BorrowsInterface {
 
     Admin?: string | null;
     DeviceID?: string | null;
+    DeviceTypeID?: string | null;
     ApproveID?: string | null;
 
     User?: UsersInterface;

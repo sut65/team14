@@ -617,6 +617,28 @@ async function CreateFood_and_Drink(data: Food_and_DrinksInterface) {
   return res;
 }
 
+async function ListFood_and_Drinks() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+  let res = await fetch(`${apiUrl}/food_and_drinks`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 async function ListGuards() {
   const requestOptions = {
     method: "GET",
@@ -1047,7 +1069,7 @@ export{
     ListBuildings,
     ListObjectives,
     GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole,
-    ListFoodtypes, ListShops, CreateFood_and_Drink,
+    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks,
     ListBorrows, CreateBorrow, GetBorrow,
     ListDevices,ListTypebyDevice,ListDeviceType,
     CreatePayback,ListPaybacks,GetPayback,
