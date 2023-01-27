@@ -184,8 +184,15 @@ func SetupDatabase() {
 
 	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน A"})
 	db.Model(&Shop{}).Create(&Shop{Name: "ร้าน B"})
+	var shop1, shop2 Shop
+	db.Raw("SELECT * FROM shops WHERE name = ?", "ร้าน A").Scan(&shop1)
+	db.Raw("SELECT * FROM shops WHERE name = ?", "ร้าน B").Scan(&shop2)
+
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท A"})
 	db.Model(&Foodtype{}).Create(&Foodtype{Name: "ประเภท B"})
+	var foodtype1, foodtype2 Foodtype
+	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท A").Scan(&foodtype1)
+	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท B").Scan(&foodtype2)
 
 	// t1, _ := time.Parse(time.RFC3339, "2023-01-30T14:00:00+07:00")
 	// t2, _ := time.Parse(time.RFC3339, "2023-01-30T16:00:00+07:00")
