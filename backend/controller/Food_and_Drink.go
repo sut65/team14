@@ -41,9 +41,10 @@ func CreateFood_and_Drink(c *gin.Context) {
 
 	//สร้าง food_and_drink
 	fad := entity.Food_and_Drink{
-		Admin:    admin,
+		Menu: 	  food_and_drink.Menu,
 		Foodtype: foodtype,
 		Shop:     shop,
+		Admin:    admin,
 	}
 
 	// ขั้นตอนการ validate
@@ -63,7 +64,7 @@ func CreateFood_and_Drink(c *gin.Context) {
 func GetFood_and_Drink(c *gin.Context) {
 	var food_and_drink entity.Food_and_Drink
 	id := c.Param("id")
-	if err := entity.DB().Preload("Foodtype").Preload("Shop").Preload("User").Raw("SELECT * FROM food_and_drinks WHERE id = ?", id).Scan(&food_and_drink).Error; err != nil {
+	if err := entity.DB().Preload("Foodtype").Preload("Shop").Preload("Admin").Raw("SELECT * FROM food_and_drinks WHERE id = ?", id).Find(&food_and_drink).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -79,7 +80,7 @@ func GetFood_and_Drink(c *gin.Context) {
 // GET /food_and_drinks
 func ListFood_and_Drinks(c *gin.Context) {
 	var food_and_drinks []entity.Food_and_Drink
-	if err := entity.DB().Preload("Foodtype").Preload("Shop").Preload("User").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
+	if err := entity.DB().Preload("Foodtype").Preload("Shop").Preload("Admin").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

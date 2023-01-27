@@ -28,9 +28,9 @@ function Users() {
       { field: "Age", headerName: "Age", width: 100 },
       { field: "Password", headerName: "Password", width: 100 },
       { field: "BirthDay", headerName: "BirthDay", width: 200 },
-      { field: "Role", headerName: "Role", width: 100 },
-      { field: "Gender", headerName: "Gender", width: 100 },
-      { field: "EducationLevel", headerName: "EducationLevel", width: 200 },
+      { field: "Role", headerName: "Role", width: 100, valueFormatter: (params) => params.value.Name  },
+      { field: "Gender", headerName: "Gender", width: 100, valueFormatter: (params) => params.value.Name  },
+      { field: "EducationLevel", headerName: "EducationLevel", width: 200, valueFormatter: (params) => params.value.Name  },
   ];
 
   useEffect(() => {

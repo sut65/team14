@@ -18,17 +18,17 @@ function Food_and_Drinks() {
   };
 
 useEffect(() => {
-  ListFood_and_Drinks();
+  listFood_and_Drinks();
 }, []);
 console.log(food_and_drinks);
 
 
 const columns: GridColDef[] = [
-    { field: "ID", headerName: "ID"},
-    { field: "Menu", headerName: "ชื่ออาหาร", width: 170, valueFormatter: (params) => params.value.Name},
-    { field: "Foodtype", headerName: "ประเภทอาหาร", width: 170, valueFormatter: (params) => params.value.Name},
-    { field: "Shop", headerName: "ร้านค้า", width: 170, valueFormatter: (params) => params.value.Name },
-    { field: "Admin", headerName: "แอดมิน", width: 170, valueFormatter: (params) => params.value.Name },
+    { field: "ID", headerName: "ID", width: 50},
+    { field: "Menu", headerName: "ชื่ออาหาร", width: 150, valueFormatter: (params) => params.value.Name},
+    { field: "Foodtype", headerName: "ประเภทอาหาร", width: 150, valueFormatter: (params) => params.value.Name},
+    { field: "Shop", headerName: "ร้านค้า", width: 150, valueFormatter: (params) => params.value.Name },
+    { field: "Admin", headerName: "แอดมิน", width: 100, valueFormatter: (params) => params.value.FirstName },
 ];
 
 return (
@@ -43,7 +43,7 @@ return (
           </Box>
         </Box>
         <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
-          <DataGrid rows={food_and_drinks} getRowId={(row) => row.ID} columns={columns} pageSize={10} rowsPerPageOptions={[5]} />
+          <DataGrid rows={food_and_drinks} getRowId={(row) => row.ID} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
         </div>
       </Container>
     </div>
