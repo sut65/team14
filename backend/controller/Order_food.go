@@ -11,7 +11,7 @@ import (
 // POST Order food
 func CreateOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
-	var booking entity.Booking
+	var approve entity.Approve
 	var food_and_drink entity.Food_and_Drink
 	var admin entity.User
 
@@ -28,7 +28,7 @@ func CreateOrder_food(c *gin.Context) {
 	}
 
 	// ค้นหา Booking ด้วย id
-	if tx := entity.DB().Where("id = ?", order_food.BookingID).First(&booking); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", order_food.ApproveID).First(&approve); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "booking ID not found"})
 		return
 	}
@@ -41,7 +41,7 @@ func CreateOrder_food(c *gin.Context) {
 
 	//สร้าง Adding Friend
 	bod := entity.Order_Food{
-		Booking:        booking,
+		Approve:        approve,
 		Admin:          admin,
 		Food_and_Drink: food_and_drink,
 	}

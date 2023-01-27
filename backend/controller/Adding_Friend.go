@@ -11,7 +11,7 @@ import (
 // POST Adding Friend
 func CreateAdding_Friend(c *gin.Context) {
 	var add_friend entity.Adding_Friend
-	var booking entity.Booking
+	var approve entity.Approve
 	var user entity.User
 	var admin entity.User
 
@@ -28,7 +28,7 @@ func CreateAdding_Friend(c *gin.Context) {
 	}
 
 	// ค้นหา Booking ด้วย id
-	if tx := entity.DB().Where("id = ?", add_friend.BookingID).First(&booking); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", add_friend.ApproveID).First(&approve); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "approve ID not found"})
 		return
 	}
@@ -41,7 +41,7 @@ func CreateAdding_Friend(c *gin.Context) {
 
 	//สร้าง Adding Friend
 	bod := entity.Adding_Friend{
-		Booking: booking,
+		Approve: approve,
 		User:    user,
 		Admin:   admin,
 	}
