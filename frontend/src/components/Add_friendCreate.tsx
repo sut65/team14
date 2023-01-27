@@ -15,7 +15,7 @@ import { CreateAdd_friend, ListApproves } from "../services/HttpClientService";
 import Approves from "./Approve";
 import {  
   
-  GetUser,GetBookingbyCodeThatNotApprove,GetBookingbyCode
+  GetUser,
  
 } from "../services/HttpClientService";
 
@@ -25,17 +25,16 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function Add_friendCreate(){    
+function Add_friendCreate(){
+    const [user, setUser] = useState<UsersInterface>({});
     const [approve, setApprove] = useState<ApprovesInterface>({});
     const [booking, setBooking] = useState<BookingsInterface>({
        User: {FirstName: "", LastName: "",}
       ,Room: {Detail: "", Building:{Detail: "",}}
     });
-    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({});
+    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({});    
     
-    //const [building, setBuilding] = useState<RoomsInterface>({});
-    //const [room, setRoom] = useState<RoomsInterface>({});    
-    const [user, setUser] = useState<UsersInterface>({});
+    
     
     const [code, setCode] = useState("");
     const [userID, setUserID] = useState("");
@@ -80,13 +79,13 @@ function Add_friendCreate(){
       setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
     }
-    let res = await GetBookingbyCode(code);
+    let res = await GetUser(code);
     if (res.status){
-      setApprove({
-        ...approve,
-        ["BookingID"]: res.data.ID,
+      setAdd_friend({
+        ...add_frind,
+        ["ApproveID"]: res.data.ID,
       });
-      setBooking(res.data);
+      setApprove(res.data);
       handleClose()
       setErrorMessage("");
     } else {
@@ -115,28 +114,7 @@ function Add_friendCreate(){
   }  
 
   async function Submit() {
-    let data = {
-      Code: approve.Code,   
-      
-
-      UserID: (user.ID),
-      //BookingID: (approve.BookingID),
-      //StatusBookID: (approve.StatusBookID),
-    };
-    console.log(data)
-    let res = await CreateAdd_friend(data);
-    if (res.status) {
-      setSuccess(true);
-      setErrorMessage("");
-      setBooking({
-        //Objective: {Detail: ""},
-        User: {FirstName: "", LastName: "",},
-        Room: {Detail: "", Building:{Detail: "",}}
-      })
-  } else {
-      setError(true);
-      setErrorMessage(res.data);
-  }
+   
 }
 
 useEffect(() => {  
@@ -225,7 +203,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={booking.ID + ""}             
+            value={approve.Booking?.ID + ""}             
              
             /> 
             <TextField id="outlined-basic" 
@@ -234,7 +212,7 @@ return (
             disabled 
             type="string" 
             size="medium"             
-            value= {""}                          
+            value= {approve.StatusBook + ""}                          
             />    
             <TextField id="outlined-basic" 
             label="User name" 
@@ -242,7 +220,7 @@ return (
             disabled 
             type="string" 
             size="medium"             
-            value={booking.User?.FirstName + " " + booking.User?.LastName }            
+            value={approve.User?.FirstName + " " + approve.User?.LastName }            
             />  
             <TextField id="outlined-basic" 
             label="Building" 
@@ -251,7 +229,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={booking.Room?.Building?.Detail + ""}            
+            value={approve.Booking?.Room?.Building + ""}            
             />    
             <TextField id="outlined-basic" 
             label="Room" 
@@ -260,7 +238,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={booking.Room?.Detail + ""}          
+            value={approve.Booking?.Room + ""}          
               
             />              
               </Box>

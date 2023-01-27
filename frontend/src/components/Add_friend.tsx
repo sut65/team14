@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
-    ListAdd_friends, 
+  ListAdd_friends, 
 } from "../services/HttpClientService";
 import { Add_friendInterface } from "../models/IAdd_friend";
 
@@ -21,12 +21,11 @@ function Add_friend() {
         }
     };  
     const columns: GridColDef[] = [
-        { field: "Booking ID", headerName: "Booking ID", width: 100  },
-        { field: "User ID", headerName: "User ID", width: 100 },
+        { field: "Approve ID", headerName: "Approve ID", width: 150  },
+        { field: "User ID", headerName: "User ID", width: 150 },
         { field: "First name", headerName: "First name", width: 200 },
-        //{ field: "LastName", headerName: "Last name", width: 150 },
-        { field: "Admin ID", headerName: "Admin ID", width: 100 },
-        { field: "First name", headerName: "First name", width: 200 },        
+        { field: "LastName", headerName: "Last name", width: 200 },
+        
     ];
     useEffect(() => {
         listAdd_friends();
@@ -66,7 +65,7 @@ function Add_friend() {
          </Box>
        </Box>
 
-       <div style={{ height: 400, width: "120%", marginTop: '20px'}}>
+       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
            rows={add_friend}
            getRowId={(row) => row.ID}

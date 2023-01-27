@@ -996,26 +996,6 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
       }
     });
 }
-async function GetApproveBycode(code: any) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/booking/approve/code/${code}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {       
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
-      }
-    });
-
-  return res;
-}
 
 
 export{
