@@ -24,10 +24,7 @@ async function Login(data: SigninInterface) {
     .then((res) => {
       if (res.data) {
         localStorage.setItem("token", res.data.token);
-        localStorage.setItem("userID", res.data.user_id);
-        
-        console.log(res);
-        
+        localStorage.setItem("userID", res.data.id);
         return res.data;
       } else {
         return false;
@@ -601,13 +598,13 @@ async function CreateFood_and_Drink(data: Food_and_DrinksInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      //Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/food_and_drinks`, requestOptions)
+  let res = await fetch(`${apiUrl}/food_and_drink`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -853,8 +850,8 @@ async function GetUserRole() {
   let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        localStorage.setItem("roleID", res.data.role_id);
+      if (res.data) {       
+        localStorage.setItem("roleID", res.data.RoleID);  
         return res.data;
       } else {
         return false;

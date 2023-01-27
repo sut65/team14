@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,10 +21,13 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
+import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
+import ShoppingCartCheckoutTwoToneIcon from '@mui/icons-material/ShoppingCartCheckoutTwoTone';
+
 
 import Booking from "./components/Booking";
-// import SignIn from "./components/SignIn";
-import Home from "./components/SignIn";
+import SignIn from "./components/SignIn";
+import Home from "./components/Home";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import UserCreate from "./components/UserCreate";
 import User from "./components/Users";
@@ -45,6 +48,7 @@ import Room from "./components/Room";
 import RoomCreate from "./components/RoomCreate";
 import Device from "./components/Device";
 import BookingUpdate from "./components/BookingUpdate";
+import Button from "@mui/material/Button";
 
 
 const drawerWidth = 260;
@@ -104,11 +108,11 @@ const menu = [
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
-  { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
+  { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
+  { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
-  { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
   { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
 ];
 
@@ -117,31 +121,32 @@ const mdTheme = createTheme();
 export default function App() {
   const [token, setToken] = useState<String>("");
   const [open, setOpen] = useState(true);
-  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
-  const uid = parseInt(localStorage.getItem("userID")+"")
+  
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
+  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
+  const uid = parseInt(localStorage.getItem("userID")+"")
   console.log(`User Role Level: ${roleLevel}`);
   console.log(`User ID: ${uid}`);
   
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
-  //   if (token) {
-  //     setToken(token);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+    }
+  }, []);
 
-  // if (!token) {
-  //   return <SignIn />;
-  // }
+  if (!token) {
+    return <SignIn />;
+  }
 
-  // const signout = () => {
-  //   localStorage.clear();
-  //   window.location.href = "/";
-  // };
+  const signout = () => {
+    localStorage.clear();
+    window.location.href = "/";
+  };
 return (
   <Router>
       <ThemeProvider theme={mdTheme}>
@@ -174,9 +179,9 @@ return (
               >
                 ระบบจองใช้ห้อง
               </Typography>
-              {/* <Button color="inherit" onClick={signout}>
+              <Button color="inherit" onClick={signout}>
                 ออกจากระบบ
-              </Button> */}
+              </Button>
             </Toolbar>
           </AppBar>
           <Drawer variant="permanent" open={open}>

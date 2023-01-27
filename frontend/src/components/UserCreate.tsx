@@ -104,13 +104,14 @@ function UserCreate() {
 
     function submit() {
         let data = {
-            FirstName: user.FirstName ?? "",
-            LastName: user.LastName ?? "",
-            Email: user.Email ?? "",
+            FirstName: user.FirstName,
+            LastName: user.LastName,
+            Email: user.Email,
             Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
             BirthDay: date,
-            Phonenumber: user.PhoneNumber ?? "",
-            Password: user.Password ?? "",
+            Phonenumber: user.PhoneNumber,
+            Password: user.Password,
+            StudentID: user.StudentID,
 
             EducationLevelID: convertType(user.EducationLevelID),
             RoleID: convertType(user.RoleID),
