@@ -99,9 +99,10 @@ func main() {
 			r.DELETE("/device/:id", controller.DeleteDevice)
 			r.PATCH("/device", controller.UpdateDevice)
 
-			//DeviceType
+			//DeviceType use by borrow
 			r.GET("/device_types", controller.ListDeviceType)
 			r.GET("/devices/device_type/:id", controller.ListTypebyDevice)
+			// r.GET("/devices",controller.ListStatus_Device)
 
 			// Guard
 			r.GET("/guards", controller.ListGuards)

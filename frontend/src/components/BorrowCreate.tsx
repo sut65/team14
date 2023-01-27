@@ -41,7 +41,7 @@ function BorrowCreate() {
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
-    const [devices, setDevices] = React.useState<DevicesInterface>({});
+    const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
     const [devicetypes, setDevicetypes] = useState<DeviceTypesInterface[]>([]);
 
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
@@ -320,7 +320,7 @@ function BorrowCreate() {
                 </Grid>  
                     {/* //////////////////////////////device after choose type//////////////////////// */}
                 
-                {/* <Grid item xs={6} >
+                 <Grid item xs={6} >
                 <p>อุปกรณ์</p>
                 <FormControl required fullWidth >
                   <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
@@ -328,9 +328,7 @@ function BorrowCreate() {
                       labelId="DeviceID"
                       label="กรุณาเลือกอุปกรณ์ *"
                       onChange={ (onChangeDevicebyType) }
-                      inputProps={{
-                        name: "DeviceID",
-                      }}
+                      inputProps={{name: "DeviceID",}}
                     >
                     {devices.map((item: DevicesInterface) => (
                       <MenuItem 
@@ -342,7 +340,7 @@ function BorrowCreate() {
                     ))}
                   </Select>
                 </FormControl>
-                </Grid> */}
+                </Grid>
      
                <Grid item xs={12}>
                 <Button component={RouterLink} to="/approves" variant="contained">
