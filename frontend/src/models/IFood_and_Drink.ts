@@ -2,7 +2,7 @@ import { UsersInterface } from "./IUser";
 
 export interface Food_and_DrinksInterface {
     ID?: number,
-    Name?: string;
+    Menu?: string;
     Foodtype?: FoodtypesInterface;
     FoodtypeID?: number;
     Shop?: ShopsInterface;

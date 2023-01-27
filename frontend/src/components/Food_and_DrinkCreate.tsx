@@ -54,7 +54,7 @@ function Food_and_DrinkCreate() {
     const handleInputChange = (
       event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-      const id = event.target.id as keyof typeof Food_and_DrinkCreate;
+      const id = event.target.id as keyof typeof food_and_drink;
       const { value } = event.target;
       setFood_and_Drink({ ...food_and_drink, [id]: value });
       console.log(`[${id}]: ${value}`);
@@ -100,11 +100,11 @@ function Food_and_DrinkCreate() {
 
     async function submit() {
       let data = {
-          Name: food_and_drink.Name,
+          Menu: food_and_drink.Menu,
 
-          AdminID: (user.ID),
           FoodtypeID: (food_and_drink.FoodtypeID),
           ShopID: (food_and_drink.ShopID),  
+          AdminID: (user.ID),
       };
       console.log(data);
       
@@ -147,7 +147,7 @@ return (
           <Grid item xs={12} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
-              <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"  value={food_and_drink.Name || ""} onChange={handleInputChange}/>
+              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu + ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={8}>
