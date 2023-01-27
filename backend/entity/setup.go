@@ -81,16 +81,15 @@ func SetupDatabase() {
 		Age: 21, Password: string(password),
 		Role: r_user, Gender: male, EducationLevel: e3,
 	})
-
 	var u1 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u1)
+
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
 		Email: "CD@gmail.com", 
 		Age: 50, Password: string(password),
 		Role: r_admin, Gender: male, EducationLevel: e3,
 	})
-
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "test@gmail.com").Scan(&u2)
 
