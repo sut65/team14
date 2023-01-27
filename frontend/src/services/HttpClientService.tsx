@@ -712,7 +712,28 @@ async function GetBookingbyCodeThatNotApprove(code: any) {
       "Content-Type": "application/json",
     },
   };
-  let res = await fetch(`${apiUrl}/booking/notapprove/code/${code}`, requestOptions)
+  let res = await fetch(`${apiUrl}/notapprove/booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function GetBookingbyCodeThaApprove(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/approve/booking/code/${code}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
@@ -1021,6 +1042,7 @@ async function GetApproveBycode(code: any) {
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
+    GetBookingbyCodeThaApprove,
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
