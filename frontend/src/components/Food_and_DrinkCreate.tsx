@@ -28,7 +28,7 @@ function Food_and_DrinkCreate() {
     const [food_and_drink, setFood_and_Drink] = React.useState<Partial<Food_and_DrinksInterface>>({});
     const [foodtypes, setFoodtypes] = React.useState<FoodtypesInterface[]>([]);
     const [shops, setShops] = React.useState<ShopsInterface[]>([]);
-    const [users, setUsers] = React.useState<UsersInterface[]>([]);
+    const [user, setUser] = React.useState<UsersInterface[]>([]);
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
     const handleClose = (
@@ -82,7 +82,7 @@ function Food_and_DrinkCreate() {
     //ดึงข้อมูล Users
     const listUsers = async () => {
       let res = await ListUsers();
-      if (res) { setUsers(res); console.log("Load User Complete");}
+      if (res) { setUser(res); console.log("Load User Complete");}
       else{ console.log("Load User InComplete!!!!");}
     };
 
@@ -92,13 +92,26 @@ function Food_and_DrinkCreate() {
       listUsers();
     }, []);
 
-async function submit() {
-    let res = await CreateFood_and_Drink(food_and_drink);
-    if (res) {
-      setSuccess(true);
-    } else {
-      setError(true);
-    }
+    async function submit() {
+      let data = {
+          Name: food_and_drink.Name,
+
+          //AdminID: (user.ID),
+          FoodtypeID: (food_and_drink.FoodtypeID),
+          ShopID: (food_and_drink.ShopID),  
+      };
+      console.log(data);
+      
+      let res = await CreateFood_and_Drink(data);
+      console.log(res);
+      if (res) {
+          setSuccess(true);
+          setErrorMessage("");
+      } else {
+          setError(true);
+          setErrorMessage(res);
+      }
+
   }
 
 return (
@@ -117,7 +130,7 @@ return (
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={10}>
+          <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
             <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
@@ -127,13 +140,13 @@ return (
             </Select>
           </FormControl>
           </Grid>
-          <Grid item xs={12} >  
+          <Grid item xs={5} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
               <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"  value={food_and_drink.Name || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
               <p>ร้านค้า</p>
               <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "ShopID", }}>
@@ -144,14 +157,14 @@ return (
           </FormControl>
           </Grid>
           <Grid item xs={6}>
-          {/* <FormControl fullWidth variant="outlined">  
+          <FormControl fullWidth variant="outlined">  
               <p>สมาชิก</p>
               <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "UserID",}}>
               <MenuItem value={"0"}>กรุณาเลือกสมาชิก</MenuItem>
-                {users?.map((item: UsersInterface) =>
-                  <MenuItem key={item.ID} value={item.ID}> {item.FirstName}</MenuItem>)}
+                {user?.map((item: UsersInterface) => //{item.Name}
+                  <MenuItem key={item.ID} value={item.ID}> </MenuItem>)}
               </Select>
-          </FormControl> */}
+          </FormControl>
           </Grid>
           <Grid item xs={12}>
             <Button component={RouterLink} to="/food_and_drinks" variant="contained"> กลับ </Button>
@@ -163,4 +176,8 @@ return (
 );
 }
 export default Food_and_DrinkCreate;
+
+function setErrorMessage(arg0: string) {
+  throw new Error("Function not implemented.");
+}
 
