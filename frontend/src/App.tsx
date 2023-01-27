@@ -21,6 +21,9 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import HomeIcon from "@mui/icons-material/Home";
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
+import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
+import ShoppingCartCheckoutTwoToneIcon from '@mui/icons-material/ShoppingCartCheckoutTwoTone';
+
 
 import Booking from "./components/Booking";
 import SignIn from "./components/SignIn";
@@ -105,11 +108,11 @@ const menu = [
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
   { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
-  { name: "ยืมอุปกรณ์", icon: <TextSnippetIcon />, path: "/borrows"},
+  { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
+  { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
   { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
-  { name: "จัดการคืนอุปกรณ์", icon: <TextSnippetIcon />, path: "/paybacks"},
   { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
 ];
 

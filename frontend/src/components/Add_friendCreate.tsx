@@ -9,12 +9,13 @@ import { BuildingsInterface } from "../models/IBuilding";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import {BookingsInterface } from "../models/IBooking";
+import { Add_friendInterface } from "../models/IAdd_friend";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { CreateAdd_friend, ListApproves } from "../services/HttpClientService";
 import Approves from "./Approve";
 import {  
   
-  GetUser,GetBookingbyCodeThatNotApprove, 
+  GetUser,GetBookingbyCodeThatNotApprove,GetBookingbyCode
  
 } from "../services/HttpClientService";
 
@@ -26,13 +27,17 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function Add_friendCreate(){    
     const [approve, setApprove] = useState<ApprovesInterface>({});
-    const [booking, setBooking] = useState<BookingsInterface>({});
+    const [booking, setBooking] = useState<BookingsInterface>({
+       User: {FirstName: "", LastName: "",}
+      ,Room: {Detail: "", Building:{Detail: "",}}
+    });
+    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({});
     
-    const [building, setBuilding] = useState<RoomsInterface>({});
-    const [room, setRoom] = useState<RoomsInterface>({});    
+    //const [building, setBuilding] = useState<RoomsInterface>({});
+    //const [room, setRoom] = useState<RoomsInterface>({});    
     const [user, setUser] = useState<UsersInterface>({});
     
-    const [codeID, setCode] = useState("");
+    const [code, setCode] = useState("");
     const [userID, setUserID] = useState("");
 
     const [key, setKey] = useState(true);
@@ -67,17 +72,15 @@ function Add_friendCreate(){
     else{
       console.log("Load User InComplete!!!!");
     }
-  };
-    
-  
-   
+  };  
+     
   async function search(){
-    if (codeID === ""){
+    if (code === ""){
       setErrorSearch(true);
       setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
     }
-    let res = await GetBookingbyCodeThatNotApprove(codeID);
+    let res = await GetBookingbyCode(code);
     if (res.status){
       setApprove({
         ...approve,
@@ -90,7 +93,6 @@ function Add_friendCreate(){
       setErrorSearch(true);
       setErrorMessage(res.data);
     }
-   
   }
     
 
@@ -103,7 +105,7 @@ function Add_friendCreate(){
     let res = await GetUser(userID);
     if (res.status){
       setUser(res.data);
-      setBooking(res.data);
+      //setBooking(res.data);
       handleClose()
       setErrorMessage("");
     } else {
@@ -178,14 +180,14 @@ return (
            autoComplete="off"
             >
             <TextField id="outlined-basic" 
-            label="Booking Code ID" 
+            label="Booking Code " 
             variant="outlined" 
             type="string" 
             size="medium" 
             placeholder="Code ID"
-            value={codeID + ""}
+            value={code + ""}
               onChange={(e) => {setCode(e.target.value)                              
-                console.log(codeID)
+                console.log(code)
                 }
               }
             />            
@@ -223,7 +225,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={booking +""}             
+            value={booking.ID + ""}             
              
             /> 
             <TextField id="outlined-basic" 
@@ -231,18 +233,16 @@ return (
             variant="outlined" 
             disabled 
             type="string" 
-            size="medium" 
-            placeholder="Booking ID"
-            value={""}                          
+            size="medium"             
+            value= {""}                          
             />    
             <TextField id="outlined-basic" 
             label="User name" 
             variant="outlined" 
             disabled 
             type="string" 
-            size="medium" 
-            placeholder="Booking ID"
-            value={booking.User?.FirstName + " " + booking.User?.LastName}            
+            size="medium"             
+            value={booking.User?.FirstName + " " + booking.User?.LastName }            
             />  
             <TextField id="outlined-basic" 
             label="Building" 
@@ -251,7 +251,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={building + ""}              
+            value={booking.Room?.Building?.Detail + ""}            
             />    
             <TextField id="outlined-basic" 
             label="Room" 
@@ -260,7 +260,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={room + ""}             
+            value={booking.Room?.Detail + ""}          
               
             />              
               </Box>
@@ -283,7 +283,7 @@ return (
             variant="outlined" 
             type="string" 
             size="medium" 
-            placeholder="Approve ID"
+            placeholder="User ID"
             value={userID}
               onChange={(e) => {setUserID(e.target.value)              
                 console.log(userID)
@@ -291,13 +291,13 @@ return (
               }
             /> 
             <TextField id="outlined-basic" 
-            label="User ID" 
+            label="UserID " 
             variant="outlined"
             disabled  
             type="string" 
             size="medium" 
             placeholder="UserID"
-            value={booking.User?.ID}
+            value={user.ID +""}
                       
             />   
              <TextField id="outlined-basic" 
@@ -307,7 +307,7 @@ return (
             type="string" 
             size="medium"            
             placeholder="Username"
-            value={booking.User?.FirstName + " " + booking.User?.LastName}           
+            value={user.FirstName + " " + user.LastName}           
             />          
               </Box>
           </FormControl>

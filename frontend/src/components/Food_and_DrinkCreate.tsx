@@ -16,7 +16,7 @@ import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { FoodtypesInterface } from "../models/IFood_and_Drink";
 import { ShopsInterface } from "../models/IFood_and_Drink";
 import { UsersInterface } from "../models/IUser";
-import { CreateFood_and_Drink } from "../services/HttpClientService";
+import { CreateFood_and_Drink, GetUser } from "../services/HttpClientService";
 import {ListFoodtypes, ListShops, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
 
@@ -28,7 +28,7 @@ function Food_and_DrinkCreate() {
     const [food_and_drink, setFood_and_Drink] = React.useState<Partial<Food_and_DrinksInterface>>({});
     const [foodtypes, setFoodtypes] = React.useState<FoodtypesInterface[]>([]);
     const [shops, setShops] = React.useState<ShopsInterface[]>([]);
-    const [user, setUser] = React.useState<UsersInterface[]>([]);
+    const [user, setUser] = React.useState<UsersInterface>({});
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
     const handleClose = (
@@ -54,7 +54,7 @@ function Food_and_DrinkCreate() {
     const handleInputChange = (
       event: React.ChangeEvent<{ id?: string; value: any }>
     ) => {
-      const id = event.target.id as keyof typeof Food_and_DrinkCreate;
+      const id = event.target.id as keyof typeof food_and_drink;
       const { value } = event.target;
       setFood_and_Drink({ ...food_and_drink, [id]: value });
       console.log(`[${id}]: ${value}`);
@@ -79,26 +79,32 @@ function Food_and_DrinkCreate() {
       else{ console.log("Load Shop InComplete!!!!");}
     };
     
-    //ดึงข้อมูล Users
-    const listUsers = async () => {
-      let res = await ListUsers();
-      if (res) { setUser(res); console.log("Load User Complete");}
-      else{ console.log("Load User InComplete!!!!");}
+    const getUser = async () => {
+      const uid = localStorage.getItem("userID")
+      let res = await GetUser(uid);
+      if (res.status) {
+        setUser(res.data);
+        console.log("Load User Complete");
+        console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      }
+      else{
+        console.log("Load User InComplete!!!!");
+      }
     };
 
     React.useEffect(() => {
       listFoodtypes();
       listShops();
-      listUsers();
+      getUser();
     }, []);
 
     async function submit() {
       let data = {
-          Name: food_and_drink.Name,
+          Menu: food_and_drink.Menu,
 
-          //AdminID: (user.ID),
           FoodtypeID: (food_and_drink.FoodtypeID),
           ShopID: (food_and_drink.ShopID),  
+          AdminID: (user.ID),
       };
       console.log(data);
       
@@ -141,7 +147,7 @@ return (
           <Grid item xs={12} >  
           <FormControl fullWidth variant="outlined">
               <p>ชื่ออาหาร</p>
-              <TextField  id="Name" variant="outlined" type="string" size="medium" placeholder="เมนูอาหาร"  value={food_and_drink.Name || ""} onChange={handleInputChange}/>
+              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu + ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={8}>

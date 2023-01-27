@@ -159,7 +159,9 @@ function BorrowCreate() {
 
             AdminID: (borrow.User),
             DeviceID: (borrow.DeviceID),
-            ApproveID: (borrow.ApproveID),  
+            DeviceTypeID: (borrow.DeviceTypeID),
+            ApproveID: (borrow.ApproveID),
+
         };
         console.log(data)
         // let res = await CreateBorrow(data);
@@ -261,9 +263,9 @@ function BorrowCreate() {
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <p>room</p>
+                      <p>BK-ID</p>
                       <TextField
-                        value={approves?.Booking?.Room?.Detail || ""}
+                        value={approves?.Booking?.ID || ""}
                         InputProps={{
                           readOnly: true,
                         }}

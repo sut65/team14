@@ -169,152 +169,187 @@ function PaybackCreate() {
     throw new Error("Function not implemented.");
   }
 
-    return (
-        <Container maxWidth="md">
-          <Snackbar
-            open={success}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          >
-            <Alert onClose={handleClose} severity="success">
-              บันทึกข้อมูลสำเร็จ
-            </Alert>
-          </Snackbar>
-     
-          <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ
-            </Alert>
-          </Snackbar>
-     
-          <Paper>
-             <Box
-                 display="flex"
-                 sx={{
-                 marginTop: 2,
-                 }}
-             >
-                 <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                     <Typography
-                         component="h2"
-                         variant="h6"
-                         color="primary"
-                         gutterBottom
-                     >
-                         Create Payback
-                     </Typography>
-                 </Box>
-            </Box>
-     
-            <Divider />
-             <Grid container spacing={3} sx={{ padding: 2 }}>
-               <Grid item xs={12} >  
-                <Box component="form"
-                    sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
-                    noValidate autoComplete="off">
-                    <TextField id="outlined-basic" label="No.Borrow" variant="outlined" 
-                    onChange={(e) => {setborrowid(e.target.value)
-                        }
-                      }
-                    />
-                </Box>
+  return (
+    <Container maxWidth="md">
+      <Snackbar
+        open={success}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert onClose={handleClose} severity="success">
+          บันทึกข้อมูลสำเร็จ
+        </Alert>
+      </Snackbar>
+ 
+      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+          บันทึกข้อมูลไม่สำเร็จ
+        </Alert>
+      </Snackbar>
+ 
+      <Paper>
+          <Box
+             display="flex"
+             sx={{
+             marginTop: 2,
+             }}
+         >
+             <Box sx={{ paddingX: 2, paddingY: 1 }}>
+                 <Typography
+                     component="h2"
+                     variant="h6"
+                     color="primary"
+                     gutterBottom
+                 >
+                     Create Borrow
+                 </Typography>
+             </Box>
+          </Box>
+ 
+        <Divider />
+         <Grid container spacing={3} sx={{ padding: 2 }}>
+            <Grid item xs={12} >  
+            {/* <Box component="form"
+                sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
+                noValidate autoComplete="off">
+                <TextField id="outlined-basic" label="No.Borrow" variant="outlined" 
+                onChange={(e) => {setAppid(e.target.value)
+                    }
+                  }
+                />
+            </Box> */}
 
-                      {/* //////////////////////////// */}
+                  {/* //////////////////////////// */}
+        
+            {/* <Button
+                style={{ float: "right" }}
+                 size="small"
+                 onClick= {searchAPID}
+                variant="contained"
+                color="primary"
+            >
+                Search ApproveID
+            </Button> */}
+           
+
+        {/* <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+                  <p>ผู้ยืมอุปกรณ์</p>
+                  <TextField
+                    value={approves?.User?.FirstName || ""}  
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+                  <p>BK-ID</p>
+                  <TextField
+                    value={approves?.Booking?.ID || ""}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  /> 
+                </FormControl>
+              </Grid>  
+            </Grid>                */}
             
-                <Button
-                    style={{ float: "right" }}
-                     size="small"
-                     onClick= {searchBorrowid}
-                    variant="contained"
-                    color="primary"
-                >
-                    Search BorrowID
-                </Button>
-               </Grid>
+        {/* <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+                  <p>เริ่มจองเวลา</p>
+                  <TextField
+                    value={approves?.Booking?.Date_Start || ""}  
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth variant="outlined">
+                  <p>หมดจองเวลา</p>
+                  <TextField
+                    value={approves?.Booking?.Date_End || ""}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                  /> 
+                </FormControl>
+              </Grid>  
+            </Grid> */}  </Grid> 
 
-            <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <p>ผู้ยืมอุปกรณ์</p>
-                      <TextField
-                        value={borrows?.User?.FirstName || ""}  
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <p>room</p>
-                      <TextField
-                        //value={borrow?.approves?.Booking?.Room?.Detail || ""}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      /> 
-                    </FormControl>
-                  </Grid>  
-                </Grid>               
-                
-            <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <p>เริ่มจองเวลา</p>
-                      <TextField
-                       // value={borrow?.approves?.Booking?.Date_Start || ""}  
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <p>หมดจองเวลา</p>
-                      <TextField
-                        //value={borrow?.approves?.Booking?.Date_End || ""}
-                        InputProps={{
-                          readOnly: true,
-                        }}
-                      /> 
-                    </FormControl>
-                  </Grid>  
-                </Grid>   
+                      {/* //////////////////////////////devicetype////////////////////////////// */}
 
-                <Grid item xs={12} >  
-                <Box component="form"
-                    sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
-                    noValidate autoComplete="off">
-                    <TextField id="outlined-basic" label="หมายเหตุ 1" variant="outlined" 
-                    onChange={(e) => {setborrowid(e.target.value)
-                        }
-                      }
-                    />
-                </Box>
-               </Grid>
-     
-               <Grid item xs={12}>
-                <Button component={RouterLink} to="/approves" variant="contained">
-                  Back
-                </Button>
-     
-                <Button
-                  style={{ float: "right" }}
-                  onClick={submit}
-                  variant="contained"
-                  color="primary"
+            {/* <Grid item xs={6} >
+            <p>ประเภทอุปกรณ์</p>
+            <FormControl required fullWidth >
+              <InputLabel id="DeviceTypeID">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
+              <Select
+                labelId="DeviceTypeID"
+                label="กรุณาเลือกประเภทอุปกรณ์ *"
+                onChange={ (onChangeDevicebyType) }
+                inputProps={{name: "DeviceTypeID",}}
+              >
+                {devicetypes.map((item: DeviceTypesInterface) => (
+                  <MenuItem 
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.DeviceTypeDetail}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            </Grid>   */}
+                {/* //////////////////////////////device after choose type//////////////////////// */}
+            
+             {/* <Grid item xs={6} >
+            <p>อุปกรณ์</p>
+            <FormControl required fullWidth >
+              <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
+                <Select
+                  labelId="DeviceID"
+                  label="กรุณาเลือกอุปกรณ์ *"
+                  onChange={ (onChangeDevicebyType) }
+                  inputProps={{name: "DeviceID",}}
                 >
-                  Submit
-                </Button>
-               </Grid>
-              
-             </Grid>
-          </Paper>
-        </Container>
-     
-      );
+                {devices.map((item: DevicesInterface) => (
+                  <MenuItem 
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Detail}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            </Grid> */}
+ 
+           <Grid item xs={12}>
+            <Button component={RouterLink} to="/approves" variant="contained">
+              Back
+            </Button>
+ 
+            <Button
+              style={{ float: "right" }}
+              onClick={submit}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
+           </Grid>
+          
+         </Grid>
+      </Paper>
+    </Container>
+ 
+  );
 
 }
 
