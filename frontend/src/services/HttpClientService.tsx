@@ -747,7 +747,7 @@ async function GetBookingbyCodeThatNotApprove(code: any) {
   return res;
 }
 
-async function GetBookingbyCodeThaApprove(code: any) {
+async function GetBookingbyCodeThatApprove(code: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -1044,7 +1044,7 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
-    GetBookingbyCodeThaApprove,
+    GetBookingbyCodeThatApprove,
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,

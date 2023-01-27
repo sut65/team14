@@ -11,7 +11,7 @@ import { ApprovesInterface } from "../models/IApprove";
 import {BookingsInterface } from "../models/IBooking";
 import { Add_friendInterface } from "../models/IAdd_friend";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { CreateAdd_friend, ListApproves } from "../services/HttpClientService";
+import { CreateAdd_friend, GetBookingbyCodeThatApprove, ListApproves } from "../services/HttpClientService";
 import Approves from "./Approve";
 import {  
   
@@ -27,10 +27,11 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function Add_friendCreate(){
     const [user, setUser] = useState<UsersInterface>({});
-    const [approve, setApprove] = useState<ApprovesInterface>({});
-    const [booking, setBooking] = useState<BookingsInterface>({
-       User: {FirstName: "", LastName: "",}
+    const [admin, setAmin] = useState<UsersInterface>({});    
+    const [booking, setBooking] = useState<BookingsInterface>({       
+       User: {FirstName: "Usesr name", LastName: "",}
       ,Room: {Detail: "", Building:{Detail: "",}}
+     
     });
     const [add_frind, setAdd_friend] = useState<Add_friendInterface>({});    
     
@@ -58,8 +59,7 @@ function Add_friendCreate(){
       }
       setSuccess(false);
       setError(false);
- }; 
-
+ };   
 
   const getUser = async () => {
     const uid = localStorage.getItem("userID")
@@ -71,7 +71,7 @@ function Add_friendCreate(){
     else{
       console.log("Load User InComplete!!!!");
     }
-  };  
+  };   
      
   async function search(){
     if (code === ""){
@@ -79,15 +79,17 @@ function Add_friendCreate(){
       setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
     }
-    let res = await GetUser(code);
+    let res = await GetBookingbyCodeThatApprove(code);
     if (res.status){
       setAdd_friend({
         ...add_frind,
         ["ApproveID"]: res.data.ID,
       });
-      setApprove(res.data);
+      
+      setBooking(res.data);
       handleClose()
       setErrorMessage("");
+      console.log(res.data);
     } else {
       setErrorSearch(true);
       setErrorMessage(res.data);
@@ -203,24 +205,16 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={approve.Booking?.ID + ""}             
+            value={booking.ID + ""}             
              
-            /> 
-            <TextField id="outlined-basic" 
-            label="Approve Satetus" 
-            variant="outlined" 
-            disabled 
-            type="string" 
-            size="medium"             
-            value= {approve.StatusBook + ""}                          
-            />    
+            />                
             <TextField id="outlined-basic" 
             label="User name" 
             variant="outlined" 
             disabled 
             type="string" 
             size="medium"             
-            value={approve.User?.FirstName + " " + approve.User?.LastName }            
+            value={booking.User?.FirstName + " " + booking.User?.LastName +""}            
             />  
             <TextField id="outlined-basic" 
             label="Building" 
@@ -229,7 +223,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={approve.Booking?.Room?.Building + ""}            
+            value={booking.Room?.Building?.Detail + ""}            
             />    
             <TextField id="outlined-basic" 
             label="Room" 
@@ -238,7 +232,7 @@ return (
             type="string" 
             size="medium" 
             placeholder="Booking ID"
-            value={approve.Booking?.Room + ""}          
+            value={booking.Room?.Detail + ""}          
               
             />              
               </Box>
@@ -327,3 +321,7 @@ return (
   );
 }
 export default Add_friendCreate;
+
+function GetBookingbyCodeThaApprove(code: string) {
+  throw new Error("Function not implemented.");
+}
