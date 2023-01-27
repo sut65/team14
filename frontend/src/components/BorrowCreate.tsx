@@ -159,7 +159,9 @@ function BorrowCreate() {
 
             AdminID: (borrow.User),
             DeviceID: (borrow.DeviceID),
-            ApproveID: (borrow.ApproveID),  
+            DeviceTypeID: (borrow.DeviceTypeID),
+            ApproveID: (borrow.ApproveID),
+
         };
         console.log(data)
         // let res = await CreateBorrow(data);

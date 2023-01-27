@@ -88,6 +88,17 @@ func GetBookingbyCode(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Booking})
 }
 
+// GET approve/booking/code/:code
+func GetBookingbyCodeThatApprove(c *gin.Context) {
+	var Booking entity.Booking
+	code := c.Param("code")
+	if err := entity.DB().Preload("User").Preload("Room").Preload("Room.Building").Preload("Approve").Raw("select b.* from bookings b inner join approves a on .booking_id = b.id where a.status_book_id=1 and b.code = ?", code).Find(&Booking).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Booking})
+}
+
 // GET /bookings/user/:id
 func ListBookingsByUser(c *gin.Context) {
 	var Booking []entity.Booking
@@ -99,7 +110,7 @@ func ListBookingsByUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Booking})
 }
 
-// GET /booking/notapprove/code/:code
+// GET notapprove/booking/code/:code
 func GetBookingbyCodeThatNotApprove(c *gin.Context) {
 	var Booking entity.Booking
 	code := c.Param("code")
