@@ -304,7 +304,7 @@ function BorrowCreate() {
                   <Select
                     labelId="DeviceTypeID"
                     label="กรุณาเลือกประเภทอุปกรณ์ *"
-                    onChange={ (handleChange) }
+                    onChange={ (onChangeDevicebyType) }
                     inputProps={{name: "DeviceTypeID",}}
                   >
                     {devicetypes.map((item: DeviceTypesInterface) => (
@@ -318,7 +318,8 @@ function BorrowCreate() {
                   </Select>
                 </FormControl>
                 </Grid>  
-                    {/* //////////////////////////////device after choose ype//////////////////////// */}
+                    {/* //////////////////////////////device after choose type//////////////////////// */}
+                
                 {/* <Grid item xs={6} >
                 <p>อุปกรณ์</p>
                 <FormControl required fullWidth >
@@ -326,7 +327,7 @@ function BorrowCreate() {
                     <Select
                       labelId="DeviceID"
                       label="กรุณาเลือกอุปกรณ์ *"
-                      onChange={ (handlessssssChange) }
+                      onChange={ (onChangeDevicebyType) }
                       inputProps={{
                         name: "DeviceID",
                       }}
