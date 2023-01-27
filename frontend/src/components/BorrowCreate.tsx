@@ -312,7 +312,7 @@ function BorrowCreate() {
                         key={item.ID}
                         value={item.ID}
                       >
-                        {item.Name}
+                        {item.DeviceTypeDetail}
                       </MenuItem>
                     ))}
                   </Select>

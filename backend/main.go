@@ -101,7 +101,7 @@ func main() {
 
 			//DeviceType
 			r.GET("/device_types", controller.ListDeviceType)
-			r.GET("/devices/type/:id", controller.ListTypebyDevice)
+			r.GET("/devices/device_type/:id", controller.ListTypebyDevice)
 
 			// Guard
 			r.GET("/guards", controller.ListGuards)

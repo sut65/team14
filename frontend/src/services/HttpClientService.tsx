@@ -314,7 +314,7 @@ async function ListDeviceType() {
   };
   
 
-  let res = await fetch(`${apiUrl}/devicetypes`, requestOptions)
+  let res = await fetch(`${apiUrl}/device_types`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -336,7 +336,7 @@ async function ListTypebyDevice(id: any) {
     },
   };
   
-  let res = await fetch(`${apiUrl}/devicetypes/device/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/devices/device_type/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
