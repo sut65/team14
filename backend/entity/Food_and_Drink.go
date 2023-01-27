@@ -7,7 +7,7 @@ import (
 type Food_and_Drink struct {
 	gorm.Model
 
-	Menu *string `gorm:"uniqueIndex"`
+	Menu string `gorm:"uniqueIndex"`
 
 	Foodtype   Foodtype `gorm:"references:id"`
 	FoodtypeID *uint
