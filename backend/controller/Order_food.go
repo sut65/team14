@@ -13,7 +13,7 @@ func CreateOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
 	var approve entity.Approve
 	var food_and_drink entity.Food_and_Drink
-	var admin entity.User
+	var admin entity.User	
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร order food
 	if err := c.ShouldBindJSON(&order_food); err != nil {
@@ -27,9 +27,9 @@ func CreateOrder_food(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา Booking ด้วย id
+	// ค้นหา Approve ด้วย id
 	if tx := entity.DB().Where("id = ?", order_food.ApproveID).First(&approve); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "booking ID not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve ID not found"})
 		return
 	}
 
@@ -65,7 +65,7 @@ func CreateOrder_food(c *gin.Context) {
 func GetOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
 	id := c.Param("id")
-	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Booking").Raw("SELECT * FROM order_foods WHERE id = ?", id).Find(&order_food).Error; err != nil {
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods WHERE id = ?", id).Find(&order_food).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +75,7 @@ func GetOrder_food(c *gin.Context) {
 // GET /oder_foods
 func ListOrder_food(c *gin.Context) {
 	var order_foods []entity.Adding_Friend
-	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Booking").Raw("SELECT * FROM order_foods ").Find(&order_foods).Error; err != nil {
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods ").Find(&order_foods).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

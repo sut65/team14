@@ -21,7 +21,10 @@ function Add_friend() {
         }
     };  
     const columns: GridColDef[] = [
-        { field: "ApproveID", headerName: "Approve ID", width: 150  },
+        //{ field: "ApproveID", headerName: "Approve ID", width: 150  },
+        { field: "Approve", 
+        headerName: "รหัสการอนุมัติ", width: 140,
+        valueFormatter: (params) => `${(params.value.Code)}`,  },
         { field: "UserID", headerName: "User ID", width: 100 },
         {field: "User",
             headerName: "เพื่อนที่เพิ่มเข้า",
@@ -62,7 +65,7 @@ function Add_friend() {
          <Box>
            <Button
              component={RouterLink}
-             to="/add_friends/create"
+             to="/add_friend/create"
              variant="contained"
              color="primary"
            >
