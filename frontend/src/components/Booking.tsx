@@ -7,7 +7,7 @@ import { FormControl, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
 import { BookingsInterface } from "../models/IBooking";
 import { 
   GetRoom,
-  ListBookingbyRoom, ListBookingbyUser, ListBuildings, ListRoomsbyBuilding, 
+  ListBookingbyRoom, ListBookingbyUser, ListBookings, ListBuildings, ListRoomsbyBuilding, 
 } from "../services/HttpClientService";
 import moment from "moment";
 import { ViewState } from '@devexpress/dx-react-scheduler';
@@ -37,6 +37,7 @@ function Bookings() {
   const uid = localStorage.getItem("userID")
   const [data, setData] = useState<ScheduleInterface[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
+  const [allBookings, setAllBookings] = useState<BookingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [roomOne, setRoomOne] = useState<RoomsInterface>({});
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -45,6 +46,17 @@ function Bookings() {
   const currentDateChange = (currentDate: Date) => {
       setCurrentDate(currentDate);
   }
+
+  const listAllBooking = async () => {
+    let res = await ListBookings();
+    if (res) {
+      console.log("Load Booking Complete");
+      setAllBookings(res)
+    }
+    else{
+      console.log("Load Booking InComplete");
+    }
+  };
 
   const ListBooking = async () => {
     let res = await ListBookingbyRoom(roomOne.Detail);
@@ -112,13 +124,16 @@ function Bookings() {
     setCurrentDate(new Date()); 
     listBuildings();  
     ListBooking(); 
+    listAllBooking();
   }, []);
 
   function schedule(book: BookingsInterface[]){
     setData([]); // clear data
     book.map((item) => {
+      const status = `${item?.Approve?.StatusBook?.Detail || "รอการอนุมัติ"}` ;
       const notes = `รหัสการจอง: ${item.Code+""}\n` +
-                    `จุดประสงค์ในการจอง: ${item.Objective?.Detail+""}`
+                    `จุดประสงค์ในการจอง: ${item.Objective?.Detail+""}\n` +
+                    `สถานะ: ${status || "รอการอนุมัติ"}`
       const x = {
         title: item.Room?.Detail +"",
         startDate: (moment(item.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
@@ -126,19 +141,39 @@ function Bookings() {
         notes:  notes,
       };
       setData((data) => [...data, x]) // push data
-    });
-    console.log("datas");
-    
+    }); 
     console.log(data);
     
   }
+
+  const header = [ "ID", "Code", "ชื่อผู้จอง", "เวลาที่เริ่มจอง", "เวลาที่สิ้นสุดจอง", "ห้อง", "สถานะ"];
+  const DisplayData=allBookings?.map(
+    (info)=>{
+      const dateStart = String(moment(info.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate());
+      const dateEnd = String(moment(info.Date_End, "YYYY-MM-DDTHH:mm:ssZ").toDate());
+      const name = `${info?.User?.FirstName} ${info?.User?.LastName}`
+      const status = info?.Approve?.StatusBook?.Detail || "รอการอนุมัติ";    
+        return(
+            <tr>
+                <td>{info.ID}</td>
+                <td>{info?.Code}</td>
+                <td>{name}</td>
+                <td>{dateStart}</td> 
+                <td>{dateEnd}</td> 
+                <td>{info?.Room?.Detail}</td>
+                <td>{status}</td>          
+            </tr>
+        )
+    }
+  )
+  
   
  return (
 <div>
   <Container maxWidth="lg">
     <Paper>
     <Grid container spacing={1} sx={{ padding: 2 }}>
-      <Grid item xs={12}>
+      <Grid item xs={12}> {/* ปุ่ม */}
       <Paper>
         <Grid container spacing={1} sx={{ padding: 2 }} >
           <Grid item xs={6}>
@@ -184,7 +219,8 @@ function Bookings() {
         </Grid>
       </Paper>
       </Grid>
-      <Grid item xs={12}>
+
+      <Grid item xs={12}> {/* ค้นหา */}
       <Paper>
       <Grid container spacing={1} sx={{ padding: 2 }}  alignItems="center">
         <Grid item xs={6} >
@@ -258,7 +294,7 @@ function Bookings() {
       </Paper>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12}> {/* ปฎิฐิน */}
       <Paper>
         <Scheduler 
             data={data}
@@ -286,8 +322,44 @@ function Bookings() {
         </Scheduler>
       </Paper>
       </Grid>
+
+      <Grid item xs={12}> {/* Data Table */}
+      <style>{`
+    table {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+    
+    tr:nth-child(even){background-color: #bebebe;}
+    tr:hover {background-color: #ddd;}
+    th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #666;
+      color: white;
+    }
+  `}</style>
+        <table>
+          <thead>
+              <tr>
+                {header.map(head => <th>{head}</th>)}
+              </tr>
+          </thead>
+          <tbody>
+              {DisplayData}
+          </tbody>
+        </table>
+      </Grid>
     </Grid>
     </Paper>
+    
   </Container>
 </div>
 );

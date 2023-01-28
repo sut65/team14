@@ -195,7 +195,7 @@ function BookingUpdate() {
                     color="primary"
                     gutterBottom
                 >
-                    Create Booking
+                    Update Booking
                 </Typography>
             </Box>
        </Box>
