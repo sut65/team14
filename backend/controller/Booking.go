@@ -41,6 +41,42 @@ func CreateBooking(c *gin.Context) {
 		return
 	}
 
+	// ถ้าเจอ   ก็คือ การจองห้องเวลาชนกัน ไปเช็คว่าการจองนั้นได้รับอนุมัติไหม
+	// ถ้าไม่เจอ ไม่เข้า if-else
+	var checkDate entity.Booking
+	if err := entity.DB().
+		Raw("select b.* from "+
+			"rooms r inner join bookings b on r.id = b.room_id "+
+			"where not(datetime(b.date_start) > ? "+ /*END*/
+			"or datetime(b.date_end) < ?)  "+ /*Start*/
+			"ORDER BY id DESC LIMIT 1 ", booking.Date_End, booking.Date_Start).
+		Scan(&checkDate).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if !(checkDate.ID == '0' || checkDate.ID == 0) {
+		// เอา booking ที่เจอไปค้นหา
+		// ถ้าเจอ   การจองนั้น *ไม่ได้* รับอนุมัติ **ไม่เข้า if-else**
+		// ถ้าไม่เจอ ก็คือ table booking ยังไม่มีการจองเกิดขึ้น *หรือ* การจองนั้นได้รับอนุมัติไปแล้ว *หรือ* การจองนั้นรอการได้รับการอนุมัติ
+		var checkApprove entity.Booking
+		if err := entity.DB().
+			Raw("select b.* from "+
+				"rooms r inner join bookings b on r.id = b.room_id "+
+				"inner join approves a on a.booking_id = b.id and a.status_book_id = 2 "+ //ได้รับการอนุมัติแล้ว
+				"where not(datetime(b.date_start) > ? "+ /*END*/
+				"or datetime(b.date_end) < ?) and b.id = ? "+ /*Start*/
+				"ORDER BY id DESC LIMIT 1;", checkDate.Date_End, checkDate.Date_Start, checkDate.ID).
+			Scan(&checkApprove).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+
+		if checkApprove.ID == '0' || checkApprove.ID == 0 {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "หมายเลขห้องนี้ถูกจองใช้ห้องไปแล้ว"})
+			return
+		}
+	}
+
 	//สร้าง Booking
 	bod := entity.Booking{
 		Code:       booking.Code,
@@ -92,7 +128,9 @@ func GetBookingbyCode(c *gin.Context) {
 func GetBookingbyCodeThatApprove(c *gin.Context) {
 	var Booking entity.Booking
 	code := c.Param("code")
-	if err := entity.DB().Preload("User").Preload("Room").Preload("Room.Building").Preload("Approve").Raw("select b.* from bookings b inner join approves a on a.booking_id = b.id where a.status_book_id=1 and b.code = ?", code).Find(&Booking).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Room").Preload("Room.Building").Preload("Approve").
+		Raw("select b.* from bookings b inner join approves a on a.booking_id = b.id where a.status_book_id=1 and b.code = ?", code).
+		Find(&Booking).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -114,7 +152,25 @@ func ListBookingsByUser(c *gin.Context) {
 func GetBookingbyCodeThatNotApprove(c *gin.Context) {
 	var Booking entity.Booking
 	code := c.Param("code")
-	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Room.Building").Raw("SELECT * FROM bookings where code = ? and id not in ( Select b1.id as id from bookings b1 inner JOIN approves a1 on a1.booking_id = b1.id );", code).Find(&Booking).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Room.Building").
+		Raw("SELECT * FROM bookings where code = ? and id not in ( Select b1.id as id from bookings b1 inner JOIN approves a1 on a1.booking_id = b1.id );", code).
+		Find(&Booking).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if Booking.ID == '0' || Booking.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "รหัสการจองนี้ อาจจะถูกอนุมัติไปแล้ว หรือไม่ก็ ไม่พบรหัสการจองนี้"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": Booking})
+}
+
+// GET notapprove/bookings
+func ListBookingsThatNotApprove(c *gin.Context) {
+	var Booking entity.Booking
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Room.Building").
+		Raw("SELECT * FROM bookings where id not in ( Select b1.id as id from bookings b1 inner JOIN approves a1 on a1.booking_id = b1.id );").
+		Find(&Booking).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -128,7 +184,8 @@ func GetBookingbyCodeThatNotApprove(c *gin.Context) {
 // GET /bookings
 func ListBookings(c *gin.Context) {
 	var Bookings []entity.Booking
-	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings").Find(&Bookings).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Preload("Approve.StatusBook").
+		Raw("SELECT * FROM bookings").Find(&Bookings).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -140,14 +197,30 @@ func ListBookingsbyRoom(c *gin.Context) {
 	var bookings []entity.Booking
 	detail := c.Param("id")
 	if detail != "0" {
-		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").
-			Raw("SELECT * FROM bookings b inner join rooms r WHERE b.room_id = r.id and datetime(date_end) > datetime('now', 'localtime')  and r.Detail = ?", detail).Find(&bookings).Error; err != nil {
+		// เอาแค่ การจองที่ *รอการได้รับอนุมัติ* และ *ได้รับอนุมัติ* แล้ว เท่านั้น!!
+		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Preload("Approve.StatusBook").
+			Raw("select b.* from "+
+				"rooms r inner join bookings b on r.id = b.room_id "+
+				"and datetime(date_end) > datetime('now', 'localtime') "+
+				"and r.Detail = ? "+
+				"EXCEPT "+
+				"select b.* from "+
+				"rooms r inner join bookings b on r.id = b.room_id "+
+				"inner join approves a on a.booking_id = b.id  and a.status_book_id = 2;", detail).Find(&bookings).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 	}
 	if detail == "0" {
-		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Raw("SELECT * FROM bookings").Find(&bookings).Error; err != nil {
+		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Preload("Approve.StatusBook").
+			Raw("select b.* from " +
+				"rooms r inner join bookings b on r.id = b.room_id " +
+				"and datetime(date_end) > datetime('now', 'localtime') " +
+				"EXCEPT " +
+				"select b.* from " +
+				"rooms r inner join bookings b on r.id = b.room_id " +
+				"inner join approves a on a.booking_id = b.id  and a.status_book_id = 2;").
+			Find(&bookings).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}

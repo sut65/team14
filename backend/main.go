@@ -32,6 +32,7 @@ func main() {
 			r.GET("/bookings/room/:id", controller.ListBookingsbyRoom)
 			r.GET("/booking/code/:code", controller.GetBookingbyCode)
 			r.GET("notapprove/booking/code/:code", controller.GetBookingbyCodeThatNotApprove)
+			r.GET("notapprove/bookings", controller.ListBookingsThatNotApprove)
 			r.GET("approve/booking/code/:code", controller.GetBookingbyCodeThatApprove)
 			r.GET("/bookings/user/:id", controller.ListBookingsByUser)
 
@@ -65,7 +66,7 @@ func main() {
 			r.GET("/approve/:id", controller.GetApprove)
 			r.POST("/approve", controller.CreateApprove)
 			r.PATCH("/approve", controller.UpdateApprove)
-			r.DELETE("/approve/:id", controller.DeleteApprove)
+			r.DELETE("/approve/:id", controller.DeleteApprove)			
 			// r.POST("/approveCode", controller.GetApproveByCode)
 
 			// Status Book

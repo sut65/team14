@@ -23,6 +23,7 @@ import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import FastfoodIcon from '@mui/icons-material/Fastfood';
 import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
 import ShoppingCartCheckoutTwoToneIcon from '@mui/icons-material/ShoppingCartCheckoutTwoTone';
+import FolderSharedIcon from '@mui/icons-material/FolderShared';
 
 
 import Booking from "./components/Booking";
@@ -49,6 +50,10 @@ import RoomCreate from "./components/RoomCreate";
 import Device from "./components/Device";
 import BookingUpdate from "./components/BookingUpdate";
 import Button from "@mui/material/Button";
+import Order_food from "./components/Order_food";
+import OrderCreate from "./components/OrderCreate";
+
+
 
 
 const drawerWidth = 260;
@@ -106,8 +111,8 @@ const menu = [
   { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings"}, 
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
-  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/"},  
-  { name: "ข้อมูลสมาชิก", icon: <TextSnippetIcon />, path: "/users"},
+  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods"},  
+  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users"},
   { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
   { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
@@ -241,7 +246,7 @@ return (
                 <Route path="/user/create" element={<UserCreate />} />
 
                 <Route path="/add_friends" element={<Add_friend />} />
-                <Route path="/add_friends/create" element={<Add_friendCreate />} />
+                <Route path="/add_friend/create" element={<Add_friendCreate />} />
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
@@ -251,6 +256,10 @@ return (
 
                 <Route path="/food_and_drinks" element={<Food_and_Drink />} />
                 <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />
+
+                <Route path="/order_foods" element={< Order_food />} />
+                <Route path="/order_food/create" element={< OrderCreate />} />
+                
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />

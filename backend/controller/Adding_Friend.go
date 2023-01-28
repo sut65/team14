@@ -65,7 +65,7 @@ func CreateAdding_Friend(c *gin.Context) {
 func GetAdd_friend(c *gin.Context) {
 	var add_friend entity.Adding_Friend
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Booking").Raw("SELECT * FROM add_friend WHERE id = ?", id).Find(&add_friend).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends WHERE id = ?", id).Find(&add_friend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -75,7 +75,7 @@ func GetAdd_friend(c *gin.Context) {
 // GET /add_friends
 func ListAdd_friend(c *gin.Context) {
 	var add_friends []entity.Adding_Friend
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Booking").Raw("SELECT * FROM add_friends").Find(&add_friends).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends").Find(&add_friends).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -86,7 +86,7 @@ func ListAdd_friend(c *gin.Context) {
 // DELETE /add_friends/:id
 func DeleteAdd_friend(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM add_friends WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM adding_friend WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Adding friend not found"})
 		return
 	}

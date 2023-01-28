@@ -19,6 +19,7 @@ import {
     ListStatusBooks, 
     GetUser,
     GetBookingbyCodeThatNotApprove,
+    ListBookings,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -47,6 +48,7 @@ function ApproveCreate() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
+  const [bookings, setBookings] = useState<BookingsInterface[]>([]);
   const [booking, setBooking] = useState<BookingsInterface>({
     Objective: {Detail: ""},
     User: {FirstName: "", LastName: "",},
@@ -108,30 +110,50 @@ function ApproveCreate() {
     }
   };
 
-  async function submit() {
-      let data = {
-        Code: approve.Code,
-        Note: approve.Note,
-        ApproveTime: approve.ApproveTime,
+  const listBookings = async () => {
+    let res = await ListBookings();
+    if (res) {
+      setBookings(res);
+      console.log("Load Bookings Complete");  
+      console.log(res);     
+    }
+    else{
+      console.log("Load Bookings InComplete!!!!");
+    }
+  };
 
-        UserID: (user.ID),
-        BookingID: (approve.BookingID),
-        StatusBookID: (approve.StatusBookID),
-      };
-      console.log(data)
-      let res = await CreateApprove(data);
-      if (res.status) {
-        setSuccess(true);
-        setErrorMessage("");
-        setBooking({
-          Objective: {Detail: ""},
-          User: {FirstName: "", LastName: "",},
-          Room: {Detail: "", Building:{Detail: "",}}
-        })
+  async function submit() {
+    let data = {
+      Code: approve.Code,
+      Note: approve.Note,
+      ApproveTime: approve.ApproveTime,
+
+      UserID: (user.ID),
+      BookingID: (approve.BookingID),
+      StatusBookID: (approve.StatusBookID),
+    };
+    console.log(data)
+    let res = await CreateApprove(data);
+    if (res.status) {
+      setSuccess(true);
+      setErrorMessage("");
+      setBooking({
+        Objective: {Detail: ""},
+        User: {FirstName: "", LastName: "",},
+        Room: {Detail: "", Building:{Detail: "",}}
+      })
+      setApprove({
+        Code: "", Note: "",
+        ApproveTime: new Date(),
+      })
+      setCode("");
+      listBookings(); 
     } else {
         setError(true);
         setErrorMessage(res.data);
     }
+    
+    
   }
 
   async function search(){
@@ -153,11 +175,13 @@ function ApproveCreate() {
       setErrorSearch(true);
       setErrorMessage(res.data);
     }
+    
   }
 
   useEffect(() => {
     listStatusBooks();
     getUser();
+    listBookings();
   }, []);
 
   function randomNumberInRange() {
@@ -238,9 +262,9 @@ function ApproveCreate() {
                 Random
             </Button>
           </Grid>
-          <Grid item xs={6} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
-          <Grid item xs={6} ><p>รหัสการจองใช้ห้อง</p></Grid>
-          <Grid item xs={6} >
+          <Grid item xs={4} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
+          <Grid item xs={8} ><p>รหัสการจองใช้ห้อง</p></Grid>
+          <Grid item xs={4} >
             <FormControl required fullWidth> 
               <InputLabel id="StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
               <Select
@@ -263,7 +287,7 @@ function ApproveCreate() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={4} >
+          <Grid item xs={3} >
             <FormControl fullWidth variant="outlined">
               <TextField
                 required
@@ -276,6 +300,30 @@ function ApproveCreate() {
                 value={code + ""}
                 onChange={(e) => setCode(e.target.value)}
               />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={3} >
+            <FormControl required fullWidth >
+              <InputLabel id="Code">กรุณาเลือกรหัสการจอง</InputLabel>
+              <Select
+                labelId="Code"
+                label="กรุณาเลือกรหัสการจอง *"
+                onChange={(e: SelectChangeEvent)=>(setCode(e.target.value))}
+              >
+                {bookings.map((item: BookingsInterface) => {
+                  if (item.Approve == null) {
+                    return(<MenuItem
+                      key={item.ID}
+                      value={item.Code}
+                    >
+                      {item.Code}
+                    </MenuItem>)
+                    }
+                }
+
+                )}
+              </Select>
             </FormControl>
           </Grid>
 

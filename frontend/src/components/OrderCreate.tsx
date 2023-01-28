@@ -3,41 +3,64 @@ import { Link as RouterLink } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import {  Button, Container, FormControl, Grid, Paper, Snackbar, TextField } from "@mui/material";
-import { RoomsInterface } from "../models/IRoom";
-import { BuildingsInterface } from "../models/IBuilding";
+import {  Button, Container, FormControl, Grid, Paper,InputLabel, MenuItem, Snackbar, TextField, styled } from "@mui/material";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Typography from '@mui/material/Typography';
+import Slider from '@mui/material/Slider';
+import MuiInput from '@mui/material/Input';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import {BookingsInterface } from "../models/IBooking";
-import { Add_friendInterface } from "../models/IAdd_friend";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { CreateAdd_friend, GetBookingbyCodeThatApprove, ListApproves } from "../services/HttpClientService";
-import Approves from "./Approve";
+
+import { CreateAdd_friend, CreateOrder, GetBookingbyCodeThatApprove, ListApproves } from "../services/HttpClientService";
 import {  
   
-  GetUser,
+  GetUser,ListFood_and_Drinks
  
 } from "../services/HttpClientService";
+import { Order_foodInterface } from "../models/IOrder_food";
+import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
 ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
+const Input = styled(MuiInput)`
+  width: 42px;
+`;
 
-function Add_friendCreate(){
+function OrderCreate(){
     const [user, setUser] = useState<UsersInterface>({
       ID:"User ID",FirstName: "User name",LastName:  "",
     });
-    const [admin, setAdmin] = useState<UsersInterface>({}); 
-    const [approve, setApprove] = useState<ApprovesInterface>({});   
+    const [admin, setAdmin] = useState<UsersInterface>({});        
     const [booking, setBooking] = useState<BookingsInterface>({
       ID: "Booking ID",       
        User: {FirstName: "Usesr name", LastName: "",}
       ,Room: {Detail: "", Building:{Detail: "",}}
      
     });
-    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({});    
+    const [order_food, setOrder_food] = useState<Order_foodInterface>({}); 
+    //const [toltold, setToltold] = useState<Order_foodInterface[]>([]);
+    const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
+    const [toltold, setValue] = useState<number | string | Array<number | string>>(
+        0,
+      );
+   
+      const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValue(event.target.value === '' ? '' : Number(event.target.value));        
+      };
+    
+      const handleBlur = () => {
+        if (toltold < 0) {
+          setValue(0);
+        } else if (toltold > 100) {
+          setValue(100);
+        }
+      };
     
     
     
@@ -48,9 +71,7 @@ function Add_friendCreate(){
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
     const [errorSearch, setErrorSearch] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-    const [errorSearch_u, setErrorSearch_u] = useState(false);
-    const [errorMessage_u, setErrorMessage_u] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");   
 
         
 
@@ -64,6 +85,18 @@ function Add_friendCreate(){
       setSuccess(false);
       setError(false);
  };   
+ 
+
+  const listFood_and_Drink = async () => {
+    let res = await ListFood_and_Drinks();
+    if (res) {
+      setFood_Drink(res);
+      console.log("Load Food_Drinks Complete");
+    }
+    else{
+      console.log("Load Food_Drinks InComplete!!!!");
+    }
+  };
 
   const getAdmin = async () => {
     const uid = localStorage.getItem("userID")
@@ -75,17 +108,7 @@ function Add_friendCreate(){
     else{
       console.log("Load Admin InComplete!!!!");
     }
-  };   
-  const getUser = async () => {    
-    let res = await GetUser(userID);
-    if (res.status) {
-      setUser(res.data);
-      console.log("Load User Complete");  
-    }
-    else{
-      console.log("Load User InComplete!!!!");
-    }
-  };   
+  };    
      
      
   async function search(){
@@ -96,8 +119,8 @@ function Add_friendCreate(){
     }
     let res = await GetBookingbyCodeThatApprove(code);
     if (res.status){
-      setAdd_friend({
-        ...add_frind,
+      setOrder_food({
+        ...order_food,
         ["ApproveID"]: res.data.ID,
       });
       
@@ -110,36 +133,19 @@ function Add_friendCreate(){
       setErrorMessage(res.data);
     }
   }
-    
-
-  async function search_u(){
-    if (userID === ""){
-      setErrorSearch_u(true);
-      setErrorMessage_u("กรุณากรอกรหัสผู้ใช้เพื่อค้นหา");
-      return
-    }
-    let res = await GetUser(userID);
-    if (res.status){
-      setUser(res.data);
-      //setBooking(res.data);
-      handleClose()
-      setErrorMessage("");
-    } else {
-      setErrorSearch(true);
-      setErrorMessage(res.data);
-    }
-  }  
+   
 
   async function Submit() {
     let data = { 
       AdminID: (admin.ID),     
       ApproveID: (booking.Approve?.ID),
-      UserID: (user.ID),      
+      Food_and_DrinkID: (food_drink),
+      Toltold:(toltold),     
       
       
     };
     console.log(data)
-    let res = await CreateAdd_friend(data);
+    let res = await CreateOrder(data);
     if (res) {
       setSuccess(true);
       setErrorMessage("");     
@@ -150,9 +156,9 @@ function Add_friendCreate(){
    
 }
 
-useEffect(() => { 
-  getAdmin(); 
-  getUser();
+useEffect(() => {
+listFood_and_Drink(); 
+  getAdmin();   
 }, []);
 
 
@@ -269,72 +275,60 @@ return (
           </FormControl>
         </Grid>        
       </Grid> 
-      <hr></hr>     
-      <Grid container spacing={1} sx={{ padding: 1 }}>
-        <Grid item xs={3}>          
-          <FormControl fullWidth variant="outlined">
-            <Box
-            component="form"
-            sx={{ '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-           noValidate
-           autoComplete="off"
-            >
-            <TextField id="outlined-basic" 
-            label="User ID" 
-            variant="outlined" 
-            type="string" 
-            size="medium" 
-            placeholder="User ID"
-            value={userID}
-              onChange={(e) => {setUserID(e.target.value)              
-                console.log(userID)
-                }
-              }
-            /> 
-            <TextField id="outlined-basic" 
-            label="UserID " 
-            variant="outlined"
-            disabled  
-            type="string" 
-            size="medium" 
-            placeholder="UserID"
-            value={user.ID +""}
-                      
-            />   
-             <TextField id="outlined-basic" 
-            label="Username"
-            disabled 
-            variant="outlined" 
-            type="string" 
-            size="medium"            
-            placeholder="Username"
-            value={user.FirstName + " " + user.LastName}           
-            />          
-              </Box>
-          </FormControl>
-        </Grid>
-        <Grid item xs={5}>
-          <Button
-             style={{ float: "right" }}
-             size="large"
-             onClick= {() => {
-              search_u();
-              }}
-             variant="contained"
-             color="primary"
-          >
-            Search
-          </Button>
-        </Grid>
+      <hr></hr>    
+             
         <Grid container spacing={1} sx={{ padding: 1 }}>
-          <Grid item xs={1}>
+        <Grid item xs={7} >
+          <p>รายการอาหาร</p>
+          <FormControl required fullWidth >
+            <InputLabel id="Food_and_DrinkID">กรุณารายการอาหาร</InputLabel>
+            <Select
+              labelId="Food_and_DrinkID"
+              label="กรุณารายการอาหาร *"
+              onChange={ (listFood_and_Drink) }
+              inputProps={{
+                name: "Food_and_DrinkID",
+              }}
+            >
+              {food_drink.map((item: Food_and_DrinksInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Menu}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>        
+                  
+        <Grid item xs={1}>
+        <p>จำนวน</p>
+          <Input
+            value={toltold}
+            size= "medium"
+            onChange={handleInputChange}
+            onBlur={handleBlur}
+            inputProps={{
+              step: 1,
+              min: 0,
+              max: 100,
+              type: 'number',
+              
+            }}
+          />
+        </Grid>
+      
+
+        <Grid container spacing={1} sx={{ padding: 1 }}></Grid>     
+        <Grid item xs={1}>
            <Stack direction="row" spacing={2}>
             <Button component={RouterLink}
-                    to="/add_friends"
+                    to="/order_foods"
                     variant="outlined">Back</Button>      
            </Stack>
-         </Grid>
+         </Grid>        
+         
          <Grid item xs={7}>           
             <Button                  
                     variant="contained" color="success" size="large" style={{ float: "right" }}                    
@@ -342,16 +336,16 @@ return (
                      Submit();
                      }} >Submit</Button>      
            
-         </Grid>   
-        </Grid>
-      </Grid>         
+         </Grid> 
+
+        </Grid> 
+               
       </Container>
+      
     </div>
   
   );
 }
-export default Add_friendCreate;
+export default OrderCreate;
 
-function GetBookingbyCodeThaApprove(code: string) {
-  throw new Error("Function not implemented.");
-}
+

@@ -38,7 +38,7 @@ async function ListBookings() {
     const requestOptions = {
       method: "GET",
       headers: {
-        // Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json",
       },
     };
@@ -61,7 +61,7 @@ async function CreateBooking(data: BookingsInterface) {
     const requestOptions = {
       method: "POST",
       headers: { 
-        // Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
         "Content-Type": "application/json" 
       },
       body: JSON.stringify(data),
@@ -84,7 +84,7 @@ async function GetBooking(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -105,7 +105,7 @@ async function ListBookingbyRoom(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -129,7 +129,7 @@ async function ListRoomsbyBuilding(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -151,7 +151,7 @@ async function ListBuildings() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -173,7 +173,7 @@ async function ListObjectives() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -195,7 +195,7 @@ async function GetUser(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -216,7 +216,7 @@ async function ListBorrows() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -238,7 +238,7 @@ async function CreateBorrow(data: BorrowsInterface) {
   const requestOptions = {
     method: "POST",
     headers: { 
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json" 
     },
     body: JSON.stringify(data),
@@ -261,7 +261,7 @@ async function GetBorrow(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -282,7 +282,7 @@ async function ListDevices() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -305,7 +305,7 @@ async function ListDeviceType() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -328,7 +328,7 @@ async function ListTypebyDevice(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -352,7 +352,7 @@ async function ListPaybacks() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -374,7 +374,7 @@ async function CreatePayback(data: PaybacksInterface) {
   const requestOptions = {
     method: "POST",
     headers: { 
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json" 
     },
     body: JSON.stringify(data),
@@ -397,7 +397,7 @@ async function GetPayback(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -419,7 +419,7 @@ async function CreateApprove(data: ApprovesInterface) {
   const requestOptions = {
     method: "POST",
     headers: { 
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json" 
     },
     body: JSON.stringify(data),
@@ -442,7 +442,7 @@ async function ListApproves() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -465,7 +465,7 @@ async function GetApprove(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -487,7 +487,7 @@ async function ListUsers() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -510,7 +510,7 @@ async function ListStatusBooks() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -533,7 +533,7 @@ async function GetRoom(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -621,7 +621,7 @@ async function ListFood_and_Drinks() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -643,7 +643,7 @@ async function ListGuards() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -665,7 +665,7 @@ async function ListCompanies() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -687,7 +687,7 @@ async function CreateBuilding(data: BuildingsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -709,7 +709,7 @@ async function GetBookingbyCode(code: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -730,7 +730,7 @@ async function GetBookingbyCodeThatNotApprove(code: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -747,11 +747,32 @@ async function GetBookingbyCodeThatNotApprove(code: any) {
   return res;
 }
 
-async function GetBookingbyCodeThaApprove(code: any) {
+async function ListBookingsThatNotApprove() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/notapprove/bookings`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function GetBookingbyCodeThatApprove(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -772,7 +793,7 @@ async function ListBookingbyUser(id: any) {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -793,7 +814,7 @@ async function CreateRoom(data: RoomsInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -816,7 +837,7 @@ async function ListTyperooms() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -839,7 +860,7 @@ async function ListRooms() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -885,7 +906,7 @@ async function GetUserRole() {
   const requestOptions = {
     method: "GET",
     headers: { 
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json" 
     },
   };
@@ -977,7 +998,7 @@ async function ListAdd_friends() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
@@ -1020,8 +1041,9 @@ async function CreateAdd_friend(data: Add_friendInterface) {
 }
 
 async function DeleteAdd_friend(data: Add_friendInterface) {
+  const id = localStorage.getItem('add_freindID')
   const requestOptions = {
-    method: "POST",
+    method: "DELETE",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
@@ -1029,7 +1051,7 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/add_friends/:id`, requestOptions)
+  let res = await fetch(`${apiUrl}/add_friends/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1039,32 +1061,82 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
       }
     });
 }
-async function GetApproveBycode(code: any) {
+
+/***************************** Order ****************************************************/
+
+async function ListOrders() {
   const requestOptions = {
     method: "GET",
     headers: {
-      // Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
   };
-  let res = await fetch(`${apiUrl}/booking/approve/code/${code}`, requestOptions)
+  
+
+  let res = await fetch(`${apiUrl}/order_foods`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
       }
     });
 
   return res;
 }
 
+async function CreateOrder(data: Add_friendInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/order_food`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function DeleteOrder(data: Add_friendInterface) {
+  const id = localStorage.getItem('order_foodID')
+  const requestOptions = {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/order_foods/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+}
+
 
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
-    GetBookingbyCodeThaApprove,
+    GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, 
     ListRoomsbyBuilding, GetRoom,
     ListBuildings,
     ListObjectives,
@@ -1077,4 +1149,5 @@ export{
     ListStatusBooks,
     ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
+    ListOrders,CreateOrder,DeleteOrder,
 }

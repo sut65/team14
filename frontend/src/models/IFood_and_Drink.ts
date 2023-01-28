@@ -7,7 +7,7 @@ export interface Food_and_DrinksInterface {
     FoodtypeID?: number;
     Shop?: ShopsInterface;
     ShopID?: number;
-    User?: UsersInterface;
+    Admin?: UsersInterface;
 }
 
 export interface FoodtypesInterface {

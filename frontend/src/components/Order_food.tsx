@@ -6,38 +6,36 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
-  ListAdd_friends, 
+    ListOrders, 
 } from "../services/HttpClientService";
-import { Add_friendInterface } from "../models/IAdd_friend";
 
-function Add_friend() {
+import { Order_foodInterface } from "../models/IOrder_food";
 
-    const [add_friend, setAdd_friends] = React.useState<Add_friendInterface[]>([]);
+function Order_food() {
+
+    const [order_food, setOrder_food] = React.useState<Order_foodInterface[]>([]);
   
-    const listAdd_friends = async () => {
-        let res = await ListAdd_friends();
+    const listOrder_foods = async () => {
+        let res = await ListOrders();
         if (res != null) {
-            setAdd_friends(res);
+          setOrder_food(res);
         }
     };  
     const columns: GridColDef[] = [
-        //{ field: "ApproveID", headerName: "Approve ID", width: 150  },
         { field: "Approve", 
-        headerName: "รหัสการอนุมัติ", width: 140,
-        valueFormatter: (params) => `${(params.value.Code)}`,  },
-        { field: "UserID", headerName: "User ID", width: 100 },
-        {field: "User",
-            headerName: "เพื่อนที่เพิ่มเข้า",
-            width: 200,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
-        { field: "AdminID", headerName: "Admin ID", width: 150 },
-        { field: "Admin", headerName: "ผู้ที่เพิ่มเข้า",
-            width: 200,
+        headerName: "รหัสการอนุมัติการใช้ห้อง", width: 140,
+        valueFormatter: (params) => `${(params.value.Code)}`,  },       
+        { field: "Food_and_DrinkID", headerName: "Food or Drink", width: 300,
+         
+        },
+        { field: "Totold", headerName: " Quantity", width: 100 ,   },        
+        { field: "Admin", headerName: "ผู้รายการสั่ง",
+            width: 150,
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
         
     ];
     useEffect(() => {
-        listAdd_friends();
+        listOrder_foods();
       }, []);
 
     
@@ -58,25 +56,25 @@ function Add_friend() {
              color="primary"
              gutterBottom
            >
-             Add Friend
+             จัดการร้องขออาหารและเครื่องดื่ม
            </Typography>
          </Box>
 
          <Box>
            <Button
              component={RouterLink}
-             to="/add_friend/create"
+             to="/order_food/create"
              variant="contained"
              color="primary"
            >
-             Create Add friend
+             Create Order
            </Button>
          </Box>
        </Box>
 
        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
-           rows={add_friend}
+           rows={order_food}
            getRowId={(row) => row.ID}
            columns={columns}
            pageSize={5}
@@ -89,4 +87,4 @@ function Add_friend() {
  );
 
 }
-export default Add_friend;
+export default Order_food;
