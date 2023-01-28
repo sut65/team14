@@ -8,11 +8,12 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
     ListOrders, 
 } from "../services/HttpClientService";
-import { Add_friendInterface } from "../models/IAdd_friend";
+
+import { Order_foodInterface } from "../models/IOrder_food";
 
 function Order_food() {
 
-    const [order_food, setOrder_food] = React.useState<Add_friendInterface[]>([]);
+    const [order_food, setOrder_food] = React.useState<Order_foodInterface[]>([]);
   
     const listOrder_foods = async () => {
         let res = await ListOrders();
@@ -21,11 +22,14 @@ function Order_food() {
         }
     };  
     const columns: GridColDef[] = [
-        { field: "ApproveID", headerName: "Approve ID", width: 150  },
-        { field: "Food_and_Drink", headerName: "Food or Drink", width: 300,
-        valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}` },
-        { field: "Totold", headerName: " Quantity", width: 100  },        
-        { field: "Admin", headerName: "ผู้ที่เพิ่มเข้า",
+        { field: "Approve", 
+        headerName: "รหัสการอนุมัติการใช้ห้อง", width: 140,
+        valueFormatter: (params) => `${(params.value.Code)}`,  },       
+        { field: "Food_and_DrinkID", headerName: "Food or Drink", width: 300,
+         
+        },
+        { field: "Totold", headerName: " Quantity", width: 100 ,   },        
+        { field: "Admin", headerName: "ผู้รายการสั่ง",
             width: 150,
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
         
@@ -59,11 +63,11 @@ function Order_food() {
          <Box>
            <Button
              component={RouterLink}
-             to="/add_friends/create"
+             to="/order_food/create"
              variant="contained"
              color="primary"
            >
-             Create Add friend
+             Create Order
            </Button>
          </Box>
        </Box>
