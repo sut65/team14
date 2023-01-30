@@ -8,10 +8,10 @@ export interface BuildingsInterface {
 
     Detail?: string,
 
-    UserID?: string | null;
-    RoomID?: string | null;
-    CompanyID?: string | null;
-    GuardID?: string | null;
+    UserID?: string;
+    RoomID?: string;
+    CompanyID?: string;
+    GuardID?: string;
 
     User?: UsersInterface
     Room?: RoomsInterface
