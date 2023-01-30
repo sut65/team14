@@ -598,7 +598,7 @@ async function CreateFood_and_Drink(data: Food_and_DrinksInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
-      //Authorization: `Bearer ${localStorage.getItem("token")}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),

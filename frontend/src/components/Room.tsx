@@ -28,16 +28,16 @@ function Rooms() {
     ;
     const columns: GridColDef[] = [
 
-        { field: "User", headerName: "แอดมิน", width: 100 , 
+        { field: "Admin", headerName: "แอดมิน", width: 100 , 
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},
      
         { field: "Building", headerName: "ตึก", width: 100 , 
         valueFormatter: (params) => params.value.Detail,},
      
-        { field: "Room", headerName: "ห้อง", width: 200  ,
-        valueFormatter: (params) => params.value.Detail,},
+        { field: "Detail", headerName: "เลขห้อง", width: 200  ,},
+       
      
-        { field: "Typeroom", headerName: "ประเภท", width: 200 ,
+        { field: "Typeroom", headerName: "ประเภทห้อง", width: 200 ,
         valueFormatter: (params) => params.value.Detail,},
      
         
@@ -46,7 +46,7 @@ function Rooms() {
      
       useEffect(() => {
      
-        ListRooms();
+        listRooms();
      
       }, [])
 
