@@ -61,6 +61,7 @@ function BookingCreate() {
       }
       setSuccess(false);
       setError(false);
+      setErrorMessage("")
   };
 
   const handleChange_Text = (
