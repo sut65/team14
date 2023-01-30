@@ -67,6 +67,7 @@ function Bookings() {
     let res = await ListRoomsbyBuilding(bid);
     if (res) {
       setRooms(res);
+      setRoomOne({});
       console.log("Load Rooms Complete");
     }
     else{
@@ -104,8 +105,6 @@ function Bookings() {
     if (res.status) {
       console.log(res.data);
       schedule(res.data)
-      
-      
       console.log("Load Booking Complete");
     }
     else{
@@ -300,7 +299,7 @@ function Bookings() {
       </Paper>
       </Grid>
 
-      <Grid item xs={12}> {/* ปฎิฐิน */}
+      <Grid item xs={12}>
       <Paper>
         <Scheduler 
             data={data}

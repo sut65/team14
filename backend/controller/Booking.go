@@ -232,8 +232,10 @@ func ListBookingsbyRoom(c *gin.Context) {
 // function สำหรับลบ customer ด้วย ID
 // DELETE /bookings/:id
 func DeleteBooking(c *gin.Context) {
+	var Booking entity.Booking
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM bookings WHERE id = ?", id); tx.RowsAffected == 0 {
+	// UPDATE booking SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&Booking); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Booking not found"})
 		return
 	}
@@ -243,21 +245,22 @@ func DeleteBooking(c *gin.Context) {
 
 // PATCH /bookings
 func UpdateBooking(c *gin.Context) {
-	var Booking entity.Booking
-	if err := c.ShouldBindJSON(&Booking); err != nil {
+	var booking entity.Booking
+
+	if err := c.ShouldBindJSON(&booking); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	if tx := entity.DB().Where("id = ?", Booking.ID).First(&Booking); tx.RowsAffected == 0 {
+	// ค้นหา booking ด้วย id
+	if tx := entity.DB().Where("id = ?", booking.ID).First(&booking); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Booking not found"})
 		return
 	}
 
-	if err := entity.DB().Save(&Booking).Error; err != nil {
+	if err := entity.DB().Save(&booking).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": Booking})
+	c.JSON(http.StatusOK, gin.H{"data": booking})
 }
