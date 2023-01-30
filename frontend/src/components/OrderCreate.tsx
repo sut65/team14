@@ -46,7 +46,7 @@ function OrderCreate(){
     const [order_food, setOrder_food] = useState<Order_foodInterface>({}); 
     //const [toltold, setToltold] = useState<Order_foodInterface[]>([]);
     const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
-    const [toltold, setValue] = useState<number | string | Array<number | string>>(
+    const [totold, setValue] = useState<number | string | Array<number | string>>(
         0,
       );
    
@@ -55,9 +55,9 @@ function OrderCreate(){
       };
     
       const handleBlur = () => {
-        if (toltold < 0) {
+        if (totold < 0) {
           setValue(0);
-        } else if (toltold > 100) {
+        } else if (totold > 100) {
           setValue(100);
         }
       };
@@ -72,7 +72,7 @@ function OrderCreate(){
     const [error, setError] = useState(false);
     const [errorSearch, setErrorSearch] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");   
-
+    const [food_drinkID, setFood_DrinkID] = useState("");
         
 
     const handleClose = (
@@ -139,8 +139,8 @@ function OrderCreate(){
     let data = { 
       AdminID: (admin.ID),     
       ApproveID: (booking.Approve?.ID),
-      Food_and_DrinkID: (food_drink),
-      Toltold:(toltold),     
+      Food_and_DrinkID: (food_drinkID),
+      Totold:(totold),    
       
       
     };
@@ -285,7 +285,7 @@ return (
             <Select
               labelId="Food_and_DrinkID"
               label="กรุณารายการอาหาร *"
-              onChange={ (listFood_and_Drink) }
+              onChange={ (e: SelectChangeEvent) => (setFood_DrinkID(e.target.value)) }
               inputProps={{
                 name: "Food_and_DrinkID",
               }}
@@ -305,7 +305,7 @@ return (
         <Grid item xs={1}>
         <p>จำนวน</p>
           <Input
-            value={toltold}
+            value={totold}
             size= "medium"
             onChange={handleInputChange}
             onBlur={handleBlur}

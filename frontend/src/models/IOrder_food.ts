@@ -8,9 +8,10 @@ export interface Order_foodInterface {
     Food_and_DrinkID?: string | null;
     ApproveID?: string | null;
     AdminID?: string | null;
+
     Totold?: string | null,
 
     Food_and_Drink?: Food_and_DrinksInterface;
     Approve?: ApprovesInterface;
-    Amin?: UsersInterface;
+    Admin?: UsersInterface;
 }

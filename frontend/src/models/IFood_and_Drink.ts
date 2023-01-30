@@ -4,10 +4,10 @@ export interface Food_and_DrinksInterface {
     ID?: number,
     Menu?: string;
     Foodtype?: FoodtypesInterface;
-    FoodtypeID?: number;
+    FoodtypeID?: string;
     Shop?: ShopsInterface;
-    ShopID?: number;
-    Admin?: UsersInterface;
+    ShopID?: string;
+    Admin?: string;
 }
 
 export interface FoodtypesInterface {
