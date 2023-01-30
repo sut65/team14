@@ -11,6 +11,7 @@ import {
 
 import { Order_foodInterface } from "../models/IOrder_food";
 
+
 function Order_food() {
 
     const [order_food, setOrder_food] = React.useState<Order_foodInterface[]>([]);
@@ -23,13 +24,14 @@ function Order_food() {
     };  
     const columns: GridColDef[] = [
         { field: "Approve", 
-        headerName: "รหัสการอนุมัติการใช้ห้อง", width: 140,
+        headerName: "รหัสการอนุมัติการใช้ห้อง", width: 200,
         valueFormatter: (params) => `${(params.value.Code)}`,  },       
-        { field: "Food_and_DrinkID", headerName: "Food or Drink", width: 300,
-         
+        { field: "Food_and_Drink", headerName: "Food or Drink", width: 300,
+        valueFormatter: (params) => `${params.value.Menu}`,
         },
-        { field: "Totold", headerName: " Quantity", width: 100 ,   },        
-        { field: "Admin", headerName: "ผู้รายการสั่ง",
+        { field: "Totold", headerName: " Quantity", width: 100 ,                 
+        },        
+        { field: "Admin", headerName: "ผู้เพิ่มรายการสั่ง",
             width: 150,
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
         

@@ -169,8 +169,8 @@ func SetupDatabase() {
 	db.Model(&Typeroom{}).Create(&Typeroom{Detail: "ห้องพัดลม"})
 	db.Model(&Typeroom{}).Create(&Typeroom{Detail: "ห้องแอร์"})
 	var typeroom1, typeroom2 Typeroom
-	db.Raw("SELECT * FROM buildings WHERE detail = ?", "ห้องพัดลม").Scan(&typeroom1)
-	db.Raw("SELECT * FROM buildings WHERE detail = ?", "ห้องแอร์").Scan(&typeroom2)
+	db.Raw("SELECT * FROM typerooms WHERE detail = ?", "ห้องพัดลม").Scan(&typeroom1)
+	db.Raw("SELECT * FROM typerooms WHERE detail = ?", "ห้องแอร์").Scan(&typeroom2)
 
 	db.Model(&Room{}).Create(&Room{
 		Admin: u1, Typeroom: typeroom1, Detail: "A4101", Building: building1})

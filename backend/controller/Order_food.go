@@ -11,6 +11,7 @@ import (
 // POST Order food
 func CreateOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
+	
 	var approve entity.Approve
 	var food_and_drink entity.Food_and_Drink
 	var admin entity.User	
@@ -39,11 +40,14 @@ func CreateOrder_food(c *gin.Context) {
 		return
 	}
 
+	
+
 	//สร้าง Adding Friend
 	bod := entity.Order_Food{
 		Approve:        approve,
 		Admin:          admin,
 		Food_and_Drink: food_and_drink,
+		Totold: order_food.Totold,
 	}
 
 	// ขั้นตอนการ validate
@@ -74,7 +78,7 @@ func GetOrder_food(c *gin.Context) {
 
 // GET /oder_foods
 func ListOrder_food(c *gin.Context) {
-	var order_foods []entity.Adding_Friend
+	var order_foods []entity.Order_Food
 	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods ").Find(&order_foods).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
