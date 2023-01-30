@@ -81,11 +81,11 @@ func main() {
 			r.DELETE("/add_friends/:id", controller.DeleteAdd_friend)
 
 			// Order food Routes
-			r.GET("/order_foods", controller.ListAdd_friend)
-			r.GET("/order_food/:id", controller.GetAdd_friend)
-			r.POST("/order_food", controller.CreateAdding_Friend)
-			r.PATCH("/order_food", controller.UpdateAddfriend)
-			r.DELETE("/order_foods/:id", controller.DeleteAdd_friend)
+			r.GET("/order_foods", controller.ListOrder_food)
+			r.GET("/order_food/:id", controller.GetOrder_food)
+			r.POST("/order_food", controller.CreateOrder_food)
+			r.PATCH("/order_food", controller.UpdateOrder_food)
+			r.DELETE("/order_foods/:id", controller.DeleteOder_food)
 
 			// Borrow
 			r.POST("/borrow", controller.CreateBorrow)
