@@ -21,6 +21,8 @@ function Buildings() {
         if (res) {
             setBuildings(res);
         }
+        console.log(res);
+        
     };
    
    
@@ -28,16 +30,15 @@ function Buildings() {
     ;
     const columns: GridColDef[] = [
 
-        { field: "User", headerName: "แอดมิน", width: 100 , 
+        { field: "Admin", headerName: "แอดมิน", width: 100 , 
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},
      
-        { field: "Building", headerName: "ตึก", width: 100 , 
-        valueFormatter: (params) => params.value.Detail,},
+        { field: "Detail", headerName: "ชื่อตึก", width: 100},
      
         { field: "Guard", headerName: "ผู้รักษาความปลอดภัย", width: 200  ,
         valueFormatter: (params) => params.value.Detail,},
      
-        { field: "Comapany", headerName: "บริษัทรับเหมา", width: 200 ,
+        { field: "Company", headerName: "บริษัทรับเหมา", width: 200 ,
         valueFormatter: (params) => params.value.Detail,},
      
         
@@ -46,7 +47,7 @@ function Buildings() {
      
       useEffect(() => {
      
-        ListBuildings();
+        listBuildings();
      
       }, [])
 

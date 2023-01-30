@@ -10,7 +10,7 @@ import {
   ListBookingbyRoom, ListBookingbyUser, ListBookings, ListBuildings, ListRoomsbyBuilding, 
 } from "../services/HttpClientService";
 import moment from "moment";
-import { ViewState } from '@devexpress/dx-react-scheduler';
+import { AppointmentModel, Color, ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,
@@ -20,22 +20,16 @@ import {
   AppointmentTooltip,
   AppointmentForm,
   TodayButton,
+  Resources,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { BuildingsInterface } from "../models/IBuilding";
 import { RoomsInterface } from "../models/IRoom";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
-interface ScheduleInterface{
-  title: string,
-  startDate: Date,
-  endDate: Date,
-  notes: string;
-}
-
+import { styled } from '@mui/material/styles';
 
 function Bookings() {
   const uid = localStorage.getItem("userID")
-  const [data, setData] = useState<ScheduleInterface[]>([]);
+  const [data, setData] = useState<AppointmentModel[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [allBookings, setAllBookings] = useState<BookingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
@@ -138,13 +132,27 @@ function Bookings() {
         title: item.Room?.Detail +"",
         startDate: (moment(item.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
         endDate: (moment(item.Date_End, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
+        statusID: item?.Approve?.StatusBookID || 0,
         notes:  notes,
       };
       setData((data) => [...data, x]) // push data
     }); 
-    console.log(data);
-    
   }
+  const resources = [{
+    fieldName: 'statusID',
+    title: 'สถานะ',
+    instances: [      
+      {
+        text: 'รอการอนุมัติ', id: 0, color: '#ff9100', 
+      }, 
+      {
+        text: 'ได้รับการอนุมัติ', id: 1, color: '#00e5ff',
+      }, 
+      {
+        text: 'ไม่ได้รับการอนุมัติ', id: 2, color: '#ff5252',
+      }],
+  }];
+
 
   const header = [ "ID", "Code", "ชื่อผู้จอง", "เวลาที่เริ่มจอง", "เวลาที่สิ้นสุดจอง", "ห้อง", "สถานะ"];
   const DisplayData=allBookings?.map(
@@ -166,7 +174,6 @@ function Bookings() {
         )
     }
   )
-  
   
  return (
 <div>
@@ -303,7 +310,7 @@ function Bookings() {
           <ViewState
               currentDate={currentDate}
               onCurrentDateChange={currentDateChange}
-              />
+          />
           <WeekView
               startDayHour={9}
               endDayHour={19}
@@ -319,33 +326,39 @@ function Bookings() {
           <AppointmentForm
               readOnly
           />
+          <Resources
+            data={resources}
+            mainResourceName="statusID"
+          />
         </Scheduler>
       </Paper>
       </Grid>
 
       <Grid item xs={12}> {/* Data Table */}
-      <style>{`
-    table {
-      font-family: Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-    
-    td, th {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-    
-    tr:nth-child(even){background-color: #bebebe;}
-    tr:hover {background-color: #ddd;}
-    th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: left;
-      background-color: #666;
-      color: white;
-    }
-  `}</style>
+      <style>
+        {`
+          table {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+          }
+          
+          td, th {
+            border: 1px solid #ddd;
+            padding: 8px;
+          }
+          
+          tr:nth-child(even){background-color: #bebebe;}
+          tr:hover {background-color: #ddd;}
+          th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #666;
+            color: white;
+          }
+        `}
+      </style>
         <table>
           <thead>
               <tr>
