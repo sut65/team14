@@ -15,19 +15,21 @@ import { BookingsInterface } from "../models/IBooking";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
-    CreateBooking, 
-    ListBuildings, ListRoomsbyBuilding,
-    ListObjectives,
+    UpdateBooking, 
     GetUser,
+    ListBookingbyUser,
+    GetBooking,
+    GetBuilding,
+    ListObjectives,
+    GetObjective,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
-import { RoomsInterface } from "../models/IRoom";
-import { ObjectivesInterface } from "../models/IObjective";
 import { UsersInterface } from "../models/IUser";
+import { ObjectivesInterface } from "../models/IObjective";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -37,19 +39,22 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 
 function BookingUpdate() {
+  const uid = parseInt(localStorage.getItem("userID")+"")
   const [user, setUser] = useState<UsersInterface>({});
-  const [booking, setBooking] = useState<BookingsInterface>({
+  const [building, setBuilding] = useState<BuildingsInterface>({});
+  const [bookingUser, setBookingUser] = useState<BookingsInterface>({
     Code: "",
     Date_Start: new Date(),
     Date_End: new Date(),
   });
+  const [bookings, setBookings] = useState<BookingsInterface[]>([]);
+  const [objectives, setObjectives] = useState<ObjectivesInterface[]>([]);
+  const [objectiveOne, setObjectiveOne] = useState<ObjectivesInterface>({});
+
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
-  const [rooms, setRooms] = useState<RoomsInterface[]>([]);
-  const [objectives, setObjectives] = useState<ObjectivesInterface[]>([]);
 
   const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -62,51 +67,40 @@ function BookingUpdate() {
       setError(false);
   };
 
-  const handleChange_Text = (
-    event: React.ChangeEvent<{ id?: string; value: any }>
-  ) => {
-    const id = event.target.id as keyof typeof booking;
-    const { value } = event.target;
-    setBooking({ ...booking, [id]: value, });
-    console.log(`[${id}]: ${value}`);
-  }; 
 
   const handleChange = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof booking;
+    const name = event.target.name as keyof typeof bookingUser;
     const value = event.target.value;
-    setBooking({
-      ...booking,
+    setBookingUser({
+      ...bookingUser,
       [name]: value,
     });
     console.log(`[${name}]: ${value}`);
   };
 
-  const onChangeBuilding = async (e: SelectChangeEvent) =>{
+  const onChangeBooking = async (e: SelectChangeEvent) =>{
     const bid = e.target.value;
-    let res = await ListRoomsbyBuilding(bid);
+    let res = await GetBooking(bid);
     if (res) {
-      setRooms(res);
-      console.log("Load Room Complete");
+      setBookingUser(res);
+      console.log("Load BookingUser Complete");
+      console.log(res);
+      
     }
     else{
-      console.log("Load Room Incomplete!!!");
+      console.log("Load BookingUser Incomplete!!!");
     }
-    
+    res = await GetBuilding(res.Room.BuildingID); 
+    if (res) {
+      setBuilding(res);
+      console.log("Load Building Complete");
+    }
+    else{
+      console.log("Load Building Incomplete!!!");
+    }   
   }
 
-  const listBuildings = async () => {
-    let res = await ListBuildings();
-    if (res) {
-      setBuildings(res);
-      console.log("Load Buildings Complete");
-    }
-    else{
-      console.log("Load Buildings InComplete!!!!");
-    }
-  };
-
-  const getUser = async () => {
-    const uid = localStorage.getItem("userID")
+  const getUser = async () => {   
     let res = await GetUser(uid);
     if (res.status) {
       setUser(res.data);
@@ -115,6 +109,29 @@ function BookingUpdate() {
     }
     else{
       console.log("Load User InComplete!!!!");
+    }
+  };
+
+  const onChangeObjective = async (e: SelectChangeEvent) =>{
+    const id = e.target.value;
+    let res = await GetObjective(id);
+    if (res) {
+      setObjectiveOne(res);
+      console.log("Load Objective Complete");
+    }
+    else{
+      console.log("Load Objective InComplete!!!!");
+    }
+  };
+
+  const listBookingbyUser = async () => {
+    let res = await ListBookingbyUser(uid);
+    if (res.status) {
+      setBookings(res.data)
+      console.log("Load Bookings Complete");
+    }
+    else{
+      console.log("Load Bookings InComplete!!!!");
     }
   };
 
@@ -131,16 +148,19 @@ function BookingUpdate() {
 
   async function submit() {
       let data = {
-          Code: booking.Code,
-          Date_Start: booking.Date_Start,
-          Date_End: booking.Date_End,
+          ID: bookingUser.ID,
+          Code: bookingUser.Code,
+          Date_Start: bookingUser.Date_Start,
+          Date_End: bookingUser.Date_End,
 
           UserID: (user.ID),
-          ObjectiveID: (booking.ObjectiveID),
-          RoomID: (booking.RoomID),
+          ObjectiveID: (bookingUser.ObjectiveID),
+          Objective: objectiveOne,
+          RoomID: (bookingUser.RoomID),
       };
-      let res = await CreateBooking(data);
-      console.log(res.data);
+      let res = await UpdateBooking(data);
+      console.log("submit");
+      console.log(data);
       if (res.status) {
           setSuccess(true);
           setErrorMessage("");
@@ -151,16 +171,10 @@ function BookingUpdate() {
   }
 
   useEffect(() => {
-    listBuildings();
-    listObjectives();
     getUser();
+    listBookingbyUser();
+    listObjectives();
   }, []);
-
-  function randomNumberInRange() {
-    const min = 10000, max = 99999;
-    const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    setBooking({ ...booking, ["Code"]: `Bk${random}`, });
-  }
 
  return (
    <Container maxWidth="md">
@@ -203,46 +217,42 @@ function BookingUpdate() {
        <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
         <Grid item xs={12} >รหัสการจองใช้ห้อง</Grid>
-          <Grid item xs={10} >
+          <Grid item xs={12} >
             <FormControl fullWidth variant="outlined">
-                <TextField
-                     required
-                     id="Code"
-                     type="string"
-                     label="รหัสการจองใช้ห้อง (Bk ตามด้วยตัวเลข5ตัว)"
-                     inputProps={{
-                       name: "Code",
-                     }}
-                    value={booking.Code + ""}
-                    onChange={handleChange_Text}
-                />
+              <InputLabel id="BookingID">กรุณารหัสการจองของคุณ</InputLabel>
+              <Select
+                labelId="BookingID"
+                label="กรุณารหัสการจองของคุณ *"
+                onChange={ (onChangeBooking) }
+                inputProps={{
+                  name: "BookingID",
+                }}
+              >
+                {bookings.map((item: BookingsInterface) => (
+                  <MenuItem 
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Code}
+                  </MenuItem>
+                ))}
+              </Select>
             </FormControl>
-          </Grid>
-
-          <Grid item xs={2} justifyContent="center">
-            <Button
-                style={{ float: "right" }}
-                size="medium"
-                onClick= {randomNumberInRange}
-                variant="contained"
-                color="primary"
-            >
-                Random
-            </Button>
           </Grid>
 
           <Grid item xs={6}>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               label="เวลาเริ่มต้นการจอง"
-              value={booking.Date_Start}
+              value={bookingUser.Date_Start}
               onChange={(newValue) => {
-                setBooking({
-                  ...booking,
+                setBookingUser({
+                  ...bookingUser,
                   Date_Start: newValue,
                 });
               }}
               ampm={true}
+              disabled
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
@@ -252,15 +262,15 @@ function BookingUpdate() {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               label="เวลาสิ้นสุดการจอง"
-              value={booking.Date_End}
-              minDateTime={booking.Date_Start}
-              // inputFormat={"yyyy-dd-MM HH:mm:ss zz"}
+              value={bookingUser.Date_End}
+              minDateTime={bookingUser.Date_Start}
               onChange={(newValue) => {
-                setBooking({
-                  ...booking,
+                setBookingUser({
+                  ...bookingUser,
                   Date_End: newValue,
                 });               
               }}
+              disabled
               renderInput={(params) => <TextField {...params} />}
             />
           </LocalizationProvider>
@@ -269,59 +279,34 @@ function BookingUpdate() {
           <Grid item xs={6} >
           <p>ตึก</p>
           <FormControl required fullWidth >
-            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
-            <Select
-              labelId="BuildingID"
-              label="กรุณาเลือกตึก *"
-              onChange={ (onChangeBuilding) }
-              inputProps={{
-                name: "BuildingID",
-              }}
-            >
-              {buildings.map((item: BuildingsInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
+            <TextField 
+              value={building?.Detail}
+              disabled
+            />
           </FormControl>
           </Grid>
 
           <Grid item xs={6} >
           <p>ห้อง</p>
-          <FormControl required fullWidth> 
-            <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
-            <Select
-              labelId="RoomID"
-              label="กรุณาเลือกห้อง *"
-              onChange={handleChange}
-              inputProps={{
-                name: "RoomID",
-              }}
-            >
-              {rooms?.map((item: RoomsInterface) => 
-                <MenuItem
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              )}
-            </Select>
+          <FormControl required fullWidth >
+            <TextField 
+              value={bookingUser.Room?.Detail}
+              disabled
+            />
           </FormControl>
           </Grid>
 
           <Grid item xs={12} >
           <p>จุดประสงค์ในการจอง</p>
           <FormControl required fullWidth >
-            <InputLabel id="BuildingID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
+            <InputLabel id="ObjectiveID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
             <Select
               labelId="ObjectiveID"
               label="กรุณาเลือกจุดประสงค์ในการจอง *"
-              onChange={ (handleChange) }
+              onChange={(e: SelectChangeEvent) => {
+                handleChange(e);
+                onChangeObjective(e);
+              } }
               inputProps={{
                 name: "ObjectiveID",
               }}

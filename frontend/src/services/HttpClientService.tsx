@@ -705,6 +705,28 @@ async function CreateBuilding(data: BuildingsInterface) {
 
   return res;
 }
+
+async function GetBuilding(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/building/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}  
+
 async function GetBookingbyCode(code: any) {
   const requestOptions = {
     method: "GET",
@@ -1073,7 +1095,6 @@ async function ListOrders() {
     },
   };
   
-
   let res = await fetch(`${apiUrl}/order_foods`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
@@ -1132,14 +1153,58 @@ async function DeleteOrder(data: Add_friendInterface) {
     });
 }
 
+async function UpdateBooking(data: BookingsInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/booking`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function GetObjective(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/objective/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
 
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
-    GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, 
-    ListRoomsbyBuilding, GetRoom,
-    ListBuildings,
-    ListObjectives,
+    GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, UpdateBooking,
+    ListRoomsbyBuilding, GetRoom, 
+    ListBuildings, GetBuilding,
+    ListObjectives, GetObjective,
     GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole,
     ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks,
     ListBorrows, CreateBorrow, GetBorrow,
