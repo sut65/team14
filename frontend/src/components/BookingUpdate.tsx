@@ -185,13 +185,13 @@ function BookingUpdate() {
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
        <Alert onClose={handleClose} severity="success">
-         บันทึกข้อมูลสำเร็จ
+         อัพเดทข้อมูลสำเร็จ
        </Alert>
      </Snackbar>
 
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+        อัพเดทข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
 
@@ -202,16 +202,16 @@ function BookingUpdate() {
             marginTop: 2,
             }}
         >
-            <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                <Typography
-                    component="h2"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                >
-                    Update Booking
-                </Typography>
-            </Box>
+          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+              <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+              >
+                  Update Booking
+              </Typography>
+          </Box>
        </Box>
 
        <Divider />
@@ -306,10 +306,11 @@ function BookingUpdate() {
               onChange={(e: SelectChangeEvent) => {
                 handleChange(e);
                 onChangeObjective(e);
-              } }
+              }}
               inputProps={{
                 name: "ObjectiveID",
               }}
+              value={bookingUser.ObjectiveID+""}
             >
               {objectives.map((item: ObjectivesInterface) => (
                 <MenuItem 

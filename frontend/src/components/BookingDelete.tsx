@@ -15,13 +15,11 @@ import { BookingsInterface } from "../models/IBooking";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
-    UpdateBooking, 
     GetUser,
     ListBookingbyUser,
     GetBooking,
     GetBuilding,
     ListObjectives,
-    GetObjective,
     DeleteBooking,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -41,7 +39,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function BookingDelete() {
   const uid = parseInt(localStorage.getItem("userID")+"")
-  const [user, setUser] = useState<UsersInterface>({});
   const [building, setBuilding] = useState<BuildingsInterface>({});
   const [bookingUser, setBookingUser] = useState<BookingsInterface>({
     Code: "",
@@ -49,8 +46,6 @@ function BookingDelete() {
     Date_End: new Date(),
   });
   const [bookings, setBookings] = useState<BookingsInterface[]>([]);
-  const [objectives, setObjectives] = useState<ObjectivesInterface[]>([]);
-  const [objectiveOne, setObjectiveOne] = useState<ObjectivesInterface>({});
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -66,17 +61,6 @@ function BookingDelete() {
       }
       setSuccess(false);
       setError(false);
-  };
-
-
-  const handleChange = (event: SelectChangeEvent) => {
-    const name = event.target.name as keyof typeof bookingUser;
-    const value = event.target.value;
-    setBookingUser({
-      ...bookingUser,
-      [name]: value,
-    });
-    console.log(`[${name}]: ${value}`);
   };
 
   const onChangeBooking = async (e: SelectChangeEvent) =>{
@@ -101,37 +85,16 @@ function BookingDelete() {
     }   
   }
 
-  const getUser = async () => {   
-    let res = await GetUser(uid);
-    if (res.status) {
-      setUser(res.data);
-      console.log("Load User Complete");
-      console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
-    }
-    else{
-      console.log("Load User InComplete!!!!");
-    }
-  };
-
   const listBookingbyUser = async () => {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       setBookings(res.data)
+      console.log(res.data);
+      
       console.log("Load Bookings Complete");
     }
     else{
       console.log("Load Bookings InComplete!!!!");
-    }
-  };
-
-  const listObjectives = async () => {
-    let res = await ListObjectives();
-    if (res) {
-      setObjectives(res);
-      console.log("Load Objectives Complete");
-    }
-    else{
-      console.log("Load Objectives InComplete!!!!");
     }
   };
 
@@ -148,9 +111,7 @@ function BookingDelete() {
   }
 
   useEffect(() => {
-    getUser();
     listBookingbyUser();
-    listObjectives();
   }, []);
 
  return (
@@ -162,13 +123,13 @@ function BookingDelete() {
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
        <Alert onClose={handleClose} severity="success">
-         บันทึกข้อมูลสำเร็จ
+          ลบข้อมูลสำเร็จ
        </Alert>
      </Snackbar>
 
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+         ลบข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
 
