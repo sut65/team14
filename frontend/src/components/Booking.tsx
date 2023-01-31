@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import { FormControl, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
 import { BookingsInterface } from "../models/IBooking";
 import { 
   GetRoom,
@@ -34,32 +34,65 @@ function Bookings() {
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [roomOne, setRoomOne] = useState<RoomsInterface>({});
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checkedUser, setCheckedUser] = useState(false);
+  const [checkedRoom, setCheckedRoom] = useState(false);
 
 
   const currentDateChange = (currentDate: Date) => {
       setCurrentDate(currentDate);
   }
 
-  const listAllBooking = async () => {
-    let res = await ListBookings();
-    if (res) {
-      console.log("Load Booking Complete");
-      setAllBookings(res)
+  const listBooking = async () => {
+    let 
+      res = await ListBookingbyRoom(0);
+      if (res) {
+        console.log("Load Booking Complete");
+        schedule(res)
+        setAllBookings(res)
+      }
+      else {
+        console.log("Load Booking InComplete");
+      }
     }
-    else{
-      console.log("Load Booking InComplete");
-    }
-  };
 
   const ListBooking = async () => {
-    let res = await ListBookingbyRoom(roomOne.Detail);
-    if (res) {
-      console.log("Load Booking Complete" + ` ห้อง: ${roomOne.Detail}`);
-      schedule(res)
+    let res;
+    if (checkedAll){
+      res = await ListBookings();
+      if (res) {
+        console.log("Load BookingAll Complete");
+        schedule(res)        
+        
+      }
+      else{
+        console.log("Load BookingAll InComplete");
+      } 
+      
+    } else if(checkedUser){
+      res = await ListBookingbyUser(uid);
+      if (res.status) {
+        schedule(res.data)
+        console.log(res.data);
+        
+        console.log("Load BookingUser Complete");
+      }
+      else {
+        console.log("Load BookingUser InComplete!!!!");
+      }
+    } else if(checkedRoom){
+      res = await ListBookingbyRoom(roomOne.Detail);
+      if (res) {
+        console.log("Load BookingRoom Complete");
+        schedule(res)
+      }
+      else {
+        console.log("Load BookingRoom InComplete");
+      }
+    } else{
+      listBooking();
     }
-    else{
-      console.log("Load Booking InComplete");
-    }
+    
   };
 
   const onChangeBuilding = async (e: SelectChangeEvent) =>{
@@ -100,37 +133,35 @@ function Bookings() {
     }
   };
 
-  const listBookingbyUser = async () => {
-    let res = await ListBookingbyUser(uid);
-    if (res.status) {
-      console.log(res.data);
-      schedule(res.data)
-      console.log("Load Booking Complete");
-    }
-    else{
-      console.log("Load Booking InComplete!!!!");
-    }
-  };
 
   useEffect(() => {
     setCurrentDate(new Date()); 
     listBuildings();  
     ListBooking(); 
-    listAllBooking();
+    listBooking();
   }, []);
 
   function schedule(book: BookingsInterface[]){
     setData([]); // clear data
     book.map((item) => {
-      const status = `${item?.Approve?.StatusBook?.Detail || "รอการอนุมัติ"}` ;
+      let status = "";
+      let statusBookID = 0;
+      if (item.DeletedAt === null){
+        status = `${item?.Approve?.StatusBook?.Detail || "รอการอนุมัติ"}` ;
+        statusBookID = parseInt(item?.Approve?.StatusBookID || "0");
+      } else {
+        status = `ถูกยกเลิก` ;
+        statusBookID = 3;
+      }
+      
       const notes = `รหัสการจอง: ${item.Code+""}\n` +
                     `จุดประสงค์ในการจอง: ${item.Objective?.Detail+""}\n` +
-                    `สถานะ: ${status || "รอการอนุมัติ"}`
+                    `สถานะ: ${status}`
       const x = {
         title: item.Room?.Detail +"",
         startDate: (moment(item.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
         endDate: (moment(item.Date_End, "YYYY-MM-DDTHH:mm:ssZ").toDate()) ,
-        statusID: item?.Approve?.StatusBookID || 0,
+        statusID: statusBookID,
         notes:  notes,
       };
       setData((data) => [...data, x]) // push data
@@ -148,6 +179,9 @@ function Bookings() {
       }, 
       {
         text: 'ไม่ได้รับการอนุมัติ', id: 2, color: '#ff5252',
+      }, 
+      {
+        text: 'ถูกยกเลิก', id: 3, color: '#9400D3',
       }],
   }];
 
@@ -158,7 +192,13 @@ function Bookings() {
       const dateStart = String(moment(info.Date_Start, "YYYY-MM-DDTHH:mm:ssZ").toDate());
       const dateEnd = String(moment(info.Date_End, "YYYY-MM-DDTHH:mm:ssZ").toDate());
       const name = `${info?.User?.FirstName} ${info?.User?.LastName}`
-      const status = info?.Approve?.StatusBook?.Detail || "รอการอนุมัติ";    
+      let status = "";
+      if (info?.DeletedAt === null){
+        status = `${info?.Approve?.StatusBook?.Detail || "รอการอนุมัติ"}` ;
+      } else {
+        status = `ถูกยกเลิก` ;
+      }
+      
         return(
             <tr>
                 <td>{info.ID}</td>
@@ -276,24 +316,61 @@ function Bookings() {
         </FormControl>
         </Grid>
 
-        <Grid item xs={12} justifyContent="center">
-            <Button
-                size="medium"
-                onClick= {ListBooking}
-                variant="contained"
-                color="primary"
-            >
-                Search
-            </Button>
-            <Button
-                style={{ float: "right" }}
-                size="medium"
-                onClick= {listBookingbyUser}
-                variant="contained"
-                color="primary"
-            >
-                เฉพาะของฉัน
-            </Button>
+        <Grid item xs={6} justifyContent="center">
+          <Button
+              size="medium"
+              onClick= {ListBooking}
+              variant="contained"
+              color="primary"
+          >
+              Search
+          </Button>
+        </Grid>
+        <Grid item xs={6} justifyContent="center">
+          <FormControlLabel control={
+            <Checkbox defaultChecked checked={checkedUser} 
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setCheckedUser(event.target.checked);
+                  setCheckedAll(false);
+                  setCheckedRoom(false);
+                }} sx={{
+                  color: '#3300FF',
+                  '&.Mui-checked': {
+                    color: '#3300FF',
+                  },
+                }}
+            />
+            } label="เฉพาะของฉัน" />
+            <FormControlLabel control={
+            <Checkbox defaultChecked checked={checkedAll} 
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setCheckedAll(event.target.checked);
+                  setCheckedRoom(false);
+                  setCheckedUser(false);
+                }} sx={{
+                  color: '#3300FF',
+                  '&.Mui-checked': {
+                    color: '#3300FF',
+                  },
+                }}
+            />
+            } label="แสดงทั้งหมด" />
+            <FormControlLabel control={
+            <Checkbox defaultChecked checked={checkedRoom} 
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  setCheckedAll(false);
+                  setCheckedRoom(event.target.checked);
+                  setCheckedUser(false);
+                }} sx={{
+                  color: '#3300FF',
+                  '&.Mui-checked': {
+                    color: '#3300FF',
+                  },
+                }}
+            />
+            } label="แสดงเฉพาะห้อง" />
+                
+                
         </Grid>
       </Grid>
       </Paper>

@@ -256,7 +256,6 @@ function BookingCreate() {
               label="เวลาสิ้นสุดการจอง"
               value={booking.Date_End}
               minDateTime={booking.Date_Start}
-              // inputFormat={"yyyy-dd-MM HH:mm:ss zz"}
               onChange={(newValue) => {
                 setBooking({
                   ...booking,

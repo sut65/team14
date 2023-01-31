@@ -240,7 +240,7 @@ function ApproveCreate() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 required
-                id="Code"
+                id="ApproveCode"
                 type="string"
                 label="รหัสการอนุมัติ (Ap ตามด้วยตัวเลข5ตัว)"
                 inputProps={{
@@ -291,7 +291,7 @@ function ApproveCreate() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 required
-                id="Code"
+                id="BookingCode1"
                 type="string"
                 label="กรุณาเลือกรหัสการจองใช้ห้อง"
                 inputProps={{
@@ -305,9 +305,9 @@ function ApproveCreate() {
 
           <Grid item xs={3} >
             <FormControl required fullWidth >
-              <InputLabel id="Code">กรุณาเลือกรหัสการจอง</InputLabel>
+              <InputLabel id="BookingCode">กรุณาเลือกรหัสการจอง</InputLabel>
               <Select
-                labelId="Code"
+                labelId="BookingCode2"
                 label="กรุณาเลือกรหัสการจอง *"
                 onChange={(e: SelectChangeEvent)=>(setCode(e.target.value))}
               >

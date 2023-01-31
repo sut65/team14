@@ -5,6 +5,7 @@ import { UsersInterface } from "./IUser";
 
 export interface BookingsInterface {
     ID?: string,
+    DeletedAt?: Date| null,
     
     Code?: string,
     Date_Start?: Date | null;
