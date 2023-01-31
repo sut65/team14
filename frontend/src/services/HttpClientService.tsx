@@ -1176,6 +1176,28 @@ async function UpdateBooking(data: BookingsInterface) {
   return res;
 }
 
+async function DeleteBooking(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
 async function GetObjective(id: any) {
   const requestOptions = {
     method: "GET",
@@ -1201,7 +1223,7 @@ async function GetObjective(id: any) {
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
-    GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, UpdateBooking,
+    GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, UpdateBooking, DeleteBooking,
     ListRoomsbyBuilding, GetRoom, 
     ListBuildings, GetBuilding,
     ListObjectives, GetObjective,

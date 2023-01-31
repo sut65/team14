@@ -10,7 +10,7 @@ import {
   ListBookingbyRoom, ListBookingbyUser, ListBookings, ListBuildings, ListRoomsbyBuilding, 
 } from "../services/HttpClientService";
 import moment from "moment";
-import { AppointmentModel, Color, ViewState } from '@devexpress/dx-react-scheduler';
+import { AppointmentModel, ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   WeekView,

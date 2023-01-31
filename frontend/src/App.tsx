@@ -52,6 +52,7 @@ import BookingUpdate from "./components/BookingUpdate";
 import Button from "@mui/material/Button";
 import Order_food from "./components/Order_food";
 import OrderCreate from "./components/OrderCreate";
+import BookingDelete from "./components/BookingDelete";
 
 const drawerWidth = 260;
 
@@ -238,6 +239,7 @@ return (
                 <Route path="/bookings" element={<Booking />} />
                 <Route path="/booking/create" element={<BookingCreate />} />
                 <Route path="/booking/update" element={<BookingUpdate />} />
+                <Route path="/booking/delete" element={<BookingDelete />} />
 
                 <Route path="/users" element={<User />} />
                 <Route path="/user/create" element={<UserCreate />} />
