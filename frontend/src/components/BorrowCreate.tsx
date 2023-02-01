@@ -36,7 +36,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function BorrowCreate() {
   const uid = localStorage.getItem("userID")
-    const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
+    const [borrow, setBorrow] = React.useState<BorrowsInterface>({
+      BorrowNote1: "",BorrowAPNote:"",
+      Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
@@ -75,7 +77,14 @@ function BorrowCreate() {
       setBorrow({ ...borrow, [id]: value, });
       console.log(`[${id}]: ${value}`);
     }; 
-
+    
+    const handleChange = (event: SelectChangeEvent) => {
+            const name = event.target.name as keyof typeof borrow;
+            const value = event.target.value;
+            setBorrow({...borrow,[name]: value,});
+            console.log(`[${name}]: ${value}`);
+          };
+          
     const onChangeDevicebyType = async (e: SelectChangeEvent) =>{
       const did = e.target.value;
       let res = await ListTypebyDevice(did);
@@ -88,17 +97,6 @@ function BorrowCreate() {
       }
       
   }
-
-    // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
-    //     const did = e.target.value;
-    //     let res = await listDevices(did);
-    //     if (res) {
-    //         setDevices(res);     //////////////
-    //       console.log("Load Device Complete");
-    //     }
-    //     else{
-    //       console.log("Load Device Incomplete!!!");
-    //     } }
 
     const listApproves = async () => {
         let res = await ListApproves();
@@ -154,47 +152,41 @@ function BorrowCreate() {
         } 
       }
 
-      const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof borrow;
-        const value = event.target.value;
-        setBorrow({
-          ...borrow,
-          [name]: value,
-        });
-        console.log(`[${name}]: ${value}`);
-      };
-
     async function submit() {
         let data = {
             Timeofborrow: borrow.Timeofborrow,
-            AdminID: (uid+""),
-            DeviceID: (borrow.DeviceID)+"",
-            DeviceTypeID: (borrow.DeviceTypeID)+"",
-            ApproveID: (appid)+"",
+
+            BorrowNote1: borrow.BorrowNote1,
+            BorrowAPNote:borrow.BorrowAPNote,
+
+            AdminID: (user.ID),
+            DeviceID: (borrow.DeviceID),
+            //DeviceTypeID: (borrow.DeviceTypeID)+ "",
+            ApproveID: (approves.ID),
 
         };
         console.log(data)
         let res = await CreateBorrow(data);
+        console.log(res)
           if (res.status) {
+            //setAlertMessage("บันทึกสำเร็จ")
             setSuccess(true);
             setErrorMessage("");
         } else {
             setError(true);
             setErrorMessage(res.data);
         }
+        
     }
 
+    function onChangedevice(e: SelectChangeEvent<string>) {
+      throw new Error("Function not implemented.");
+        }    
     ///////////////////////////////search/////////////////////////
-
     useEffect(() => {
         listDeviceType();
         listApproves();
-        getUser();
-    }, []);
-
-  function onChangedevice(e: SelectChangeEvent<string>) {
-    throw new Error("Function not implemented.");
-  }
+        getUser();},[]);
 
     return (
         <Container maxWidth="md">
@@ -211,7 +203,7 @@ function BorrowCreate() {
      
           <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ
+            บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
             </Alert>
           </Snackbar>
      
@@ -241,14 +233,10 @@ function BorrowCreate() {
                     sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
                     noValidate autoComplete="off">
                     <TextField id="outlined-basic" label="No.Approve" variant="outlined" 
-                    onChange={(e) => {setAppid(e.target.value)
-                        }
-                      }
+                    onChange={(e) => {setAppid(e.target.value)}}
                     />
                 </Box>
-
                       {/* //////////////////////////// */}
-            
                 <Button
                     style={{ float: "right" }}
                      size="small"
@@ -258,6 +246,39 @@ function BorrowCreate() {
                 >
                     Search ApproveID
                 </Button>
+
+                <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="BorrowAPNote"
+                type="string"
+                label="กรุณากรอกAP12345"
+                inputProps={{
+                  name: "BorrowAPNote",
+                }}
+                value={borrow.BorrowAPNote + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="BorrowNote1"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
+                inputProps={{
+                  name: "BorrowNote1",
+                }}
+                value={borrow.BorrowNote1 + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
                
 
             <Grid container spacing={2}>

@@ -15,7 +15,7 @@ func CreateBorrow(c *gin.Context) {
 	var device entity.Device
 	var approve entity.Approve
 	var admin entity.User
-	var devicetype entity.DeviceType
+	// var devicetype entity.DeviceType
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร borrow
 	if err := c.ShouldBindJSON(&borrow); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -34,11 +34,11 @@ func CreateBorrow(c *gin.Context) {
 		return
 	}
 
-	// ค้นหา devicetype ด้วย id
-	if tx := entity.DB().Where("id = ?", borrow.DeviceTypeID).First(&devicetype); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบประเภทอุปกรณ์"})
-		return
-	}
+	// // ค้นหา devicetype ด้วย id
+	// if tx := entity.DB().Where("id = ?", borrow.DeviceTypeID).First(&devicetype); tx.RowsAffected == 0 {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบประเภทอุปกรณ์"})
+	// 	return
+	// }
 
 	// ค้นหา Approve ด้วย id
 	if tx := entity.DB().Where("id = ?", borrow.ApproveID).First(&approve); tx.RowsAffected == 0 {
@@ -49,10 +49,14 @@ func CreateBorrow(c *gin.Context) {
 	//สร้าง borrow
 	bod := entity.Borrow{
 		Timeofborrow: borrow.Timeofborrow,
+
+		BorrowNote1: borrow.BorrowNote1,
+		BorrowAPNote: borrow.BorrowAPNote,
+
 		Admin:   admin,
 		Device:  device,
 		Approve: approve,
-		DeviceType: devicetype,
+		// DeviceType: devicetype,
 	}
 
 	// ขั้นตอนการ validate
@@ -60,6 +64,7 @@ func CreateBorrow(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	
 	// บันทึก
 	if err := entity.DB().Create(&bod).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

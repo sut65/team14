@@ -6,13 +6,15 @@ import { DeviceTypesInterface } from "./IDeviceType";
 export interface BorrowsInterface {
     ID?: string,
     Timeofborrow: Date | null;
+    BorrowNote1: string | null;
+    BorrowAPNote: string |null;
 
-    Admin?: string | null;
+    AdminID?: string | null;
     DeviceID?: string | null;
-    DeviceTypeID?: string | null;
+    //DeviceTypeID?: string | null;
     ApproveID?: string | null;
 
-    User?: UsersInterface;
+    Admin?: UsersInterface;
     Device?: DevicesInterface;
     Approve?: ApprovesInterface;
 

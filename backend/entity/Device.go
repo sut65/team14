@@ -25,7 +25,7 @@ type DeviceType struct {
 	gorm.Model
 	DeviceTypeDetail string `gorm:"uniqueIndex"`
 	Device []Device `gorm:"foreignkey:DeviceTypeID"`
-	Borrow []Borrow `gorm:"foreignkey:DeviceTypeID"`
+	//Borrow []Borrow `gorm:"foreignkey:DeviceTypeID"`
 }
 
 type Brand struct {
