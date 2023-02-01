@@ -50,8 +50,4 @@ func init() {
 		// ย้อนหลังไม่เกิน 1 วัน
 		return t.After(time.Now().AddDate(0, 0, -1))
 	})
-	govalidator.CustomTypeTagMap.Set("DelayNow5Min", func(i interface{}, context interface{}) bool {
-		t := i.(time.Time)
-		return t.After(time.Now().Add(5 - time.Minute))
-	})
 }
