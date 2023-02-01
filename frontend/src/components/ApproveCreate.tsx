@@ -241,7 +241,7 @@ function ApproveCreate() {
             <FormControl fullWidth variant="outlined">
               <TextField
                 required
-                id="ApproveCode"
+                id="Code"
                 type="string"
                 label="รหัสการอนุมัติ (Ap ตามด้วยตัวเลข5ตัว)"
                 inputProps={{
@@ -267,9 +267,10 @@ function ApproveCreate() {
           <Grid item xs={8} ><p>รหัสการจองใช้ห้อง</p></Grid>
           <Grid item xs={4} >
             <FormControl required fullWidth> 
-              <InputLabel id="StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
+              <InputLabel id="menu-StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
               <Select
-                labelId="StatusBookID"
+                id="StatusBookID"
+                value={approve.StatusBookID || ""}
                 label="กรุณาเลือกสถานะการจองใช้ห้อง *"
                 onChange={handleChange}
                 inputProps={{
@@ -288,7 +289,7 @@ function ApproveCreate() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={3} >
+          {/* <Grid item xs={3} >
             <FormControl fullWidth variant="outlined">
               <TextField
                 required
@@ -302,18 +303,19 @@ function ApproveCreate() {
                 onChange={(e) => setCode(e.target.value)}
               />
             </FormControl>
-          </Grid>
+          </Grid> */}
 
-          <Grid item xs={3} >
-            <FormControl required fullWidth >
+          <Grid item xs={6} >
+            <FormControl required fullWidth id="BookingCode">
               <InputLabel id="BookingCode">กรุณาเลือกรหัสการจอง</InputLabel>
               <Select
-                labelId="BookingCode2"
+                id="BookingCode"
+                value={code || ""}
                 label="กรุณาเลือกรหัสการจอง *"
                 onChange={(e: SelectChangeEvent)=>(setCode(e.target.value))}
               >
                 {bookings.map((item: BookingsInterface) => {
-                  if (item.Approve == null) {
+                  if (item.Approve == null && item.DeletedAt == null) {
                     return(<MenuItem
                       key={item.ID}
                       value={item.Code}

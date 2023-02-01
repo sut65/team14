@@ -210,17 +210,17 @@ function BookingCreate() {
         <Grid item xs={12} >รหัสการจองใช้ห้อง</Grid>
           <Grid item xs={10} >
             <FormControl fullWidth variant="outlined">
-                <TextField
-                     required
-                     id="Code"
-                     type="string"
-                     label="รหัสการจองใช้ห้อง (Bk ตามด้วยตัวเลข5ตัว)"
-                     inputProps={{
-                       name: "Code",
-                     }}
-                    value={booking.Code + ""}
-                    onChange={handleChange_Text}
-                />
+              <TextField
+                required
+                id="Code"
+                type="string"
+                label="รหัสการจองใช้ห้อง (Bk ตามด้วยตัวเลข5ตัว)"
+                inputProps={{
+                  name: "Code",
+                }}
+                value={booking.Code + ""}
+                onChange={handleChange_Text}
+              />
             </FormControl>
           </Grid>
 
@@ -272,7 +272,7 @@ function BookingCreate() {
 
           <Grid item xs={6} >
           <p>ตึก</p>
-          <FormControl required fullWidth>
+          <FormControl required fullWidth >
             <InputLabel id="menu-BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
               id="BuildingID"
@@ -323,7 +323,7 @@ function BookingCreate() {
           <Grid item xs={12} >
           <p>จุดประสงค์ในการจอง</p>
           <FormControl required fullWidth id="ObjectiveID">
-            <InputLabel id="BuildingID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
+            <InputLabel id="ObjectiveID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
             <Select
               id="ObjectiveID"
               value={booking.ObjectiveID || ""}
