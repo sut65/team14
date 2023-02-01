@@ -31,6 +31,12 @@ function Borrows() {
             valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
         },
         {
+          field: "DeviceTypeID",
+          headerName: "ประเภทอุปกรณ์",
+          width: 120,
+          valueFormatter: (params) => params.value.Detail,
+      },
+        {
             field: "DeviceID",
             headerName: "อุปกรณ์",
             width: 120,

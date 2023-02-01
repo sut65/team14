@@ -11,8 +11,6 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -29,7 +27,6 @@ import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { DeviceTypesInterface } from "../models/IDeviceType";
-import { containerClasses } from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -154,9 +151,7 @@ function BorrowCreate() {
 
     async function submit() {
         let data = {
-            //Date_Start: format(borrow?.Date_Start as Date, 'yyyy-dd-MM HH:mm:ss zz'),
             Timeofborrow: borrow.Timeofborrow,
-
             AdminID: (borrow.User),
             DeviceID: (borrow.DeviceID),
             DeviceTypeID: (borrow.DeviceTypeID),
@@ -164,13 +159,6 @@ function BorrowCreate() {
 
         };
         console.log(data)
-        // let res = await CreateBorrow(data);
-        // console.log(res);
-        // if (res) {
-        //     setSuccess(true);
-        // } else {
-        //     setError(true);
-        // }
     }
 
     ///////////////////////////////search/////////////////////////
