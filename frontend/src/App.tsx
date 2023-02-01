@@ -53,6 +53,7 @@ import Button from "@mui/material/Button";
 import Order_food from "./components/Order_food";
 import OrderCreate from "./components/OrderCreate";
 import BookingDelete from "./components/BookingDelete";
+import DeviceCreate from "./components/DeviceCreate";
 
 const drawerWidth = 260;
 
@@ -270,7 +271,7 @@ return (
                 <Route path="/payback/create" element={<PaybackCreate />} />
 
                 <Route path="/devices" element={<Device />} />
-                {/* <Route path="/payback/create" element={<PaybackCreate />} /> */}
+                <Route path="/device/create" element={<DeviceCreate />} />
 
 
               </Routes> 

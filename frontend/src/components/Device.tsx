@@ -11,13 +11,12 @@ import { DevicesInterface } from "../models/IDevice";
 import { DeviceTypesInterface } from "../models/IDeviceType";
 import { BrandsInterface } from "../models/IBrand";
 import { ListDevices } from "../services/HttpClientService";
+import { ListDeviceType } from "../services/HttpClientService";
 
 
 function Devices() {
 
     const [device, setDevices] = React.useState<DevicesInterface[]>([]);
-    const [devicetype, setDeviceTypes] = React.useState<DeviceTypesInterface[]>([]);
-    const [brand, setBrands] = React.useState<BrandsInterface[]>([]);
    
    
     const listdevices = async () => {
@@ -26,6 +25,12 @@ function Devices() {
             setDevices(res);
         }
     };
+    // const listdevicetypes = async () => {
+    //   let res = await ListDeviceType();
+    //   if (res) {
+    //       setDevices(res);
+    //   }
+    // };
    
    
       
@@ -36,11 +41,11 @@ function Devices() {
      
         { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 100},
      
-        { field: "StatusDevice", headerName: "สถานะ", width: 200},
+        { field: "StatusDevice", headerName: "สถานะ", width: 200 },
      
-        { field: "DevicetypeDetail", headerName: "ประเภท", width: 200},
+        { field: "DeviceType", headerName: "ประเภท", width: 200, valueFormatter: (params) => params.value.DeviceTypeDetail },
 
-        { field: "BrandDetail", headerName: "ยี่ห้อ", width: 200},
+        { field: "Brand", headerName: "ยี่ห้อ", width: 200, valueFormatter: (params) => params.value.BrandDetail},
      
         
       ];
@@ -49,6 +54,7 @@ function Devices() {
       useEffect(() => {
      
         listdevices();
+        //listdevicetypes();
      
       }, [])
 
@@ -75,40 +81,20 @@ function Devices() {
               </Box>
      
               <Box>
-                {/* <Button
+                <Button
                   component={RouterLink}
-                  to="/building/create"
+                  to="/device/create"
                   variant="contained"
                   color="primary"
                 >
                   Update Device
-                </Button> */}
+                </Button>
               </Box>
             </Box>
      
             <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
               <DataGrid
                 rows={device}
-                getRowId={(row) => row.ID}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            </div>
-
-            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-              <DataGrid
-                rows={devicetype}
-                getRowId={(row) => row.ID}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            </div>
-
-            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-              <DataGrid
-                rows={brand}
                 getRowId={(row) => row.ID}
                 columns={columns}
                 pageSize={5}

@@ -41,6 +41,23 @@ func CreateBooking(c *gin.Context) {
 		return
 	}
 
+	//สร้าง Booking
+	bod := entity.Booking{
+		Code:       booking.Code,
+		Date_Start: booking.Date_Start,
+		Date_End:   booking.Date_End,
+
+		User:      user,
+		Objective: objective,
+		Room:      Room,
+	}
+
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(bod); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	// ถ้าเจอ   ก็คือ เวลาชนกัน --> ไปเช็คว่าการจองนั้นได้รับอนุมัติไหม
 	// ถ้าไม่เจอ ก็คือ *ไม่เวลาชนกัน* หรือ *ถูกยกเลิกไปแล้ว*
 	var checkDate entity.Booking
@@ -78,23 +95,6 @@ func CreateBooking(c *gin.Context) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "หมายเลขห้องนี้ถูกจองใช้ห้องไปแล้ว"})
 			return
 		}
-	}
-
-	//สร้าง Booking
-	bod := entity.Booking{
-		Code:       booking.Code,
-		Date_Start: booking.Date_Start,
-		Date_End:   booking.Date_End,
-
-		User:      user,
-		Objective: objective,
-		Room:      Room,
-	}
-
-	// ขั้นตอนการ validate
-	if _, err := govalidator.ValidateStruct(bod); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
 	}
 
 	// บันทึก
