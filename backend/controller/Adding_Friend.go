@@ -41,6 +41,9 @@ func CreateAdding_Friend(c *gin.Context) {
 
 	//สร้าง Adding Friend
 	bod := entity.Adding_Friend{
+		Note:       add_friend.Note,
+		AddfriendTime: add_friend.AddfriendTime,
+
 		Approve: approve,
 		User:    user,
 		Admin:   admin,

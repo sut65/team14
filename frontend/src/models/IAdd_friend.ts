@@ -8,6 +8,9 @@ export interface Add_friendInterface {
     ApproveID?: string | null;
     AdminID?: string | null;
 
+    Note?: string | "";
+    AddfriendTime?: Date | null;
+
     User?: UsersInterface;
     Approve?: ApprovesInterface;
     Amin?: UsersInterface;

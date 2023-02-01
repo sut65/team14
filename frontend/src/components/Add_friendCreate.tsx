@@ -12,12 +12,15 @@ import {BookingsInterface } from "../models/IBooking";
 import { Add_friendInterface } from "../models/IAdd_friend";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { CreateAdd_friend, GetBookingbyCodeThatApprove, ListApproves } from "../services/HttpClientService";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import Approves from "./Approve";
 import {  
   
   GetUser,
  
 } from "../services/HttpClientService";
+import { DateTimePicker } from "@mui/x-date-pickers";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -37,7 +40,9 @@ function Add_friendCreate(){
       ,Room: {Detail: "", Building:{Detail: "",}}
      
     });
-    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({});    
+    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({
+    Note: "",
+    AddfriendTime: new Date(),});    
     
     
     
@@ -64,6 +69,15 @@ function Add_friendCreate(){
       setSuccess(false);
       setError(false);
  };   
+
+ const handleChange_Text = (
+  event: React.ChangeEvent<{ id?: string; value: any }>
+) => {
+  const id = event.target.id as keyof typeof add_frind;
+  const { value } = event.target;
+  setAdd_friend({ ...add_frind, [id]: value, });
+  console.log(`[${id}]: ${value}`);
+}; 
 
   const getAdmin = async () => {
     const uid = localStorage.getItem("userID")
@@ -134,7 +148,10 @@ function Add_friendCreate(){
     let data = { 
       AdminID: (admin.ID),     
       ApproveID: (booking.Approve?.ID),
-      UserID: (user.ID),      
+      UserID: (user.ID), 
+      Note: add_frind.Note,
+      AddfriendTime: add_frind.AddfriendTime,
+
       
       
     };
@@ -147,6 +164,10 @@ function Add_friendCreate(){
       setError(true);
       setErrorMessage(res.data);
   }
+  setAdd_friend({
+    Note: "",
+    AddfriendTime: new Date(),
+  })
    
 }
 
@@ -328,6 +349,41 @@ return (
           </Button>
         </Grid>
         <Grid container spacing={1} sx={{ padding: 1 }}>
+          
+         <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="Note"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
+                inputProps={{
+                  name: "Note",
+                }}
+                value={add_frind.Note + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <p>เวลาที่เพิ่มเข้า</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรอกเวลาที่อนุมัติ"
+                value={add_frind.AddfriendTime}
+                onChange={(newValue) => {
+                  setAdd_friend({
+                    ...add_frind,
+                    AddfriendTime: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
           <Grid item xs={1}>
            <Stack direction="row" spacing={2}>
             <Button component={RouterLink}
@@ -352,6 +408,4 @@ return (
 }
 export default Add_friendCreate;
 
-function GetBookingbyCodeThaApprove(code: string) {
-  throw new Error("Function not implemented.");
-}
+

@@ -29,7 +29,12 @@ function Add_friend() {
         {field: "User",
             headerName: "เพื่อนที่เพิ่มเข้า",
             width: 200,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
+            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},    
+        { 
+          field: "AddfriendTime", headerName: "เวลาที่อนุมัติ", width: 200,
+          valueFormatter: (params) => `${new Date(params.value)}`,
+        },
+        { field: "Note", headerName: "Note", width: 150 },    
         { field: "AdminID", headerName: "Admin ID", width: 150 },
         { field: "Admin", headerName: "ผู้ที่เพิ่มเข้า",
             width: 200,

@@ -43,8 +43,7 @@ function OrderCreate(){
       ,Room: {Detail: "", Building:{Detail: "",}}
      
     });
-    const [order_food, setOrder_food] = useState<Order_foodInterface>({}); 
-    //const [toltold, setToltold] = useState<Order_foodInterface[]>([]);
+    const [order_food, setOrder_food] = useState<Order_foodInterface>({});     
     const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
     const [totold, setValue] = useState<number | string | Array<number | string>>(
         0,
