@@ -35,11 +35,10 @@ func CreateBorrow(c *gin.Context) {
 	}
 
 	// ค้นหา devicetype ด้วย id
-	if tx := entity.DB().Where("id = ?", borrow.DeviceType).First(&devicetype); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", borrow.DeviceTypeID).First(&devicetype); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบประเภทอุปกรณ์"})
 		return
 	}
-
 
 	// ค้นหา Approve ด้วย id
 	if tx := entity.DB().Where("id = ?", borrow.ApproveID).First(&approve); tx.RowsAffected == 0 {
@@ -49,6 +48,7 @@ func CreateBorrow(c *gin.Context) {
 
 	//สร้าง borrow
 	bod := entity.Borrow{
+		Timeofborrow: borrow.Timeofborrow,
 		Admin:   admin,
 		Device:  device,
 		Approve: approve,

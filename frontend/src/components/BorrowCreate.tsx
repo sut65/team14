@@ -35,6 +35,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BorrowCreate() {
+  const uid = localStorage.getItem("userID")
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
@@ -45,9 +46,14 @@ function BorrowCreate() {
     const [appid, setAppid] = React.useState("");
 
     const [success, setSuccess] = React.useState(false);
+    const [errorSearch, setErrorSearch] = useState(false);
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
-
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
 
     const handleClose = (
         event?: React.SyntheticEvent | Event,
@@ -60,6 +66,15 @@ function BorrowCreate() {
         setSuccess(false);
         setError(false);
     };  
+
+    const handleChange_Text = (
+      event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+      const id = event.target.id as keyof typeof borrow;
+      const { value } = event.target;
+      setBorrow({ ...borrow, [id]: value, });
+      console.log(`[${id}]: ${value}`);
+    }; 
 
     const onChangeDevicebyType = async (e: SelectChangeEvent) =>{
       const did = e.target.value;
@@ -152,13 +167,21 @@ function BorrowCreate() {
     async function submit() {
         let data = {
             Timeofborrow: borrow.Timeofborrow,
-            AdminID: (borrow.User),
-            DeviceID: (borrow.DeviceID),
-            DeviceTypeID: (borrow.DeviceTypeID),
-            ApproveID: (borrow.ApproveID),
+            AdminID: (uid+""),
+            DeviceID: (borrow.DeviceID)+"",
+            DeviceTypeID: (borrow.DeviceTypeID)+"",
+            ApproveID: (appid)+"",
 
         };
         console.log(data)
+        let res = await CreateBorrow(data);
+          if (res.status) {
+            setSuccess(true);
+            setErrorMessage("");
+        } else {
+            setError(true);
+            setErrorMessage(res.data);
+        }
     }
 
     ///////////////////////////////search/////////////////////////
@@ -294,8 +317,9 @@ function BorrowCreate() {
                   <Select
                     labelId="DeviceTypeID"
                     label="กรุณาเลือกประเภทอุปกรณ์ *"
-                    onChange={ (onChangeDevicebyType) }
+                    onChange={(e: SelectChangeEvent) => {onChangeDevicebyType(e);handleChange(e)} }
                     inputProps={{name: "DeviceTypeID",}}
+
                   >
                     {devicetypes.map((item: DeviceTypesInterface) => (
                       <MenuItem 
@@ -317,7 +341,7 @@ function BorrowCreate() {
                     <Select
                       labelId="DeviceID"
                       label="กรุณาเลือกอุปกรณ์ *"
-                      onChange={ (onChangeDevicebyType) }
+                      onChange={ (handleChange) }
                       inputProps={{name: "DeviceID",}}
                     >
                     {devices.map((item: DevicesInterface) => (
