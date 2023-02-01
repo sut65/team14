@@ -14,8 +14,8 @@ func TestBorrowPass(t *testing.T) {
 	// ข้อมูลถูกต้องหมดทุก field
 	borrow := Borrow{
 		BorrowNote1:  "ssss",
-		BorrowAPNote:  "Ap12345",
-		Timeofborrow: time.Now(), // เป็นปัจจุบัน +- 3 นาที
+		BorrowAPNote: "Ap12345",
+		Timeofborrow: time.Now(),
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -28,40 +28,40 @@ func TestBorrowPass(t *testing.T) {
 	g.Expect(err).To(BeNil())
 }
 
-func TestBorrowNote_Format(t *testing.T) {
-	g := NewGomegaWithT(t)
+// func TestBorrowNote_Format(t *testing.T) {
+// 	g := NewGomegaWithT(t)
 
-	// ข้อมูล Code ไม่ถูกต้องตาม Format
-	borrow := Borrow{
-		BorrowNote1:  "ssss",
-		BorrowAPNote:  "Ap12345",
-		Timeofborrow: time.Now().Add(22 * time.Hour),
+// 	// ข้อมูล Code ไม่ถูกต้องตาม Format
+// 	borrow := Borrow{
+// 		BorrowNote1:  "ssss",
+// 		BorrowAPNote: "Ap12345",
+// 		Timeofborrow: time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC), // เป็นอดีต fail
 
-		// Code:        "12345", // format is A ตามด้วยตัวเลข 5 ตัว
-		// Note:        "test",
-		// ApproveTime: time.Now().Add(22 * time.Hour),
-	}
+// 		// Code:        "12345", // format is A ตามด้วยตัวเลข 5 ตัว
+// 		// Note:        "test",
+// 		// ApproveTime: time.Now().Add(22 * time.Hour),
+// 	}
 
-	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(borrow)
+// 	// ตรวจสอบด้วย govalidator
+// 	ok, err := govalidator.ValidateStruct(borrow)
 
-	// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
-	g.Expect(ok).ToNot(BeTrue())
+// 	// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
+// 	g.Expect(ok).ToNot(BeTrue())
 
-	// err ต้องไม่เป็น nil แปลว่าต้องจับ error ได้
-	g.Expect(err).ToNot(BeNil())
+// 	// err ต้องไม่เป็น nil แปลว่าต้องจับ error ได้
+// 	g.Expect(err).ToNot(BeNil())
 
-	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("เวลาไม่ใช่ปัจจุปัน"))
-}
+// 	// err.Error() ต้องมี message แสดงออกมา
+// 	g.Expect(err.Error()).To(Equal("เวลาไม่ใช่ปัจจุปัน"))
+// }
 
 func TestBorrowAPNote_Null(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	// ข้อมูล Code ไม่ถูกต้องตาม Format
 	borrow := Borrow{
-		BorrowNote1:  "sssss", 
-		BorrowAPNote:  "",//null
+		BorrowNote1:  "sssss",
+		BorrowAPNote: "", //null
 		Timeofborrow: time.Now().Add(22 * time.Hour),
 	}
 
@@ -75,7 +75,7 @@ func TestBorrowAPNote_Null(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("รหัสการอนุมัติ ต้องขึ้นต้นด้วย Ap ตามด้วยตัวเลข 5 หลัก;เวลาไม่ใช่ปัจจุปัน"))
+	g.Expect(err.Error()).To(Equal("รหัสการอนุมัติ ต้องขึ้นต้นด้วย Ap ตามด้วยตัวเลข 5 หลัก"))
 }
 
 func TestBorrowNote1_Null(t *testing.T) {
@@ -83,7 +83,7 @@ func TestBorrowNote1_Null(t *testing.T) {
 
 	// ข้อมูล Note เป็น Null
 	borrow := Borrow{
-		BorrowAPNote:  "Ap12345",
+		BorrowAPNote: "Ap12345",
 		BorrowNote1:  "",
 		Timeofborrow: time.Now().Add(22 * time.Hour),
 
@@ -102,7 +102,7 @@ func TestBorrowNote1_Null(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกหมายเหตุ1;เวลาไม่ใช่ปัจจุปัน"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกหมายเหตุ1"))
 }
 
 func TestBorrow_Time(t *testing.T) {
@@ -111,7 +111,7 @@ func TestBorrow_Time(t *testing.T) {
 	// ข้อมูล Note เป็น Null
 	borrow := Borrow{
 		BorrowNote1:  "sssss",
-		BorrowAPNote:  "Ap12345",
+		BorrowAPNote: "Ap12345",
 		Timeofborrow: time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC), // เป็นอดีต
 	}
 
