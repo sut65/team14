@@ -6,15 +6,15 @@ import (
 
 type Device struct {
 	gorm.Model
-	Detail string `gorm:"uniqueIndex"`
+	Detail string `gorm:"uniqueIndex" valid:"required~Name cannot be blank"` 
 
 
 	StatusDevice	bool	
 
-	Brand   Brand `gorm:"references:id" valid:"-"`
+	Brand   Brand `gorm:"references:id" valid:"required~Name cannot be blank"`
 	BrandID *uint
 	
-	DeviceType   DeviceType `gorm:"references:id" valid:"-"`
+	DeviceType   DeviceType `gorm:"references:id" valid:"required~Name cannot be blank"`
 	DeviceTypeID *uint
 	
 	Borrow []Borrow `gorm:"foreignKey:DeviceID"`

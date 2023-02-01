@@ -11,5 +11,5 @@ export interface DevicesInterface {
     BrandID?: string | null,
 
     DeviceType?: DeviceTypesInterface
-    BrandType?: BrandsInterface
+    Brand?: BrandsInterface
 }

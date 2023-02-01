@@ -9,6 +9,7 @@ import { SigninInterface } from "../models/ISignin";
 import { TyperoomsInterface } from "../models/ITyperoom";
 import { UsersInterface } from "../models/IUser";
 import { Add_friendInterface } from "../models/IAdd_friend";
+import { DevicesInterface } from "../models/IDevice";
 
 const apiUrl = "http://localhost:8080";
 
@@ -312,6 +313,29 @@ async function ListDeviceType() {
   
 
   let res = await fetch(`${apiUrl}/device_types`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListBrand() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/brands`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1220,6 +1244,29 @@ async function GetObjective(id: any) {
   return res;
 }
 
+async function CreateDevice(data: DevicesInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/device`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
@@ -1236,5 +1283,5 @@ export{
     ListStatusBooks,
     ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
-    ListOrders,CreateOrder,DeleteOrder,
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,
 }
