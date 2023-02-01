@@ -41,37 +41,40 @@ func CreateBooking(c *gin.Context) {
 		return
 	}
 
-	// ถ้าเจอ   ก็คือ การจองห้องที่ยังไม่ถูกยกเลิก เวลาชนกัน --> ไปเช็คว่าการจองนั้นได้รับอนุมัติไหม
-	// ถ้าไม่เจอ if-else
+	// ถ้าเจอ   ก็คือ เวลาชนกัน --> ไปเช็คว่าการจองนั้นได้รับอนุมัติไหม
+	// ถ้าไม่เจอ ก็คือ *ไม่เวลาชนกัน* หรือ *ถูกยกเลิกไปแล้ว*
 	var checkDate entity.Booking
 	if err := entity.DB().
 		Raw("select b.* from "+
-			"rooms r inner join bookings b on r.id = b.room_id "+
-			"where not(datetime(b.date_start) >= ? "+ /*END*/
-			"or datetime(b.date_end) <= ?) and b.deleted_at is NULL "+ /*Start*/
-			"ORDER BY id DESC LIMIT 1 ", booking.Date_End, booking.Date_Start).
+			"rooms r inner join bookings b on r.id = ? and b.room_id = r.id "+
+			"where datetime(b.date_start) >= datetime(?) "+ /*Start*/
+			"and datetime(b.date_end) <= datetime(?) and b.deleted_at is NULL "+ /*END*/
+			"ORDER BY id DESC LIMIT 1 ", Room.ID, booking.Date_Start, booking.Date_End).
 		Scan(&checkDate).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if !(checkDate.ID == '0' || checkDate.ID == 0) {
+	if checkDate.ID != 0 {
 		// เอา booking ที่เจอไปค้นหา
-		// ถ้าเจอ   การจองนั้น *ไม่ได้รับอนุมัติ* หรือ *ถูกยกเลิกไปแล้ว* **ไม่เข้า if-else**
-		// ถ้าไม่เจอ ก็คือ table booking ยังไม่มีการจองเกิดขึ้น *หรือ* การจองนั้นได้รับอนุมัติไปแล้ว *หรือ* การจองนั้นรอการได้รับการอนุมัติ
+		// ถ้าเจอ ก็คือ การจองนั้นได้รับอนุมัติไปแล้ว *หรือ* การจองนั้นรอการได้รับการอนุมัติ
+		// ถ้าไม่เจอ   การจองนั้น *ไม่ได้รับอนุมัติ* **ไม่เข้า if-else**
+
 		var checkApprove entity.Booking
+		// if *checkDate.Approve.StatusBookID == 1 || *checkDate.Approve.StatusBookID == 0 {
+		// 	c.JSON(http.StatusBadRequest, gin.H{"error": "หมายเลขห้องนี้ถูกจองใช้ห้องไปแล้ว"})
+		// 	return
+		// }
 		if err := entity.DB().
-			Raw("select b.* from "+
-				"rooms r inner join bookings b on r.id = b.room_id "+
-				"inner join approves a on a.booking_id = b.id and a.status_book_id = 2 "+ //ได้รับการอนุมัติแล้ว
-				"where not(datetime(b.) >= ? "+ /*END*/
-				"or datetime(b.date_end) <= ?) and b.id = ? or b.deleted_at is not NULL "+ /*Start*/
-				"ORDER BY id DESC LIMIT 1;", checkDate.Date_End, checkDate.Date_Start, checkDate.ID).
+			Raw("select b.* from bookings b "+
+				"inner join approves a on a.booking_id = b.id  "+ //ไม่ได้รับการอนุมัติ
+				"WHERE a.status_book_id = 2 and a.booking_id = ? "+
+				"ORDER BY id DESC LIMIT 1;", checkDate.ID).
 			Scan(&checkApprove).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
-		if checkApprove.ID == '0' || checkApprove.ID == 0 {
+		if checkApprove.ID == 0 {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "หมายเลขห้องนี้ถูกจองใช้ห้องไปแล้ว"})
 			return
 		}
@@ -259,6 +262,26 @@ func UpdateBooking(c *gin.Context) {
 	// ค้นหา booking ด้วย id
 	if tx := entity.DB().Where("id = ?", booking.ID).First(&booking); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Booking not found"})
+		return
+	}
+	var user entity.User
+	var objective entity.Objective
+	var Room entity.Room
+	// ค้นหา user ด้วย id
+	if tx := entity.DB().Where("id = ?", booking.UserID).First(&user); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
+		return
+	}
+
+	// ค้นหา objective ด้วย id
+	if tx := entity.DB().Where("id = ?", booking.ObjectiveID).First(&objective); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรายละเอียดการจอง"})
+		return
+	}
+
+	// ค้นหา room ด้วย id
+	if tx := entity.DB().Where("id = ?", booking.RoomID).First(&Room); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบห้อง"})
 		return
 	}
 

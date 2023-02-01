@@ -49,6 +49,7 @@ function BookingCreate() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
+  const [buildingID, setBuildingID] = useState("")
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [objectives, setObjectives] = useState<ObjectivesInterface[]>([]);
 
@@ -85,6 +86,7 @@ function BookingCreate() {
 
   const onChangeBuilding = async (e: SelectChangeEvent) =>{
     const bid = e.target.value;
+    setBuildingID(bid);
     let res = await ListRoomsbyBuilding(bid);
     if (res) {
       setRooms(res);
@@ -167,6 +169,7 @@ function BookingCreate() {
  return (
    <Container maxWidth="md">
      <Snackbar
+       id="success"
        open={success}
        autoHideDuration={6000}
        onClose={handleClose}
@@ -177,7 +180,7 @@ function BookingCreate() {
        </Alert>
      </Snackbar>
 
-     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+     <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
@@ -269,10 +272,11 @@ function BookingCreate() {
 
           <Grid item xs={6} >
           <p>ตึก</p>
-          <FormControl required fullWidth >
-            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
+          <FormControl required fullWidth>
+            <InputLabel id="menu-BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
-              labelId="BuildingID"
+              id="BuildingID"
+              value={buildingID}
               label="กรุณาเลือกตึก *"
               onChange={ (onChangeBuilding) }
               inputProps={{
@@ -293,10 +297,11 @@ function BookingCreate() {
 
           <Grid item xs={6} >
           <p>ห้อง</p>
-          <FormControl required fullWidth> 
+          <FormControl required fullWidth id="RoomID">
             <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
             <Select
-              labelId="RoomID"
+              id="RoomID"
+              value={booking.RoomID || ""}
               label="กรุณาเลือกห้อง *"
               onChange={handleChange}
               inputProps={{
@@ -317,10 +322,11 @@ function BookingCreate() {
 
           <Grid item xs={12} >
           <p>จุดประสงค์ในการจอง</p>
-          <FormControl required fullWidth >
+          <FormControl required fullWidth id="ObjectiveID">
             <InputLabel id="BuildingID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
             <Select
-              labelId="ObjectiveID"
+              id="ObjectiveID"
+              value={booking.ObjectiveID || ""}
               label="กรุณาเลือกจุดประสงค์ในการจอง *"
               onChange={ (handleChange) }
               inputProps={{

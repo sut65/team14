@@ -117,6 +117,7 @@ function BookingDelete() {
  return (
    <Container maxWidth="md">
      <Snackbar
+       id="success" 
        open={success}
        autoHideDuration={6000}
        onClose={handleClose}
@@ -127,7 +128,7 @@ function BookingDelete() {
        </Alert>
      </Snackbar>
 
-     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+     <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
          ลบข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
