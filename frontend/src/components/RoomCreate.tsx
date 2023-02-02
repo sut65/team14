@@ -19,6 +19,7 @@ import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CreateRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -27,7 +28,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function RoomCreate(){
-    const [room, setRoom] = React.useState<RoomsInterface>({Detail:""});
+    const [room, setRoom] = React.useState<RoomsInterface>({
+      Detail:"", Note: "",
+      Time: new Date(),});
+
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [typeroom, setTyperooms] = React.useState<TyperoomsInterface[]>([]);
@@ -125,12 +129,19 @@ function RoomCreate(){
             AdminID: (user.ID),
             TyperoomID: (room.TyperoomID),
             BuildingID: (room.BuildingID),  
+            Note: room.Note,
+            Time: room.Time,
         };
         let res = await CreateRoom(data);
       console.log(res);
       if (res) {
           setSuccess(true);
           setErrorMessage("");
+
+          setRoom({
+            Note: "",
+            Time: new Date(),
+          })
       } else {
           setError(true);
           setErrorMessage(res);
@@ -189,6 +200,7 @@ function RoomCreate(){
             <Select
               labelId="BuildingID"
               label="กรุณาเลือกตึก *"
+              value={room?.BuildingID || ""}
               onChange={ (handleChange) }
               inputProps={{
                 name: "BuildingID",
@@ -250,6 +262,41 @@ function RoomCreate(){
             </Select>
           </FormControl>
           </Grid>  
+
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="Note"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
+                inputProps={{
+                  name: "Note",
+                }}
+                value={room.Note + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <p>เวลาที่อนุมัติ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรอกเวลาที่อนุมัติ"
+                value={room.Time}
+                onChange={(newValue) => {
+                  setRoom({
+                    ...room,
+                    Time: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
 
           
               

@@ -8,6 +8,8 @@ export interface RoomsInterface {
     UserID?: string | null;
     BuildingID?: string | null;
     TyperoomID?: string | null;
+    Note?: string | "";
+    Time?: Date | null;
 
     Detail?: string,
     
