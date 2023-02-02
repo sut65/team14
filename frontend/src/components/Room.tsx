@@ -36,9 +36,14 @@ function Rooms() {
      
         { field: "Detail", headerName: "เลขห้อง", width: 200  ,},
        
-     
         { field: "Typeroom", headerName: "ประเภทห้อง", width: 200 ,
         valueFormatter: (params) => params.value.Detail,},
+
+        { field: "Note", headerName: "หมายเหตุ", width: 200  ,},
+        { 
+          field: "Time", headerName: "เวลาที่เพิ่มห้อง", width: 200,
+          valueFormatter: (params) => `${new Date(params.value)}`,
+        },
      
         
       ];

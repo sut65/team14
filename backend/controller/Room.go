@@ -36,7 +36,9 @@ func CreateRoom(c *gin.Context) {
 		Admin:    admin,
 		Typeroom: typeroom,
 		Building: building,
-		Detail: room.Detail,
+		Detail:   room.Detail,
+		Note:     room.Note,
+		Time:     room.Time,
 	}
 	// ขั้นตอนการ validate
 	if _, err := govalidator.ValidateStruct(bod); err != nil {
