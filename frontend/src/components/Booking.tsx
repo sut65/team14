@@ -31,55 +31,55 @@ function Bookings() {
   const [data, setData] = useState<AppointmentModel[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [allBookings, setAllBookings] = useState<BookingsInterface[]>([]);
+  const [userBookings, setUserBookings] = useState<BookingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [roomOne, setRoomOne] = useState<RoomsInterface>({});
   const [currentDate, setCurrentDate] = useState(new Date());
   const [checkedAll, setCheckedAll] = useState(false);
   const [checkedUser, setCheckedUser] = useState(false);
   const [checkedRoom, setCheckedRoom] = useState(false);
-
+  const [key, setKey] = useState(false);
 
   const currentDateChange = (currentDate: Date) => {
       setCurrentDate(currentDate);
   }
 
   const listBooking = async () => {
-    let 
-      res = await ListBookingbyRoom(0);
+    let res = await ListBookingbyRoom(0);
       if (res) {
         console.log("Load Booking Complete");
-        schedule(res)
         setAllBookings(res)
       }
       else {
         console.log("Load Booking InComplete");
       }
-    }
+  }
 
-  const ListBooking = async () => {
+  const listUserBooking = async () => {
+    let res = await ListBookingbyUser(uid);
+    if (res.status) {
+      setUserBookings(res.data)
+      console.log("Load BookingUser Complete");
+    }
+    else {
+      console.log("Load BookingUser InComplete!!!!");
+    }
+  }
+
+  const listBookingOption = async () => {
     let res;
     if (checkedAll){
       res = await ListBookings();
       if (res) {
         console.log("Load BookingAll Complete");
         schedule(res)        
-        
       }
       else{
         console.log("Load BookingAll InComplete");
       } 
       
     } else if(checkedUser){
-      res = await ListBookingbyUser(uid);
-      if (res.status) {
-        schedule(res.data)
-        console.log(res.data);
-        
-        console.log("Load BookingUser Complete");
-      }
-      else {
-        console.log("Load BookingUser InComplete!!!!");
-      }
+      schedule(userBookings);
     } else if(checkedRoom){
       res = await ListBookingbyRoom(roomOne.Detail);
       if (res) {
@@ -89,8 +89,8 @@ function Bookings() {
       else {
         console.log("Load BookingRoom InComplete");
       }
-    } else{
-      listBooking();
+    } else{ 
+      schedule(allBookings);
     }
     
   };
@@ -135,11 +135,14 @@ function Bookings() {
 
 
   useEffect(() => {
-    setCurrentDate(new Date()); 
     listBuildings();  
-    ListBooking(); 
     listBooking();
+    listUserBooking();
   }, []);
+
+  useEffect(() => {
+    listBookingOption(); 
+  }, [key]);
 
   function schedule(book: BookingsInterface[]){
     setData([]); // clear data
@@ -319,7 +322,7 @@ function Bookings() {
         <Grid item xs={6} justifyContent="center">
           <Button
               size="medium"
-              onClick= {ListBooking}
+              onClick= {() => (setKey(!key))}
               variant="contained"
               color="primary"
           >

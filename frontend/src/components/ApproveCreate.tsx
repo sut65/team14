@@ -191,7 +191,7 @@ function ApproveCreate() {
   }
 
  return (
-   <Container maxWidth="md">
+   <Container maxWidth="lg">
      <Snackbar
        id="success" 
        open={success}

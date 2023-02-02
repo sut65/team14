@@ -3,12 +3,14 @@ package entity
 import (
 	//"github.com/asaskevich/govalidator"
 	"gorm.io/gorm"
-	//"time"
+	"time"
 )
 
 type Order_Food struct {
 	gorm.Model	
 	Totold *uint
+	Note        string    `valid:"required~กรุณากรอกหมายเหตุ"`
+	OrderTime time.Time `valid:"IsnotPast~เวลาไม่ถูกต้อง"`
 	// การอนุมัติ .
 	Approve Approve `gorm:"references:id" valid:"-"`
 	ApproveID *uint		

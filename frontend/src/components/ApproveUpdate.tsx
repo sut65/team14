@@ -15,11 +15,13 @@ import { ApprovesInterface } from "../models/IApprove";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
-    CreateApprove, 
-    ListStatusBooks, 
-    GetUser,
-    GetBookingbyCodeThatNotApprove,
-    ListBookings,
+  UpdateApprove, 
+  ListStatusBooks, 
+  GetUser,
+  GetBookingbyCodeThatNotApprove,
+  ListApproves,
+  GetApprove,
+  GetStatusBook,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -48,13 +50,13 @@ function ApproveUpdate() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
-  const [bookings, setBookings] = useState<BookingsInterface[]>([]);
+  const [statusBook, setStatusBook] = useState<StatusBooksInterface>({});
+  const [approves, setApproves] = useState<ApprovesInterface[]>([]);
   const [booking, setBooking] = useState<BookingsInterface>({
     Objective: {Detail: ""},
     User: {FirstName: "", LastName: "",},
     Room: {Detail: "", Building:{Detail: "",}}
   });
-  const [code, setCode] = useState("")
 
   const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -77,6 +79,28 @@ function ApproveUpdate() {
     });
     console.log(`[${name}]: ${value}`);
   };
+
+  const onChangeApprove = async (e: SelectChangeEvent) =>{
+    const appid = e.target.value;
+    let res = await GetApprove(appid);
+    if (res) {
+      let data = {
+        ID: res.ID,
+        Code: res.Code,
+        Note: res.Note,
+        ApproveTime: new Date(),
+  
+        UserID: (user.ID),
+        BookingID: (res.BookingID),
+        StatusBookID: (res.StatusBookID),
+      };
+      setApprove(data);
+      search(res.Booking?.Code);
+      getStatusBook(data.StatusBookID);
+    } else{
+      console.log("Load Approve InComplete");
+    }
+  }
 
   const handleChange_Text = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -103,22 +127,31 @@ function ApproveUpdate() {
     let res = await GetUser(uid);
     if (res.status) {
       setUser(res.data);
-      console.log("Load User Complete");  
     }
     else{
       console.log("Load User InComplete!!!!");
     }
   };
 
-  const listBookings = async () => {
-    let res = await ListBookings();
+  const getStatusBook = async (id:any) => {
+    let res = await GetStatusBook(id);
     if (res) {
-      setBookings(res);
-      console.log("Load Bookings Complete");  
-      console.log(res);     
+      setStatusBook(res);
+      console.log(res);
+      
     }
     else{
-      console.log("Load Bookings InComplete!!!!");
+      console.log("Load Status Book InComplete!!!!");
+    }
+  };
+
+  const listApprove = async () => {
+    let res = await ListApproves();
+    if (res) {
+      setApproves(res); 
+    }
+    else{
+      console.log("Load Approves InComplete!!!!");
     }
   };
 
@@ -129,15 +162,19 @@ function ApproveUpdate() {
       Note: approve.Note,
       ApproveTime: approve.ApproveTime,
 
-      UserID: (user.ID),
-      BookingID: (approve.BookingID),
-      StatusBookID: (approve.StatusBookID),
+      User: user,
+      UserID: user.ID,
+      Booking: booking,
+      BookingID: booking.ID,
+      StatusBook: statusBook,
+      StatusBookID: approve.StatusBookID,
     };
     console.log(data)
-    let res = await CreateApprove(data);
+    let res = await UpdateApprove(data);
     if (res.status) {
       setSuccess(true);
       setErrorMessage("");
+      setStatusBook({});
       setBooking({
         Objective: {Detail: ""},
         User: {FirstName: "", LastName: "",},
@@ -147,52 +184,29 @@ function ApproveUpdate() {
         Code: "", Note: "",
         ApproveTime: new Date(),
       })
-      setCode("");
-      listBookings(); 
     } else {
-        setError(true);
-        setErrorMessage(res.data);
-    }
-    
-    
-  }
-
-  async function search(){
-    if (code === ""){
-      setErrorSearch(true);
-      setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
-      return
-    }
-    let res = await GetBookingbyCodeThatNotApprove(code);
-    if (res.status){
-      setApprove({
-        ...approve,
-        ["BookingID"]: res.data.ID,
-      });
-      setBooking(res.data);
-      handleClose()
-      setErrorMessage("");
-    } else {
-      setErrorSearch(true);
+      setError(true);
       setErrorMessage(res.data);
     }
-    
+  }
+
+  async function search(code : any){
+    let res = await GetBookingbyCodeThatNotApprove(code);
+    if (res.status){
+      setBooking(res.data);
+    } else {
+      console.log("Load Booking InComplete!!!");
+    }   
   }
 
   useEffect(() => {
     listStatusBooks();
     getUser();
-    listBookings();
+    listApprove();
   }, []);
 
-  function randomNumberInRange() {
-    const min = 10000, max = 99999;
-    const random = Math.floor(Math.random() * (max - min + 1)) + min;
-    setApprove({ ...approve, ["Code"]: `Ap${random}`, });
-  }
-
  return (
-   <Container maxWidth="md">
+   <Container maxWidth="lg">
      <Snackbar
        id="success" 
        open={success}
@@ -201,13 +215,13 @@ function ApproveUpdate() {
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
        <Alert onClose={handleClose} severity="success">
-         บันทึกข้อมูลสำเร็จ
+          อัพเดทข้อมูลสำเร็จ
        </Alert>
      </Snackbar>
 
      <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+          อัพเดทข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
 
@@ -230,7 +244,7 @@ function ApproveUpdate() {
               variant="h6"
               color="primary"
             >
-              บันทึกอนุมัติการจองใช้ห้อง
+              อัพเดทอนุมัติการจองใช้ห้อง
             </Typography>
           </Box>
        </Box>
@@ -238,42 +252,43 @@ function ApproveUpdate() {
        <Divider />
         <Grid container spacing={1} sx={{ padding: 2 }}>
           <Grid item xs={12}>รหัสการอนุมัติ</Grid>
-          <Grid item xs={10} >
-            <FormControl fullWidth variant="outlined">
-              <TextField
-                required
-                id="Code"
-                type="string"
-                label="รหัสการอนุมัติ (Ap ตามด้วยตัวเลข5ตัว)"
+          <Grid item xs={12} >
+            <FormControl required fullWidth> 
+              <InputLabel id="menu-ApproveID">กรุณาเลือกรหัสการอนุมัติ</InputLabel>
+              <Select
+                id="ApproveID"
+                value={statusBook.ID || ""}
+                label="กรุณาเลือกรหัสการอนุมัติ *"
+                onChange={onChangeApprove}
                 inputProps={{
-                  name: "Code",
+                  name: "ID",
                 }}
-                value={approve.Code + ""}
-                onChange={handleChange_Text}
-              />
+              >
+                {approves?.map((item: ApprovesInterface) => 
+                  <MenuItem
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Code}
+                  </MenuItem>
+                )}
+              </Select>
             </FormControl>
           </Grid>
-          <Grid item xs={2} justifyContent="center">
-            <Button
-                style={{ float: "right" }}
-                size="medium"
-                onClick= {randomNumberInRange}
-                variant="contained"
-                color="primary"
-            >
-                Random
-            </Button>
-          </Grid>
-          <Grid item xs={4} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
-          <Grid item xs={8} ><p>รหัสการจองใช้ห้อง</p></Grid>
-          <Grid item xs={4} >
+
+          <Grid item xs={6} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
+          <Grid item xs={6} ><p>รหัสการจองใช้ห้อง</p></Grid>
+          <Grid item xs={6} >
             <FormControl required fullWidth> 
               <InputLabel id="menu-StatusBookID">กรุณาเลือกสถานะการจองใช้ห้อง</InputLabel>
               <Select
                 id="StatusBookID"
                 value={approve.StatusBookID || ""}
                 label="กรุณาเลือกสถานะการจองใช้ห้อง *"
-                onChange={handleChange}
+                onChange={(e: SelectChangeEvent) => {
+                  handleChange(e);
+                  getStatusBook(e.target.value);
+                }}
                 inputProps={{
                   name: "StatusBookID",
                 }}
@@ -290,57 +305,13 @@ function ApproveUpdate() {
             </FormControl>
           </Grid>
 
-          {/* <Grid item xs={3} >
-            <FormControl fullWidth variant="outlined">
-              <TextField
-                required
-                id="BookingCode1"
-                type="string"
-                label="กรุณาเลือกรหัสการจองใช้ห้อง"
-                inputProps={{
-                  name: "Code",
-                }}
-                value={code + ""}
-                onChange={(e) => setCode(e.target.value)}
+          <Grid item xs={6} >
+            <FormControl required fullWidth >
+              <TextField 
+                value={booking.Code}
+                disabled
               />
             </FormControl>
-          </Grid> */}
-
-          <Grid item xs={6} >
-            <FormControl required fullWidth id="BookingCode">
-              <InputLabel id="BookingCode">กรุณาเลือกรหัสการจอง</InputLabel>
-              <Select
-                id="BookingCode"
-                value={code || ""}
-                label="กรุณาเลือกรหัสการจอง *"
-                onChange={(e: SelectChangeEvent)=>(setCode(e.target.value))}
-              >
-                {bookings.map((item: BookingsInterface) => {
-                  if (item.Approve == null && item.DeletedAt == null) {
-                    return(<MenuItem
-                      key={item.ID}
-                      value={item.Code}
-                    >
-                      {item.Code}
-                    </MenuItem>)
-                    }
-                }
-
-                )}
-              </Select>
-            </FormControl>
-          </Grid>
-
-          <Grid item xs={2} justifyContent="center">
-            <Button
-                style={{ float: "right" }}
-                size="medium"
-                onClick= {search}
-                variant="contained"
-                color="primary"
-            >
-                Search
-            </Button>
           </Grid>
 
           <Grid item xs={12} >

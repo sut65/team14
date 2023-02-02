@@ -5,13 +5,13 @@ import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import {  Button, Container, FormControl, Grid, Paper,InputLabel, MenuItem, Snackbar, TextField, styled } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Typography from '@mui/material/Typography';
-import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
-import VolumeUp from '@mui/icons-material/VolumeUp';
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers";
+
 
 import { UsersInterface } from "../models/IUser";
-import { ApprovesInterface } from "../models/IApprove";
 import {BookingsInterface } from "../models/IBooking";
 
 import { CreateAdd_friend, CreateOrder, GetBookingbyCodeThatApprove, ListApproves } from "../services/HttpClientService";
@@ -36,6 +36,7 @@ function OrderCreate(){
     const [user, setUser] = useState<UsersInterface>({
       ID:"User ID",FirstName: "User name",LastName:  "",
     });
+
     const [admin, setAdmin] = useState<UsersInterface>({});        
     const [booking, setBooking] = useState<BookingsInterface>({
       ID: "Booking ID",       
@@ -43,11 +44,24 @@ function OrderCreate(){
       ,Room: {Detail: "", Building:{Detail: "",}}
      
     });
-    const [order_food, setOrder_food] = useState<Order_foodInterface>({});     
+
+    const [order_food, setOrder_food] = useState<Order_foodInterface>({Note: "",
+    OrderTime: new Date(),});     
     const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
     const [totold, setValue] = useState<number | string | Array<number | string>>(
         0,
       );
+
+      const [code, setCode] = useState("");
+      const [userID, setUserID] = useState("");
+  
+      const [key, setKey] = useState(true);
+      const [success, setSuccess] = useState(false);
+      const [error, setError] = useState(false);
+      const [errorSearch, setErrorSearch] = useState(false);
+      const [errorMessage, setErrorMessage] = useState("");   
+      const [food_drinkID, setFood_DrinkID] = useState("");
+          
    
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value === '' ? '' : Number(event.target.value));        
@@ -60,21 +74,18 @@ function OrderCreate(){
           setValue(100);
         }
       };
-    
-    
-    
-    const [code, setCode] = useState("");
-    const [userID, setUserID] = useState("");
 
-    const [key, setKey] = useState(true);
-    const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
-    const [errorSearch, setErrorSearch] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("");   
-    const [food_drinkID, setFood_DrinkID] = useState("");
-        
-
-    const handleClose = (
+    
+ const handleChange_Text = (
+  event: React.ChangeEvent<{ id?: string; value: any }>
+) => {
+  const id = event.target.id as keyof typeof order_food;
+  const { value } = event.target;
+  setOrder_food({ ...order_food, [id]: value, });
+  console.log(`[${id}]: ${value}`);
+};    
+    
+const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
   ) => {
@@ -83,10 +94,9 @@ function OrderCreate(){
       }
       setSuccess(false);
       setError(false);
- };   
- 
+ };  
 
-  const listFood_and_Drink = async () => {
+const listFood_and_Drink = async () => {
     let res = await ListFood_and_Drinks();
     if (res) {
       setFood_Drink(res);
@@ -139,7 +149,9 @@ function OrderCreate(){
       AdminID: (admin.ID),     
       ApproveID: (booking.Approve?.ID),
       Food_and_DrinkID: (food_drinkID),
-      Totold:(totold),    
+      Totold:(totold), 
+      Note: order_food.Note,
+      OrderTime: order_food.OrderTime,   
       
       
     };
@@ -152,11 +164,15 @@ function OrderCreate(){
       setError(true);
       setErrorMessage(res.data);
   }
+  setOrder_food({
+    Note: "",
+    OrderTime: new Date(),
+  })
    
 }
 
 useEffect(() => {
-listFood_and_Drink(); 
+  listFood_and_Drink(); 
   getAdmin();   
 }, []);
 
@@ -317,6 +333,40 @@ return (
             }}
           />
         </Grid>
+        <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="Note"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
+                inputProps={{
+                  name: "Note",
+                }}
+                value={order_food.Note + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <p>เวลาบันทึกรายการ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรอกเวลาที่อนุมัติ"
+                value={order_food.OrderTime}
+                onChange={(newValue) => {
+                  setOrder_food({
+                    ...order_food,
+                    OrderTime: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
       
 
         <Grid container spacing={1} sx={{ padding: 1 }}></Grid>     

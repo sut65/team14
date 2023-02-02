@@ -10,6 +10,8 @@ export interface Order_foodInterface {
     AdminID?: string | null;
 
     Totold?: string | null,
+    Note?: string | "";
+    OrderTime?: Date | null;    
 
     Food_and_Drink?: Food_and_DrinksInterface;
     Approve?: ApprovesInterface;

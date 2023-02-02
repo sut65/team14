@@ -3,18 +3,16 @@ import { Link as RouterLink } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import {  Button, Container, FormControl, Grid, Paper, Snackbar, TextField } from "@mui/material";
-import { RoomsInterface } from "../models/IRoom";
-import { BuildingsInterface } from "../models/IBuilding";
+import {  Button, Container, FormControl, Grid, Snackbar, TextField } from "@mui/material";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import {BookingsInterface } from "../models/IBooking";
 import { Add_friendInterface } from "../models/IAdd_friend";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { CreateAdd_friend, GetBookingbyCodeThatApprove, ListApproves } from "../services/HttpClientService";
+
+import { CreateAdd_friend, GetBookingbyCodeThatApprove} from "../services/HttpClientService";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import Approves from "./Approve";
+
 import {  
   
   GetUser,

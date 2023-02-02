@@ -47,7 +47,10 @@ func CreateOrder_food(c *gin.Context) {
 		Approve:        approve,
 		Admin:          admin,
 		Food_and_Drink: food_and_drink,
+
 		Totold: order_food.Totold,
+		Note:       order_food.Note,
+		OrderTime: order_food.OrderTime,
 	}
 
 	// ขั้นตอนการ validate
