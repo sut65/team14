@@ -54,6 +54,8 @@ import Order_food from "./components/Order_food";
 import OrderCreate from "./components/OrderCreate";
 import BookingDelete from "./components/BookingDelete";
 import DeviceCreate from "./components/DeviceCreate";
+import ApproveUpdate from "./components/ApproveUpdate";
+import ApproveDelete from "./components/ApproveDelete";
 
 const drawerWidth = 260;
 
@@ -250,6 +252,8 @@ return (
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
+                <Route path="/approve/update" element={<ApproveUpdate />} />
+                <Route path="/approve/delete" element={<ApproveDelete />} />
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />

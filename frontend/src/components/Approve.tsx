@@ -9,6 +9,8 @@ import {
     ListApproves, 
 } from "../services/HttpClientService";
 import { ApprovesInterface } from "../models/IApprove";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 function Approves() {
 
@@ -55,48 +57,79 @@ function Approves() {
  return (
 
    <div>
-     <Container maxWidth="md">
-       <Box
-         display="flex"
-         sx={{
-           marginTop: 2,
-         }}
-       >
+     <Container maxWidth="lg">
+     <Paper>
+      <Grid container spacing={1} sx={{ padding: 2 }} >
+        <Grid item xs={12}>
+          <Paper>
+            <Grid container spacing={1} sx={{ padding: 2 }} >
+              <Grid item xs={6}>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+                >
+                  อนุมัติการจองใช้ห้อง
+                </Typography>
+              </Grid>
 
-         <Box flexGrow={1}>
-           <Typography
-             component="h2"
-             variant="h6"
-             color="primary"
-             gutterBottom
-           >
-             อนุมัติการจองใช้ห้อง
-           </Typography>
-         </Box>
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/approve/create"
+                variant="contained"
+                color="primary"
+              >
+                Create Approve
+              </Button>
+              </Grid>
 
-         <Box>
-           <Button
-             component={RouterLink}
-             to="/approve/create"
-             variant="contained"
-             color="primary"
-           >
-             Create Approve
-           </Button>
-         </Box>
-       </Box>
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/approve/update"
+                variant="contained"
+                color="primary"
+              >
+                Update Approve
+              </Button>
+              </Grid>
 
-       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-         <DataGrid
-           rows={approves}
-           getRowId={(row) => row.ID}
-           columns={columns}
-           pageSize={5}
-           rowsPerPageOptions={[5]}
-         />
-       </div>
-       
-     </Container>
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/approve/delete"
+                variant="contained"
+                color="primary"
+              >
+                Delete Approve
+              </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+        
+        <Grid item xs={12}>
+        <Paper>
+          <Grid container spacing={1} sx={{ padding: 2 }} >
+            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+            <DataGrid
+              rows={approves}
+              getRowId={(row) => row.ID}
+              columns={columns}
+              pageSize={5}
+              rowsPerPageOptions={[5]}
+            />
+            </div>
+          </Grid>
+        </Paper>
+        </Grid>
+
+      </Grid>
+    </Paper>
+    
+    </Container>
    </div>
 
  );
