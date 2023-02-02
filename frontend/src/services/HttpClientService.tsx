@@ -6,7 +6,6 @@ import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { PaybacksInterface } from "../models/IPayback";
 import { RoomsInterface } from "../models/IRoom";
 import { SigninInterface } from "../models/ISignin";
-import { TyperoomsInterface } from "../models/ITyperoom";
 import { UsersInterface } from "../models/IUser";
 import { Add_friendInterface } from "../models/IAdd_friend";
 import { DevicesInterface } from "../models/IDevice";
@@ -34,7 +33,9 @@ async function Login(data: SigninInterface) {
 
   return res;
 }
-
+///////////////////////////////////////////////////////////////
+///////////////////    Booking    /////////////////////////////
+///////////////////////////////////////////////////////////////
 async function ListBookings() {
     const requestOptions = {
       method: "GET",
@@ -125,6 +126,275 @@ async function ListBookingbyRoom(id: any) {
 
   return res;
 }  
+
+async function GetBookingbyCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetBookingbyCodeThatNotApprove(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/notapprove/booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function ListBookingsThatNotApprove() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/notapprove/bookings`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function GetBookingbyCodeThatApprove(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/approve/booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function ListBookingbyUser(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/bookings/user/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function UpdateBooking(data: BookingsInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/booking`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function DeleteBooking(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+///////////////////////////////////////////////////////////////
+///////////////////    Approve    /////////////////////////////
+///////////////////////////////////////////////////////////////
+
+async function CreateApprove(data: ApprovesInterface) {
+  const requestOptions = {
+    method: "POST",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/approve`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
+async function ListApproves() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  
+
+  let res = await fetch(`${apiUrl}/approves`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetApprove(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/approve/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function UpdateApprove(data: ApprovesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/approve`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function DeleteApprove(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/approve/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
+///////////////////////////////////////////////////////////////
+///////////////////    Approve    /////////////////////////////
+///////////////////////////////////////////////////////////////
 
 async function ListRoomsbyBuilding(id: any) {
   const requestOptions = {
@@ -439,73 +709,6 @@ async function GetPayback(id: any) {
 }
 
 //////////////////////////////////Payback/////////////////
-async function CreateApprove(data: ApprovesInterface) {
-  const requestOptions = {
-    method: "POST",
-    headers: { 
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json" 
-    },
-    body: JSON.stringify(data),
-  };
-
-  let res = await fetch(`${apiUrl}/approve`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
-      }
-    });
-
-  return res;
-}
-
-async function ListApproves() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  
-
-  let res = await fetch(`${apiUrl}/approves`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function GetApprove(id: any) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/approve/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
 
 async function ListUsers() {
   const requestOptions = {
@@ -750,111 +953,6 @@ async function GetBuilding(id: any) {
 
   return res;
 }  
-
-async function GetBookingbyCode(code: any) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/booking/code/${code}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
-      }
-    });
-
-  return res;
-}
-
-async function GetBookingbyCodeThatNotApprove(code: any) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/notapprove/booking/code/${code}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {       
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
-      }
-    });
-
-  return res;
-}
-
-async function ListBookingsThatNotApprove() {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/notapprove/bookings`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {       
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
-      }
-    });
-
-  return res;
-}
-
-async function GetBookingbyCodeThatApprove(code: any) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/approve/booking/code/${code}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {       
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
-      }
-    });
-
-  return res;
-}
-
-async function ListBookingbyUser(id: any) {
-  const requestOptions = {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-  };
-  let res = await fetch(`${apiUrl}/bookings/user/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {       
-        return {data: res.data, status: true};
-      } else {     
-        return {data: res.error, status: false};
-      }
-    });
-
-  return res;
-}
 
 async function CreateRoom(data: RoomsInterface) {
   const requestOptions = {
@@ -1177,50 +1275,7 @@ async function DeleteOrder(data: Add_friendInterface) {
     });
 }
 
-async function UpdateBooking(data: BookingsInterface) {
-  const requestOptions = {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  };
 
-  let res = await fetch(`${apiUrl}/booking`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
-      }
-    });
-
-  return res;
-}
-
-async function DeleteBooking(id: any) {
-  const requestOptions = {
-    method: "DELETE",
-    headers: { 
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json" 
-    },
-  };
-
-  let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
-    .then((response) => response.json())
-    .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
-      }
-    });
-
-  return res;
-}
 
 async function GetObjective(id: any) {
   const requestOptions = {
@@ -1271,17 +1326,30 @@ export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
     GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, UpdateBooking, DeleteBooking,
-    ListRoomsbyBuilding, GetRoom, 
-    ListBuildings, GetBuilding,
+
+    CreateApprove, ListApproves, GetApprove, UpdateApprove, DeleteApprove,
+
+    ListRoomsbyBuilding, GetRoom ,CreateRoom,ListRooms,
+
+    ListBuildings, GetBuilding, CreateBuilding,
+
     ListObjectives, GetObjective,
+
     GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole,
+
     ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks,
+
     ListBorrows, CreateBorrow, GetBorrow,
+
     ListDevices,ListTypebyDevice,ListDeviceType,
+
     CreatePayback,ListPaybacks,GetPayback,
-    CreateApprove, ListApproves, GetApprove,
+    
     ListStatusBooks,
-    ListGuards,ListCompanies,CreateBuilding,CreateRoom,ListTyperooms,ListRooms,
+
+    ListGuards,ListCompanies, ListTyperooms,
+
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
+
     ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,
 }
