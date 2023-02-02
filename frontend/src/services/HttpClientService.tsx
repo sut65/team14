@@ -361,6 +361,8 @@ async function UpdateApprove(data: ApprovesInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
+        console.log(res.data);
+        
         return {status:true, data:res.data};
       } else {
         return {status:false, data:res.data};
@@ -744,6 +746,27 @@ async function ListStatusBooks() {
   
 
   let res = await fetch(`${apiUrl}/statusBooks`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function GetStatusBook(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/statusBook/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1345,7 +1368,7 @@ export{
 
     CreatePayback,ListPaybacks,GetPayback,
     
-    ListStatusBooks,
+    ListStatusBooks, GetStatusBook,
 
     ListGuards,ListCompanies, ListTyperooms,
 

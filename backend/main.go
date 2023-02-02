@@ -65,7 +65,7 @@ func main() {
 			r.GET("/approves", controller.ListApproves)
 			r.GET("/approve/:id", controller.GetApprove)
 			r.POST("/approve", controller.CreateApprove)
-			r.PATCH("/approve", controller.UpdateApprove)
+			r.PUT("/approve", controller.UpdateApprove)
 			r.DELETE("/approve/:id", controller.DeleteApprove)
 			// r.POST("/approveCode", controller.GetApproveByCode)
 

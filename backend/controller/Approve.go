@@ -79,7 +79,7 @@ func GetApprove(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Approve})
 }
 
-// GET /approves
+// GET /approve
 func ListApproves(c *gin.Context) {
 	var Approves []entity.Approve
 	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Raw("SELECT * FROM approves").Find(&Approves).Error; err != nil {
@@ -90,10 +90,12 @@ func ListApproves(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Approves})
 }
 
-// DELETE /approves/:id
+// DELETE /approve/:id
 func DeleteApprove(c *gin.Context) {
+	var Approve entity.Approve
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM approves WHERE id = ?", id); tx.RowsAffected == 0 {
+	// UPDATE Approves SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&Approve); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve not found"})
 		return
 	}
@@ -101,23 +103,51 @@ func DeleteApprove(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /approves
+// PUT /approve
 func UpdateApprove(c *gin.Context) {
-	var Approve entity.Approve
-	if err := c.ShouldBindJSON(&Approve); err != nil {
+	var approve entity.Approve
+	// var tmp entity.Approve
+
+	if err := c.ShouldBindJSON(&approve); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	if tx := entity.DB().Where("id = ?", Approve.ID).First(&Approve); tx.RowsAffected == 0 {
+	// ค้นหา Approve ด้วย ID
+	if tx := entity.DB().Where("id = ?", approve.ID).First(&approve); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve not found"})
 		return
 	}
 
-	if err := entity.DB().Save(&Approve).Error; err != nil {
+	var user entity.User
+	var statusBook entity.StatusBook
+	var Booking entity.Booking
+
+	// ค้นหา user ด้วย id
+	if tx := entity.DB().Where("id = ?", approve.UserID).First(&user); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	// ค้นหา statusBook ด้วย id
+	if tx := entity.DB().Where("id = ?", approve.StatusBookID).First(&statusBook); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "StatusBook not found"})
+		return
+	}
+
+	// ค้นหา booking ด้วย id
+	if tx := entity.DB().Where("id = ?", approve.BookingID).First(&Booking); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Booking not found"})
+		return
+	}
+
+	// approve.Booking = Booking
+	// approve.StatusBook = statusBook
+	// approve.User = user
+
+	if err := entity.DB().Save(&approve).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": Approve})
+	c.JSON(http.StatusOK, gin.H{"data": approve})
 }
