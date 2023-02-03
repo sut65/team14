@@ -53,6 +53,7 @@ func main() {
 			r.GET("/objective/:id", controller.GetObjective)
 
 			// User Routes
+			r.POST("/user", controller.CreateUser)
 			r.GET("/users", controller.ListUsers)
 			r.GET("/user/:id", controller.GetUser)
 			r.GET("/educationlevels", controller.ListEducationLevels)

@@ -25,6 +25,7 @@ type SignUpPayload struct {
 	IdentificationNumber string `json:"IdentificationNumber"`
 	StudentID            string `json:"StudentID"`
 	Age                  uint8  `json:"Age"`
+	//BirthDay             date
 
 	RoleID           uint `json:"RoleID"`
 	GenderID         uint `json:"GenderID"`
@@ -87,6 +88,7 @@ func Login(c *gin.Context) {
 // POST /create
 func CreateUser(c *gin.Context) {
 	var payload SignUpPayload
+	var user entity.User
 	var gender entity.Gender
 	var role entity.Role
 	var educationlevel entity.EducationLevel
@@ -134,6 +136,7 @@ func CreateUser(c *gin.Context) {
 		StudentID:            payload.StudentID,
 		Age:                  payload.Age,
 		Password:             string(hashPassword),
+		BirthDay:             user.BirthDay,
 	}
 
 	// x: บันทึก
