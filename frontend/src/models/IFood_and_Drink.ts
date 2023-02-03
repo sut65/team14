@@ -2,12 +2,12 @@ import { UsersInterface } from "./IUser";
 
 export interface Food_and_DrinksInterface {
     ID?: number,
-    Menu?: string;
-    Foodtype?: FoodtypesInterface;
-    FoodtypeID?: string;
+    Menu?: string | null;
+    Foodtype?: FoodtypesInterface ;
+    FoodtypeID?: string | null;
     Shop?: ShopsInterface;
-    ShopID?: string;
-    Admin?: string;
+    ShopID?: string | null;
+    Admin?: string | null;
 }
 
 export interface FoodtypesInterface {

@@ -41,7 +41,9 @@ func CreateFood_and_Drink(c *gin.Context) {
 
 	//สร้าง food_and_drink
 	fad := entity.Food_and_Drink{
-		Menu: 	  food_and_drink.Menu,
+		Menu:     food_and_drink.Menu,
+		Address:  food_and_drink.Address,
+		Tel:      food_and_drink.Tel,
 		Foodtype: foodtype,
 		Shop:     shop,
 		Admin:    admin,

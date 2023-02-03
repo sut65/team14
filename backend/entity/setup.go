@@ -193,7 +193,7 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท A").Scan(&foodtype1)
 	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท B").Scan(&foodtype2)
 
-	db.Model(&Food_and_Drink{}).Create(&Food_and_Drink{Menu: "น้ำเปล่า",Foodtype: foodtype1 , Shop: shop1, Admin: u2})
+	db.Model(&Food_and_Drink{}).Create(&Food_and_Drink{Menu: "น้ำเปล่า",Address: "บ้านเลขที่60 ถนน555/555", Tel: "011-1111111", Foodtype: foodtype1 , Shop: shop1, Admin: u2})
 	var food_and_drink1 Food_and_Drink
 	db.Raw("SELECT * FROM food_and_drinks WHERE menu = ?", "น้ำเปล่า").Scan(&food_and_drink1)
 
