@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {  ListRooms } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
+import { Grid, Paper } from "@mui/material";
 
 
 function Rooms() {
@@ -58,48 +59,79 @@ function Rooms() {
       return (
 
         <div>
-          <Container maxWidth="md">
-            <Box
-              display="flex"
-              sx={{
-                marginTop: 2,
-              }}
-            >
+          <Container maxWidth="lg">
+          <Paper>
+           <Grid container spacing={1} sx={{ padding: 2 }} >
+             <Grid item xs={12}>
+               <Paper>
+                 <Grid container spacing={1} sx={{ padding: 2 }} >
+                   <Grid item xs={6}>
+                     <Typography
+                       component="h2"
+                       variant="h6"
+                       color="primary"
+                       gutterBottom
+                     >
+                       การจัดการห้อง
+                     </Typography>
+                   </Grid>
      
-              <Box flexGrow={1}>
-                <Typography
-                  component="h2"
-                  variant="h6"
-                  color="primary"
-                  gutterBottom
-                >
-                  การจัดการห้อง
-                </Typography>
-              </Box>
+                   <Grid item xs={2}>
+                   <Button
+                     component={RouterLink}
+                     to="/room/create"
+                     variant="contained"
+                     color="primary"
+                   >
+                     Create room
+                   </Button>
+                   </Grid>
      
-              <Box>
-                <Button
-                  component={RouterLink}
-                  to="/room/create"
-                  variant="contained"
-                  color="primary"
-                >
-                  Create Room
-                </Button>
-              </Box>
-            </Box>
+                   <Grid item xs={2}>
+                   <Button
+                     component={RouterLink}
+                     to="/room/update"
+                     variant="contained"
+                     color="primary"
+                   >
+                     Update room
+                   </Button>
+                   </Grid>
      
-            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-              <DataGrid
-                rows={room}
-                getRowId={(row) => row.ID}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            </div>
-            
-          </Container>
+                   <Grid item xs={2}>
+                   <Button
+                     component={RouterLink}
+                     to="/room/delete"
+                     variant="contained"
+                     color="primary"
+                   >
+                     Delete room
+                   </Button>
+                   </Grid>
+                 </Grid>
+               </Paper>
+             </Grid>
+             
+             <Grid item xs={12}>
+             <Paper>
+               <Grid container spacing={1} sx={{ padding: 2 }} >
+                 <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+                 <DataGrid
+                   rows={room}
+                   getRowId={(row) => row.ID}
+                   columns={columns}
+                   pageSize={5}
+                   rowsPerPageOptions={[5]}
+                 />
+                 </div>
+               </Grid>
+             </Paper>
+             </Grid>
+     
+           </Grid>
+         </Paper>
+         
+         </Container>
         </div>
      
       );

@@ -15,10 +15,10 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
-import { GuardsInterface } from "../models/IGuard";
-import { CompaniesInterface } from "../models/ICompany";
 import { InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from "@mui/material";
-import { CreateBuilding, DeleteBuilding, GetBuilding, GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
+import { CreateRoom, GetRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
+import { RoomsInterface } from "../models/IRoom";
+import { TyperoomsInterface } from "../models/ITyperoom";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -27,31 +27,32 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function BuildingDelete(){
-    const [building, setBuilding] = React.useState<BuildingsInterface>({
+function RoomDelete(){
+    const [room, setRoom] = React.useState<RoomsInterface>({
       Detail:"", Note: "",
-    Time: new Date(),});
+      Time: new Date(),});
+
     const [user, setUser] = useState<UsersInterface>({});    
 
-    const [guards, setGuards] = React.useState<GuardsInterface[]>([]);
+    const [typeroom, setTyperooms] = React.useState<TyperoomsInterface[]>([]);
 
-    const [companies, setCompanies] = React.useState<CompaniesInterface[]>([]); 
+    const [building, setBuildings] = React.useState<BuildingsInterface[]>([]); 
 
-    const [buildingID, setBuildingID] = useState("");
+    const [roomID, setRoomID] = useState("");
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [errorSearch_b, setErrorSearch_b] = useState(false);
-    const [errorMessage_b, setErrorMessage_b] = useState("");
+    const [errorSearch_r, setErrorSearch_r] = useState(false);
+    const [errorMessage_r, setErrorMessage_r] = useState("");
     const [errorSearch, setErrorSearch] = useState(false);
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
       ) => {
-        const id = event.target.id as keyof typeof building;
+        const id = event.target.id as keyof typeof room;
         const { value } = event.target;
-        setBuilding({ ...building, [id]: value, });
+        setRoom({ ...room, [id]: value, });
         console.log(`[${id}]: ${value}`);
       };
 
@@ -68,60 +69,73 @@ function BuildingDelete(){
     };  
 
     const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof building;
+        const name = event.target.name as keyof typeof room;
         const value = event.target.value;
-        setBuilding({
-          ...building,
+        setRoom({
+          ...room,
           [name]: value,
         });
         console.log(`[${name}]: ${value}`);
       };
 
+      const onChangeBuilding = async (e: SelectChangeEvent) =>{
+        const bid = e.target.value;
+        let res = await ListRoomsbyBuilding(bid);
+        if (res) {
+          setRoom(res);
+          console.log("Load Room Complete");
+        }
+        else{
+          console.log("Load Room Incomplete!!!");
+        }
+        
+      }
 
-      const getBuilding = async () => {
+
+      const getUser = async () => {
         const uid = localStorage.getItem("userID")
-        let res = await GetBuilding(uid);
+        let res = await GetUser(uid);
         if (res.status) {
-          setBuilding(res.data);
-          console.log("Load Building Complete");
+          setUser(res.data);
+          console.log("Load User Complete");
           console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
         }
         else{
-          console.log("Load Building InComplete!!!!");
+          console.log("Load User InComplete!!!!");
         }
       };
 
-      const listGuards = async () => {
-        let res = await ListGuards();
+      const listTyperooms = async () => {
+        let res = await ListTyperooms();
         if (res) {
-            setGuards(res);
-            console.log("Load Guards Complete");
+            setTyperooms(res);
+            console.log("Load Typerooms Complete");
         }
         else{
-          console.log("Load Guards InComplete!!!!");
+          console.log("Load Typerooms InComplete!!!!");
         }
       };
 
-      const listCompanies = async () => {
-        let res = await ListCompanies();
+      const listBuildings = async () => {
+        let res = await ListBuildings();
         if (res) {
-          setCompanies(res);
-          console.log("Load Company Complete");
+          setBuildings(res);
+          console.log("Load Buildings Complete");
         }
         else{
-          console.log("Load Company InComplete!!!!");
+          console.log("Load Buildings InComplete!!!!");
         }
       };
 
-      async function search_b(){
-        if (buildingID === ""){
-          setErrorSearch_b(true);
-          setErrorMessage_b("กรุณากรอกชื่อตึก");
+      async function search_r(){
+        if (roomID === ""){
+          setErrorSearch_r(true);
+          setErrorMessage_r("กรุณากรอกเลขห้อง");
           return
         }
-        let res = await GetBuilding(buildingID);
+        let res = await GetRoom(roomID);
         if (res.status){
-          setBuilding(res.data);
+          setRoom(res.data);
           //setBooking(res.data);
           handleClose()
           setErrorMessage("");
@@ -134,41 +148,65 @@ function BuildingDelete(){
 
       async function submit() {
         let data = {
-            
-            Detail: building.Detail,
 
+            Detail: room.Detail,
             AdminID: (user.ID),
-            GuardID: (building.GuardID),
-            CompanyID: (building.CompanyID),  
-            Note: building.Note,
-            Time: building.Time,
+            TyperoomID: (room.TyperoomID),
+            BuildingID: (room.BuildingID),  
+            Note: room.Note,
+            Time: room.Time,
         };
-        console.log(data);
-        
-        let res = await DeleteBuilding(data);
-        console.log(res);
-        if (res) {
-            setSuccess(true);
-            setErrorMessage("");
+        let res = await CreateRoom(data);
+      console.log(res);
+      if (res) {
+          setSuccess(true);
+          setErrorMessage("");
 
-            setBuilding({
-              Note: "",
-              Time: new Date(),
-            })
-        } else {
-            setError(true);
-            setErrorMessage(res);
-        }
+          setRoom({
+            Note: "",
+            Time: new Date(),
+          })
+      } else {
+          setError(true);
+          setErrorMessage(res);
+      }
 
     }
 
     useEffect(() => {
-        
-        getBuilding();
+        listTyperooms();
+        listBuildings();
+        getUser();
     }, []);
 
 
-      return (  
+    <Grid item xs={6} >
+          <p>ชื่อตึก</p>
+          <FormControl required fullWidth >
+            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
+            <Select
+              labelId="BuildingID"
+              label="กรุณาเลือกตึก *"
+              value={room?.BuildingID || ""}
+              onChange={ (handleChange) }
+              inputProps={{
+                name: "BuildingID",
+              }}
+            >
+              {building.map((item: BuildingsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>
+
+
+return (  
     <div>
 <Container maxWidth="md">
     <Snackbar
@@ -202,6 +240,32 @@ function BuildingDelete(){
                      </Typography>
                  </Box>
       <Grid container spacing={1} sx={{ padding: 1 }}>
+
+      <Grid item xs={6} >
+          <p>ชื่อตึก</p>
+          <FormControl required fullWidth >
+            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
+            <Select
+              labelId="BuildingID"
+              label="กรุณาเลือกตึก *"
+              value={room?.BuildingID || ""}
+              onChange={ (handleChange) }
+              inputProps={{
+                name: "BuildingID",
+              }}
+            >
+              {building.map((item: BuildingsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>
+
     <Grid item xs={3}>          
       <FormControl fullWidth variant="outlined">
         <Box
@@ -212,36 +276,28 @@ function BuildingDelete(){
        autoComplete="off"
         >
         <TextField id="outlined-basic" 
-        label="Building ID" 
+        label="Room ID" 
         variant="outlined" 
         type="string" 
         size="medium" 
-        placeholder="Building ID"
-        value={buildingID}
-          onChange={(e) => {setBuildingID(e.target.value)              
-            console.log(buildingID)
+        placeholder="Room ID"
+        value={roomID}
+          onChange={(e) => {setRoomID(e.target.value)              
+            console.log(roomID)
             }
           }
         /> 
         <TextField id="outlined-basic" 
-        label="GuardID " 
+        label="TyperoomID " 
         variant="outlined"
         disabled  
         type="string" 
         size="medium" 
-        placeholder="GuardID"
-        value={building.Guard?.Detail +""}
+        placeholder="TyperoomID"
+        value={room.Typeroom?.Detail +""}
                   
         />   
-         <TextField id="outlined-basic" 
-        label="Company"
-        disabled 
-        variant="outlined" 
-        type="string" 
-        size="medium"            
-        placeholder="Company"
-        value={building.Company?.Detail +""}           
-        />          
+                             
           </Box>
       </FormControl>
     </Grid>
@@ -250,7 +306,7 @@ function BuildingDelete(){
          style={{ float: "right" }}
          size="large"
          onClick= {() => {
-          search_b();
+          search_r();
           }}
          variant="contained"
          color="primary"
@@ -271,7 +327,7 @@ function BuildingDelete(){
             inputProps={{
               name: "Note",
             }}
-            value={building.Note + ""}
+            value={room.Note + ""}
             onChange={handleChange_Text}
           />
         </FormControl>
@@ -282,10 +338,10 @@ function BuildingDelete(){
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DateTimePicker
             label="กรอกเวลาที่อนุมัติ"
-            value={building.Time}
+            value={room.Time}
             onChange={(newValue) => {
-              setBuilding({
-                ...building,
+              setRoom({
+                ...room,
                 Time: newValue,
               });
             }}
@@ -307,13 +363,18 @@ function BuildingDelete(){
                 >
                   Submit
                 </Button>
-               </Grid>  
+               </Grid> 
         </Grid>
       </Grid>         
       </Container>
     </div>
   
   );
+     
 }
 
-export default BuildingDelete;
+export default RoomDelete;
+
+
+
+
