@@ -12,6 +12,8 @@ export interface BuildingsInterface {
     RoomID?: string;
     CompanyID?: string;
     GuardID?: string;
+    Note?: string | "";
+    Time?: Date | null;
 
     User?: UsersInterface
     Room?: RoomsInterface

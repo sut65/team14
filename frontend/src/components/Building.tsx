@@ -41,6 +41,11 @@ function Buildings() {
         { field: "Company", headerName: "บริษัทรับเหมา", width: 200 ,
         valueFormatter: (params) => params.value.Detail,},
      
+        { field: "Note", headerName: "หมายเหตุ", width: 200  ,},
+        { 
+          field: "Time", headerName: "เวลาที่เพิ่มตึก", width: 200,
+          valueFormatter: (params) => `${new Date(params.value)}`,
+        },
         
       ];
      
