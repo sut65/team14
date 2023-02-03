@@ -346,6 +346,23 @@ async function GetApprove(id: any) {
 
   return res;
 }
+async function GetApprovebyCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/approve/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });}
 
 async function UpdateApprove(data: ApprovesInterface) {
   const requestOptions = {
@@ -1442,7 +1459,7 @@ export{
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
     GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, UpdateBooking, DeleteBooking,
 
-    CreateApprove, ListApproves, GetApprove, UpdateApprove, DeleteApprove,
+    CreateApprove, ListApproves, GetApprove, GetApprovebyCode, UpdateApprove, DeleteApprove,
 
     ListRoomsbyBuilding, GetRoom ,CreateRoom,ListRooms,UpdateRoom, DeleteRoom,
 

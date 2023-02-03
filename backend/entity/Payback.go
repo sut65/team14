@@ -24,7 +24,8 @@ type Payback struct {
 	Device   Device `gorm:"references:id" valid:"-"`
 	DeviceID *uint
 
-	
+	PBADNote string `valid:"required~กรุณากรอกหมายเหตุจากผู้บันทึก"`
+	PBusNote string `valid:"required~กรุณากรอกหมายเหตุจากผู้ยืม"`
 }
 
 func init() {

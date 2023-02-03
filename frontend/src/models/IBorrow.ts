@@ -2,6 +2,7 @@ import { DevicesInterface } from "./IDevice";
 import { ApprovesInterface } from "./IApprove";
 import { UsersInterface } from "./IUser";
 import { DeviceTypesInterface } from "./IDeviceType";
+import { PaybacksInterface } from "./IPayback";
 
 export interface BorrowsInterface {
     ID?: string,
@@ -18,5 +19,6 @@ export interface BorrowsInterface {
     Device?: DevicesInterface;
     Approve?: ApprovesInterface;
 
+    Payback?: PaybacksInterface;
     //change user to admin & booking to approve
 }
