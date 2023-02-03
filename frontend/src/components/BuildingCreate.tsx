@@ -19,6 +19,7 @@ import { GuardsInterface } from "../models/IGuard";
 import { CompaniesInterface } from "../models/ICompany";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { CreateBuilding, GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -27,7 +28,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BuildingCreate(){
-    const [building, setBuilding] = React.useState<BuildingsInterface>({Detail:""});
+    const [building, setBuilding] = React.useState<BuildingsInterface>({
+      Detail:"", Note: "",
+    Time: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [guards, setGuards] = React.useState<GuardsInterface[]>([]);
@@ -113,6 +116,8 @@ function BuildingCreate(){
             AdminID: (user.ID),
             GuardID: (building.GuardID),
             CompanyID: (building.CompanyID),  
+            Note: building.Note,
+            Time: building.Time,
         };
         console.log(data);
         
@@ -243,6 +248,42 @@ function BuildingCreate(){
             </Select>
           </FormControl>
           </Grid> 
+
+
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="Note"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
+                inputProps={{
+                  name: "Note",
+                }}
+                value={building.Note + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={12}>
+            <p>เวลาที่อนุมัติ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรอกเวลาที่อนุมัติ"
+                value={building.Time}
+                onChange={(newValue) => {
+                  setBuilding({
+                    ...building,
+                    Time: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
 
               
      

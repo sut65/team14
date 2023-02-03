@@ -24,6 +24,8 @@ import FastfoodIcon from '@mui/icons-material/Fastfood';
 import AddShoppingCartTwoToneIcon from '@mui/icons-material/AddShoppingCartTwoTone';
 import ShoppingCartCheckoutTwoToneIcon from '@mui/icons-material/ShoppingCartCheckoutTwoTone';
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
+import ApartmentIcon from '@mui/icons-material/Apartment';
+import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
 
 
 import Booking from "./components/Booking";
@@ -117,8 +119,8 @@ const menu = [
   { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
   { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
-  { name: "จัดการตึก", icon: <TextSnippetIcon />, path: "/buildings"},
-  { name: "จัดการห้อง", icon: <TextSnippetIcon />, path: "/rooms"},
+  { name: "จัดการตึก", icon: <ApartmentIcon />, path: "/buildings"},
+  { name: "จัดการห้อง", icon: <MeetingRoomIcon />, path: "/rooms"},
   { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
 ];
 
@@ -252,8 +254,6 @@ return (
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
-                <Route path="/approve/update" element={<ApproveUpdate />} />
-                <Route path="/approve/delete" element={<ApproveDelete />} />
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
