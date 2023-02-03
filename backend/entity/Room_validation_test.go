@@ -8,6 +8,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
+
 func TestRoomPass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
