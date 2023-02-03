@@ -36,26 +36,15 @@ function UserCreate() {
     const [error, setError] = React.useState(false);
 
     const handleClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string
-    ) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        setSuccess(false);
-        setError(false);
-    };
-
-
-    const handleInputChange = (
-
-        event: React.ChangeEvent<{ id?: string; value: any }>
-
-    ) => {
-        const id = event.target.id as keyof typeof UserCreate;
-        const { value } = event.target;
-        setUser({ ...user, [id]: value });
-    };
+      event?: React.SyntheticEvent | Event,
+      reason?: string
+  ) => {
+      if (reason === "clickaway") {
+          return;
+      }
+      setSuccess(false);
+      setError(false);
+  };
 
     const handleChange = (event: SelectChangeEvent) => {
       const name = event.target.name as keyof typeof user;
@@ -67,10 +56,20 @@ function UserCreate() {
       console.log(`[${name}]: ${value}`);
     };
 
-    const convertType = (data: string | number | undefined) => {
-      let val = typeof data === "string" ? parseInt(data) : data;
-      return val;
-    };
+    const handleInputChange = (
+
+      event: React.ChangeEvent<{ id?: string; value: any }>
+
+  ) => {
+      const id = event.target.id as keyof typeof UserCreate;
+      const { value } = event.target;
+      setUser({ ...user, [id]: value });
+  };
+
+  const convertType = (data: string | number | undefined) => {
+    let val = typeof data === "string" ? parseInt(data) : data;
+    return val;
+  };
 
     //ดึงข้อมูล Genders
     const listGenders = async () => {
@@ -100,19 +99,18 @@ function UserCreate() {
     }, []);
 
     
-
-
     function submit() {
         let data = {
             FirstName: user.FirstName,
             LastName: user.LastName,
             Email: user.Email,
-            Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
-            BirthDay: date,
             Phonenumber: user.PhoneNumber,
-            Password: user.Password,
+            IdentificationNumber: user.IdentificationNumber,
             StudentID: user.StudentID,
-
+            Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
+            Password: user.Password,
+            BirthDay: date,
+            
             EducationLevelID: convertType(user.EducationLevelID),
             RoleID: convertType(user.RoleID),
             GenderID: convertType(user.GenderID),
@@ -186,6 +184,8 @@ function UserCreate() {
                variant="outlined"
                type="string"
                size="medium"
+               label="ชื่อ" 
+               inputProps={{name: "FirstName",}}
                value={user.FirstName || ""}
                onChange={handleInputChange}
              />
@@ -257,9 +257,7 @@ function UserCreate() {
                type="number"
                size="medium"
                InputProps={{ inputProps: { min: 1 } }}
-               InputLabelProps={{
-                 shrink: true,
-               }}
+               InputLabelProps={{ shrink: true,}}
                value={user.Age || ""}
                onChange={handleInputChange}
              />
@@ -273,9 +271,7 @@ function UserCreate() {
                 required
                 defaultValue={"0"}
                 onChange={handleChange}
-                inputProps={{
-                  name: "GenderID",
-                }}
+                inputProps={{name: "GenderID",}}
               >
                 <MenuItem value={"0"}>กรุณาเลือกเพศ</MenuItem>
                 {genders?.map((item: GendersInterface) =>
@@ -326,9 +322,7 @@ function UserCreate() {
                 required
                 defaultValue={"0"}
                 onChange={handleChange}
-                inputProps={{
-                  name: "EducationLevelID",
-                }}
+                inputProps={{name: "EducationLevelID",}}
               >
                 <MenuItem value={"0"}>กรุณาเลือกระดับการศึกษา</MenuItem>
                 {educationlevels?.map((item: EducationLevelsInterface) =>
@@ -349,9 +343,7 @@ function UserCreate() {
              <LocalizationProvider dateAdapter={AdapterDateFns}>
                <DatePicker
                  value={date}
-                 onChange={(newValue) => {
-                   setDate(newValue);
-                 }}
+                 onChange={(newValue) => {setDate(newValue);}}
                  renderInput={(params) => <TextField {...params} />}
                />
              </LocalizationProvider>
@@ -365,9 +357,7 @@ function UserCreate() {
                 required
                 defaultValue={"0"}
                 onChange={handleChange}
-                inputProps={{
-                  name: "RoleID",
-                }}
+                inputProps={{name: "RoleID",}}
               >
                 <MenuItem value={"0"}>กรุณาเลือกบทบาท</MenuItem>
                 {roles?.map((item: RolesInterface) =>

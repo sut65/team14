@@ -17,10 +17,14 @@ type LoginPayload struct {
 
 // SignUpPayload signup body
 type SignUpPayload struct {
-	FirstName   string `json:"firstName"`
-	Email       string `json:"email"`
-	Password    string `json:"password"`
-	Phonenumber string `json:"Phonenumber"`
+	FirstName            string `json:"firstName"`
+	LastName             string `json:"lastName"`
+	Email                string `json:"email"`
+	Password             string `json:"password"`
+	PhoneNumber          string `json:"PhoneNumber"`
+	IdentificationNumber string `json:"IdentificationNumber"`
+	StudentID            string `json:"StudentID"`
+	Age                  uint8  `json:"Age"`
 
 	RoleID           uint `json:"RoleID"`
 	GenderID         uint `json:"GenderID"`
@@ -118,13 +122,18 @@ func CreateUser(c *gin.Context) {
 	}
 	//x: สร้าง User
 	us := entity.User{
-		Role:           role,           // โยงความสัมพันธ์กับ Entity Role
-		Gender:         gender,         // โยงความสัมพันธ์กับ Entity Gender
-		EducationLevel: educationlevel, // โยงความสัมพันธ์กับ Entity EducationLevel
+		Role:           role,
+		Gender:         gender,
+		EducationLevel: educationlevel,
 
-		FirstName: payload.FirstName,
-		Email:     payload.Email,
-		Password:  string(hashPassword),
+		FirstName:            payload.FirstName,
+		LastName:             payload.LastName,
+		Email:                payload.Email,
+		PhoneNumber:          payload.PhoneNumber,
+		IdentificationNumber: payload.IdentificationNumber,
+		StudentID:            payload.StudentID,
+		Age:                  payload.Age,
+		Password:             string(hashPassword),
 	}
 
 	// x: บันทึก
