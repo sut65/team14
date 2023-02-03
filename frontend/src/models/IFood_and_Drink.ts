@@ -3,6 +3,8 @@ import { UsersInterface } from "./IUser";
 export interface Food_and_DrinksInterface {
     ID?: number,
     Menu?: string | null;
+    Address?: string | null;
+    Tel?: string | null;
     Foodtype?: FoodtypesInterface ;
     FoodtypeID?: string | null;
     Shop?: ShopsInterface;

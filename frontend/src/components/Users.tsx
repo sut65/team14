@@ -19,18 +19,18 @@ function Users() {
 
   const columns: GridColDef[] = [
       { field: "ID", headerName: "ID", width: 50 },
-      { field: "FirstName", headerName: "First name", width: 150 },
-      { field: "LastName", headerName: "Last name", width: 150 },
-      { field: "Email", headerName: "Email", width: 150 },
-      { field: "PhoneNumber", headerName: "PhoneNumber", width: 120 },
-      { field: "IdentificationNumber", headerName: "IdentificationNumber", width: 150 },
-      { field: "StudentID", headerName: "StudentID", width: 100 },
-      { field: "Age", headerName: "Age", width: 50 },
-      { field: "Password", headerName: "Password", width: 100 },
-      { field: "BirthDay", headerName: "BirthDay", width: 150 },
-      { field: "Role", headerName: "Role", width: 70, valueFormatter: (params) => params.value.Name  },
-      { field: "Gender", headerName: "Gender", width: 80, valueFormatter: (params) => params.value.Name  },
-      { field: "EducationLevel", headerName: "EducationLevel", width: 120, valueFormatter: (params) => params.value.Name  },
+      { field: "FirstName", headerName: "ชื่อ", width: 150 },
+      { field: "LastName", headerName: "นามสกุล", width: 150 },
+      { field: "Email", headerName: "อีเมลล์", width: 150 },
+      { field: "PhoneNumber", headerName: "เบอร์โทรศัพท์", width: 120 },
+      { field: "IdentificationNumber", headerName: "เลขบัตรประชาชน", width: 150 },
+      { field: "StudentID", headerName: "รหัสนักศึกษา", width: 100 },
+      { field: "Age", headerName: "อายุ", width: 50 },
+      { field: "Password", headerName: "รหัสผ่าน", width: 100 },
+      { field: "BirthDay", headerName: "วัน/เดือน/ปีเกิด", width: 150 },
+      { field: "Role", headerName: "สถานะ", width: 70, valueFormatter: (params) => params.value.Name,  },
+      { field: "Gender", headerName: "เพศ", width: 80, valueFormatter: (params) => params.value.Name  },
+      { field: "EducationLevel", headerName: "ระดับการศึกษา", width: 120, valueFormatter: (params) => params.value.Name  },
   ];
 
   useEffect(() => {
@@ -55,7 +55,7 @@ function Users() {
              color="primary"
              gutterBottom
            >
-             Users
+             สมาชิก
            </Typography>
          </Box>
 
@@ -66,7 +66,7 @@ function Users() {
              variant="contained"
              color="primary"
            >
-             Create User
+             ลงทะเบียนสมาชิก
            </Button>
          </Box>
        </Box>

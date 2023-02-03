@@ -28,6 +28,8 @@ const columns: GridColDef[] = [
     { field: "Menu", headerName: "ชื่ออาหาร", width: 150, valueFormatter: (params) => params.value.Name},
     { field: "Foodtype", headerName: "ประเภทอาหาร", width: 150, valueFormatter: (params) => params.value.Name},
     { field: "Shop", headerName: "ร้านค้า", width: 150, valueFormatter: (params) => params.value.Name },
+    { field: "Tel", headerName: "เบอร์โทรศัพท์", width: 150, valueFormatter: (params) => params.value.Name},
+    { field: "Address", headerName: "ที่อยู่", width: 200, valueFormatter: (params) => params.value.Name},
     { field: "Admin", headerName: "แอดมิน", width: 100, valueFormatter: (params) => params.value.FirstName },
 ];
 

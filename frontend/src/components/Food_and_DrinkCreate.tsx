@@ -31,7 +31,7 @@ function Food_and_DrinkCreate() {
     const [user, setUser] = React.useState<UsersInterface>({});
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
-    
+
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -102,6 +102,8 @@ function Food_and_DrinkCreate() {
     async function submit() {
       let data = {
           Menu: food_and_drink.Menu,
+          Address: food_and_drink.Address,
+          Tel: food_and_drink.Tel,
 
           FoodtypeID: (food_and_drink.FoodtypeID),
           ShopID: (food_and_drink.ShopID),  
@@ -135,7 +137,7 @@ return (
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
-          <Grid item xs={8}>
+          <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
             <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
@@ -145,13 +147,7 @@ return (
             </Select>
           </FormControl>
           </Grid>
-          <Grid item xs={12} >  
-          <FormControl fullWidth variant="outlined">
-              <p>ชื่ออาหาร</p>
-              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu || ""} onChange={handleInputChange}/>
-          </FormControl>
-          </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
               <p>ร้านค้า</p>
               <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "ShopID", }}>
@@ -159,6 +155,24 @@ return (
                 {shops?.map((item: ShopsInterface) => 
                   <MenuItem key={item.ID} value={item.ID}> {item.Name} </MenuItem>)}
               </Select>
+          </FormControl>
+          </Grid>
+          <Grid item xs={8} >  
+          <FormControl fullWidth variant="outlined">
+              <p>ชื่ออาหาร</p>
+              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu || ""} onChange={handleInputChange}/>
+          </FormControl>
+          </Grid>
+          <Grid item xs={6} >  
+          <FormControl fullWidth variant="outlined">
+              <p>เบอร์โทรศัพท์</p>
+              <TextField  id="Tel" variant="outlined" type="string" size="medium" label="เบอร์โทรศัพท์" inputProps={{name: "Tel",}} value={food_and_drink.Tel || ""} onChange={handleInputChange}/>
+          </FormControl>
+          </Grid>
+          <Grid item xs={12} >  
+          <FormControl fullWidth variant="outlined">
+              <p>ที่อยู่</p>
+              <TextField  id="Address" variant="outlined" type="string" size="medium" label="ที่อยู่" inputProps={{name: "Address",}} value={food_and_drink.Address || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={8}>
