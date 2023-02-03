@@ -875,9 +875,9 @@ async function CreateFood_and_Drink(data: Food_and_DrinksInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
-      } else {
-        return false;
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -1072,7 +1072,7 @@ async function CreateUser(data: UsersInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/user`, requestOptions)
+  let res = await fetch(`${apiUrl}/users`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
