@@ -42,6 +42,9 @@ func CreatePayback(c *gin.Context) {
 
 	//สร้าง Payback
 	bod := entity.Payback{
+		PBADNote: payback.PBADNote,
+		PBusNote: payback.PBusNote,
+
 		Admin:   admin,
 		Device:  device,
 		Borrow: borrow,
@@ -68,7 +71,7 @@ func CreatePayback(c *gin.Context) {
 func GetPayback(c *gin.Context) {
 	var Payback entity.Payback
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Device").Preload("Borrow").Raw("SELECT * FROM paybacks WHERE id = ?", id).Find(&Payback).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Device").Preload("Borrow").Preload("Approve").Preload("Booking").Raw("SELECT * FROM paybacks WHERE id = ?", id).Find(&Payback).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -82,7 +85,7 @@ func GetPayback(c *gin.Context) {
 // GET /Paybacks
 func ListPaybacks(c *gin.Context) {
 	var Paybacks []entity.Payback
-	if err := entity.DB().Preload("User").Preload("Device").Preload("Borrow").Raw("SELECT * FROM paybacks").Find(&Paybacks).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Device").Preload("Borrow").Preload("Approve").Preload("Booking").Raw("SELECT * FROM paybacks").Find(&Paybacks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

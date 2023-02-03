@@ -78,11 +78,14 @@ func ListBuildings(c *gin.Context) {
 
 // DELETE /buildings/:id
 func DeleteBuilding(c *gin.Context) {
+	var Building entity.Building
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM buildings WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "building not found"})
+	// UPDATE Buildings SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&Building); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Building not found"})
 		return
 	}
+
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 

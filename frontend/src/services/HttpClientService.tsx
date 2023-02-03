@@ -346,6 +346,23 @@ async function GetApprove(id: any) {
 
   return res;
 }
+async function GetApprovebyCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/approve/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });}
 
 async function UpdateApprove(data: ApprovesInterface) {
   const requestOptions = {
@@ -1345,16 +1362,108 @@ async function CreateDevice(data: DevicesInterface) {
   return res;
 }
 
+async function UpdateBuilding(data: BuildingsInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/building`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function DeleteBuilding(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/building/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
+async function UpdateRoom(data: RoomsInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/room`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function DeleteRoom(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/room/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
+
+
 export{
     Login,
     ListBookings, CreateBooking, GetBooking, ListBookingbyRoom, GetBookingbyCode, GetBookingbyCodeThatNotApprove, ListBookingbyUser,
     GetBookingbyCodeThatApprove, ListBookingsThatNotApprove, UpdateBooking, DeleteBooking,
 
-    CreateApprove, ListApproves, GetApprove, UpdateApprove, DeleteApprove,
+    CreateApprove, ListApproves, GetApprove, GetApprovebyCode, UpdateApprove, DeleteApprove,
 
-    ListRoomsbyBuilding, GetRoom ,CreateRoom,ListRooms,
+    ListRoomsbyBuilding, GetRoom ,CreateRoom,ListRooms,UpdateRoom, DeleteRoom,
 
-    ListBuildings, GetBuilding, CreateBuilding,
+    ListBuildings, GetBuilding, CreateBuilding, UpdateBuilding, DeleteBuilding,
 
     ListObjectives, GetObjective,
 

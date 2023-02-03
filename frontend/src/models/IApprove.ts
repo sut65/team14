@@ -1,6 +1,7 @@
 import { StatusBooksInterface } from "./IStatusBook";
 import { BookingsInterface } from "./IBooking";
 import { UsersInterface } from "./IUser";
+import { BorrowsInterface } from "./IBorrow";
 
 export interface ApprovesInterface {
     ID?: string,
@@ -16,4 +17,6 @@ export interface ApprovesInterface {
     User?: UsersInterface;
     StatusBook?: StatusBooksInterface;
     Booking?: BookingsInterface;
+
+    Borrow?: BorrowsInterface;
 }

@@ -58,6 +58,7 @@ import BookingDelete from "./components/BookingDelete";
 import DeviceCreate from "./components/DeviceCreate";
 import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
+import BuildingDelete from "./components/BuildingDelete";
 
 const drawerWidth = 260;
 
@@ -267,6 +268,8 @@ return (
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />
+                <Route path="/building/delete" element={<BuildingDelete />} />
+
 
                 <Route path="/rooms" element={<Room />} />
                 <Route path="/room/create" element={<RoomCreate />} />
