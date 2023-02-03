@@ -209,12 +209,13 @@ func ListBookingsbyRoom(c *gin.Context) {
 		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Preload("Approve.StatusBook").
 			Raw("select b.* from "+
 				"rooms r inner join bookings b on r.id = b.room_id "+
-				"and datetime(date_end) > datetime('now', 'localtime') "+
-				"and r.Detail = ? "+
+				"and datetime(date_end) > datetime('now', 'localtime') and b.deleted_at is null "+
 				"EXCEPT "+
 				"select b.* from "+
 				"rooms r inner join bookings b on r.id = b.room_id "+
-				"inner join approves a on a.booking_id = b.id  and a.status_book_id = 2;", detail).Find(&bookings).Error; err != nil {
+				"inner join approves a on a.booking_id = b.id "+
+				"and a.id in (select max(a.id) from approves a group by a.booking_id) "+
+				"where a.status_book_id = 2;", detail).Find(&bookings).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
@@ -223,11 +224,13 @@ func ListBookingsbyRoom(c *gin.Context) {
 		if err := entity.DB().Preload("User").Preload("Objective").Preload("Room").Preload("Approve").Preload("Approve.StatusBook").
 			Raw("select b.* from " +
 				"rooms r inner join bookings b on r.id = b.room_id " +
-				"and datetime(date_end) > datetime('now', 'localtime') " +
+				"and datetime(date_end) > datetime('now', 'localtime') and b.deleted_at is null " +
 				"EXCEPT " +
 				"select b.* from " +
 				"rooms r inner join bookings b on r.id = b.room_id " +
-				"inner join approves a on a.booking_id = b.id  and a.status_book_id = 2;").
+				"inner join approves a on a.booking_id = b.id " +
+				"and a.id in (select max(a.id) from approves a group by a.booking_id) " +
+				"where a.status_book_id = 2;").
 			Find(&bookings).Error; err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
@@ -254,19 +257,20 @@ func DeleteBooking(c *gin.Context) {
 // PUT /booking
 func UpdateBooking(c *gin.Context) {
 	var booking entity.Booking
+	var tmp entity.Booking
 
 	if err := c.ShouldBindJSON(&booking); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	// ค้นหา booking ด้วย id
-	if tx := entity.DB().Where("id = ?", booking.ID).First(&booking); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", booking.ID).First(&tmp); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Booking not found"})
 		return
 	}
 	var user entity.User
 	var objective entity.Objective
-	var Room entity.Room
+	var room entity.Room
 	// ค้นหา user ด้วย id
 	if tx := entity.DB().Where("id = ?", booking.UserID).First(&user); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
@@ -280,12 +284,16 @@ func UpdateBooking(c *gin.Context) {
 	}
 
 	// ค้นหา room ด้วย id
-	if tx := entity.DB().Where("id = ?", booking.RoomID).First(&Room); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", booking.RoomID).First(&room); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบห้อง"})
 		return
 	}
+	tmp.Code = booking.Code
+	tmp.User = user
+	tmp.Objective = objective
+	tmp.Room = room
 
-	if err := entity.DB().Save(&booking).Error; err != nil {
+	if err := entity.DB().Save(&tmp).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

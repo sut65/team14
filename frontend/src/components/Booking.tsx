@@ -31,10 +31,14 @@ function Bookings() {
   const [data, setData] = useState<AppointmentModel[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [allBookings, setAllBookings] = useState<BookingsInterface[]>([]);
-  const [userBookings, setUserBookings] = useState<BookingsInterface[]>([]);
+  const [roomBookings, setRoomBookings] = useState<BookingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [roomOne, setRoomOne] = useState<RoomsInterface>({});
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(
+    //new Date()
+    (moment("2023-02-02T06:00:00Z", "YYYY-MM-DDTHH:mm:ssZ").toDate())
+  );
+  console.log(currentDate)
   const [checkedAll, setCheckedAll] = useState(false);
   const [checkedUser, setCheckedUser] = useState(false);
   const [checkedRoom, setCheckedRoom] = useState(false);
@@ -44,21 +48,33 @@ function Bookings() {
       setCurrentDate(currentDate);
   }
 
-  const listBooking = async () => {
-    let res = await ListBookingbyRoom(0);
+  const listBookingRoom = async (id: any) => {
+    let res = await ListBookingbyRoom(id);
       if (res) {
-        console.log("Load Booking Complete");
-        setAllBookings(res)
+        console.log(`Load BookingRoom: ${id} Complete`);
+        schedule(res)
       }
       else {
-        console.log("Load Booking InComplete");
+        console.log(`Load BookingRoom: ${id} InComplete`);
       }
+  }
+
+  const listBookingAll = async () => {
+    let res = await ListBookings();
+    if (res) {
+      console.log("Load BookingAll Complete");
+      setAllBookings(res)
+      schedule(res)        
+    }
+    else{
+      console.log("Load BookingAll InComplete");
+    } 
   }
 
   const listUserBooking = async () => {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
-      setUserBookings(res.data)
+      schedule(res.data);
       console.log("Load BookingUser Complete");
     }
     else {
@@ -67,30 +83,17 @@ function Bookings() {
   }
 
   const listBookingOption = async () => {
-    let res;
     if (checkedAll){
-      res = await ListBookings();
-      if (res) {
-        console.log("Load BookingAll Complete");
-        schedule(res)        
-      }
-      else{
-        console.log("Load BookingAll InComplete");
-      } 
-      
-    } else if(checkedUser){
-      schedule(userBookings);
-    } else if(checkedRoom){
-      res = await ListBookingbyRoom(roomOne.Detail);
-      if (res) {
-        console.log("Load BookingRoom Complete");
-        schedule(res)
-      }
-      else {
-        console.log("Load BookingRoom InComplete");
-      }
-    } else{ 
-      schedule(allBookings);
+      listBookingAll();
+    } 
+    else if(checkedUser){
+      listUserBooking();
+    } 
+    else if(checkedRoom){
+      listBookingRoom(roomOne.Detail);
+    } 
+    else{ 
+      listBookingRoom(0);
     }
     
   };
@@ -136,8 +139,7 @@ function Bookings() {
 
   useEffect(() => {
     listBuildings();  
-    listBooking();
-    listUserBooking();
+    listBookingAll();
   }, []);
 
   useEffect(() => {
@@ -168,7 +170,9 @@ function Bookings() {
         notes:  notes,
       };
       setData((data) => [...data, x]) // push data
+      console.log(item)
     }); 
+    
   }
   const resources = [{
     fieldName: 'statusID',

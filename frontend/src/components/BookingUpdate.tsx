@@ -128,6 +128,7 @@ function BookingUpdate() {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       setBookings(res.data)
+      console.log(res.data)
       console.log("Load Bookings Complete");
     }
     else{

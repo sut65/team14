@@ -16,7 +16,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
   DeleteApprove, 
-  GetBookingbyCodeThatNotApprove,
+  GetBookingbyCode,
   ListApproves,
   GetApprove,
 } from "../services/HttpClientService";
@@ -102,9 +102,9 @@ function ApproveDelete() {
   }
 
   async function search(code : any){
-    let res = await GetBookingbyCodeThatNotApprove(code);
-    if (res.status){
-      setBooking(res.data);
+    let res = await GetBookingbyCode(code);
+    if (res){
+      setBooking(res);
     } else {
       console.log("Load Booking InComplete!!!");
     }   

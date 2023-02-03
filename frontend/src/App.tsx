@@ -256,6 +256,8 @@ return (
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
+                <Route path="/approve/update" element={<ApproveUpdate />} />
+                <Route path="/approve/delete" element={<ApproveDelete />} />
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
