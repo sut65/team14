@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { BuildingsInterface } from "../models/IBuilding";
 import { ListBuildings } from "../services/HttpClientService";
+import { Grid, Paper } from "@mui/material";
 
 
 function Buildings() {
@@ -59,48 +60,79 @@ function Buildings() {
       return (
 
         <div>
-          <Container maxWidth="md">
-            <Box
-              display="flex"
-              sx={{
-                marginTop: 2,
-              }}
-            >
+          <Container maxWidth="lg">
+          <Paper>
+           <Grid container spacing={1} sx={{ padding: 2 }} >
+             <Grid item xs={12}>
+               <Paper>
+                 <Grid container spacing={1} sx={{ padding: 2 }} >
+                   <Grid item xs={6}>
+                     <Typography
+                       component="h2"
+                       variant="h6"
+                       color="primary"
+                       gutterBottom
+                     >
+                       การจัดการตึก
+                     </Typography>
+                   </Grid>
      
-              <Box flexGrow={1}>
-                <Typography
-                  component="h2"
-                  variant="h6"
-                  color="primary"
-                  gutterBottom
-                >
-                  การจัดการตึก
-                </Typography>
-              </Box>
+                   <Grid item xs={2}>
+                   <Button
+                     component={RouterLink}
+                     to="/building/create"
+                     variant="contained"
+                     color="primary"
+                   >
+                     Create building
+                   </Button>
+                   </Grid>
      
-              <Box>
-                <Button
-                  component={RouterLink}
-                  to="/building/create"
-                  variant="contained"
-                  color="primary"
-                >
-                  Create Building
-                </Button>
-              </Box>
-            </Box>
+                   <Grid item xs={2}>
+                   <Button
+                     component={RouterLink}
+                     to="/building/update"
+                     variant="contained"
+                     color="primary"
+                   >
+                     Update building
+                   </Button>
+                   </Grid>
      
-            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-              <DataGrid
-                rows={building}
-                getRowId={(row) => row.ID}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            </div>
-            
-          </Container>
+                   <Grid item xs={2}>
+                   <Button
+                     component={RouterLink}
+                     to="/building/delete"
+                     variant="contained"
+                     color="primary"
+                   >
+                     Delete building
+                   </Button>
+                   </Grid>
+                 </Grid>
+               </Paper>
+             </Grid>
+             
+             <Grid item xs={12}>
+             <Paper>
+               <Grid container spacing={1} sx={{ padding: 2 }} >
+                 <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+                 <DataGrid
+                   rows={building}
+                   getRowId={(row) => row.ID}
+                   columns={columns}
+                   pageSize={5}
+                   rowsPerPageOptions={[5]}
+                 />
+                 </div>
+               </Grid>
+             </Paper>
+             </Grid>
+     
+           </Grid>
+         </Paper>
+         
+         </Container>
         </div>
      
       );
