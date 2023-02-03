@@ -27,6 +27,7 @@ import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { DeviceTypesInterface } from "../models/IDeviceType";
+import { BookingsInterface } from "../models/IBooking";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -41,11 +42,13 @@ function BorrowCreate() {
       Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
+    const [bookings, setBookings] = useState<BookingsInterface[]>([]);
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
     const [devicetypes, setDevicetypes] = useState<DeviceTypesInterface[]>([]);
 
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
     const [appid, setAppid] = React.useState("");
+    const [code, setCode] = useState("")
 
     const [success, setSuccess] = React.useState(false);
     const [errorSearch, setErrorSearch] = useState(false);
@@ -232,10 +235,33 @@ function BorrowCreate() {
                 <Box component="form"
                     sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
                     noValidate autoComplete="off">
-                    <TextField id="outlined-basic" label="No.Approve" variant="outlined" 
+                    <TextField id="outlined-basic" label="หมายเลขการอนุมัติ" variant="outlined" 
                     onChange={(e) => {setAppid(e.target.value)}}
                     />
                 </Box>
+
+                {/* <FormControl required fullWidth id="BookingCode">
+                  <InputLabel id="BookingCode">กรุณาเลือกรหัสการจอง</InputLabel>
+                  <Select
+                    id="BookingCode"
+                    value={code || ""}
+                    label="กรุณาเลือกรหัสการจอง *"
+                    onChange={(e: SelectChangeEvent)=>(setCode(e.target.value))}
+                  >
+                    {bookings.map((item: BookingsInterface) => {
+                      if (item.Approve == null && item.DeletedAt == null) {
+                        return(<MenuItem
+                          key={item.ID}
+                          value={item.Code}
+                        >
+                          {item.Code}
+                        </MenuItem>)
+                        }
+                    }
+
+                    )}
+                  </Select>
+                </FormControl> */}
                       {/* //////////////////////////// */}
                 <Button
                     style={{ float: "right" }}
@@ -249,12 +275,12 @@ function BorrowCreate() {
 
                 <Grid item xs={12} >
             <FormControl fullWidth variant="outlined">
-              <p>หมายเหตุ</p>
+              <p>หมายเหตุจากผู้บันทึก</p>
               <TextField
                 required
                 id="BorrowAPNote"
                 type="string"
-                label="กรุณากรอกAP12345"
+                label="กรุณากรอกหมายเหตุจากผู้บันทึก"
                 inputProps={{
                   name: "BorrowAPNote",
                 }}
@@ -265,12 +291,12 @@ function BorrowCreate() {
           </Grid>
           <Grid item xs={12} >
             <FormControl fullWidth variant="outlined">
-              <p>หมายเหตุ</p>
+              <p>หมายเหตุจากผู้ยืม</p>
               <TextField
                 required
                 id="BorrowNote1"
                 type="string"
-                label="กรุณากรอกหมายเหตุ"
+                label="กรุณากรอกหมายเหตุจากผู้ยืม"
                 inputProps={{
                   name: "BorrowNote1",
                 }}
@@ -286,21 +312,23 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>ผู้ยืมอุปกรณ์</p>
                       <TextField
-                        value={approves?.User?.FirstName || ""}  
-                        InputProps={{
-                          readOnly: true,
-                        }}
+                      label="ชื่อ"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={(approves?.Booking?.User?.FirstName + " " + approves?.Booking?.User?.LastName) || ""}  
                       />
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl fullWidth variant="outlined">
-                      <p>BK-ID</p>
+                      <p>Bookingcode</p>
                       <TextField
-                        value={approves?.Booking?.ID || ""}
-                        InputProps={{
-                          readOnly: true,
-                        }}
+                        label="รหัสการจอง"
+                        type="string"
+                        disabled
+                        variant="filled"
+                        value={approves?.Booking?.Code || ""}
                       /> 
                     </FormControl>
                   </Grid>  
@@ -311,10 +339,11 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>เริ่มจองเวลา</p>
                       <TextField
-                        value={approves?.Booking?.Date_Start || ""}  
-                        InputProps={{
-                          readOnly: true,
-                        }}
+                      label="เริ่มจองเวลา"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={approves?.Booking?.Date_Start || ""}  
                       />
                     </FormControl>
                   </Grid>
@@ -322,10 +351,11 @@ function BorrowCreate() {
                     <FormControl fullWidth variant="outlined">
                       <p>หมดจองเวลา</p>
                       <TextField
-                        value={approves?.Booking?.Date_End || ""}
-                        InputProps={{
-                          readOnly: true,
-                        }}
+                      label="หมดจองเวลา"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={approves?.Booking?.Date_End || ""}
                       /> 
                     </FormControl>
                   </Grid>  

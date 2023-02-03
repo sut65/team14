@@ -30,8 +30,8 @@ type Borrow struct {
 
 	Payback        []Payback    `gorm:"foreignKey:BorrowID"`
 
-	BorrowNote1 string `valid:"required~กรุณากรอกหมายเหตุ1"`
-	BorrowAPNote string `valid:"required~รหัสการอนุมัติ ต้องขึ้นต้นด้วย Ap ตามด้วยตัวเลข 5 หลัก"`
+	BorrowNote1 string `valid:"required~กรุณากรอกหมายเหตุจากผู้ยืม"`
+	BorrowAPNote string `valid:"required~กรุณากรอกหมายเหตุจากผู้บันทึก"`
 
 }
 
