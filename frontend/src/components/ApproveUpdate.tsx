@@ -18,7 +18,7 @@ import {
   UpdateApprove, 
   ListStatusBooks, 
   GetUser,
-  GetBookingbyCodeThatNotApprove,
+  GetBookingbyCode,
   ListApproves,
   GetApprove,
   GetStatusBook,
@@ -30,6 +30,7 @@ import { StatusBooksInterface } from "../models/IStatusBook";
 import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
+import { log } from "console";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -191,9 +192,9 @@ function ApproveUpdate() {
   }
 
   async function search(code : any){
-    let res = await GetBookingbyCodeThatNotApprove(code);
-    if (res.status){
-      setBooking(res.data);
+    let res = await GetBookingbyCode(code);
+    if (res){
+      setBooking(res);      
     } else {
       console.log("Load Booking InComplete!!!");
     }   

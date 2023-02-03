@@ -30,7 +30,7 @@ func TestFood_and_DrinkPass(t *testing.T) {
 func TestFood_and_DrinkMenuNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล Code ไม่ถูกต้องตาม Format
+	// ข้อมูล ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
 		Menu: "",
 		Address: "999/999",
@@ -53,7 +53,7 @@ func TestFood_and_DrinkMenuNull(t *testing.T) {
 func TestFood_and_DrinkAddressNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล Code ไม่ถูกต้องตาม Format
+	// ข้อมูล ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
 		Menu: "ขนมปัง",
 		Address: "",
@@ -76,7 +76,7 @@ func TestFood_and_DrinkAddressNull(t *testing.T) {
 func TestFood_and_DrinkTelNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล Code ไม่ถูกต้องตาม Format
+	// ข้อมูล ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
 		Menu: "ขนมปัง",
 		Address: "999/999",

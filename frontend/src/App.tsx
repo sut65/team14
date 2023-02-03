@@ -58,6 +58,8 @@ import BookingDelete from "./components/BookingDelete";
 import DeviceCreate from "./components/DeviceCreate";
 import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
+import BuildingDelete from "./components/BuildingDelete";
+import RoomDelete from "./components/RoomDelete";
 
 const drawerWidth = 260;
 
@@ -254,6 +256,8 @@ return (
 
                 <Route path="/approves" element={<Approve />} />
                 <Route path="/approve/create" element={<ApproveCreate />} />
+                <Route path="/approve/update" element={<ApproveUpdate />} />
+                <Route path="/approve/delete" element={<ApproveDelete />} />
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
@@ -267,9 +271,12 @@ return (
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />
+                <Route path="/building/delete" element={<BuildingDelete />} />
+
 
                 <Route path="/rooms" element={<Room />} />
                 <Route path="/room/create" element={<RoomCreate />} />
+                <Route path="/room/delete" element={<RoomDelete />} />
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />

@@ -20,17 +20,19 @@ function Approves() {
         let res = await ListApproves();
         if (res) {
             setApproves(res);
+            console.log(res)
         }
     };
 
     const columns: GridColDef[] = [
+        { field: "ID", headerName: "ID", width: 100 },
         { field: "Code", headerName: "รหัสการอนุมัติ", width: 120 },
         {
           field: "Booking",
           headerName: "รหัสการจองใช้ห้อง",
           width: 140,
           valueFormatter: (params) => `${(params.value.Code)}`,
-      },
+        },
         { 
           field: "ApproveTime", headerName: "เวลาที่อนุมัติ", width: 200,
           valueFormatter: (params) => `${new Date(params.value)}`,

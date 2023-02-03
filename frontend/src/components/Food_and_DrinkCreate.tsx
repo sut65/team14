@@ -31,7 +31,7 @@ function Food_and_DrinkCreate() {
     const [user, setUser] = React.useState<UsersInterface>({});
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
-
+    const [message, setAlertMessage] = React.useState("");
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -113,21 +113,23 @@ function Food_and_DrinkCreate() {
       
       let res = await CreateFood_and_Drink(data);
       console.log(res);
-      if (res) {
-          setSuccess(true);
+      if (res.status) {
+        setAlertMessage("บันทึกรายการอาหารและเครื่องดื่มสำเร็จ");
+        setSuccess(true);
       } else {
-          setError(true);
+        setAlertMessage(res.data);
+        setError(true);
       }
 
   }
 
 return (
     <Container maxWidth="md">
-      <Snackbar open={success} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-        <Alert onClose={handleClose} severity="success"> บันทึกรายการอาหารสำเร็จ </Alert>
+      <Snackbar id="success" open={success} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert onClose={handleClose} severity="success"> {message} </Alert>
       </Snackbar>
-      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error"> บันทึกรายการอาหารไม่สำเร็จ </Alert>
+      <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error"> {message} </Alert>
       </Snackbar>
       <Paper>
         <Box display="flex" sx={{ marginTop: 2, }}>
@@ -169,7 +171,7 @@ return (
               <TextField  id="Tel" variant="outlined" type="string" size="medium" label="เบอร์โทรศัพท์" inputProps={{name: "Tel",}} value={food_and_drink.Tel || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
-          <Grid item xs={12} >  
+          <Grid item xs={6} >  
           <FormControl fullWidth variant="outlined">
               <p>ที่อยู่</p>
               <TextField  id="Address" variant="outlined" type="string" size="medium" label="ที่อยู่" inputProps={{name: "Address",}} value={food_and_drink.Address || ""} onChange={handleInputChange}/>

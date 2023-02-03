@@ -19,7 +19,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { CreateBorrow,
     ListDevices,ListDeviceType,
     GetUser,
-    ListApproves,
+    ListApproves,GetApprovebyCode,
     GetApprove,ListTypebyDevice,
     } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
@@ -42,7 +42,6 @@ function BorrowCreate() {
       Timeofborrow: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
-    const [bookings, setBookings] = useState<BookingsInterface[]>([]);
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
     const [devicetypes, setDevicetypes] = useState<DeviceTypesInterface[]>([]);
 
@@ -155,6 +154,28 @@ function BorrowCreate() {
         } 
       }
 
+      // async function searchAPbyCode() {
+      //   if (code === ""){
+      //     setErrorSearch(true);
+      //     setErrorMessage("กรุณากรอกรหัส Approve ที่จะค้นหา");
+      //     return
+      //   }
+      //   let res = await GetApprovebyCode(code);
+      //   // let res = await GetApprove(appid);
+      //   if (res.status){
+      //     setBorrow({
+      //       ...borrow,
+      //       ["Approve"]: res.data.ID,
+      //     });
+      //     setApproves(res.data);
+      //     handleClose()
+      //     setErrorMessage("");
+      //   } else {
+      //     setErrorSearch(true);
+      //     setErrorMessage(res.data);
+      //   }
+      // }
+
     async function submit() {
         let data = {
             Timeofborrow: borrow.Timeofborrow,
@@ -233,23 +254,23 @@ function BorrowCreate() {
              <Grid container spacing={3} sx={{ padding: 2 }}>
                 <Grid item xs={12} >  
                 <Box component="form"
-                    sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
+                    sx={{'& > :not(style)': { m: 1, width: '50ch' },}}
                     noValidate autoComplete="off">
                     <TextField id="outlined-basic" label="หมายเลขการอนุมัติ" variant="outlined" 
                     onChange={(e) => {setAppid(e.target.value)}}
                     />
                 </Box>
 
-                {/* <FormControl required fullWidth id="BookingCode">
-                  <InputLabel id="BookingCode">กรุณาเลือกรหัสการจอง</InputLabel>
+                {/* <FormControl required fullWidth id="ApproveCode">
+                  <InputLabel id="ApproveCode">กรุณาเลือกรหัสการจอง</InputLabel>
                   <Select
-                    id="BookingCode"
+                    id="ApproveCode"
                     value={code || ""}
                     label="กรุณาเลือกรหัสการจอง *"
                     onChange={(e: SelectChangeEvent)=>(setCode(e.target.value))}
                   >
-                    {bookings.map((item: BookingsInterface) => {
-                      if (item.Approve == null && item.DeletedAt == null) {
+                    {approves.map((item: ApprovesInterface) => {
+                      if (item.Borrow == null && item.ApproveTime == null) {
                         return(<MenuItem
                           key={item.ID}
                           value={item.Code}
@@ -261,8 +282,9 @@ function BorrowCreate() {
 
                     )}
                   </Select>
-                </FormControl> */}
-                      {/* //////////////////////////// */}
+                </FormControl>  */}
+
+                                                                          {/* //////////////////////////// */}
                 <Button
                     style={{ float: "right" }}
                      size="small"
@@ -274,37 +296,38 @@ function BorrowCreate() {
                 </Button>
 
                 <Grid item xs={12} >
-            <FormControl fullWidth variant="outlined">
-              <p>หมายเหตุจากผู้บันทึก</p>
-              <TextField
-                required
-                id="BorrowAPNote"
-                type="string"
-                label="กรุณากรอกหมายเหตุจากผู้บันทึก"
-                inputProps={{
-                  name: "BorrowAPNote",
-                }}
-                value={borrow.BorrowAPNote + ""}
-                onChange={handleChange_Text}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} >
-            <FormControl fullWidth variant="outlined">
-              <p>หมายเหตุจากผู้ยืม</p>
-              <TextField
-                required
-                id="BorrowNote1"
-                type="string"
-                label="กรุณากรอกหมายเหตุจากผู้ยืม"
-                inputProps={{
-                  name: "BorrowNote1",
-                }}
-                value={borrow.BorrowNote1 + ""}
-                onChange={handleChange_Text}
-              />
-            </FormControl>
-          </Grid>
+                  <FormControl fullWidth variant="outlined">
+                    <p>หมายเหตุจากผู้บันทึก</p>
+                    <TextField
+                      required
+                      id="BorrowAPNote"
+                      type="string"
+                      label="กรุณากรอกหมายเหตุจากผู้บันทึก"
+                      inputProps={{
+                        name: "BorrowAPNote",
+                      }}
+                      value={borrow.BorrowAPNote + ""}
+                      onChange={handleChange_Text}
+                    />
+                  </FormControl>
+                </Grid>
+
+                <Grid item xs={12} >
+                  <FormControl fullWidth variant="outlined">
+                    <p>หมายเหตุจากผู้ยืม</p>
+                    <TextField
+                      required
+                      id="BorrowNote1"
+                      type="string"
+                      label="กรุณากรอกหมายเหตุจากผู้ยืม"
+                      inputProps={{
+                        name: "BorrowNote1",
+                      }}
+                      value={borrow.BorrowNote1 + ""}
+                      onChange={handleChange_Text}
+                    />
+                  </FormControl>
+                </Grid>
                
 
             <Grid container spacing={2}>
@@ -359,7 +382,8 @@ function BorrowCreate() {
                       /> 
                     </FormControl>
                   </Grid>  
-                </Grid>   </Grid>
+                </Grid>   
+                </Grid>
                           {/* //////////////////////////////devicetype////////////////////////////// */}
                 <Grid item xs={6} >
                 <p>ประเภทอุปกรณ์</p>
@@ -408,7 +432,7 @@ function BorrowCreate() {
                 </Grid>
      
                <Grid item xs={12}>
-                <Button component={RouterLink} to="/approves" variant="contained">
+                <Button component={RouterLink} to="/borrows" variant="contained">
                   Back
                 </Button>
      
@@ -418,7 +442,7 @@ function BorrowCreate() {
                   variant="contained"
                   color="primary"
                 >
-                  Submit
+                  อนุมัติการยืม
                 </Button>
                </Grid>
               

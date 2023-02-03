@@ -71,7 +71,9 @@ func CreateApprove(c *gin.Context) {
 func GetApprove(c *gin.Context) {
 	var Approve entity.Approve
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Preload("Booking.User").Raw("SELECT * FROM approves WHERE id = ?", id).Find(&Approve).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Preload("Booking.User").
+		Raw("SELECT * FROM approves WHERE id = ?", id).
+		Find(&Approve).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -82,7 +84,10 @@ func GetApprove(c *gin.Context) {
 // GET /approve
 func ListApproves(c *gin.Context) {
 	var Approves []entity.Approve
-	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").Raw("SELECT * FROM approves").Find(&Approves).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("StatusBook").Preload("Booking").
+		Raw("select a.* from bookings b inner join approves a " +
+			"on a.booking_id = b.id where b.deleted_at is null and a.deleted_at is null and b.id != 0").
+		Find(&Approves).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -92,10 +97,22 @@ func ListApproves(c *gin.Context) {
 
 // DELETE /approve/:id
 func DeleteApprove(c *gin.Context) {
-	var Approve entity.Approve
+	var approve entity.Approve
+	var sts2 entity.StatusBook
+	entity.DB().Raw("SELECT * FROM Status_Books WHERE id = 2").Scan(&sts2)
 	id := c.Param("id")
+	// ค้นหา Approve ด้วย ID
+	if tx := entity.DB().Where("id = ?", id).First(&approve); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve not found"})
+		return
+	}
+	approve.StatusBook = sts2
+	if err := entity.DB().Save(&approve).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	// UPDATE Approves SET deleted_at="now" WHERE id = ?;
-	if tx := entity.DB().Where("id = ?", id).Delete(&Approve); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", id).Delete(&approve); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve not found"})
 		return
 	}
@@ -106,14 +123,14 @@ func DeleteApprove(c *gin.Context) {
 // PUT /approve
 func UpdateApprove(c *gin.Context) {
 	var approve entity.Approve
-	// var tmp entity.Approve
+	var tmp entity.Approve
 
 	if err := c.ShouldBindJSON(&approve); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	// ค้นหา Approve ด้วย ID
-	if tx := entity.DB().Where("id = ?", approve.ID).First(&approve); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", approve.ID).First(&tmp); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve not found"})
 		return
 	}
@@ -140,14 +157,15 @@ func UpdateApprove(c *gin.Context) {
 		return
 	}
 
-	// approve.Booking = Booking
-	// approve.StatusBook = statusBook
-	// approve.User = user
+	tmp.Booking = Booking
+	tmp.StatusBook = statusBook
+	tmp.User = user
+	tmp.Note = approve.Note
 
-	if err := entity.DB().Save(&approve).Error; err != nil {
+	if err := entity.DB().Save(&tmp).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": approve})
+	c.JSON(http.StatusOK, gin.H{"data": tmp})
 }

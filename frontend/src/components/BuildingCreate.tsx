@@ -126,6 +126,11 @@ function BuildingCreate(){
         if (res) {
             setSuccess(true);
             setErrorMessage("");
+
+            setBuilding({
+              Note: "",
+              Time: new Date(),
+            })
         } else {
             setError(true);
             setErrorMessage(res);

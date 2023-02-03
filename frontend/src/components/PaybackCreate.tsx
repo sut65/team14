@@ -39,7 +39,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function PaybackCreate() {
-    const [payback, setPayback] = React.useState<PaybacksInterface>({Timeofpayback: new Date(),});
+    const [payback, setPayback] = React.useState<PaybacksInterface>({
+    PBADNote: "",PBusNote:"",
+    Timeofpayback: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
 
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
@@ -62,7 +64,16 @@ function PaybackCreate() {
         }
         setSuccess(false);
         setError(false);
-    };  
+    }; 
+
+    const handleChange_Text = (
+      event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+      const id = event.target.id as keyof typeof payback;
+      const { value } = event.target;
+      setPayback({ ...payback, [id]: value, });
+      console.log(`[${id}]: ${value}`);
+    }; 
 
     const handleInputChange = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -131,30 +142,18 @@ function PaybackCreate() {
         } 
       }
 
-      // async function searchdtype() {
-      //   let res = await GetDevices(appid);
-      //   console.log(res);
-      //   if (res) {
-      //       setDevices(res);
-      //   } 
-      // }
-
     async function submit() {
         let data = {
             Timeofpayback: payback.Timeofpayback,
+            PBADNote: payback.PBADNote,
+            PBusNote: payback.PBusNote,
 
             AdminID: (payback.User),
             DeviceID: (payback.DeviceID),
             BorrowID: (payback.BorrowID),  
         };
         console.log(data)
-        // let res = await CreateBorrow(data);
-        // console.log(res);
-        // if (res) {
-        //     setSuccess(true);
-        // } else {
-        //     setError(true);
-        // }
+
     }
 
     ///////////////////////////////search/////////////////////////
@@ -202,7 +201,7 @@ function PaybackCreate() {
                      color="primary"
                      gutterBottom
                  >
-                     Create Borrow
+                     Create Payback
                  </Typography>
              </Box>
           </Box>
@@ -210,128 +209,146 @@ function PaybackCreate() {
         <Divider />
          <Grid container spacing={3} sx={{ padding: 2 }}>
             <Grid item xs={12} >  
-            {/* <Box component="form"
+             <Box component="form"
                 sx={{'& > :not(style)': { m: 1, width: '25ch' },}}
                 noValidate autoComplete="off">
                 <TextField id="outlined-basic" label="No.Borrow" variant="outlined" 
-                onChange={(e) => {setAppid(e.target.value)
+                onChange={(e) => {setborrowid(e.target.value)
                     }
                   }
                 />
-            </Box> */}
+            </Box> 
 
                   {/* //////////////////////////// */}
         
-            {/* <Button
+             <Button
                 style={{ float: "right" }}
                  size="small"
-                 onClick= {searchAPID}
+                 onClick= {searchBorrowid}
                 variant="contained"
                 color="primary"
             >
                 Search ApproveID
-            </Button> */}
+            </Button> 
            
-
-        {/* <Grid container spacing={2}>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <FormControl fullWidth variant="outlined">
-                  <p>ผู้ยืมอุปกรณ์</p>
-                  <TextField
-                    value={approves?.User?.FirstName || ""}  
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
+                <p>หมายเหตุจากผู้บันทึก</p>
+                <TextField
+                  required
+                  id="PBADNote"
+                  type="string"
+                  label="กรุณากรอกหมายเหตุจากผู้บันทึก"
+                  inputProps={{
+                    name: "PBADNote",
+                  }}
+                  value={payback.PBADNote + ""}
+                  onChange={handleChange_Text}
+                />
                 </FormControl>
               </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth variant="outlined">
-                  <p>BK-ID</p>
-                  <TextField
-                    value={approves?.Booking?.ID || ""}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  /> 
-                </FormControl>
-              </Grid>  
-            </Grid>                */}
-            
-        {/* <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <FormControl fullWidth variant="outlined">
-                  <p>เริ่มจองเวลา</p>
-                  <TextField
-                    value={approves?.Booking?.Date_Start || ""}  
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  />
-                </FormControl>
-              </Grid>
-              <Grid item xs={6}>
-                <FormControl fullWidth variant="outlined">
-                  <p>หมดจองเวลา</p>
-                  <TextField
-                    value={approves?.Booking?.Date_End || ""}
-                    InputProps={{
-                      readOnly: true,
-                    }}
-                  /> 
-                </FormControl>
-              </Grid>  
-            </Grid> */}  </Grid> 
+              <Grid item xs={12} >
+                  <FormControl fullWidth variant="outlined">
+                    <p>หมายเหตุจากผู้ยืม</p>
+                    <TextField
+                      required
+                      id="PBusNote"
+                      type="string"
+                      label="กรุณากรอกหมายเหตุจากผู้ยืม"
+                      inputProps={{
+                        name: "PBusNote",
+                      }}
+                      value={payback.PBusNote + ""}
+                      onChange={handleChange_Text}
+                    />
+                  </FormControl>
+                </Grid>
 
-                      {/* //////////////////////////////devicetype////////////////////////////// */}
 
-            {/* <Grid item xs={6} >
-            <p>ประเภทอุปกรณ์</p>
-            <FormControl required fullWidth >
-              <InputLabel id="DeviceTypeID">กรุณาเลือกประเภทอุปกรณ์</InputLabel>
-              <Select
-                labelId="DeviceTypeID"
-                label="กรุณาเลือกประเภทอุปกรณ์ *"
-                onChange={ (onChangeDevicebyType) }
-                inputProps={{name: "DeviceTypeID",}}
-              >
-                {devicetypes.map((item: DeviceTypesInterface) => (
-                  <MenuItem 
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.DeviceTypeDetail}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            </Grid>   */}
-                {/* //////////////////////////////device after choose type//////////////////////// */}
+          <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <p>ผู้ยืมอุปกรณ์</p>
+                      <TextField
+                      label="ชื่อ"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={(borrows?.Approve?.Booking?.User?.FirstName + " " + borrows?.Approve?.Booking?.User?.LastName) || ""}  
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <p>Bookingcode</p>
+                      <TextField
+                        label="รหัสการจอง"
+                        type="string"
+                        disabled
+                        variant="filled"
+                        value={borrows?.Approve?.Booking?.Code  }
+                      /> 
+                    </FormControl>
+                  </Grid>  
+                </Grid>             
             
-             {/* <Grid item xs={6} >
-            <p>อุปกรณ์</p>
-            <FormControl required fullWidth >
-              <InputLabel id="DeviceID">กรุณาเลือกอุปกรณ์</InputLabel>
-                <Select
-                  labelId="DeviceID"
-                  label="กรุณาเลือกอุปกรณ์ *"
-                  onChange={ (onChangeDevicebyType) }
-                  inputProps={{name: "DeviceID",}}
-                >
-                {devices.map((item: DevicesInterface) => (
-                  <MenuItem 
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Detail}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            </Grid> */}
- 
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <p>เริ่มจองเวลา</p>
+                      <TextField
+                      label="เริ่มจองเวลา"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={borrows?.Approve?.Booking?.Date_Start || ""}  
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <p>หมดจองเวลา</p>
+                      <TextField
+                      label="หมดจองเวลา"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={borrows?.Approve?.Booking?.Date_End || ""}
+                      /> 
+                    </FormControl>
+                  </Grid>  
+                </Grid>  
+        
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <p>เริ่มยืมเวลา</p>
+                      <TextField
+                      label="เริ่มยืมเวลา"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={borrows?.Timeofborrow || ""}  
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl fullWidth variant="outlined">
+                      <p>อุปกรณ์</p>
+                      <TextField
+                      label="อุปกรณ์"
+                      type="string"
+                      disabled
+                      variant="filled"
+                      value={borrows?.Device?.Detail || ""}
+                      /> 
+                    </FormControl>
+                  </Grid>  
+                </Grid> 
+
+        </Grid> 
            <Grid item xs={12}>
-            <Button component={RouterLink} to="/approves" variant="contained">
+            <Button component={RouterLink} to="/paybacks" variant="contained">
               Back
             </Button>
  
@@ -341,7 +358,7 @@ function PaybackCreate() {
               variant="contained"
               color="primary"
             >
-              Submit
+              อนุมัติการคืน
             </Button>
            </Grid>
           
@@ -354,7 +371,3 @@ function PaybackCreate() {
 }
 
 export default PaybackCreate;
-
-function ListDevice(did: any) {
-  throw new Error("Function not implemented.");
-}

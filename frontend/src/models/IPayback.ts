@@ -5,6 +5,8 @@ import { UsersInterface } from "./IUser";
 export interface PaybacksInterface {
     ID?: string,
     Timeofpayback: Date | null;
+    PBADNote: string | null;
+    PBusNote: string | null;
 
     Admin?: string | null;
     DeviceID?: string | null;
