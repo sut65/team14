@@ -7,7 +7,9 @@ import (
 type Food_and_Drink struct {
 	gorm.Model
 
-	Menu string `gorm:"uniqueIndex"`
+	Menu string `gorm:"uniqueIndex" valid:"required~กรุณากรอกชื่ออาหารและเครื่องดื่ม"`
+	Address string `gorm:"uniqueIndex" valid:"required~กรุณากรอกที่อยู่"`
+	Tel string `gorm:"uniqueIndex" valid:"required~กรุณากรอกเบอร์โทรศัพท์"`
 
 	Foodtype   Foodtype `gorm:"references:id"`
 	FoodtypeID *uint

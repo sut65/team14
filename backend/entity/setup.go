@@ -76,8 +76,8 @@ func SetupDatabase() {
 
 	db.Model(&User{}).Create(&User{
 		FirstName: "A", LastName: "B",
-		Email: "test@gmail.com", PhoneNumber: "123456",
-		IdentificationNumber: "123456", StudentID: "123456",
+		Email: "test@gmail.com", PhoneNumber: "011-1111111",
+		IdentificationNumber: "1309876543212", StudentID: "B1234567",
 		Age: 21, Password: string(password),
 		Role: r_user, Gender: male, EducationLevel: e3,
 	})
@@ -86,9 +86,10 @@ func SetupDatabase() {
 
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
-		Email: "CD@gmail.com", 
+		Email: "CD@gmail.com", PhoneNumber: "022-2222222",
+		IdentificationNumber: "1301234567898", StudentID: "B9876543",
 		Age: 50, Password: string(password),
-		Role: r_admin, Gender: male, EducationLevel: e3,
+		Role: r_admin, Gender: female, EducationLevel: e1,
 	})
 	var u2 User
 	db.Raw("SELECT * FROM users WHERE Email = ?", "CD@gmail.com").Scan(&u2)
@@ -193,7 +194,7 @@ func SetupDatabase() {
 	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท A").Scan(&foodtype1)
 	db.Raw("SELECT * FROM foodtypes WHERE name = ?", "ประเภท B").Scan(&foodtype2)
 
-	db.Model(&Food_and_Drink{}).Create(&Food_and_Drink{Menu: "น้ำเปล่า",Foodtype: foodtype1 , Shop: shop1, Admin: u2})
+	db.Model(&Food_and_Drink{}).Create(&Food_and_Drink{Menu: "น้ำเปล่า",Address: "บ้านเลขที่60 ถนน555/555", Tel: "011-1111111", Foodtype: foodtype1 , Shop: shop1, Admin: u2})
 	var food_and_drink1 Food_and_Drink
 	db.Raw("SELECT * FROM food_and_drinks WHERE menu = ?", "น้ำเปล่า").Scan(&food_and_drink1)
 

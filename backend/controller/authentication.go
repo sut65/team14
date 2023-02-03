@@ -25,7 +25,7 @@ type SignUpPayload struct {
 	IdentificationNumber string `json:"IdentificationNumber"`
 	StudentID            string `json:"StudentID"`
 	Age                  uint8  `json:"Age"`
-	//BirthDay             date
+	BirthDay             string `json:"BirthDay"`
 
 	RoleID           uint `json:"RoleID"`
 	GenderID         uint `json:"GenderID"`
@@ -56,7 +56,7 @@ func Login(c *gin.Context) {
 	// ตรวจสอบรหัสผ่าน
 	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(payload.Password))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "password is incerrect"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "password is incorrect"})
 		return
 	}
 

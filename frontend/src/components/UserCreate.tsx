@@ -168,7 +168,7 @@ function UserCreate() {
                     color="primary"
                     gutterBottom
                 >
-                    Create User
+                    ลงทะเบียนสมาชิก
                 </Typography>
             </Box>
        </Box>
@@ -177,7 +177,7 @@ function UserCreate() {
 
        <Grid container spacing={3} sx={{ padding: 2 }}>
          <Grid item xs={6}>
-           <p>First Name</p>
+           <p>ชื่อ</p>
            <FormControl fullWidth variant="outlined">
              <TextField
                id="FirstName"
@@ -194,7 +194,7 @@ function UserCreate() {
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>Last Name</p>
+             <p>นามสกุล</p>
              <TextField
                id="LastName"
                variant="outlined"
@@ -208,7 +208,7 @@ function UserCreate() {
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>Email</p>
+             <p>อีเมลล์</p>
              <TextField
                id="Email"
                variant="outlined"
@@ -222,7 +222,7 @@ function UserCreate() {
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>Password</p>
+             <p>รหัสผ่าน</p>
              <TextField
                id="Password"
                variant="outlined"
@@ -235,7 +235,7 @@ function UserCreate() {
          </Grid>
 
          <Grid item xs={6}>
-           <p>StudentID</p>
+           <p>รหัสนักศึกษา</p>
            <FormControl fullWidth variant="outlined">
              <TextField
                id="StudentID"
@@ -250,7 +250,7 @@ function UserCreate() {
 
          <Grid item xs={3}>
            <FormControl fullWidth variant="outlined">
-             <p>Age</p>
+             <p>อายุ</p>
              <TextField
                id="Age"
                variant="outlined"
@@ -266,7 +266,7 @@ function UserCreate() {
 
          <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
-              <p>Gender</p>
+              <p>เพศ</p>
               <Select
                 required
                 defaultValue={"0"}
@@ -288,7 +288,7 @@ function UserCreate() {
 
 
          <Grid item xs={6}>
-           <p>Phone Number</p>
+           <p>เบอร์โทรศัพท์</p>
            <FormControl fullWidth variant="outlined">
              <TextField
                id="PhoneNumber"
@@ -302,7 +302,7 @@ function UserCreate() {
          </Grid>
 
          <Grid item xs={6}>
-           <p>Identification Number</p>
+           <p>เลขบัตรประชาชน</p>
            <FormControl fullWidth variant="outlined">
              <TextField
                id="IdentificationNumber"
@@ -317,7 +317,7 @@ function UserCreate() {
 
          <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
-              <p>Education Level</p>
+              <p>ระดับการศึกษา</p>
               <Select
                 required
                 defaultValue={"0"}
@@ -339,7 +339,7 @@ function UserCreate() {
 
          <Grid item xs={3}>
            <FormControl fullWidth variant="outlined">
-             <p>BirthDay</p>
+             <p>วัน/เดือน/ปีเกิด</p>
              <LocalizationProvider dateAdapter={AdapterDateFns}>
                <DatePicker
                  value={date}
@@ -352,7 +352,7 @@ function UserCreate() {
 
           <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
-              <p>Role</p>
+              <p>สถานะ</p>
               <Select
                 required
                 defaultValue={"0"}

@@ -23,35 +23,29 @@ function Borrows() {
   
     const columns: GridColDef[] = [
         { field: "ID", headerName: "ID", width: 50 },
-        // { field: "ApproveCode", headerName: "Approve Code", width: 150 },
-        {
-            field: "User",
-            headerName: "ผู้อนุมัติ",
-            width: 120,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
-        },
-        {
-          field: "DeviceTypeID",
-          headerName: "ประเภทอุปกรณ์",
-          width: 120,
-          valueFormatter: (params) => params.value.Detail,
-      },
-        {
-            field: "DeviceID",
-            headerName: "อุปกรณ์",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
-        {
-            field: "StatusDevice",
-            headerName: "สถานะอุปกรณ์",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
+
+        {field: "Approve",headerName: "รหัสการจองใช้ห้อง",width: 140,
+          valueFormatter: (params) => `${(params.value.Code)}`,},
+
+        {field: "BorrowAPNote",headerName: "หมายเหตุจากผู้บันทึก",width: 140,},
+
+        {field: "BorrowNote1",headerName: "หมายเหตุจากผู้ใช้",width: 140,},
+
+        {field: "Device",headerName: "อุปกรณ์",width: 140,
+        valueFormatter: (params) => `${(params.value.Detail )}`,},
+
+        // {field: "User",headerName: "ผู้อนุมัติ",width: 120,
+        //   valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`, },
+
+        {field: "Timeofborrow",headerName: "เวลาที่ทำการยืม",width: 120,
+          valueFormatter: (params) => `${new Date(params.value)}`,},
+
+        
+        
     ];
 
     useEffect(() => {
-        ListBorrows();
+        listBorrows();
     }, []);
 
  return (

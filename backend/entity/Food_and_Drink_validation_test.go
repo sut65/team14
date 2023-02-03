@@ -2,24 +2,23 @@ package entity
 
 import (
 	"testing"
-	"time"
 
 	"github.com/asaskevich/govalidator"
 	. "github.com/onsi/gomega"
 )
 
-func TestBorrowPass(t *testing.T) {
+func TestFood_and_DrinkPass(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	// ข้อมูลถูกต้องหมดทุก field
-	borrow := Borrow{
-		BorrowNote1:  "ssss",
-		BorrowAPNote: "ฟฟฟฟฟ",
-		Timeofborrow: time.Now(),
+	food_and_drink := Food_and_Drink{
+		Menu: "ขนมปัง",
+		Address: "999/999",
+		Tel: "099-9999999",
 	}
 
 	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(borrow)
+	ok, err := govalidator.ValidateStruct(food_and_drink)
 
 	// ok ต้องเป็น true แปลว่าไม่มี error
 	g.Expect(ok).To(BeTrue())
@@ -28,18 +27,18 @@ func TestBorrowPass(t *testing.T) {
 	g.Expect(err).To(BeNil())
 }
 
-func TestBorrowAPNote_Null(t *testing.T) {
+func TestFood_and_DrinkMenuNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	// ข้อมูล Code ไม่ถูกต้องตาม Format
-	borrow := Borrow{
-		BorrowNote1:  "sssss",
-		BorrowAPNote: "", //null
-		Timeofborrow: time.Now().Add(22 * time.Hour),
+	food_and_drink := Food_and_Drink{
+		Menu: "",
+		Address: "999/999",
+		Tel: "099-9999999",
 	}
 
 	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(borrow)
+	ok, err := govalidator.ValidateStruct(food_and_drink)
 
 	// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
 	g.Expect(ok).ToNot(BeTrue())
@@ -48,25 +47,21 @@ func TestBorrowAPNote_Null(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกหมายเหตุจากผู้บันทึก"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกชื่ออาหารและเครื่องดื่ม"))
 }
 
-func TestBorrowNote1_Null(t *testing.T) {
+func TestFood_and_DrinkAddressNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล Note เป็น Null
-	borrow := Borrow{
-		BorrowAPNote: "ฟฟฟฟฟฟฟ",
-		BorrowNote1:  "",
-		Timeofborrow: time.Now().Add(22 * time.Hour),
-
-		// Code:        "Ap12345",
-		// Note:        "", // null
-		// ApproveTime: time.Now().Add(22 * time.Hour),
+	// ข้อมูล Code ไม่ถูกต้องตาม Format
+	food_and_drink := Food_and_Drink{
+		Menu: "ขนมปัง",
+		Address: "",
+		Tel: "099-9999999",
 	}
 
 	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(borrow)
+	ok, err := govalidator.ValidateStruct(food_and_drink)
 
 	// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
 	g.Expect(ok).ToNot(BeTrue())
@@ -75,21 +70,21 @@ func TestBorrowNote1_Null(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("กรุณากรอกหมายเหตุจากผู้ยืม"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกที่อยู่"))
 }
 
-func TestBorrow_Time(t *testing.T) {
+func TestFood_and_DrinkTelNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล Note เป็น Null
-	borrow := Borrow{
-		BorrowNote1:  "sssss",
-		BorrowAPNote: "Ap12345",
-		Timeofborrow: time.Date(2000, 1, 26, 0, 0, 0, 0, time.UTC), // เป็นอดีต
+	// ข้อมูล Code ไม่ถูกต้องตาม Format
+	food_and_drink := Food_and_Drink{
+		Menu: "ขนมปัง",
+		Address: "999/999",
+		Tel: "",
 	}
 
 	// ตรวจสอบด้วย govalidator
-	ok, err := govalidator.ValidateStruct(borrow)
+	ok, err := govalidator.ValidateStruct(food_and_drink)
 
 	// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
 	g.Expect(ok).ToNot(BeTrue())
@@ -98,5 +93,5 @@ func TestBorrow_Time(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("เวลาไม่ใช่ปัจจุปัน"))
+	g.Expect(err.Error()).To(Equal("กรุณากรอกเบอร์โทรศัพท์"))
 }
