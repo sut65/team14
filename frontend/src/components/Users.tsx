@@ -25,7 +25,7 @@ function Users() {
       { field: "PhoneNumber", headerName: "เบอร์โทรศัพท์", width: 120 },
       { field: "IdentificationNumber", headerName: "เลขบัตรประชาชน", width: 150 },
       { field: "StudentID", headerName: "รหัสนักศึกษา", width: 100 },
-      { field: "Age", headerName: "อายุ", width: 50 },
+      { field: "Age", headerName: "อายุ", width: 30 },
       { field: "Password", headerName: "รหัสผ่าน", width: 100, },
       { field: "BirthDay", headerName: "วัน/เดือน/ปีเกิด", width: 150 },
       { field: "Role", headerName: "สถานะ", width: 70, valueFormatter: (params) => params.value.Name,  },
