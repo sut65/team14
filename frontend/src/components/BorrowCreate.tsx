@@ -50,7 +50,6 @@ function BorrowCreate() {
     const [code, setCode] = useState("")
 
     const [success, setSuccess] = React.useState(false);
-    const [errorSearch, setErrorSearch] = useState(false);
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
@@ -122,16 +121,16 @@ function BorrowCreate() {
         }
       };
 
-    const listDevices = async () => {
-      let res = await ListDevices();
-      if (res) {
-        setDevices(res);
-        console.log("Load Devices Complete");
-      }
-      else{
-        console.log("Load Devices InComplete!!!!");
-      }
-    };
+    // const listDevices = async () => {
+    //   let res = await ListDevices();
+    //   if (res) {
+    //     setDevices(res);
+    //     console.log("Load Devices Complete");
+    //   }
+    //   else{
+    //     console.log("Load Devices InComplete!!!!");
+    //   }
+    // };
 
     const getUser = async () => {
         const uid = localStorage.getItem("userID")
@@ -202,10 +201,6 @@ function BorrowCreate() {
         }
         
     }
-
-    function onChangedevice(e: SelectChangeEvent<string>) {
-      throw new Error("Function not implemented.");
-        }    
     ///////////////////////////////search/////////////////////////
     useEffect(() => {
         listDeviceType();

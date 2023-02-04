@@ -11,8 +11,6 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
@@ -20,17 +18,15 @@ import MenuItem from "@mui/material/MenuItem";
 
 import { CreateBorrow,
     ListDevices,ListBorrows,
-    GetUser,
-    ListApproves,
-    GetApprove,
-    GetBorrow,
+    GetUser,ListApproves,GetBorrow,
+    GetBooking,CreatePayback,
     } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { PaybacksInterface } from "../models/IPayback";
-import { containerClasses } from "@mui/material";
+import { BookingsInterface } from "../models/IBooking";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -43,13 +39,16 @@ function PaybackCreate() {
     PBADNote: "",PBusNote:"",
     Timeofpayback: new Date(),});
     const [user, setUser] = useState<UsersInterface>({});    
-
+    
     const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
+    const [booking, setBooking] = React.useState<BookingsInterface>({});
+    const [approves, setApproves] = React.useState<ApprovesInterface>({});
 
-    const [borrows, setBorrows] = React.useState<BorrowsInterface>(); 
+    const [borrows, setBorrows] = React.useState<BorrowsInterface>({}); 
     const [borrowid, setborrowid] = React.useState("");
 
     const [success, setSuccess] = React.useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const [error, setError] = React.useState(false);
 
 
@@ -75,27 +74,23 @@ function PaybackCreate() {
       console.log(`[${id}]: ${value}`);
     }; 
 
-    const handleInputChange = (
-        event: React.ChangeEvent<{ id?: string; value: any }>
-    ) => {
-        const id = event.target.id as keyof typeof payback;
-        const { value } = event.target.value;
-        setPayback({ 
-            ...payback , 
-            [id]: value 
-        }); console.log(`[${id}]: ${value}`);
-    };
+    // const handleInputChange = (
+    //     event: React.ChangeEvent<{ id?: string; value: any }>
+    // ) => {
+    //     const id = event.target.id as keyof typeof payback;
+    //     const { value } = event.target.value;
+    //     setPayback({ 
+    //         ...payback , 
+    //         [id]: value 
+    //     }); console.log(`[${id}]: ${value}`);
+    // };
 
-    // const onChangedevice = async (e: SelectChangeEvent) =>{   ///////////
-    //     const did = e.target.value;
-    //     let res = await listDevices(did);
-    //     if (res) {
-    //         setDevices(res);     //////////////
-    //       console.log("Load Device Complete");
-    //     }
-    //     else{
-    //       console.log("Load Device Incomplete!!!");
-    //     } }
+    const handleChange = (event: SelectChangeEvent) => {
+      const name = event.target.name as keyof typeof payback;
+      const value = event.target.value;
+      setPayback({...payback,[name]: value,});
+      console.log(`[${name}]: ${value}`);
+    };
 
     const listBorrows = async () => {
         let res = await ListBorrows();
@@ -120,25 +115,34 @@ function PaybackCreate() {
     };
 
     const getUser = async () => {
-        const uid = localStorage.getItem("userID")
-        let res = await GetUser(uid);
-        if (res.status) {
-          setUser(res.data);
-          console.log("Load User Complete");
-          console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
-        }
-        else{
-          console.log("Load User InComplete!!!!");
-        }
-      };
+      const uid = localStorage.getItem("userID")
+      let res = await GetUser(uid);
+      if (res.status) {
+        setUser(res.data);
+        console.log("Load User Complete");
+        console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      }
+      else{
+        console.log("Load User InComplete!!!!");
+      }
+    };
 
-      ////////////////////////////////////////search///////////////////
+                                                        ////////////////////////////////////////search///////////////////
 
       async function searchBorrowid() {
         let res = await GetBorrow(borrowid);
         console.log(res);
         if (res) {
             setBorrows(res);
+            searchBookingid(res.Approve?.BookingID);
+        } 
+      }
+
+      async function searchBookingid(id: any) {
+        let res = await GetBooking(id);     
+        console.log(res);
+        if (res) {
+            setBooking(res);
         } 
       }
 
@@ -148,11 +152,21 @@ function PaybackCreate() {
             PBADNote: payback.PBADNote,
             PBusNote: payback.PBusNote,
 
-            AdminID: (payback.User),
-            DeviceID: (payback.DeviceID),
-            BorrowID: (payback.BorrowID),  
+            AdminID: (user.ID),
+            DeviceID: (borrows.DeviceID),
+            BorrowID: (borrows.ID),  
         };
         console.log(data)
+        let res = await CreatePayback(data);
+        console.log(res)
+          if (res.status) {
+            //setAlertMessage("บันทึกสำเร็จ")
+            setSuccess(true);
+            setErrorMessage("");
+        } else {
+            setError(true);
+            setErrorMessage(res.data);
+        }
 
     }
 
@@ -160,13 +174,10 @@ function PaybackCreate() {
 
     useEffect(() => {
         listDevices();
+        ListApproves();
         listBorrows();
         getUser();
     }, []);
-
-  function onChangedevice(e: SelectChangeEvent<string>) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <Container maxWidth="md">
@@ -228,7 +239,7 @@ function PaybackCreate() {
                 variant="contained"
                 color="primary"
             >
-                Search ApproveID
+                Search BorrowID
             </Button> 
            
               <Grid item xs={12}>
@@ -274,7 +285,7 @@ function PaybackCreate() {
                       type="string"
                       disabled
                       variant="filled"
-                      value={(borrows?.Approve?.Booking?.User?.FirstName + " " + borrows?.Approve?.Booking?.User?.LastName) || ""}  
+                      value={(booking.User?.FirstName + " " + booking.User?.LastName) || ""}  
                       />
                     </FormControl>
                   </Grid>
@@ -286,7 +297,7 @@ function PaybackCreate() {
                         type="string"
                         disabled
                         variant="filled"
-                        value={borrows?.Approve?.Booking?.Code  }
+                        value={booking.Code || "" }
                       /> 
                     </FormControl>
                   </Grid>  
@@ -301,7 +312,7 @@ function PaybackCreate() {
                       type="string"
                       disabled
                       variant="filled"
-                      value={borrows?.Approve?.Booking?.Date_Start || ""}  
+                      value={booking.Date_Start || ""}  
                       />
                     </FormControl>
                   </Grid>
@@ -313,7 +324,7 @@ function PaybackCreate() {
                       type="string"
                       disabled
                       variant="filled"
-                      value={borrows?.Approve?.Booking?.Date_End || ""}
+                      value={booking.Date_End || ""}
                       /> 
                     </FormControl>
                   </Grid>  

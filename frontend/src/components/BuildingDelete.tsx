@@ -189,7 +189,7 @@ function BuildingDelete(){
        </Alert>
      </Snackbar>
 
-     
+     <Paper>
 
      <Box sx={{ paddingX: 2, paddingY: 1 }}>
                      <Typography
@@ -309,7 +309,8 @@ function BuildingDelete(){
                 </Button>
                </Grid>  
         </Grid>
-      </Grid>         
+      </Grid>      
+      </Paper> 
       </Container>
     </div>
   

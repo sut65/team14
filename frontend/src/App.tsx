@@ -60,6 +60,8 @@ import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
 import BuildingDelete from "./components/BuildingDelete";
 import RoomDelete from "./components/RoomDelete";
+import RoomUpdate from "./components/RoomUpdate";
+import BuildingUpdate from "./components/BuildingUpdate";
 
 const drawerWidth = 260;
 
@@ -271,11 +273,13 @@ return (
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />
+                <Route path="/building/update" element={<BuildingUpdate />} />
                 <Route path="/building/delete" element={<BuildingDelete />} />
 
 
                 <Route path="/rooms" element={<Room />} />
                 <Route path="/room/create" element={<RoomCreate />} />
+                <Route path="/room/update" element={<RoomUpdate />} />
                 <Route path="/room/delete" element={<RoomDelete />} />
 
                 <Route path="/paybacks" element={<Paybacks />} />

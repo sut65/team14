@@ -95,6 +95,13 @@ func main() {
 			r.DELETE("/borrow", controller.DeleteBorrow)
 			r.PATCH("/borrow/:id", controller.UpdateBorrow)
 
+			// Payback
+			r.POST("/paybacks", controller.CreatePayback)
+			r.GET("/payback/:id", controller.GetPayback)
+			r.GET("/paybacks", controller.ListPaybacks)
+			r.DELETE("/payback", controller.DeletePayback)
+			r.PATCH("/payback/:id", controller.UpdatePayback)
+
 			// Device
 			r.POST("/device", controller.CreateDevice)
 			r.GET("/device/:id", controller.GetDevice)

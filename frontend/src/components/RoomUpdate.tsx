@@ -15,8 +15,8 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
-import { InputLabel, MenuItem, Select, SelectChangeEvent, Stack } from "@mui/material";
-import { CreateRoom, DeleteRoom, GetRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms } from "../services/HttpClientService";
+import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
+import { CreateRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms, UpdateRoom } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -27,7 +27,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function RoomDelete(){
+function RoomUpdate(){
     const [room, setRoom] = React.useState<RoomsInterface>({
       Detail:"", Note: "",
       Time: new Date(),});
@@ -38,14 +38,11 @@ function RoomDelete(){
 
     const [building, setBuildings] = React.useState<BuildingsInterface[]>([]); 
 
-    const [roomID, setRoomID] = useState("");
+    const [rooms, setRooms] = React.useState<RoomsInterface[]>([]);
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    const [errorSearch_r, setErrorSearch_r] = useState(false);
-    const [errorMessage_r, setErrorMessage_r] = useState("");
-    const [errorSearch, setErrorSearch] = useState(false);
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -127,25 +124,6 @@ function RoomDelete(){
         }
       };
 
-      async function search_r(){
-        if (roomID === ""){
-          setErrorSearch_r(true);
-          setErrorMessage_r("กรุณากรอกเลขห้อง");
-          return
-        }
-        let res = await GetRoom(roomID);
-        if (res.status){
-          setRoom(res.data);
-          //setBooking(res.data);
-          handleClose()
-          setErrorMessage("");
-        } else {
-          setErrorSearch(true);
-          setErrorMessage(res.data);
-        }
-      }  
-    
-
       async function submit() {
         let data = {
 
@@ -156,7 +134,7 @@ function RoomDelete(){
             Note: room.Note,
             Time: room.Time,
         };
-        let res = await DeleteRoom(data);
+        let res = await UpdateRoom(data);
       console.log(res);
       if (res) {
           setSuccess(true);
@@ -179,14 +157,9 @@ function RoomDelete(){
         getUser();
     }, []);
 
-
-
-
-return (  
-    
-<Container maxWidth="md">
-
-    <Snackbar
+      return (
+        <Container maxWidth="md">
+          <Snackbar
        id="success" 
        open={success}
        autoHideDuration={6000}
@@ -194,31 +167,36 @@ return (
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
        <Alert onClose={handleClose} severity="success">
-         ลบข้อมูลสำเร็จ
+          อัพเดทข้อมูลสำเร็จ
        </Alert>
      </Snackbar>
 
      <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
-       ลบข้อมูลไม่สำเร็จ: {errorMessage}
+          อัพเดทข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
-
-     <Paper>
-
-     <Box sx={{ paddingX: 2, paddingY: 1 }}>
+     
+          <Paper>
+             <Box
+                 display="flex"
+                 sx={{
+                 marginTop: 2,
+                 }}
+             >
+                 <Box sx={{ paddingX: 2, paddingY: 1 }}>
                      <Typography
                          component="h2"
                          variant="h6"
                          color="primary"
                          gutterBottom
                      >
-                         Delete Building
+                         Update Room
                      </Typography>
                  </Box>
-      <Grid container spacing={1} sx={{ padding: 1 }}>
+            </Box>
 
-      <Grid item xs={6} >
+            <Grid item xs={6} >
           <p>ชื่อตึก</p>
           <FormControl required fullWidth >
             <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
@@ -241,93 +219,98 @@ return (
               ))}
             </Select>
           </FormControl>
+          </Grid>  
+     
+
+          <Grid item xs={6} >
+          <p>เลขห้อง</p>
+          <FormControl required fullWidth >
+            <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
+            <Select
+              labelId="RoomID"
+              label="กรุณาเลือกห้อง *"
+              value={room?.Detail || ""}
+              onChange={ (handleChange) }
+              inputProps={{
+                name: "RoomID",
+              }}
+            >
+              {rooms.map((item: RoomsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>                
+                
+    
+                <Grid item xs={6} >
+          <p>ประเภทห้อง</p>
+          <FormControl required fullWidth >
+            <InputLabel id="TyperoomID">กรุณาเลือกประเภทห้อง</InputLabel>
+            <Select
+              labelId="TyperoomID"
+              label="กรุณาเลือกประเภทห้อง *"
+              onChange={ (handleChange) }
+              inputProps={{
+                name: "TyperoomID",
+              }}
+            >
+              {typeroom.map((item: TyperoomsInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.Detail}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          </Grid>  
+
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField
+                required
+                id="Note"
+                type="string"
+                label="กรุณากรอกหมายเหตุ"
+                inputProps={{
+                  name: "Note",
+                }}
+                value={room.Note + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
           </Grid>
 
-    <Grid item xs={3}>          
-      <FormControl fullWidth variant="outlined">
-        <Box
-        component="form"
-        sx={{ '& > :not(style)': { m: 1, width: '25ch' },
-        }}
-       noValidate
-       autoComplete="off"
-        >
-        <TextField id="outlined-basic" 
-        label="Room ID" 
-        variant="outlined" 
-        type="string" 
-        size="medium" 
-        placeholder="Room ID"
-        value={roomID}
-          onChange={(e) => {setRoomID(e.target.value)              
-            console.log(roomID)
-            }
-          }
-        /> 
-        <TextField id="outlined-basic" 
-        label="TyperoomID " 
-        variant="outlined"
-        disabled  
-        type="string" 
-        size="medium" 
-        placeholder="TyperoomID"
-        value={room.Typeroom?.Detail +""}
-                  
-        />   
-                             
-          </Box>
-      </FormControl>
-    </Grid>
-    <Grid item xs={5}>
-      <Button
-         style={{ float: "right" }}
-         size="large"
-         onClick= {() => {
-          search_r();
-          }}
-         variant="contained"
-         color="primary"
-      >
-        Search
-      </Button>
-    </Grid>
-    <Grid container spacing={1} sx={{ padding: 1 }}>
-      
-     <Grid item xs={12} >
-        <FormControl fullWidth variant="outlined">
-          <p>หมายเหตุ</p>
-          <TextField
-            required
-            id="Note"
-            type="string"
-            label="กรุณากรอกหมายเหตุ"
-            inputProps={{
-              name: "Note",
-            }}
-            value={room.Note + ""}
-            onChange={handleChange_Text}
-          />
-        </FormControl>
-      </Grid>
+          <Grid item xs={12}>
+            <p>เวลาที่อนุมัติ</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรอกเวลาที่อนุมัติ"
+                value={room.Time}
+                onChange={(newValue) => {
+                  setRoom({
+                    ...room,
+                    Time: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider> 
+          </Grid>
 
-      <Grid item xs={12}>
-        <p>เวลาที่เพิ่มเข้า</p>
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <DateTimePicker
-            label="กรอกเวลาที่อนุมัติ"
-            value={room.Time}
-            onChange={(newValue) => {
-              setRoom({
-                ...room,
-                Time: newValue,
-              });
-            }}
-            ampm={true}
-            renderInput={(params) => <TextField {...params} />}
-          />
-        </LocalizationProvider> 
-      </Grid>
-      <Grid item xs={12}>
+          
+              
+     
+               <Grid item xs={12}>
                 <Button component={RouterLink} to="/rooms" variant="contained">
                   Back
                 </Button>
@@ -340,17 +323,17 @@ return (
                 >
                   Submit
                 </Button>
-               </Grid> 
-        </Grid>
-      </Grid>        
-      </Paper>
-    </Container>
-  
-  );
+               </Grid>
+              
+          </Paper>
+        </Container>
+     
+      );
+
      
 }
 
-export default RoomDelete;
+export default RoomUpdate;
 
 
 
