@@ -62,6 +62,8 @@ import BuildingDelete from "./components/BuildingDelete";
 import RoomDelete from "./components/RoomDelete";
 import RoomUpdate from "./components/RoomUpdate";
 import BuildingUpdate from "./components/BuildingUpdate";
+import Admin from "./components/Admin";
+import AdminCreate from "./components/AdminCreate";
 
 const drawerWidth = 260;
 
@@ -126,6 +128,7 @@ const menu = [
   { name: "จัดการตึก", icon: <ApartmentIcon />, path: "/buildings"},
   { name: "จัดการห้อง", icon: <MeetingRoomIcon />, path: "/rooms"},
   { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
+  { name: "ข้อมูลแอดมิน", icon: <TextSnippetIcon />, path: "/admins"},
 ];
 
 const mdTheme = createTheme();
@@ -287,6 +290,9 @@ return (
 
                 <Route path="/devices" element={<Device />} />
                 <Route path="/device/create" element={<DeviceCreate />} />
+
+                <Route path="/admins" element={<Admin />} />
+                <Route path="/admin/create" element={<AdminCreate />} />
 
 
               </Routes> 
