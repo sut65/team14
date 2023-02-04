@@ -5,9 +5,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { 
-    ListBorrows, 
-} from "../services/HttpClientService";
+import { ListBorrows, } from "../services/HttpClientService";
 import { BorrowsInterface } from "../models/IBorrow";
 
 function Borrows() {
@@ -34,8 +32,8 @@ function Borrows() {
         {field: "Device",headerName: "อุปกรณ์",width: 140,
         valueFormatter: (params) => `${(params.value.Detail )}`,},
 
-        // {field: "User",headerName: "ผู้อนุมัติ",width: 120,
-        //   valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`, },
+        {field: "Admin",headerName: "ผู้อนุมัติ",width: 120,
+          valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`, },
 
         {field: "Timeofborrow",headerName: "เวลาที่ทำการยืม",width: 120,
           valueFormatter: (params) => `${new Date(params.value)}`,},
