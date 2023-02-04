@@ -17,7 +17,7 @@ func CreatePayback(c *gin.Context) {
 	var admin entity.User
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร Payback
-	if err := c.ShouldBindJSON(&borrow); err != nil {
+	if err := c.ShouldBindJSON(&payback); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -36,12 +36,13 @@ func CreatePayback(c *gin.Context) {
 
 	// ค้นหา Borrow ด้วย id
 	if tx := entity.DB().Where("id = ?", payback.BorrowID).First(&borrow); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบการจองนี้"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบการยืมนี้"})
 		return
 	}
 
 	//สร้าง Payback
-	bod := entity.Payback{
+	pbc := entity.Payback{
+		Timeofpayback: payback.Timeofpayback,
 		PBADNote: payback.PBADNote,
 		PBusNote: payback.PBusNote,
 
@@ -51,17 +52,17 @@ func CreatePayback(c *gin.Context) {
 	}
 
 	// ขั้นตอนการ validate
-	if _, err := govalidator.ValidateStruct(bod); err != nil {
+	if _, err := govalidator.ValidateStruct(pbc); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	// บันทึก
-	if err := entity.DB().Create(&bod).Error; err != nil {
+	if err := entity.DB().Create(&pbc).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": bod})
+	c.JSON(http.StatusOK, gin.H{"data": pbc})
 }
 
 
@@ -71,7 +72,7 @@ func CreatePayback(c *gin.Context) {
 func GetPayback(c *gin.Context) {
 	var Payback entity.Payback
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Device").Preload("Borrow").Preload("Approve").Preload("Booking").Raw("SELECT * FROM paybacks WHERE id = ?", id).Find(&Payback).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Borrow").Raw("SELECT * FROM paybacks WHERE id = ?", id).Find(&Payback).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -79,13 +80,10 @@ func GetPayback(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Payback})
 }
 
-
-
-
 // GET /Paybacks
 func ListPaybacks(c *gin.Context) {
 	var Paybacks []entity.Payback
-	if err := entity.DB().Preload("User").Preload("Device").Preload("Borrow").Preload("Approve").Preload("Booking").Raw("SELECT * FROM paybacks").Find(&Paybacks).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Borrow").Raw("SELECT * FROM paybacks").Find(&Paybacks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

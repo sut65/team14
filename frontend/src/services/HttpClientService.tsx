@@ -697,9 +697,9 @@ async function CreatePayback(data: PaybacksInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
+        return {status: true ,data: res.data};
       } else {
-        return false;
+        return {status: false ,data: res.error};
       }
     });
 

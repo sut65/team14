@@ -4,15 +4,15 @@ import { UsersInterface } from "./IUser";
 
 export interface PaybacksInterface {
     ID?: string,
-    Timeofpayback: Date | null;
-    PBADNote: string | null;
-    PBusNote: string | null;
+    Timeofpayback?: Date | null;
+    PBADNote?: string | null;
+    PBusNote?: string | null;
 
-    Admin?: string | null;
+    AdminID?: string | null;
     DeviceID?: string | null;
     BorrowID?: string | null;
 
-    User?: UsersInterface;
+    Admin?: UsersInterface;
     Device?: DevicesInterface;
     Borrow?: BorrowsInterface;
 

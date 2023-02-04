@@ -6,15 +6,15 @@ import { PaybacksInterface } from "./IPayback";
 
 export interface BorrowsInterface {
     ID?: string,
-    Timeofborrow: Date | null;
-    BorrowNote1: string | null;
-    BorrowAPNote: string |null;
+    Timeofborrow?: Date | null;
+    BorrowNote1?: string | null;
+    BorrowAPNote?: string |null;
 
     AdminID?: string | null;
     DeviceID?: string | null;
-    //DeviceTypeID?: string | null;
     ApproveID?: string | null;
-
+    //DeviceTypeID?: string | null;
+    
     Admin?: UsersInterface;
     Device?: DevicesInterface;
     Approve?: ApprovesInterface;

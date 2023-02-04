@@ -45,11 +45,13 @@ func init() {
 		t := i.(time.Time)
 		return t.Equal(time.Now())
 	})
+
 	govalidator.CustomTypeTagMap.Set("IsnotPast", func(i interface{}, o interface{}) bool {
 		t := i.(time.Time)
 		// ย้อนหลังไม่เกิน 1 วัน
 		return t.After(time.Now().AddDate(0, 0, -1))
 	})
+	
 	govalidator.CustomTypeTagMap.Set("IsPast", func(i interface{}, context interface{}) bool {
 		t := i.(time.Time)
 		return t.Before(time.Now())
