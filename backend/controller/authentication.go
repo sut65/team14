@@ -2,7 +2,9 @@ package controller
 
 import (
 	"net/http"
+	"time"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team14/entity"
 	"github.com/sut65/team14/service"
@@ -25,7 +27,7 @@ type SignUpPayload struct {
 	IdentificationNumber string `json:"IdentificationNumber"`
 	StudentID            string `json:"StudentID"`
 	Age                  uint8  `json:"Age"`
-	BirthDay             string `json:"BirthDay"`
+	BirthDay             time.Time `json:"BirthDay"`
 
 	RoleID           uint `json:"RoleID"`
 	GenderID         uint `json:"GenderID"`
@@ -88,7 +90,6 @@ func Login(c *gin.Context) {
 // POST /create
 func CreateUser(c *gin.Context) {
 	var payload SignUpPayload
-	var user entity.User
 	var gender entity.Gender
 	var role entity.Role
 	var educationlevel entity.EducationLevel
@@ -136,7 +137,13 @@ func CreateUser(c *gin.Context) {
 		StudentID:            payload.StudentID,
 		Age:                  payload.Age,
 		Password:             string(hashPassword),
-		BirthDay:             user.BirthDay,
+		BirthDay:             payload.BirthDay,
+	}
+
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(us); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 
 	// x: บันทึก

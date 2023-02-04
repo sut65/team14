@@ -29,13 +29,13 @@ func CreateFood_and_Drink(c *gin.Context) {
 
 	// ค้นหา foodtype ด้วย id
 	if tx := entity.DB().Where("id = ?", food_and_drink.FoodtypeID).First(&foodtype); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่ประเภทอาหาร"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบประเภทอาหาร"})
 		return
 	}
 
 	// ค้นหา shop ด้วย id
 	if tx := entity.DB().Where("id = ?", food_and_drink.ShopID).First(&shop); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบร้านค้านี้"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบร้านค้า"})
 		return
 	}
 

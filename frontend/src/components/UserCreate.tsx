@@ -17,7 +17,12 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import {ListGenders, ListRoles, ListEducationLevels,} from "../services/HttpClientService";
+import {ListGenders, ListRoles, ListEducationLevels,CreateUser} from "../services/HttpClientService";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import IconButton from "@mui/material/IconButton";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -30,10 +35,13 @@ function UserCreate() {
     const [date, setDate] = React.useState<Date | null>(null);
     const [user, setUser] = React.useState<Partial<UsersInterface>>({});
     const [genders, setGenders] = React.useState<GendersInterface[]>([]);
-    const [roles, setRoles] = React.useState<RolesInterface[]>([]);
     const [educationlevels, setEducationLevels] = React.useState<EducationLevelsInterface[]>([]);
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+    const [errorMessage, setErrorMessage] = React.useState("");
+    const [showPassword, setShowPassword] = React.useState(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const handleClose = (
       event?: React.SyntheticEvent | Event,
@@ -77,13 +85,6 @@ function UserCreate() {
       if (res) { setGenders(res); console.log("Load Gender Complete");}
       else{ console.log("Load Gender InComplete!!!!");}
     };
-
-    //ดึงข้อมูล Roles
-    const listRoles = async () => {
-      let res = await ListRoles();
-      if (res) { setRoles(res); console.log("Load Role Complete");}
-      else{ console.log("Load Role InComplete!!!!");}
-    };
     
     //ดึงข้อมูล EducationLevels
     const listEducationLevels = async () => {
@@ -94,12 +95,11 @@ function UserCreate() {
 
     React.useEffect(() => {
       listGenders();
-      listRoles();
       listEducationLevels();
     }, []);
 
     
-    function submit() {
+    async function  submit() {
         let data = {
             FirstName: user.FirstName,
             LastName: user.LastName,
@@ -112,26 +112,18 @@ function UserCreate() {
             BirthDay: date,
             
             EducationLevelID: convertType(user.EducationLevelID),
-            RoleID: convertType(user.RoleID),
+            RoleID: 1,
             GenderID: convertType(user.GenderID),
         };
-
-        const apiUrl = "http://localhost:8080/users";
-        const requestOptions = {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-        };
-
-        fetch(apiUrl, requestOptions)
-            .then((response) => response.json())
-            .then((res) => {
-            if (res.data) {
-                setSuccess(true);
-            } else {
-                setError(true);
-            }
-        });
+        console.log(data)
+        let res = await CreateUser(data);
+        if (res.status) {
+          setSuccess(true);
+          setErrorMessage("");
+      } else {
+          setError(true);
+          setErrorMessage(res.data);
+      }
     }
 
 
@@ -223,14 +215,21 @@ function UserCreate() {
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
              <p>รหัสผ่าน</p>
-             <TextField
-               id="Password"
-               variant="outlined"
-               type="string"
-               size="medium"
-               value={user.Password || ""}
-               onChange={handleInputChange}
-             />
+             <OutlinedInput
+              id="Password"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+            }
+          />
            </FormControl>
          </Grid>
 
@@ -337,7 +336,7 @@ function UserCreate() {
             </FormControl>
           </Grid>
 
-         <Grid item xs={3}>
+         <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
              <p>วัน/เดือน/ปีเกิด</p>
              <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -350,7 +349,7 @@ function UserCreate() {
            </FormControl>
          </Grid>
 
-          <Grid item xs={3}>
+          {/* <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
               <p>สถานะ</p>
               <Select
@@ -370,7 +369,7 @@ function UserCreate() {
                 )}
               </Select>
             </FormControl>
-          </Grid>
+          </Grid> */}
 
          <Grid item xs={12}>
            <Button component={RouterLink} to="/users" variant="contained">

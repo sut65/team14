@@ -1072,13 +1072,13 @@ async function CreateUser(data: UsersInterface) {
     body: JSON.stringify(data),
   };
 
-  let res = await fetch(`${apiUrl}/users`, requestOptions)
+  let res = await fetch(`${apiUrl}/user`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
