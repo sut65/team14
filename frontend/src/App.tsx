@@ -64,6 +64,7 @@ import RoomUpdate from "./components/RoomUpdate";
 import BuildingUpdate from "./components/BuildingUpdate";
 import Admin from "./components/Admin";
 import AdminCreate from "./components/AdminCreate";
+import OrderUpdate from "./components/OrderUpdate";
 
 const drawerWidth = 260;
 
@@ -272,6 +273,7 @@ return (
 
                 <Route path="/order_foods" element={< Order_food />} />
                 <Route path="/order_food/create" element={< OrderCreate />} />
+                <Route path="/order_food/update" element={< OrderUpdate />} />
                 
 
                 <Route path="/buildings" element={<Building />} />
