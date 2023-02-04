@@ -10,6 +10,7 @@ import {
 } from "../services/HttpClientService";
 
 import { Order_foodInterface } from "../models/IOrder_food";
+import ButtonGroup from "@mui/material/ButtonGroup";
 
 
 function Order_food() {
@@ -66,16 +67,23 @@ function Order_food() {
              จัดการร้องขออาหารและเครื่องดื่ม
            </Typography>
          </Box>
+         
 
          <Box>
-           <Button
-             component={RouterLink}
-             to="/order_food/create"
-             variant="contained"
-             color="primary"
-           >
-             Create Order
-           </Button>
+         <ButtonGroup variant="contained" aria-label="Disabled elevation buttons">
+            <Button component={RouterLink}
+                    to="/order_food/create"
+                    variant="contained"
+                    color="primary" > Create Order </Button>
+            <Button component={RouterLink}
+                    to="/order_food/update"
+                    variant="outlined"
+                    color="primary" >Edit</Button>
+            <Button component={RouterLink}
+                    to="/order_food/update"
+                    variant="outlined"
+                    color="error">Del</Button>
+        </ButtonGroup>           
          </Box>
        </Box>
 

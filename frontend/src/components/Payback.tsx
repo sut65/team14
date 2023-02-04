@@ -5,9 +5,7 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { ListBorrows, ListPaybacks,
-} from "../services/HttpClientService";
-import { BorrowsInterface } from "../models/IBorrow";
+import { ListPaybacks,} from "../services/HttpClientService";
 import { PaybacksInterface } from "../models/IPayback";
 
 function Paybacks() {
@@ -18,52 +16,36 @@ function Paybacks() {
         let res = await ListPaybacks();
         if (res) {
             setPaybacks(res);
+            console.log(res)
         }
     };
   
     const columns: GridColDef[] = [
-        { field: "ID", headerName: "ID", width: 50 },
-        // { field: "ApproveCode", headerName: "Approve Code", width: 150 },
-        {
-            field: "Borrow",
-            headerName: "การยืมที่",
-            width: 120,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
-        },
-        {
-            field: "User",
-            headerName: "ผู้อนุมัติ",
-            width: 120,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
-        },
-        {
-            field: "DeviceID",
-            headerName: "อุปกรณ์",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
-        {
-            field: "Date_Start",
-            headerName: "เริ่มจองเวลา",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
-        {
-            field: "Date_End",
-            headerName: "หมดจองเวลา",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
-        {
-            field: "StatusDevice",
-            headerName: "สถานะอุปกรณ์",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
+      { field: "ID", headerName: "ID", width: 50 },
+
+      {field: "Admin",headerName: "ผู้อนุมัติ",width: 120,
+        valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},
+
+      // {field: "Approve",headerName: "รหัสการจองใช้ห้อง",width: 140,
+      //   valueFormatter: (params) => `${(params.value.Code)}`,},
+
+      {field: "PBADNote",headerName: "หมายเหตุจากผู้บันทึก",width: 140,},
+
+      {field: "PBusNote",headerName: "หมายเหตุจากผู้ใช้",width: 140,},
+
+      {field: "Device",headerName: "อุปกรณ์",width: 80,
+      valueFormatter: (params) => `${(params.value.Detail )}`,},
+
+      {field: "Timeofborrow",headerName: "เวลาที่ทำการยืม",width: 120,
+          valueFormatter: (params) => `${new Date(params.value)}`,},
+      
+      {field: "Timeofpayback",headerName: "เวลาที่ทำการคืน",width: 120,
+      valueFormatter: (params) => `${new Date(params.value)}`,},    
+        
     ];
 
     useEffect(() => {
-        ListPaybacks();
+        listPaybacks();
     }, []);
 
  return (
@@ -91,7 +73,7 @@ function Paybacks() {
          <Box>
            <Button
              component={RouterLink}
-             to="/payback/create"
+             to="/paybacks/create"
              variant="contained"
              color="primary"
            >

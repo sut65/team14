@@ -62,6 +62,8 @@ function OrderCreate(){
       const [errorSearch, setErrorSearch] = useState(false);
       const [errorMessage, setErrorMessage] = useState("");   
       const [food_drinkID, setFood_DrinkID] = useState("");
+      const [orderID, setOrderID] = useState("");
+      const [order_foods, setOrders] = useState<Order_foodInterface[]>([]);
           
    
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -135,6 +137,7 @@ const listFood_and_Drink = async () => {
       });
       
       setBooking(res.data);
+      setOrders(res.data);
       handleClose()
       setErrorMessage("");
       console.log(res.data);
@@ -213,7 +216,7 @@ return (
              //variant="h6"             
              gutterBottom
            >
-            ค้นหาห้อง
+            ค้นหารายการที่สั่ง
            </Typography>
       </Box> 
       <Paper
@@ -249,43 +252,26 @@ return (
            noValidate
            autoComplete="off"
             >
-            <TextField id="outlined-basic" 
-            label="Booking ID" 
-            variant="outlined" 
-            disabled 
-            type="string" 
-            size="medium" 
-            placeholder="Booking ID"
-            value={booking.ID + ""}             
-             
-            />                
-            <TextField id="outlined-basic" 
-            label="User name" 
-            variant="outlined" 
-            disabled 
-            type="string" 
-            size="medium"             
-            value={booking.User?.FirstName + " " + booking.User?.LastName +""}            
-            />  
-            <TextField id="outlined-basic" 
-            label="Building" 
-            variant="outlined" 
-            disabled 
-            type="string" 
-            size="medium" 
-            placeholder="Booking ID"
-            value={booking.Room?.Building?.Detail + ""}            
-            />    
-            <TextField id="outlined-basic" 
-            label="Room" 
-            variant="outlined" 
-            disabled 
-            type="string" 
-            size="medium" 
-            placeholder="Booking ID"
-            value={booking.Room?.Detail + ""}          
-              
-            />              
+            <FormControl required fullWidth >
+            <InputLabel id="OrderID">กรุณารายการอาหาร</InputLabel>
+            <Select
+              labelId="OrderID"
+              label="กรุณารายการอาหาร *"
+              onChange={ (e: SelectChangeEvent) => (setOrderID(e.target.value)) }
+              inputProps={{
+                name: "OrderID",
+              }}
+            >
+              {order_foods.map((item: Order_foodInterface) => (
+                <MenuItem 
+                  key={item.ID}
+                  value={item.ID}
+                >
+                  {item.ID}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>                          
               </Box>
           </FormControl>
         </Grid>        
@@ -398,3 +384,4 @@ return (
 export default OrderCreate;
 
 
+ 

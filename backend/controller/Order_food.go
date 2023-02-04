@@ -89,6 +89,19 @@ func ListOrder_food(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": order_foods})
 }
 
+// GET /oder_foods/Booking/:code
+func ListOrderByBookingCode(c *gin.Context) {
+	var order_foods []entity.Order_Food
+	code := c.Param("code")
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").
+	Raw("Select * from bookings where code = ? and Select o.*  from bookings b1 inner JOIN approves a1 on a1.booking_id = b1.id and b1.deleted_at is NULL	inner JOIN order_foods o on o.approve_id = a1.id ",code).Find(&order_foods).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": order_foods})
+}
+
+
 // function สำหรับลบ oder ด้วย ID
 // DELETE /order_foods/:id
 func DeleteOder_food(c *gin.Context) {
