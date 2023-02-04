@@ -53,7 +53,7 @@ func TestFood_and_DrinkMenuNull(t *testing.T) {
 func TestFood_and_DrinkAddressNull(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล ไม่ถูกต้องตาม Format
+	// ข้อมูล Address ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
 		Menu: "ขนมปัง",
 		Address: "",
