@@ -1302,7 +1302,7 @@ async function DeleteOrder(id: any) {
     },
   };
 
-  let res = await fetch(`${apiUrl}/order_foods/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/order_food/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
