@@ -6,17 +6,25 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
+  DeleteOrder,
     ListOrders, 
 } from "../services/HttpClientService";
 
 import { Order_foodInterface } from "../models/IOrder_food";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import Paper from '@mui/material/Paper';
 
 
 function Order_food() {
 
     const [order_food, setOrder_food] = React.useState<Order_foodInterface[]>([]);
-  
+    
     const listOrder_foods = async () => {
         let res = await ListOrders();
         if (res != null) {
@@ -39,8 +47,8 @@ function Order_food() {
         { field: "Note", headerName: "Note", width: 200 },        
         { field: "Admin", headerName: "ผู้เพิ่มรายการสั่ง",
             width: 150,
-        valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
-        
+        valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,}, 
+       
     ];
     useEffect(() => {
         listOrder_foods();
@@ -49,7 +57,7 @@ function Order_food() {
     
  return (
     <div>
-         <Container maxWidth="md">
+         <Container maxWidth="lg" sx={{p:2}}>
        <Box
          display="flex"
          sx={{
@@ -91,12 +99,54 @@ function Order_food() {
          <DataGrid
            rows={order_food}
            getRowId={(row) => row.ID}
-           columns={columns}
+           columns={columns }
            pageSize={5}
            rowsPerPageOptions={[5]}
          />
-       </div>
+         
        
+       <TableContainer component={Paper}>
+      <Table sx={{ height: 400, width: "100%", marginTop: '20px'}} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Order ID</TableCell>
+            <TableCell align="center">Approve Code</TableCell>
+            <TableCell align="center">Menu</TableCell>
+            <TableCell align="center">Quantity</TableCell>
+            <TableCell align="center">Note</TableCell>
+            <TableCell align="center">เวลาที่บันทึก</TableCell>
+            <TableCell align="center">ผู้บันทึก</TableCell>
+            <TableCell align="center">Option</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {order_food.map((row) => (
+            <TableRow
+              key={row.ID}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            >
+              <TableCell component="th" scope="row">{row.ID}</TableCell>
+              <TableCell align="center">{row.Approve?.Booking?.Code}</TableCell>
+              <TableCell align="right">{row.Food_and_Drink?.Menu}</TableCell>
+              <TableCell align="right">{row.Totold}</TableCell>
+              <TableCell align="left">{row.Note}</TableCell>
+              <TableCell align="right">{row.OrderTime?.toString()}</TableCell>               
+              <TableCell align="right">{row.Admin?.FirstName} {row.Admin?.LastName} </TableCell>
+              <TableCell align="right"><ButtonGroup
+                                          disableElevation                                          
+                                          aria-label="Disabled elevation buttons"
+                                          size="small"
+                                        >
+                                          <Button variant="contained">Edit</Button>
+                                          <Button variant="outlined" onClick={() => DeleteOrder(row.ID)}>Del</Button>
+                                        </ButtonGroup>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    </div>
      </Container>
    </div>
  );

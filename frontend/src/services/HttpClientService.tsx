@@ -1293,29 +1293,27 @@ async function CreateOrder(data: Add_friendInterface) {
   return res;
 }
 
-async function DeleteOrder(data: Add_friendInterface) {
-  const id = localStorage.getItem('order_foodID')
+async function DeleteOrder(id: any) {
   const requestOptions = {
     method: "DELETE",
-    headers: {
+    headers: { 
       Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
+      "Content-Type": "application/json" 
     },
-    body: JSON.stringify(data),
   };
 
   let res = await fetch(`${apiUrl}/order_foods/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.data};
       }
     });
+
+  return res;
 }
-
-
 
 async function GetObjective(id: any) {
   const requestOptions = {
