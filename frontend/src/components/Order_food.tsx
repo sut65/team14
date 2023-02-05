@@ -28,12 +28,18 @@ function Order_food() {
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = React.useState("");
     
-      const listOrder_foods = async () => {
+    const listOrder_foods = async () => {
           let res = await ListOrders();
           if (res != null) {
             setOrder_foods(res);
           }
     };   
+    const listOrder_foodsBybooking = async () => {
+      let res = await ListOrders();
+      if (res != null) {
+        setOrder_foods(res);
+      }
+};  
 
     useEffect(() => {
         listOrder_foods();        
