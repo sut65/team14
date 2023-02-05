@@ -104,9 +104,9 @@ func ListOrderByBookingCode(c *gin.Context) {
 
 // function สำหรับลบ oder ด้วย ID
 // DELETE /order_foods/:id
-func DeleteOder_food(c *gin.Context) {
+func DeleteOrder_food(c *gin.Context) {
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM oder_foods WHERE id = ?", id); tx.RowsAffected == 0 {
+	if tx := entity.DB().Exec("DELETE FROM order_foods WHERE id = ?", id); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Order not found"})
 		return
 	}
