@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
   DeleteOrder,
-    ListOrders, 
+    ListOrders,ListOrderByBookingCode
 } from "../services/HttpClientService";
 
 import { Order_foodInterface } from "../models/IOrder_food";
@@ -34,7 +34,7 @@ function Order_food() {
             setOrder_foods(res);
           }
     };   
-    const listOrder_foodsBybooking = async () => {
+    const listOrdersBybookingCode = async () => {
       let res = await ListOrders();
       if (res != null) {
         setOrder_foods(res);
