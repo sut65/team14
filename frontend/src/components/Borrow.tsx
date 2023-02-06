@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ListBorrows, } from "../services/HttpClientService";
 import { BorrowsInterface } from "../models/IBorrow";
+import { Grid, Paper } from "@mui/material";
 
 function Borrows() {
 
@@ -49,26 +50,61 @@ function Borrows() {
  return (
 
    <div>
-     <Container maxWidth="md">
-       <Box
-         display="flex"
-         sx={{
-           marginTop: 2,
-         }}
-       >
+     <Container maxWidth="lg">
+     <Paper>
+     <Grid container spacing={1} sx={{ padding: 2 }} >
+      
+         <Grid item xs={12}>
+          <Paper>
+            <Grid container spacing={1} sx={{ padding: 2 }} >
+              <Grid item xs={6}>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+                >
+                  อนุมัติการยืมอุปกรณ์
+                </Typography>
+              </Grid>
 
-         <Box flexGrow={1}>
-           <Typography
-             component="h2"
-             variant="h6"
-             color="primary"
-             gutterBottom
-           >
-             อนุมัติการยืมอุปกรณ์
-           </Typography>
-         </Box>
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/borrow/create"
+                variant="contained"
+                color="primary"
+              >
+                Create Borrow
+              </Button>
+              </Grid>
 
-         <Box>
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/borrow/update"
+                variant="contained"
+                color="primary"
+              >
+                Update Borrow
+              </Button>
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/borrow/delete"
+                variant="contained"
+                color="primary"
+              >
+                Delete Borrow
+              </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+         
+         {/* <Box>
            <Button
              component={RouterLink}
              to="/borrow/create"
@@ -78,7 +114,27 @@ function Borrows() {
              Create Borrow
            </Button>
          </Box>
-       </Box>
+         <Grid item xs={2}>
+              <Button
+                  component={RouterLink}
+                  to="/borrow/update"
+                  variant="contained"
+                  color="primary"
+              >
+                  Update Borrow
+              </Button>
+          </Grid>
+          <Grid item xs={2}>
+              <Button
+                  component={RouterLink}
+                  to="/borrow/update"
+                  variant="contained"
+                  color="primary"
+              >
+                  Update Borrow
+              </Button>
+          </Grid> */}
+       
 
        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
@@ -90,6 +146,8 @@ function Borrows() {
          />
        </div>
        
+      </Grid>
+     </Paper>
      </Container>
    </div>
 
