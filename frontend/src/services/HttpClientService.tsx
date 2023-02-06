@@ -1270,7 +1270,7 @@ async function ListOrders() {
   return res;
 }
 
-async function GetOrderByBookingCode(code: any) {
+async function ListOrderByBookingCode(code: any) {
   const requestOptions = {
     method: "GET",
     headers: {
@@ -1502,5 +1502,5 @@ export{
 
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 
-    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,GetOrderByBookingCode,
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,
 }
