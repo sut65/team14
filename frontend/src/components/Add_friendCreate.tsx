@@ -224,19 +224,21 @@ return (
      </Snackbar>
      
 
-     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
-     <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}>
+
+     <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
-            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
+              ค้นหารายการไม่สำเร็จ: {errorMessage}
           </Alert>
       </Snackbar>
-      <Snackbar open={errorSearch_u} autoHideDuration={6000} onClose={handleClose}>
+
+      <Snackbar open={errorSearch_u} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
-            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage_u}
+            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
           </Alert>
       </Snackbar>
 
