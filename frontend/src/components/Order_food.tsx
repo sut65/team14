@@ -92,7 +92,7 @@ function Order_food() {
         <TableHead>
           <TableRow>
             <TableCell>Order ID</TableCell>
-            <TableCell align="center">Approve Code</TableCell>
+            <TableCell align="center">Approve Code</TableCell>           
             <TableCell align="center">Menu</TableCell>
             <TableCell align="center">Quantity</TableCell>
             <TableCell align="center">Note</TableCell>
@@ -108,7 +108,7 @@ function Order_food() {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">{row.ID}</TableCell>
-              <TableCell align="center">{row.Approve?.Booking?.Code}</TableCell>
+              <TableCell align="center">{row.Approve?.Code}</TableCell>              
               <TableCell align="right">{row.Food_and_Drink?.Menu}</TableCell>
               <TableCell align="right">{row.Totold}</TableCell>
               <TableCell align="left">{row.Note}</TableCell>
