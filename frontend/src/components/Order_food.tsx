@@ -46,7 +46,7 @@ function Order_food() {
     const [errorMessage, setErrorMessage] = useState("");
     const [code, setCode] = useState(""); 
     const [errorSearch, setErrorSearch] = useState(false); 
-    const [ OrderID, setOrderID] = useState("");
+   
   
 
     const handleClose = (
@@ -68,7 +68,7 @@ function Order_food() {
       setErrorSearch(true);
       setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
-    }  
+    }      
     let res = await ListOrderByBookingCode(code);  
     if (res != null){
       setOrder_foods(res.data);   
@@ -92,7 +92,7 @@ function Order_food() {
         setSuccessDel(true);
         setErrorMessage("");
         console.log(res.data);
-        console.log(res.data);
+       
         } else {
           setErrorSearch(true);
           setErrorMessage(res);
@@ -104,7 +104,7 @@ function Order_food() {
       setErrorMessageDel(res);
     }
 }; 
-       
+
     
  return (
     <div>
@@ -122,12 +122,12 @@ function Order_food() {
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
             >
               <Alert onClose={handleClose} severity="success">
-                ค้นหาข้อมูลสำเร็จ
+                ค้นหารายการสำเร็จ
               </Alert>
       </Snackbar>
-      <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
-            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
+              ค้นหารายการไม่สำเร็จ: {errorMessage}
           </Alert>
       </Snackbar>
 
@@ -141,6 +141,7 @@ function Order_food() {
          ยกเลิกรายการสั่งสำเร็จ
        </Alert>
      </Snackbar>
+
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
          ยกเลิกรายการสั่งไม่สำเร็จ: {errorMessageDel}
@@ -159,16 +160,13 @@ function Order_food() {
          </Box>
          
          <Box>
-         <ButtonGroup variant="contained" aria-label="Disabled elevation buttons">
-            <Button component={RouterLink}
-                    to="/order_food/create"
-                    variant="contained"
-                    color="primary" > Create Order </Button>
-            <Button 
-                    variant="outlined"
-                    color="primary" >Edit</Button>           
-        </ButtonGroup>           
-         </Box>
+          <ButtonGroup variant="contained" aria-label="Disabled elevation buttons">
+              <Button component={RouterLink}
+                      to="/order_food/create"
+                      variant="contained"
+                      color="primary" > Create Order </Button>                      
+          </ButtonGroup>           
+         </Box> 
        </Box>
        <Paper
             component="form"

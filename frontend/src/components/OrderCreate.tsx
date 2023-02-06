@@ -59,6 +59,10 @@ function OrderCreate(){
       const [key, setKey] = useState(true);
       const [success, setSuccess] = useState(false);
       const [error, setError] = useState(false);
+
+      const [successB, setSuccessB] = useState(false);
+      const [errorB, setErrorB] = useState(false);
+
       const [errorSearch, setErrorSearch] = useState(false);
       const [errorMessage, setErrorMessage] = useState("");   
       const [food_drinkID, setFood_DrinkID] = useState("");
@@ -95,6 +99,9 @@ const handleClose = (
       }
       setSuccess(false);
       setError(false);
+
+      setSuccessB(false);
+      setErrorB(false);
  };  
 
 const listFood_and_Drink = async () => {
@@ -197,6 +204,23 @@ return (
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
+
+     <Snackbar
+              open={successB}
+              autoHideDuration={6000}
+              onClose={handleClose}
+              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            >
+              <Alert onClose={handleClose} severity="success">
+                ค้นหารายการสำเร็จ
+              </Alert>
+      </Snackbar>
+      <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+          <Alert onClose={handleClose} severity="error">
+              ค้นหารายการไม่สำเร็จ: {errorMessage}
+          </Alert>
+      </Snackbar>
+
      <Box flexGrow={1}>
            <Typography
              component="h2"
