@@ -1270,6 +1270,27 @@ async function ListOrders() {
   return res;
 }
 
+async function GetOrderByBookingCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/order_foods/Booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
+
 async function CreateOrder(data: Add_friendInterface) {
   const requestOptions = {
     method: "POST",
@@ -1481,5 +1502,5 @@ export{
 
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 
-    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,GetOrderByBookingCode,
 }
