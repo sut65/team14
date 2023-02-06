@@ -65,6 +65,7 @@ import BuildingUpdate from "./components/BuildingUpdate";
 import Admin from "./components/Admin";
 import AdminCreate from "./components/AdminCreate";
 import OrderUpdate from "./components/OrderUpdate";
+import BorrowDelete from "./components/BorrowDelete";
 
 const drawerWidth = 260;
 
@@ -267,6 +268,8 @@ return (
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
+                {/* <Route path="/borrow/update" element={<BorrowUpdate />} /> */}
+                <Route path="/borrow/delete" element={<BorrowDelete />} />
 
                 <Route path="/food_and_drinks" element={<Food_and_Drink />} />
                 <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />

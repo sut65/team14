@@ -568,6 +568,28 @@ async function GetBorrow(id: any) {
   return res;
 }
 
+async function DeleteBorrow(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/borrow/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
 async function ListDevices() {
   const requestOptions = {
     method: "GET",
@@ -1490,7 +1512,7 @@ export{
 
     ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks,
 
-    ListBorrows, CreateBorrow, GetBorrow,
+    ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
 
     ListDevices,ListTypebyDevice,ListDeviceType,
 
