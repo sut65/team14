@@ -50,6 +50,13 @@ function Add_friendCreate(){
     const [key, setKey] = useState(true);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState(false);
+    
+    const [successB, setSuccessB] = useState(false);
+    const [errorB, setErrorB] = useState(false);
+
+    const [errorU, setErrorU] = useState(false);
+    const [successU, setSuccessU] = useState(false);
+    
     const [errorSearch, setErrorSearch] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [errorSearch_u, setErrorSearch_u] = useState(false);
@@ -57,7 +64,7 @@ function Add_friendCreate(){
 
         
 
-    const handleClose = (
+  const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
   ) => {
@@ -66,6 +73,12 @@ function Add_friendCreate(){
       }
       setSuccess(false);
       setError(false);
+
+      setSuccessB(false);
+      setErrorB(false);
+
+      setSuccessU(false);
+      setErrorU(false);
  };   
 
  const handleChange_Text = (
@@ -115,6 +128,7 @@ function Add_friendCreate(){
       
       setBooking(res.data);
       handleClose()
+      setSuccessB(true);
       setErrorMessage("");
       console.log(res.data);
     } else {
@@ -132,9 +146,9 @@ function Add_friendCreate(){
     }
     let res = await GetUser(userID);
     if (res.status){
-      setUser(res.data);
-      //setBooking(res.data);
+      setUser(res.data);      
       handleClose()
+      setSuccessU(true);
       setErrorMessage("");
     } else {
       setErrorSearch(true);
@@ -188,12 +202,43 @@ return (
          บันทึกข้อมูลสำเร็จ
        </Alert>
      </Snackbar>
+     <Snackbar
+       open={successB}
+       autoHideDuration={6000}
+       onClose={handleClose}
+       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+     >
+       <Alert onClose={handleClose} severity="success">
+         ค้นหาข้อมูลหาจองห้องสำเร็จ
+       </Alert>
+     </Snackbar>
+     <Snackbar
+       open={successU}
+       autoHideDuration={6000}
+       onClose={handleClose}
+       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+     >
+       <Alert onClose={handleClose} severity="success">
+         ค้นหาข้อมูลผู้ใช้สำเร็จ
+       </Alert>
+     </Snackbar>
+     
 
      <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
      </Snackbar>
+     <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
+          </Alert>
+      </Snackbar>
+      <Snackbar open={errorSearch_u} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="error">
+            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage_u}
+          </Alert>
+      </Snackbar>
 
      
 
