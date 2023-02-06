@@ -5,7 +5,9 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { ListBorrows, } from "../services/HttpClientService";
+import { 
+  ListBorrows, 
+} from "../services/HttpClientService";
 import { BorrowsInterface } from "../models/IBorrow";
 import { Grid, Paper } from "@mui/material";
 
@@ -104,38 +106,6 @@ function Borrows() {
           </Paper>
         </Grid>
          
-         {/* <Box>
-           <Button
-             component={RouterLink}
-             to="/borrow/create"
-             variant="contained"
-             color="primary"
-           >
-             Create Borrow
-           </Button>
-         </Box>
-         <Grid item xs={2}>
-              <Button
-                  component={RouterLink}
-                  to="/borrow/update"
-                  variant="contained"
-                  color="primary"
-              >
-                  Update Borrow
-              </Button>
-          </Grid>
-          <Grid item xs={2}>
-              <Button
-                  component={RouterLink}
-                  to="/borrow/update"
-                  variant="contained"
-                  color="primary"
-              >
-                  Update Borrow
-              </Button>
-          </Grid> */}
-       
-
        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
            rows={borrows}
