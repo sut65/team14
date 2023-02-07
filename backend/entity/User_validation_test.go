@@ -269,7 +269,7 @@ func TestUserIdentificationNumberNull(t *testing.T) {
 func TestUserStudentID(t *testing.T) {
 	g := NewGomegaWithT(t)
 
-	// ข้อมูล ไม่ถูกต้องตาม Format
+	// ข้อมูล StudentID ไม่ถูกต้องตาม Format
 	user := User{
 		FirstName:            "bbb",
 		LastName:             "ccc",
