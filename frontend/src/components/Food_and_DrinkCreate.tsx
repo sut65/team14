@@ -31,7 +31,7 @@ function Food_and_DrinkCreate() {
     const [user, setUser] = React.useState<UsersInterface>({});
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
-    const [message, setAlertMessage] = React.useState("");
+    const [errorMessage, setErrorMessage] = React.useState("");
     const handleClose = (
       event?: React.SyntheticEvent | Event,
       reason?: string
@@ -114,10 +114,10 @@ function Food_and_DrinkCreate() {
       let res = await CreateFood_and_Drink(data);
       console.log(res);
       if (res.status) {
-        setAlertMessage("บันทึกรายการอาหารและเครื่องดื่มสำเร็จ");
+        setErrorMessage("บันทึกรายการอาหารและเครื่องดื่มสำเร็จ");
         setSuccess(true);
       } else {
-        setAlertMessage(res.data);
+        setErrorMessage(res.data);
         setError(true);
       }
 
@@ -126,10 +126,10 @@ function Food_and_DrinkCreate() {
 return (
     <Container maxWidth="md">
       <Snackbar id="success" open={success} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-        <Alert onClose={handleClose} severity="success"> {message} </Alert>
+        <Alert onClose={handleClose} severity="success"> {errorMessage} </Alert>
       </Snackbar>
       <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
-        <Alert onClose={handleClose} severity="error"> {message} </Alert>
+        <Alert onClose={handleClose} severity="error"> {errorMessage} </Alert>
       </Snackbar>
       <Paper>
         <Box display="flex" sx={{ marginTop: 2, }}>
