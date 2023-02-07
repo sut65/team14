@@ -54,6 +54,8 @@ func main() {
 
 			// User Routes
 			r.POST("/user", controller.CreateUser)
+			r.PUT("/user", controller.UpdateUser)
+			r.DELETE("/user/:id", controller.DeleteUser)
 			r.GET("/users", controller.ListUsers)
 			r.GET("/user/:id", controller.GetUser)
 			r.GET("/educationlevels", controller.ListEducationLevels)
@@ -123,6 +125,8 @@ func main() {
 
 			// Food_and_Drink
 			r.POST("/food_and_drink", controller.CreateFood_and_Drink)
+			r.PUT("/food_and_drink", controller.UpdateFood_and_Drink)
+			r.DELETE("/food_and_drink/:id", controller.DeleteFood_and_Drink)
 			r.GET("/food_and_drink/:id", controller.GetFood_and_Drink)
 			r.GET("/food_and_drinks", controller.ListFood_and_Drinks)
 			r.GET("/shops", controller.ListShops)
