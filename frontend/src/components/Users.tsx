@@ -7,6 +7,8 @@ import Box from "@mui/material/Box";
 import { UsersInterface } from "../models/IUser";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ListUsers, } from "../services/HttpClientService";
+import Paper from "@mui/material/Paper";
+import Grid from "@mui/material/Grid";
 
 function Users() {
   const [users, setUsers] = React.useState<UsersInterface[]>([]);
@@ -39,27 +41,26 @@ function Users() {
 
  return (
 
-   <div>
-     <Container maxWidth="md">
-       <Box
-         display="flex"
-         sx={{
-           marginTop: 2,
-         }}
-       >
+  <div>
+  <Container maxWidth="lg">
+  <Paper>
+  <Grid container spacing={1} sx={{ padding: 2 }} >
+   
+      <Grid item xs={12}>
+       <Paper>
+         <Grid container spacing={1} sx={{ padding: 2 }} >
+           <Grid item xs={6}>
+             <Typography
+               component="h2"
+               variant="h6"
+               color="primary"
+               gutterBottom
+             >
+               ข้อมูลสมาชิก
+             </Typography>
+           </Grid>
 
-         <Box flexGrow={1}>
-           <Typography
-             component="h2"
-             variant="h6"
-             color="primary"
-             gutterBottom
-           >
-             สมาชิก
-           </Typography>
-         </Box>
-
-         <Box>
+           <Grid item xs={2}>
            <Button
              component={RouterLink}
              to="/user/create"
@@ -68,21 +69,47 @@ function Users() {
            >
              ลงทะเบียนสมาชิก
            </Button>
-         </Box>
-       </Box>
+           </Grid>
 
-       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-         <DataGrid
-           rows={users}
-           getRowId={(row) => row.ID}
-           columns={columns}
-           pageSize={5}
-           rowsPerPageOptions={[5]}
-         />
-       </div>
-       
-     </Container>
-   </div>
+           <Grid item xl={2}>
+           <Button
+             component={RouterLink}
+             to="/user/update"
+             variant="contained"
+             color="primary"
+           >
+             แก้ไขบัญชีส่วนตัว
+           </Button>
+           </Grid>
+
+           <Grid item xl={2}>
+           <Button
+             component={RouterLink}
+             to="/user/delete"
+             variant="contained"
+             color="primary"
+           >
+             ลบบัญชีผู้ใช้
+           </Button>
+           </Grid>
+         </Grid>
+       </Paper>
+     </Grid>
+      
+    <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+      <DataGrid
+        rows={users}
+        getRowId={(row) => row.ID}
+        columns={columns}
+        pageSize={5}
+        rowsPerPageOptions={[5]}
+      />
+    </div>
+    
+   </Grid>
+  </Paper>
+  </Container>
+</div>
 
  );
 

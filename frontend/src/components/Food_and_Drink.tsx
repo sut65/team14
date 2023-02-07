@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { Link as RouterLink } from "react-router-dom";
 import { ListFood_and_Drinks } from "../services/HttpClientService";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 function Food_and_Drinks() {
   const [food_and_drinks, setFood_and_Drinks] = React.useState<Food_and_DrinksInterface[]>([]);
@@ -35,21 +37,76 @@ const columns: GridColDef[] = [
 
 return (
   <div>
-      <Container maxWidth="md">
-        <Box display="flex" sx={{ marginTop: 2,}}>
-          <Box flexGrow={1}>
-            <Typography component="h2" variant="h6" color="primary" gutterBottom > รายการอาหาร </Typography>
-          </Box>
-          <Box>
-            <Button component={RouterLink} to="/food_and_drink/create" variant="contained" color="success" >เพิ่มรายการอาหาร </Button>
-          </Box>
-        </Box>
-        <div style={{ height: 400, width: "100%", marginTop: "20px" }}>
-          <DataGrid rows={food_and_drinks} getRowId={(row) => row.ID} columns={columns} pageSize={5} rowsPerPageOptions={[5]} />
-        </div>
-      </Container>
-    </div>
-  );
+     <Container maxWidth="lg">
+     <Paper>
+     <Grid container spacing={1} sx={{ padding: 2 }} >
+         <Grid item xs={12}>
+          <Paper>
+            <Grid container spacing={1} sx={{ padding: 2 }} >
+              <Grid item xs={6}>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  color="primary"
+                  gutterBottom
+                >
+                  รายการอาหารและเครื่องดื่ม
+                </Typography>
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/food_and_drink/create"
+                variant="contained"
+                color="primary"
+              >
+                สร้างรายการอาหาร
+              </Button>
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/food_and_drink/update"
+                variant="contained"
+                color="primary"
+              >
+                แก้ไขรายการอาหาร
+              </Button>
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/food_and_drink/delete"
+                variant="contained"
+                color="primary"
+              >
+                ลบรายการอาหาร
+              </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+         
+       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+         <DataGrid
+           rows={food_and_drinks}
+           getRowId={(row) => row.ID}
+           columns={columns}
+           pageSize={5}
+           rowsPerPageOptions={[5]}
+         />
+       </div>
+       
+      </Grid>
+     </Paper>
+     </Container>
+   </div>
+
+ );
+
 }
 
 export default Food_and_Drinks;
