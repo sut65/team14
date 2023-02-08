@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink,useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { UsersInterface } from "../models/IUser";
 import { BuildingsInterface } from "../models/IBuilding";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { CreateRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms, UpdateRoom } from "../services/HttpClientService";
+import { CreateRoom, GetRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms, UpdateRoom } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -28,6 +28,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function RoomUpdate(){
+    const {id} = useParams<{ id : string | undefined}>();
     const [room, setRoom] = React.useState<RoomsInterface>({
       Detail:"", Note: "",
       Time: new Date(),});
@@ -88,6 +89,18 @@ function RoomUpdate(){
         
       }
 
+      const getRoom = async (id : any) => {
+        let res = await GetRoom(id);
+        if (res) {
+          setRoom(res);
+          console.log("Load Room Complete"); 
+          console.log (res);
+        }
+        else{
+          console.log("Load Room InComplete!!!!");
+        }
+      };  
+
 
       const getUser = async () => {
         const uid = localStorage.getItem("userID")
@@ -127,6 +140,7 @@ function RoomUpdate(){
       async function submit() {
         let data = {
 
+          ID: room.ID,
             Detail: room.Detail,
             AdminID: (user.ID),
             TyperoomID: (room.TyperoomID),
@@ -155,6 +169,7 @@ function RoomUpdate(){
         listTyperooms();
         listBuildings();
         getUser();
+        getRoom(id);
     }, []);
 
       return (
@@ -196,56 +211,41 @@ function RoomUpdate(){
                  </Box>
             </Box>
 
-            <Grid item xs={6} >
-          <p>ชื่อตึก</p>
-          <FormControl required fullWidth >
-            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
-            <Select
-              labelId="BuildingID"
-              label="กรุณาเลือกตึก *"
-              value={room?.BuildingID || ""}
-              onChange={ (handleChange) }
-              inputProps={{
-                name: "BuildingID",
-              }}
-            >
-              {building.map((item: BuildingsInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </Grid>  
+            <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>ชื่อตึก</p>
+              <TextField
+                required
+                id="Building"
+                disabled
+                type="string"
+                label="ชื่อตึก"
+                inputProps={{
+                  name: "Building",
+                }}
+                value={room.Building?.Detail+ ""}
+              />
+            </FormControl>
+          </Grid>              
+                
      
 
-          <Grid item xs={6} >
-          <p>เลขห้อง</p>
-          <FormControl required fullWidth >
-            <InputLabel id="RoomID">กรุณาเลือกห้อง</InputLabel>
-            <Select
-              labelId="RoomID"
-              label="กรุณาเลือกห้อง *"
-              value={room?.Detail || ""}
-              onChange={ (handleChange) }
-              inputProps={{
-                name: "RoomID",
-              }}
-            >
-              {rooms.map((item: RoomsInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </Grid>                
+          <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>เลขห้อง</p>
+              <TextField
+                required
+                id="Detail"
+                type="string"
+                label="กรุณาเลขห้อง"
+                inputProps={{
+                  name: "Detail",
+                }}
+                value={room.Detail + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>             
                 
     
                 <Grid item xs={6} >
@@ -255,6 +255,7 @@ function RoomUpdate(){
             <Select
               labelId="TyperoomID"
               label="กรุณาเลือกประเภทห้อง *"
+              value={room.TyperoomID+""}
               onChange={ (handleChange) }
               inputProps={{
                 name: "TyperoomID",

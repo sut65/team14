@@ -41,7 +41,9 @@ func main() {
 			r.GET("/rooms/building/:id", controller.ListRoomsbyBuilding)
 			r.GET("/rooms", controller.ListRooms)
 			r.GET("/room/:id", controller.GetRoom)
+			r.PUT("/room", controller.UpdateRoom)
 			r.GET("/typerooms", controller.ListTyperooms)
+			r.DELETE("/room/:id", controller.DeleteRoom)
 
 			// Building Routes
 			r.POST("/building", controller.CreateBuilding)
