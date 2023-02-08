@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -7,8 +7,7 @@ import Box from "@mui/material/Box";
 import MuiInput from '@mui/material/Input';
 import SearchIcon from '@mui/icons-material/Search';
 import { 
-  DeleteOrder,
-    ListOrders,ListOrderByBookingCode
+  DeleteOrder, ListOrderByBookingCode
 } from "../services/HttpClientService";
 
 import { Order_foodInterface } from "../models/IOrder_food";
@@ -21,7 +20,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Paper from '@mui/material/Paper';
-import TextField from "@mui/material/TextField";
 import { Grid, IconButton, InputBase, Snackbar, styled } from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -114,17 +112,7 @@ function Order_food() {
          sx={{
            marginTop: 2,
          }}
-       >
-      <Snackbar
-              open={success}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="success">
-                ค้นหารายการสำเร็จ
-              </Alert>
-      </Snackbar>
+       >      
       <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
               ค้นหารายการไม่สำเร็จ: {errorMessage}
@@ -226,7 +214,7 @@ function Order_food() {
                                         >
                                           <Button variant="contained" 
                                                   component={RouterLink}
-                                                  to="/order_food/update" >Edit</Button>
+                                                  to={`/order_food/update/${row.ID}`}>Edit</Button>
                                           <Button variant="outlined" 
                                                   color="error" 
                                                   onClick={() => DelOrder(row.ID)}>Del</Button>

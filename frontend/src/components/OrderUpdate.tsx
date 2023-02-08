@@ -1,22 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
+
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import {  Button, Container, FormControl, Grid, Paper,InputLabel, MenuItem, Snackbar, TextField, styled, Typography, IconButton, InputBase } from "@mui/material";
+import {  Button, Container, FormControl, Grid, InputLabel, MenuItem, Snackbar, TextField, styled, Typography,} from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MuiInput from '@mui/material/Input';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers";
 
-import SearchIcon from '@mui/icons-material/Search';
-
 
 import { UsersInterface } from "../models/IUser";
 import {BookingsInterface } from "../models/IBooking";
 
-import {CreateOrder, GetBookingbyCodeThatApprove, } from "../services/HttpClientService";
+import {CreateOrder,GetOrderByID} from "../services/HttpClientService";
 import {  
   
   GetUser,ListFood_and_Drinks
@@ -24,6 +23,9 @@ import {
 } from "../services/HttpClientService";
 import { Order_foodInterface } from "../models/IOrder_food";
 import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
+
+
+
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -35,10 +37,7 @@ const Input = styled(MuiInput)`
 `;
 
 function OrderCreate(){
-    const [user, setUser] = useState<UsersInterface>({
-      ID:"User ID",FirstName: "User name",LastName:  "",
-    });
-
+    const {id} = useParams<{ id: string | undefined }>();
     const [admin, setAdmin] = useState<UsersInterface>({});        
     const [booking, setBooking] = useState<BookingsInterface>({
       ID: "Booking ID",       
@@ -47,23 +46,21 @@ function OrderCreate(){
      
     });
 
-    const [order_food, setOrder_food] = useState<Order_foodInterface>({Note: "",
-    OrderTime: new Date(),});     
+    const [order_food, setOrder_food] = useState<Order_foodInterface>({
+      Note: "",
+      OrderTime: new Date(),});     
     const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
     const [totold, setValue] = useState<number | string | Array<number | string>>(
-        0,
+        1,
       );
 
-      const [code, setCode] = useState("");      
-  
       const [key, setKey] = useState(true);
       const [success, setSuccess] = useState(false);
       const [error, setError] = useState(false);
-      const [errorSearch, setErrorSearch] = useState(false);
+     
       const [errorMessage, setErrorMessage] = useState("");   
-      const [food_drinkID, setFood_DrinkID] = useState("");
-      const [orderID, setOrderID] = useState("");
-      const [order_foods, setOrders] = useState<Order_foodInterface[]>([]);
+      const [food_drinkID, setFood_DrinkID] = useState("");      
+      
           
    
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,15 +68,14 @@ function OrderCreate(){
       };
     
       const handleBlur = () => {
-        if (totold < 0) {
-          setValue(0);
+        if (totold < 1) {
+          setValue(1);
         } else if (totold > 100) {
           setValue(100);
         }
       };
 
-    
- const handleChange_Text = (
+      const handleChange_Text = (
   event: React.ChangeEvent<{ id?: string; value: any }>
 ) => {
   const id = event.target.id as keyof typeof order_food;
@@ -120,33 +116,19 @@ const listFood_and_Drink = async () => {
     else{
       console.log("Load Admin InComplete!!!!");
     }
-  };    
-     
-     
-  async function search(){
-    if (code === ""){
-      setErrorSearch(true);
-      setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
-      return
+  };   
+
+  const getOrderByID = async (id:any) => {    
+    let res = await GetOrderByID(id);
+    if (res) {
+      setOrder_food(res);
+      console.log(res);
+      console.log("Load order Complete");  
     }
-    let res = await GetBookingbyCodeThatApprove(code);
-    if (res.status){
-      setOrder_food({
-        ...order_food,
-        ["ApproveID"]: res.data.ID,
-      });
-      
-      setBooking(res.data);
-      setOrders(res.data);
-      handleClose()
-      setErrorMessage("");
-      console.log(res.data);
-    } else {
-      setErrorSearch(true);
-      setErrorMessage(res.data);
+    else{
+      console.log("Load Order InComplete!!!!");
     }
-  }
-   
+  }; 
 
   async function Submit() {
     let data = { 
@@ -176,12 +158,16 @@ const listFood_and_Drink = async () => {
 }
 
 useEffect(() => {
-  listFood_and_Drink(); 
+  console.log("id page : " + id + "*********************"); 
+  //alert(id);
+  getOrderByID(id);
+  listFood_and_Drink();
   getAdmin();   
 }, []);
 
 
-return (  
+return ( 
+     
     <div>
 <Container maxWidth="md">
      <Snackbar
@@ -207,106 +193,25 @@ return (
              color="primary"
              gutterBottom
            >
-             จัดการร้องขออาหารและเครื่องดื่ม
+             Update Order
            </Typography>
-      </Box>
-      <Box flexGrow={1}>
-           <Typography
-             component="h1"
-             //variant="h6"             
-             gutterBottom
-           >
-            ค้นหารายการที่สั่ง
-           </Typography>
-      </Box> 
-      <Paper
-      component="form"
-      sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
-    >      
-      <InputBase
-        sx={{ ml: 1, flex: 1 }}
-        placeholder="Booking Code"
-        inputProps={{ 'aria-label': 'Booking Code' }}
-        value={code + ""}
-              onChange={(e) => {setCode(e.target.value)                              
-                console.log(code)
-                }
-              }
-      />
-      <IconButton type="button" sx={{ p: '10px' }} 
-                  aria-label="search" size="large"
-                  onClick= {() => {
-                   search();
-                   }}>
-        <SearchIcon />
-      </IconButton>      
-    </Paper> 
-    
-      <Grid container spacing={1} sx={{ padding: 1 }}>
-        <Grid item xs={9}>          
-          <FormControl fullWidth variant="outlined">
-            <Box
-            component="form"
-            sx={{ '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-           noValidate
-           autoComplete="off"
-            >
-            <FormControl required fullWidth >
-            <InputLabel id="OrderID">กรุณารายการอาหาร</InputLabel>
-            <Select
-              labelId="OrderID"
-              label="กรุณารายการอาหาร *"
-              onChange={ (e: SelectChangeEvent) => (setOrderID(e.target.value)) }
-              inputProps={{
-                name: "OrderID",
-              }}
-            >
-              {order_foods.map((item: Order_foodInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.ID}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>                          
-              </Box>
-          </FormControl>
-        </Grid>        
-      </Grid> 
-      <hr></hr>    
-             
+      </Box>  
+                   
         <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={7} >
           <p>รายการอาหาร</p>
           <FormControl required fullWidth >
-            <InputLabel id="Food_and_DrinkID">กรุณารายการอาหาร</InputLabel>
-            <Select
-              labelId="Food_and_DrinkID"
-              label="กรุณารายการอาหาร *"
-              onChange={ (e: SelectChangeEvent) => (setFood_DrinkID(e.target.value)) }
-              inputProps={{
-                name: "Food_and_DrinkID",
-              }}
-            >
-              {food_drink.map((item: Food_and_DrinksInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Menu}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              <TextField 
+                value={order_food.Food_and_Drink?.Menu}
+                disabled
+              />
+            </FormControl>
         </Grid>        
                   
         <Grid item xs={1}>
         <p>จำนวน</p>
           <Input
-            value={totold}
+            value={order_food.Totold}
             size= "medium"
             onChange={handleInputChange}
             onBlur={handleBlur}

@@ -1386,6 +1386,27 @@ async function ListOrders() {
   return res;
 }
 
+async function GetOrderByID(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/order_food/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+    return res;
+  }
+
 async function ListOrderByBookingCode(code: any) {
   const requestOptions = {
     method: "GET",
@@ -1618,5 +1639,5 @@ export{
 
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 
-    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID
 }

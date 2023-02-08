@@ -240,9 +240,7 @@ return (
           <Alert onClose={handleClose} severity="error">
             ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
           </Alert>
-      </Snackbar>
-
-     
+      </Snackbar>    
 
         <p>ระบบจัดการเพิ่มเพื่อนเข้าห้อง</p>
       <Grid container spacing={1} sx={{ padding: 1 }}>
