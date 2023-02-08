@@ -35,7 +35,7 @@ func TestApproveCode_Format(t *testing.T) {
 	approve := Approve{
 		Code:        "12345", // format is A ตามด้วยตัวเลข 5 ตัว
 		Note:        "test",
-		ApproveTime: time.Now().Add(22 * time.Hour),
+		ApproveTime: time.Now().Add(1 + time.Minute),
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -58,7 +58,7 @@ func TestApproveCode_Null(t *testing.T) {
 	approve := Approve{
 		Code:        "", // Null
 		Note:        "test",
-		ApproveTime: time.Now().Add(22 * time.Hour),
+		ApproveTime: time.Now().Add(-1 * time.Minute),
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -81,7 +81,7 @@ func TestApproveNote_Null(t *testing.T) {
 	approve := Approve{
 		Code:        "Ap12345",
 		Note:        "", // null
-		ApproveTime: time.Now().Add(22 * time.Hour),
+		ApproveTime: time.Now().Add(2 + time.Minute),
 	}
 
 	// ตรวจสอบด้วย govalidator

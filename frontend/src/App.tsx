@@ -276,7 +276,7 @@ return (
 
                 <Route path="/order_foods" element={< Order_food />} />
                 <Route path="/order_food/create" element={< OrderCreate />} />
-                <Route path="/order_food/update" element={< OrderUpdate />} />
+                <Route path="/order_food/update/:id" element={< OrderUpdate />} />
                 
 
                 <Route path="/buildings" element={<Building />} />

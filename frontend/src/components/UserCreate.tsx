@@ -118,11 +118,12 @@ function UserCreate() {
         console.log(data)
         let res = await CreateUser(data);
         if (res.status) {
+          setErrorMessage("ลงทะเบียนสมาชิกสำเร็จ");
           setSuccess(true);
-          setErrorMessage("");
       } else {
-          setError(true);
           setErrorMessage(res.data);
+          setError(true);
+          
       }
     }
 
@@ -130,20 +131,13 @@ function UserCreate() {
  return (
    <Container maxWidth="md">
      <Snackbar
-       open={success}
-       autoHideDuration={6000}
-       onClose={handleClose}
-       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-     >
-       <Alert onClose={handleClose} severity="success">
-         บันทึกข้อมูลสำเร็จ
-       </Alert>
+       id="success" open={success} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+       <Alert onClose={handleClose} severity="success"> {errorMessage} </Alert>
      </Snackbar>
 
-     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
-       <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ
-       </Alert>
+     <Snackbar 
+       id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
+       <Alert onClose={handleClose} severity="error"> {errorMessage} </Alert>
      </Snackbar>
 
      <Paper>

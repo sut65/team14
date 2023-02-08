@@ -928,6 +928,53 @@ async function ListFood_and_Drinks() {
   return res;
 }
 
+async function UpdateFood_and_Drink(data: ApprovesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/food_and_drink`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function DeleteFood_and_Drink(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/food_and_drink/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
 async function ListGuards() {
   const requestOptions = {
     method: "GET",
@@ -1131,6 +1178,53 @@ async function GetUserRole() {
   return res;
 }
 
+async function UpdateUser(data: ApprovesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/user`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
+async function DeleteUser(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/user/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
 async function ListEducationLevels() {
   const requestOptions = {
     method: "GET",
@@ -1291,6 +1385,27 @@ async function ListOrders() {
 
   return res;
 }
+
+async function GetOrderByID(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/order_food/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+    return res;
+  }
 
 async function ListOrderByBookingCode(code: any) {
   const requestOptions = {
@@ -1508,9 +1623,9 @@ export{
 
     ListObjectives, GetObjective,
 
-    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole, UpdateUser, DeleteUser,
 
-    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks,
+    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink,
 
     ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
 
@@ -1524,5 +1639,5 @@ export{
 
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 
-    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID
 }

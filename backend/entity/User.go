@@ -8,15 +8,15 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName            string
-	LastName             string
-	Email                string `gorm:"uniqueIndex"`
-	PhoneNumber          string `gorm:"uniqueIndex"`
-	IdentificationNumber string `gorm:"uniqueIndex"`
-	StudentID            string `gorm:"uniqueIndex"`
-	Age                  uint8
-	Password             string `json:"-"`
-	BirthDay			 time.Time
+	FirstName            string `valid:"required~กรุณากรอกชื่อ"`
+	LastName             string `valid:"required~กรุณากรอกนามสกุล"`
+	Email                string `gorm:"uniqueIndex" valid:"email, required~Email: กรุณากรอกอีเมลล์"`
+	PhoneNumber          string `gorm:"uniqueIndex" valid:"matches(^\\d{10}$)~เบอร์โทรศัพท์ต้องมีตัวเลข 10 หลัก, required~กรุณากรอกเบอร์โทรศัพท์"`
+	IdentificationNumber string `gorm:"uniqueIndex" valid:"matches(^\\d{13}$)~เลขบัตรประชาชนต้องมีตัวเลข 13 หลัก, required~กรุณากรอกเลขบัตรประชาชน"`
+	StudentID            string `gorm:"uniqueIndex" valid:"matches(^[B]\\d{7}$)~รหัสนักศึกษาต้องขึ้นต้นด้วย B ตามด้วยตัวเลข 7 หลัก, required~กรุณากรอกรหัสนักศึกษา"`
+	Age                  uint8  `valid:"range(18|100)~อายุไม่ต่ำกว่า 18"`
+	Password             string `json:"-" valid:"minstringlength(6), required~กรุณากรอกรหัสผ่าน"` //error password
+	BirthDay             time.Time
 	RoleID               *uint
 	GenderID             *uint
 	EducationLevelID     *uint

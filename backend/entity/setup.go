@@ -76,7 +76,7 @@ func SetupDatabase() {
 
 	db.Model(&User{}).Create(&User{
 		FirstName: "A", LastName: "B",
-		Email: "test@gmail.com", PhoneNumber: "011-1111111",
+		Email: "test@gmail.com", PhoneNumber: "0111111111",
 		IdentificationNumber: "1309876543212", StudentID: "B1234567",
 		Age: 21, Password: string(password),
 		Role: r_user, Gender: male, EducationLevel: e3,
@@ -86,7 +86,7 @@ func SetupDatabase() {
 
 	db.Model(&User{}).Create(&User{
 		FirstName: "C", LastName: "D",
-		Email: "CD@gmail.com", PhoneNumber: "022-2222222",
+		Email: "CD@gmail.com", PhoneNumber: "0222222222",
 		IdentificationNumber: "1301234567898", StudentID: "B9876543",
 		Age: 50, Password: string(password),
 		Role: r_admin, Gender: female, EducationLevel: e1,
