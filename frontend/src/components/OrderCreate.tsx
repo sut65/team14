@@ -51,7 +51,7 @@ function OrderCreate(){
     OrderTime: new Date(),});     
     const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
     const [totold, setValue] = useState<number | string | Array<number | string>>(
-        0,
+        1
       );
 
       const [code, setCode] = useState("");      
@@ -62,7 +62,8 @@ function OrderCreate(){
 
       const [successB, setSuccessB] = useState(false);
       const [errorB, setErrorB] = useState(false);
-
+      
+      
       const [errorSearch, setErrorSearch] = useState(false);
       const [errorMessage, setErrorMessage] = useState("");   
       const [food_drinkID, setFood_DrinkID] = useState("");
@@ -73,8 +74,8 @@ function OrderCreate(){
       };
     
       const handleBlur = () => {
-        if (totold < 0) {
-          setValue(0);
+        if (totold < 1) {               
+          setValue(1);
         } else if (totold > 100) {
           setValue(100);
         }
@@ -102,6 +103,7 @@ const handleClose = (
 
       setSuccessB(false);
       setErrorB(false);
+     
  };  
 
 const listFood_and_Drink = async () => {
@@ -143,10 +145,11 @@ const listFood_and_Drink = async () => {
       
       setBooking(res.data);
       handleClose()
+      setSuccessB(true);
       setErrorMessage("");
       console.log(res.data);
     } else {
-      setErrorSearch(true);
+      setErrorB(true);
       setErrorMessage(res.data);
     }
   }
@@ -203,18 +206,13 @@ return (
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
-     </Snackbar>
-
-     <Snackbar
-              open={successB}
-              autoHideDuration={6000}
-              onClose={handleClose}
-              anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-            >
-              <Alert onClose={handleClose} severity="success">
-                ค้นหารายการสำเร็จ
-              </Alert>
+     </Snackbar>     
+      <Snackbar open={errorB} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+          <Alert onClose={handleClose} severity="error">
+              ค้นหาไม่สำเร็จ: {errorMessage}
+          </Alert>
       </Snackbar>
+     
       <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
               ค้นหารายการไม่สำเร็จ: {errorMessage}
@@ -350,7 +348,7 @@ return (
             onBlur={handleBlur}
             inputProps={{
               step: 1,
-              min: 0,
+              min: 1,
               max: 100,
               type: 'number',
               

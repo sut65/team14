@@ -7,7 +7,7 @@ import (
 
 type Order_Food struct {
 	gorm.Model
-	Totold    int       `valid:"range(0|100)~เลขไม่ถูกต้อง"`
+	Totold    int       `valid:"range(1|100)~เลขไม่ถูกต้อง"`
 	Note      string    `valid:"required~กรุณากรอกหมายเหตุ"`
 	OrderTime time.Time `valid:"IsnotPast~เวลาไม่ถูกต้อง"`
 	// การอนุมัติ .

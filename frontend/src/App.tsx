@@ -276,7 +276,7 @@ return (
 
                 <Route path="/order_foods" element={< Order_food />} />
                 <Route path="/order_food/create" element={< OrderCreate />} />
-                <Route path="/order_food/update" element={< OrderUpdate />} />
+                <Route path="/order_food/update/:id" element={< OrderUpdate />} />
                 
 
                 <Route path="/buildings" element={<Building />} />
@@ -287,7 +287,7 @@ return (
 
                 <Route path="/rooms" element={<Room />} />
                 <Route path="/room/create" element={<RoomCreate />} />
-                <Route path="/room/update" element={<RoomUpdate />} />
+                <Route path="/room/update/:id" element={<RoomUpdate />} />
                 <Route path="/room/delete" element={<RoomDelete />} />
 
                 <Route path="/paybacks" element={<Paybacks />} />
