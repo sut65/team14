@@ -88,7 +88,7 @@ func main() {
 			r.GET("/order_food/:id", controller.GetOrder_food)
 			r.GET("/order_foods/Booking/code/:code", controller.ListOrderByBookingCode)
 			r.POST("/order_food", controller.CreateOrder_food)
-			r.PATCH("/order_food", controller.UpdateOrder_food)
+			r.PUT("/order_food", controller.UpdateOrder_food)
 			r.DELETE("/order_food/:id", controller.DeleteOrder_food)
 
 			// Borrow

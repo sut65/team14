@@ -1472,6 +1472,31 @@ async function DeleteOrder(id: any) {
 
   return res;
 }
+async function UpdateOrder(data: ApprovesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/order_food`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.data};
+      }
+    });
+
+  return res;
+}
+
 
 async function GetObjective(id: any) {
   const requestOptions = {
@@ -1639,5 +1664,5 @@ export{
 
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 
-    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID,UpdateOrder
 }

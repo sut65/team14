@@ -116,21 +116,51 @@ func DeleteOrder_food(c *gin.Context) {
 
 // PATCH /order_food
 func UpdateOrder_food(c *gin.Context) {
-	var oder_food entity.Order_Food
-	if err := c.ShouldBindJSON(&oder_food); err != nil {
+	var order entity.Order_Food
+	var tmp entity.Order_Food
+
+	if err := c.ShouldBindJSON(&order); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	// ค้นหา order ด้วย ID
+	if tx := entity.DB().Where("id = ?", order.ID).First(&tmp); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "order not found"})
+		return
+	}
+
+	var admin entity.User
+	var food_and_drink entity.Food_and_Drink
+	var approve entity.Approve
+
+	// ค้นหา Amin ด้วย id
+	if tx := entity.DB().Where("id = ?", order.AdminID).First(&admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	// ค้นหา Approve ด้วย id
+	if tx := entity.DB().Where("id = ?", order.ApproveID).First(&approve); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Approve ID not found"})
+		return
+	}
+
+	// ค้นหา food and drink ด้วย id
+	if tx := entity.DB().Where("id = ?", order.Food_and_DrinkID).First(&food_and_drink); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "food ID not found"})
+		return
+	}
+
+
+	tmp.Approve = approve
+	tmp.Admin = admin
+	tmp.Totold = order.Totold
+	tmp.Note = order.Note
+
+	if err := entity.DB().Save(&tmp).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	if tx := entity.DB().Where("id = ?", oder_food.ID).First(&oder_food); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Order not found"})
-		return
-	}
-
-	if err := entity.DB().Save(&oder_food).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"data": oder_food})
+	c.JSON(http.StatusOK, gin.H{"data": tmp})
 }

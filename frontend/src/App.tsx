@@ -59,7 +59,6 @@ import DeviceCreate from "./components/DeviceCreate";
 import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
 import BuildingDelete from "./components/BuildingDelete";
-import RoomDelete from "./components/RoomDelete";
 import RoomUpdate from "./components/RoomUpdate";
 import BuildingUpdate from "./components/BuildingUpdate";
 import Admin from "./components/Admin";
@@ -288,7 +287,6 @@ return (
                 <Route path="/rooms" element={<Room />} />
                 <Route path="/room/create" element={<RoomCreate />} />
                 <Route path="/room/update/:id" element={<RoomUpdate />} />
-                <Route path="/room/delete" element={<RoomDelete />} />
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />
