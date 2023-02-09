@@ -58,7 +58,6 @@ import BookingDelete from "./components/BookingDelete";
 import DeviceCreate from "./components/DeviceCreate";
 import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
-import BuildingDelete from "./components/BuildingDelete";
 import RoomUpdate from "./components/RoomUpdate";
 import BuildingUpdate from "./components/BuildingUpdate";
 import Admin from "./components/Admin";
@@ -280,8 +279,7 @@ return (
 
                 <Route path="/buildings" element={<Building />} />
                 <Route path="/building/create" element={<BuildingCreate />} />
-                <Route path="/building/update" element={<BuildingUpdate />} />
-                <Route path="/building/delete" element={<BuildingDelete />} />
+                <Route path="/building/update/:id" element={<BuildingUpdate />} />
 
 
                 <Route path="/rooms" element={<Room />} />
