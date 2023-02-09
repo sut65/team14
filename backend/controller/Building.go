@@ -68,7 +68,7 @@ func GetBuilding(c *gin.Context) {
 // GET /Buildings
 func ListBuildings(c *gin.Context) {
 	var Building []entity.Building
-	if err := entity.DB().Preload("Admin").Preload("Company").Preload("Guard").Raw("SELECT * FROM buildings").Find(&Building).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Company").Preload("Guard").Raw("SELECT * FROM buildings where deleted_at is null").Find(&Building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -96,10 +96,37 @@ func UpdateBuilding(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", building.ID).First(&building); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "building not found"})
+
+	var tmp entity.Building
+	var admin entity.User
+	var company entity.Company
+	var guard entity.Guard
+	
+
+	if tx := entity.DB().Where("id = ?", building.ID).First(&tmp); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
 		return
 	}
+	if tx := entity.DB().Where("id = ?", building.AdminID).First(&admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", building.CompanyID).First(&company); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบบริษัท]"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", building.GuardID).First(&guard); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบผู้รักษาความปลอดภัย"})
+		return
+	}
+	
+	tmp.Admin = admin
+	tmp.Guard = guard
+	tmp.Company = company
+	tmp.Detail = building.Detail
+	tmp.Note = building.Note
+
+
 	if err := entity.DB().Save(&building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
