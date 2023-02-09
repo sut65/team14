@@ -8,14 +8,14 @@ export interface BuildingsInterface {
 
     Detail?: string,
 
-    UserID?: string;
+    AdminID?: string;
     RoomID?: string;
     CompanyID?: string;
     GuardID?: string;
     Note?: string | "";
     Time?: Date | null;
 
-    User?: UsersInterface
+    Admin?: UsersInterface
     Room?: RoomsInterface
     Company?: CompaniesInterface
     Guard?: GuardsInterface
