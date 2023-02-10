@@ -9,6 +9,7 @@ import { SigninInterface } from "../models/ISignin";
 import { UsersInterface } from "../models/IUser";
 import { Add_friendInterface } from "../models/IAdd_friend";
 import { DevicesInterface } from "../models/IDevice";
+import { Order_foodInterface } from "../models/IOrder_food";
 
 const apiUrl = "http://localhost:8080";
 
@@ -1449,7 +1450,7 @@ async function ListOrderByBookingCode(code: any) {
   return res;
 }
 
-async function CreateOrder(data: Add_friendInterface) {
+async function CreateOrder(data:  Order_foodInterface) {
   const requestOptions = {
     method: "POST",
     headers: {
@@ -1462,14 +1463,14 @@ async function CreateOrder(data: Add_friendInterface) {
   let res = await fetch(`${apiUrl}/order_food`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
-  return res;
+  return res; 
 }
 
 async function DeleteOrder(id: any) {
@@ -1487,13 +1488,13 @@ async function DeleteOrder(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 
   return res;
 }
-async function UpdateOrder(data: ApprovesInterface) {
+async function UpdateOrder(data:  Order_foodInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -1511,7 +1512,7 @@ async function UpdateOrder(data: ApprovesInterface) {
         
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 

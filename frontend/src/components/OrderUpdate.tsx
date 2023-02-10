@@ -36,7 +36,7 @@ function OrderUpateOrder(){
     const [order_food, setOrder_food] = useState<Order_foodInterface>({
       Note: "",
       OrderTime: new Date(),});     
-    const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface[]>([]);
+    const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface>({});
     const [totold, setValue] = useState<number | string | Array<number | string>>(
         1,
       );
@@ -118,9 +118,9 @@ const listFood_and_Drink = async () => {
     let data = { 
       ID: order_food.ID,
       AdminID: admin.ID,     
-      ApproveID: order_food.Approve?.ID,
-      Food_and_DrinkID: order_food.Food_and_Drink?.ID,
-      Totold:totold, 
+      ApproveID: order_food.ApproveID,
+      Food_and_DrinkID: order_food.Food_and_DrinkID,
+      Totold: totold, 
       Note: order_food.Note,
       OrderTime: order_food.OrderTime,         
       
