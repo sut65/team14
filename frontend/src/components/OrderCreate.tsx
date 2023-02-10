@@ -307,7 +307,8 @@ return (
             placeholder="Booking ID"
             value={booking.Room?.Detail + ""}          
               
-            />              
+            />   
+                       
               </Box>
           </FormControl>
         </Grid>        
