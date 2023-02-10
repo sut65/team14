@@ -60,6 +60,7 @@ func main() {
 			r.POST("/user", controller.CreateUser)
 			r.GET("/users", controller.ListUsers)
 			r.GET("/user/:id", controller.GetUser)
+			r.GET("/User/StudentID/:StudentID", controller.GetUserByStudentID)
 			r.GET("/educationlevels", controller.ListEducationLevels)
 			r.GET("/genders", controller.ListGenders)
 			r.GET("/roles", controller.ListRoles)

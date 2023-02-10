@@ -501,6 +501,27 @@ async function GetUser(id: any) {
 
   return res;
 }  
+
+async function GetUserByStudentID(StudentID: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/User/StudentID//${StudentID}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+} 
 ////////////////////////////////////borrow///////////////////////////////////////////
 async function ListBorrows() {
   const requestOptions = {
@@ -1664,5 +1685,5 @@ export{
 
     ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
 
-    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID,UpdateOrder
+    ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID,UpdateOrder,GetUserByStudentID
 }
