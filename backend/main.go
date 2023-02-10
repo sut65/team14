@@ -49,6 +49,8 @@ func main() {
 			r.POST("/building", controller.CreateBuilding)
 			r.GET("/buildings", controller.ListBuildings)
 			r.GET("/building/:id", controller.GetBuilding)
+			r.PUT("/building", controller.UpdateBuilding)
+			r.DELETE("/building/:id", controller.DeleteBuilding)
 
 			// Objective Routes
 			r.GET("/objectives", controller.ListObjectives)

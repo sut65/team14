@@ -1399,9 +1399,9 @@ async function GetOrderByID(id: any) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
-        return res.data;
-      } else {
-        return false;
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
     return res;

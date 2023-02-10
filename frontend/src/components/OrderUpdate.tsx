@@ -1,31 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
-
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import {  Button, Container, FormControl, Grid, InputLabel, MenuItem, Snackbar, TextField, styled, Typography,} from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
+import {  Button, Container, FormControl, Grid, Snackbar, TextField, styled, Typography, Paper,} from "@mui/material";
 import MuiInput from '@mui/material/Input';
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers";
 
-
+import { Order_foodInterface } from "../models/IOrder_food";
+import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { UsersInterface } from "../models/IUser";
-import {BookingsInterface } from "../models/IBooking";
 
-import {CreateOrder,GetOrderByID} from "../services/HttpClientService";
+import {GetOrderByID, UpdateOrder} from "../services/HttpClientService";
 import {  
   
   GetUser,ListFood_and_Drinks
  
 } from "../services/HttpClientService";
-import { Order_foodInterface } from "../models/IOrder_food";
-import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
-
-
-
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -36,16 +29,10 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-function OrderCreate(){
+function OrderUpateOrder(){
+
     const {id} = useParams<{ id: string | undefined }>();
     const [admin, setAdmin] = useState<UsersInterface>({});        
-    const [booking, setBooking] = useState<BookingsInterface>({
-      ID: "Booking ID",       
-       User: {FirstName: "Usesr name", LastName: "",}
-      ,Room: {Detail: "", Building:{Detail: "",}}
-     
-    });
-
     const [order_food, setOrder_food] = useState<Order_foodInterface>({
       Note: "",
       OrderTime: new Date(),});     
@@ -53,25 +40,22 @@ function OrderCreate(){
     const [totold, setValue] = useState<number | string | Array<number | string>>(
         1,
       );
-
       const [key, setKey] = useState(true);
       const [success, setSuccess] = useState(false);
       const [error, setError] = useState(false);
      
       const [errorMessage, setErrorMessage] = useState("");   
-      const [food_drinkID, setFood_DrinkID] = useState("");      
-      
-          
-   
+
       const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value === '' ? '' : Number(event.target.value));        
+        setValue(event.target.value === '' ? '' : Number(event.target.value));     
+               
       };
     
       const handleBlur = () => {
         if (totold < 1) {
-          setValue(1);
+          setValue(1);          
         } else if (totold > 100) {
-          setValue(100);
+          setValue(100);          
         }
       };
 
@@ -120,9 +104,9 @@ const listFood_and_Drink = async () => {
 
   const getOrderByID = async (id:any) => {    
     let res = await GetOrderByID(id);
-    if (res) {
-      setOrder_food(res);
-      console.log(res);
+    if (res.status) {
+      setOrder_food(res.data);
+      console.log(res.data);
       console.log("Load order Complete");  
     }
     else{
@@ -132,18 +116,19 @@ const listFood_and_Drink = async () => {
 
   async function Submit() {
     let data = { 
-      AdminID: (admin.ID),     
-      ApproveID: (booking.Approve?.ID),
-      Food_and_DrinkID: (food_drinkID),
-      Totold:(totold), 
+      ID: order_food.ID,
+      AdminID: admin.ID,     
+      ApproveID: order_food.Approve?.ID,
+      Food_and_DrinkID: order_food.Food_and_Drink?.ID,
+      Totold:totold, 
       Note: order_food.Note,
-      OrderTime: order_food.OrderTime,   
-      
+      OrderTime: order_food.OrderTime,         
       
     };
+    
     console.log(data)
-    let res = await CreateOrder(data);
-    if (res) {
+    let res = await UpdateOrder(data);
+    if (res.status) {
       setSuccess(true);
       setErrorMessage("");     
   } else {
@@ -151,15 +136,15 @@ const listFood_and_Drink = async () => {
       setErrorMessage(res.data);
   }
   setOrder_food({
-    Note: "",
+    Note: "",   
     OrderTime: new Date(),
+   
   })
    
 }
 
 useEffect(() => {
   console.log("id page : " + id + "*********************"); 
-  //alert(id);
   getOrderByID(id);
   listFood_and_Drink();
   getAdmin();   
@@ -168,8 +153,8 @@ useEffect(() => {
 
 return ( 
      
-    <div>
-<Container maxWidth="md">
+    <div >
+<Container maxWidth="lg" >
      <Snackbar
        open={success}
        autoHideDuration={6000}
@@ -185,18 +170,22 @@ return (
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
-     </Snackbar>
+     </Snackbar>     
      <Box flexGrow={1}>
            <Typography
-             component="h2"
-             variant="h5"
+             component="h1"
+             variant="h4"
              color="primary"
-             gutterBottom
+             gutterBottom                        
            >
              Update Order
            </Typography>
-      </Box>  
-                   
+      </Box>
+        
+      <Paper
+            component="form"
+            sx={{ height: "95%", width: "100%", marginTop: '20px' }}
+          >             
         <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={7} >
           <p>รายการอาหาร</p>
@@ -210,18 +199,20 @@ return (
                   
         <Grid item xs={1}>
         <p>จำนวน</p>
-          <Input
-            value={order_food.Totold}
-            size= "medium"
-            onChange={handleInputChange}
+          <Input 
+            id = "tolold"                   
+            size= "medium"            
             onBlur={handleBlur}
             inputProps={{
               step: 1,
               min: 0,
               max: 100,
-              type: 'number',
-              
-            }}
+              type: 'number', 
+              name : "tolold"       
+            }
+          }
+          onChange={handleInputChange}          
+          value={totold+ ""}
           />
         </Grid>
         <Grid item xs={12} >
@@ -260,33 +251,33 @@ return (
           </Grid>
       
 
-        <Grid container spacing={1} sx={{ padding: 1 }}></Grid>     
-        <Grid item xs={1}>
-           <Stack direction="row" spacing={2}>
-            <Button component={RouterLink}
-                    to="/order_foods"
-                    variant="outlined">Back</Button>      
-           </Stack>
-         </Grid>        
-         
-         <Grid item xs={7}>           
-            <Button                  
-                    variant="contained" color="success" size="large" style={{ float: "right" }}                    
-                    onClick= {() => {
-                     Submit();
-                     }} >Submit</Button>      
-           
-         </Grid> 
-
+        <Grid container spacing={1} sx={{ padding: 1 }}>    
+          <Grid item xs={10}>
+            <Stack direction="row" spacing={2}>
+              <Button component={RouterLink}
+                      to="/order_foods"
+                      variant="outlined">Back</Button>      
+            </Stack>
+          </Grid>        
+          
+          <Grid item xs={2}>           
+              <Button                  
+                      variant="contained" color="success" size="large" style={{ float: "right" }}                    
+                      onClick= {() => {
+                      Submit();
+                      }} >Submit</Button>      
+            
+          </Grid> 
         </Grid> 
-               
+        </Grid> 
+      </Paper>
       </Container>
       
     </div>
   
   );
 }
-export default OrderCreate;
+export default OrderUpateOrder;
 
 
  

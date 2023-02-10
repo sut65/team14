@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import FormControl from "@mui/material/FormControl";
@@ -18,8 +18,9 @@ import { BuildingsInterface } from "../models/IBuilding";
 import { GuardsInterface } from "../models/IGuard";
 import { CompaniesInterface } from "../models/ICompany";
 import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { CreateBuilding, GetUser, ListCompanies, ListGuards } from "../services/HttpClientService";
+import { CreateBuilding, GetBuilding, GetUser, ListCompanies, ListGuards, UpdateBuilding } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { get } from "http";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -28,6 +29,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 function BuildingUpdate(){
+    const {id} = useParams<{ id : string | undefined}>();
     const [building, setBuilding] = React.useState<BuildingsInterface>({
       Detail:"", Note: "",
     Time: new Date(),});
@@ -75,6 +77,19 @@ function BuildingUpdate(){
       };
 
 
+      const getBuilding = async (id : any) => {
+        let res = await GetBuilding(id);
+        if (res) {
+          setBuilding(res);
+          console.log("Load Building Complete"); 
+          console.log (res);
+        }
+        else{
+          console.log("Load Building InComplete!!!!");
+        }
+      };
+
+
       const getUser = async () => {
         const uid = localStorage.getItem("userID")
         let res = await GetUser(uid);
@@ -113,6 +128,7 @@ function BuildingUpdate(){
       async function submit() {
         let data = {
             
+          ID: building.ID,
             Detail: building.Detail,
 
             AdminID: (user.ID),
@@ -123,13 +139,14 @@ function BuildingUpdate(){
         };
         console.log(data);
         
-        let res = await CreateBuilding(data);
+        let res = await UpdateBuilding(data);
         console.log(res);
         if (res) {
             setSuccess(true);
             setErrorMessage("");
 
             setBuilding({
+              Detail:"",
               Note: "",
               Time: new Date(),
             })
@@ -144,6 +161,7 @@ function BuildingUpdate(){
         listGuards();
         listCompanies();
         getUser();
+        getBuilding(id);
     }, []);
 
 
@@ -189,29 +207,22 @@ function BuildingUpdate(){
             </Box>
      
 
-            <Grid item xs={6} >
-          <p>ชื่อตึก</p>
-          <FormControl required fullWidth >
-            <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
-            <Select
-              labelId="BuildingID"
-              label="กรุณาเลือกตึก *"
-              onChange={ (handleChange) }
-              inputProps={{
-                name: "BuildingID",
-              }}
-            >
-              {buildings.map((item: BuildingsInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          </Grid>            
+            <Grid item xs={12} >
+            <FormControl fullWidth variant="outlined">
+              <p>ชื่อตึก</p>
+              <TextField
+                required
+                id="Detail"
+                type="string"
+                label="กรุณาเลขห้อง"
+                inputProps={{
+                  name: "Detail",
+                }}
+                value={building.Detail + ""}
+                onChange={handleChange_Text}
+              />
+            </FormControl>
+          </Grid>             
                 
     
                 <Grid item xs={6} >
@@ -221,6 +232,7 @@ function BuildingUpdate(){
             <Select
               labelId="GuardID"
               label="กรุณาเลือกผู้รักษาความปลอดภัย *"
+              value={building.GuardID+""}
               onChange={ (handleChange) }
               inputProps={{
                 name: "GuardID",
@@ -245,6 +257,7 @@ function BuildingUpdate(){
             <Select
               labelId="CompanyID"
               label="กรุณาเลือกบริษัท *"
+              value={building.CompanyID+""}
               onChange={ (handleChange) }
               inputProps={{
                 name: "CompanyID",
