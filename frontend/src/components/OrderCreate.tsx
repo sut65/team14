@@ -312,8 +312,9 @@ return (
           </FormControl>
         </Grid>        
       </Grid> 
-      <hr></hr>    
-             
+
+      <Paper component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center'}}>      
         <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={7} >
           <p>รายการอาหาร</p>
@@ -410,7 +411,7 @@ return (
          </Grid> 
 
         </Grid> 
-               
+        </Paper>        
       </Container>
       
     </div>
