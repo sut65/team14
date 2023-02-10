@@ -168,7 +168,7 @@ const listFood_and_Drink = async () => {
     };
     console.log(data)
     let res = await CreateOrder(data);
-    if (res) {
+    if (res.status) {
       setSuccess(true);
       setErrorMessage("");     
   } else {
