@@ -248,9 +248,9 @@ async function UpdateBooking(data: BookingsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -269,10 +269,10 @@ async function DeleteBooking(id: any) {
   let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -380,11 +380,9 @@ async function UpdateApprove(data: ApprovesInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
-        
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -403,10 +401,10 @@ async function DeleteApprove(id: any) {
   let res = await fetch(`${apiUrl}/approve/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -1167,10 +1165,10 @@ async function CreateRoom(data: RoomsInterface) {
   let res = await fetch(`${apiUrl}/room`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 
@@ -1213,9 +1211,9 @@ async function ListRooms() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
+        return {status: true ,data: res.data};
       } else {
-        return false;
+        return {status: false ,data: res.error};
       }
     });
 
@@ -1695,7 +1693,7 @@ async function UpdateRoom(data: RoomsInterface) {
       if (res.data) {
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 

@@ -136,6 +136,12 @@ func UpdateRoom(c *gin.Context) {
 	tmp.Detail = room.Detail
 	tmp.Note = room.Note
 
+
+	if _, err := govalidator.ValidateStruct(tmp); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := entity.DB().Save(&room).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

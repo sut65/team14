@@ -88,7 +88,7 @@ async function DelBuilding(id:any) {
 
         <div>
           <Container maxWidth="lg">
-          <Paper>
+          
            <Grid container spacing={1} sx={{ padding: 2 }} >
              <Grid item xs={12}>
                <Paper>
@@ -189,7 +189,7 @@ async function DelBuilding(id:any) {
     </div>
      
            </Grid>
-         </Paper>
+         
          
          </Container>
         </div>
