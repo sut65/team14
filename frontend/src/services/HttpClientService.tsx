@@ -613,6 +613,52 @@ async function DeleteBorrow(id: any) {
   return res;
 }
 
+async function GetDevice(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/device/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function UpdateDevice(data:  DevicesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/device`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.error};
+      }
+    });
+
+  return res;
+}
+
 async function ListDevices() {
   const requestOptions = {
     method: "GET",
@@ -1699,7 +1745,7 @@ export{
 
     ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
 
-    ListDevices,ListTypebyDevice,ListDeviceType,
+    GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 
     CreatePayback,ListPaybacks,GetPayback,
     

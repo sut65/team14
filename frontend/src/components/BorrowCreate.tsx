@@ -18,7 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 
 import { CreateBorrow,
 ListDevices,ListDeviceType,
-GetUser,
+GetUser,GetDevice,UpdateDevice,
 ListApproves,GetApprovebyCode,
 GetApprove,ListTypebyDevice,
 } from "../services/HttpClientService";
@@ -44,6 +44,7 @@ const [user, setUser] = useState<UsersInterface>({});
 
 const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
 const [devicetypes, setDevicetypes] = useState<DeviceTypesInterface[]>([]);
+const [device, setDevice] = React.useState<DevicesInterface>({});
 
 const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
 const [appid, setAppid] = React.useState("");
@@ -190,6 +191,7 @@ async function submit() {
   };
   console.log(data)
   let res = await CreateBorrow(data);
+  
   console.log(res)
     if (res.status) {
       //setAlertMessage("บันทึกสำเร็จ")
@@ -199,7 +201,22 @@ async function submit() {
       setError(true);
       setErrorMessage(res.data);
   }
-  
+  let res1 = await GetDevice(data.DeviceID)
+    if(res1){
+      setDevice(res1);
+      setDevice({...device,"StatusDevice": false,});
+    }
+  setDevice({...device,"StatusDevice": false,});
+  let res2 = await UpdateDevice(device)
+  console.log(res2)
+  if (res2.status) {
+    //setAlertMessage("บันทึกสำเร็จ")
+    setSuccess(true);
+    setErrorMessage("");
+ } else {
+    setError(true);
+    setErrorMessage(res2.data);
+ }
 }
 ///////////////////////////////search/////////////////////////
 useEffect(() => {

@@ -113,7 +113,8 @@ func main() {
 			r.GET("/device/:id", controller.GetDevice)
 			r.GET("/devices", controller.ListDevices)
 			r.DELETE("/device/:id", controller.DeleteDevice)
-			r.PATCH("/device", controller.UpdateDevice)
+			r.PUT("/device", controller.UpdateDevice)
+			
 
 			//DeviceType use by borrow
 			r.GET("/device_types", controller.ListDeviceType)

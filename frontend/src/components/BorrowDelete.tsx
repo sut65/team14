@@ -14,7 +14,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { GetUser,ListBorrows, DeleteBorrow, GetBorrow, GetBooking,} from "../services/HttpClientService";
+import { GetUser,ListBorrows, DeleteBorrow, GetBorrow, GetBooking, GetDevice,} from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
@@ -31,6 +31,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function BorrowDelete() {
     const uid = localStorage.getItem("userID")
+
     const [borrows, setBorrows] = useState<BorrowsInterface[]>([]);
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({
       BorrowNote1: "",BorrowAPNote:"",
@@ -38,8 +39,9 @@ function BorrowDelete() {
 
     const [user, setUser] = useState<UsersInterface>({});    
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
-    const [appid, setAppid] = React.useState("");
-    const [booking, setBooking] = React.useState<BookingsInterface>({}); 
+
+    const [booking, setBooking] = React.useState<BookingsInterface>({});
+    const [device, setDevice] = React.useState<DevicesInterface>({}); 
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
@@ -64,18 +66,24 @@ function BorrowDelete() {
         setBorrow(res);
         console.log("Load BookingUser Complete");
         console.log(res);
-        searchBorrowid(res);
+        searchBorrowid(res.ID);
     }
     else{
         console.log("Load Borrow Incomplete!!!");
     }   
+
+    let res1 = await GetDevice(res.DeviceID);
+    if (res1){
+        setDevice(res1);
+        console.log(res1);
+    }
   }
 
     async function searchBorrowid(id: any) {
     let res = await GetBorrow(id);
     console.log(res);
     if (res) {
-        setBorrows(res);
+        setBorrow(res);
         searchBookingid(res.Approve?.BookingID);
     } 
     }
@@ -246,7 +254,7 @@ return (
                 type="string"
                 disabled
                 variant="filled"
-                value={approves?.Booking?.Code || ""}
+                value={booking?.Code || ""}
             /> 
             </FormControl>
         </Grid>  
@@ -261,7 +269,7 @@ return (
             type="string"
             disabled
             variant="filled"
-            value={approves?.Booking?.Date_Start || ""}  
+            value={booking?.Date_Start || ""}  
             />
             </FormControl>
         </Grid>
@@ -273,7 +281,7 @@ return (
             type="string"
             disabled
             variant="filled"
-            value={approves?.Booking?.Date_End || ""}
+            value={booking?.Date_End || ""}
             /> 
             </FormControl>
         </Grid>  
@@ -287,7 +295,7 @@ return (
             type="string"
             disabled
             variant="filled"
-            value={ borrow?.Device?.DeviceType?.DeviceTypeDetail || ""}
+            value={ device?.DeviceType?.DeviceTypeDetail || ""}
             /> 
             </FormControl>
         </Grid>  
