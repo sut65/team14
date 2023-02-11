@@ -16,7 +16,7 @@ import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { FoodtypesInterface } from "../models/IFood_and_Drink";
 import { ShopsInterface } from "../models/IFood_and_Drink";
 import { UsersInterface } from "../models/IUser";
-import { CreateFood_and_Drink, GetUser } from "../services/HttpClientService";
+import { CreateFood_and_Drink, GetFood_and_Drinks, GetUser, ListFood_and_Drinks, UpdateFood_and_Drink } from "../services/HttpClientService";
 import {ListFoodtypes, ListShops, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
 
@@ -24,8 +24,9 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-function Food_and_DrinkCreate() {
+function Food_and_DrinkUpdate() {
     const [food_and_drink, setFood_and_Drink] = React.useState<Partial<Food_and_DrinksInterface>>({});
+    const [food_and_drinks, setFood_and_Drinks] = React.useState<Food_and_DrinksInterface[]>([]);
     const [foodtypes, setFoodtypes] = React.useState<FoodtypesInterface[]>([]);
     const [shops, setShops] = React.useState<ShopsInterface[]>([]);
     const [user, setUser] = React.useState<UsersInterface>({});
@@ -50,6 +51,13 @@ function Food_and_DrinkCreate() {
         ...food_and_drink,
         [name]: value,
       });
+    };
+
+    const onChangeFood_and_Drink = async(event: SelectChangeEvent) => {
+      const id = event.target.value;
+      let res = await GetFood_and_Drinks(id);
+      if (res.status) { setFood_and_Drink(res.data); console.log("Load Food_and_Drink Complete");}
+      else{ console.log("Load Food_and_Drink InComplete!!!!");}
     };
 
     const handleInputChange = (
@@ -79,6 +87,12 @@ function Food_and_DrinkCreate() {
       if (res) { setShops(res); console.log("Load Shop Complete");}
       else{ console.log("Load Shop InComplete!!!!");}
     };
+
+    const listFood_and_Drinks = async () => {
+      let res = await ListFood_and_Drinks();
+      if (res) { setFood_and_Drinks(res); console.log("Load Food_and_Drink Complete");}
+      else{ console.log("Load Food_and_Drink InComplete!!!!");}
+    };
     
     const getUser = async () => {
       const uid = localStorage.getItem("userID")
@@ -97,6 +111,7 @@ function Food_and_DrinkCreate() {
       listFoodtypes();
       listShops();
       getUser();
+      listFood_and_Drinks();
     }, []);
 
     async function submit() {
@@ -111,10 +126,10 @@ function Food_and_DrinkCreate() {
       };
       console.log(data);
       
-      let res = await CreateFood_and_Drink(data);
+      let res = await UpdateFood_and_Drink(data);
       console.log(res);
       if (res.status) {
-        setErrorMessage("บันทึกรายการอาหารและเครื่องดื่มสำเร็จ");
+        setErrorMessage("แก้ไขรายการอาหารและเครื่องดื่มสำเร็จ");
         setSuccess(true);
       } else {
         setErrorMessage(res.data);
@@ -139,6 +154,16 @@ return (
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
+        <Grid item xs={8}>
+          <FormControl fullWidth variant="outlined">   
+            <p>รายการอาหาร</p>
+            <Select required defaultValue={"0"} onChange={onChangeFood_and_Drink} inputProps={{ name: "Food_and_DrinkID", }}>
+              <MenuItem value={"0"}>กรุณาเลือกรายการอาหาร</MenuItem>
+                {food_and_drinks?.map((item: Food_and_DrinksInterface) => 
+                  <MenuItem key={item.ID} value={item.ID} > {item.Menu} </MenuItem>)}
+            </Select>
+          </FormControl>
+          </Grid>
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
@@ -190,5 +215,5 @@ return (
     </Container>
 );
 }
-export default Food_and_DrinkCreate;
+export default Food_and_DrinkUpdate;
 

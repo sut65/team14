@@ -1,0 +1,891 @@
+{
+  "id": "887e1e07-8693-4bc7-9a01-4fb65b7022c2",
+  "version": "2.0",
+  "name": "Building",
+  "url": "http://localhost:3000/building/create",
+  "tests": [{
+    "id": "dd0151b2-797c-4204-b2c4-e79196f9a268",
+    "name": "1.Pass",
+    "commands": [{
+      "id": "cf24f7d0-a7c1-4be8-b585-aaf621a4978c",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/building/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "52d71b56-e81f-41af-bddc-65e0e6250741",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cd0c38d0-8749-4186-aa0b-a641b9d25ca1",
+      "comment": "",
+      "command": "click",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a2a77bed-3051-4d74-9ef2-11813f95c6c0",
+      "comment": "",
+      "command": "type",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "ตึกC"
+    }, {
+      "id": "68324c37-4f41-41b8-9b3e-5ccbeb00e021",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.MuiInputBase-root > #GuardID",
+      "targets": [
+        ["css=.MuiInputBase-root > #GuardID", "css:finder"],
+        ["xpath=//div[@id='GuardID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9829ff85-086e-4401-ac72-312baa485b13",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "806c22c7-b5ad-4bc2-a1b7-0cb08bbad725",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "faa04d01-f325-46d1-9c02-b4589dc6319d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'นายมะม่วง หวาน')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9399bab6-2afa-4720-b07d-0992cc0add92",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=CompanyID",
+      "targets": [
+        ["id=CompanyID", "id"],
+        ["css=#CompanyID", "css:finder"],
+        ["xpath=//div[@id='CompanyID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[4]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d630e8dd-94b1-490a-94ae-7f6dabd11ca8",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1a111e47-c5bc-4532-ad42-2ca5fa3d2cde",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "085320ee-8d39-4f43-8aaa-3051e53653b5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(1)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div[3]/ul/li", "xpath:idRelative"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a15d9496-e6d0-4845-863e-f3b6ffd3012c",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9da6bb8e-90b5-4716-8840-452f796c1e81",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "59a0f98e-225e-45f7-a7ab-b51166bbc67c",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "AAA"
+    }, {
+      "id": "eb7fa5f6-c000-4ae3-8e93-568dc522ed12",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "329ec714-fdfe-40f0-98e4-bc4a7d898261",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb0168d0-ee87-4e93-bb51-3b160902b684",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลสำเร็จ"
+    }]
+  }, {
+    "id": "3010f8df-9747-456e-bb8d-59dbfcecacab",
+    "name": "2.Null building",
+    "commands": [{
+      "id": "c5a34a92-690f-4d41-b6f0-aa9f0b23c72f",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/building/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f2882f01-2fd0-4f4a-96ae-01cb0ab9b9bb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "346bb660-d4be-4a97-9bfd-e8be15b88ec2",
+      "comment": "",
+      "command": "click",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f8eee2a-4806-402b-82b2-fb169a0e6920",
+      "comment": "",
+      "command": "type",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "65187d56-d7a6-4012-ab8f-7ad6e6c7d814",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.MuiInputBase-root > #GuardID",
+      "targets": [
+        ["css=.MuiInputBase-root > #GuardID", "css:finder"],
+        ["xpath=//div[@id='GuardID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1756671-5dbc-4df7-830f-d8b4b0fc768b",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a99c0942-a692-42b0-b3fa-9e7abe62937c",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "74ebb1c9-fa2f-40aa-a962-c019d3dec5c3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'นายมะม่วง หวาน')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ebdb0cea-514f-4105-b2d9-03c8260733d8",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=CompanyID",
+      "targets": [
+        ["id=CompanyID", "id"],
+        ["css=#CompanyID", "css:finder"],
+        ["xpath=//div[@id='CompanyID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[4]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b0b02568-f63e-4c24-8759-bc6be0102334",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "417f60e6-dda3-48a7-9130-6ff5135cb648",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c48adfff-e16c-4c71-8144-ad83fcf20a31",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(1)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div[3]/ul/li", "xpath:idRelative"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d08e07c-e192-4825-a78f-7b3d646c64ce",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8a22c36-2191-4218-a4ad-a56ad081bb9f",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "23f9f933-4d6d-49fc-9328-121f98a5ec8f",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "AAA"
+    }, {
+      "id": "6be6ecd1-a3c5-478c-873f-24b75bb0c287",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cdd94eb2-a4a7-4419-8c2d-13b66502e3ce",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a574301-89aa-4211-87b8-cba9bf5278ec",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ กรุณากรอกชื่อตึก"
+    }]
+  }, {
+    "id": "33b1fad7-98be-4b3c-8b17-9b0cd335efca",
+    "name": "3. Null note",
+    "commands": [{
+      "id": "b571b2b1-68c2-4055-85d1-81cefc4be033",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/building/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a0f49cf1-3657-4293-9854-7158ad68937b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5594595d-30af-4fbb-a987-15c31a4d1e41",
+      "comment": "",
+      "command": "click",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5e8ec561-8a05-49a6-b092-7c3b0e839c61",
+      "comment": "",
+      "command": "type",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "ตึกC"
+    }, {
+      "id": "ec19306f-3bc0-4647-b52c-f11cac2b6652",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.MuiInputBase-root > #GuardID",
+      "targets": [
+        ["css=.MuiInputBase-root > #GuardID", "css:finder"],
+        ["xpath=//div[@id='GuardID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0678c903-d928-4b88-bb72-e7716ae47241",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0da9c230-12bc-4bd6-a2b0-48652c188b86",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "61577014-9fe4-4597-9f49-88c9554a6dea",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'นายมะม่วง หวาน')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5a1c816d-4259-4d32-87e4-563e96b79635",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=CompanyID",
+      "targets": [
+        ["id=CompanyID", "id"],
+        ["css=#CompanyID", "css:finder"],
+        ["xpath=//div[@id='CompanyID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[4]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b7f9d21c-94fc-4f30-a02d-3dd8fe9d0a12",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "188f02d4-3db7-4c9b-93af-43c37553adfd",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de6d4db2-d58e-44b5-ad75-46ed2afe03c7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(1)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div[3]/ul/li", "xpath:idRelative"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f6621ad-aeae-4c73-adf4-8bdd7ced5c3c",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6d2c345b-43cb-45b7-8e00-62a3fe186bea",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dabc9719-c18f-4258-ac65-7dd87bc2a279",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b0c6b9ab-deb3-44f6-8623-3efec79f5050",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e6c2d524-5bb1-451a-98b3-f7cfb4ea617d",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "caa0e187-bb1e-49df-89a4-cdc9a48594ec",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ กรุณากรอกหมายเหตุ"
+    }]
+  }, {
+    "id": "27a4aa79-99be-4d44-93ce-16cce3c80b13",
+    "name": "4.Date past",
+    "commands": [{
+      "id": "30a5bdb1-7058-49e2-84e4-e572bdf1c39e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/building/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "754bcff2-dc29-4301-8c87-7c74f0cbd7d5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x824",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8edbd473-09ea-4ea0-8bfe-576ebcaae097",
+      "comment": "",
+      "command": "click",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9158681c-397f-4fe5-8135-b01256a94cbc",
+      "comment": "",
+      "command": "type",
+      "target": "id=Detail",
+      "targets": [
+        ["id=Detail", "id"],
+        ["name=Detail", "name"],
+        ["css=#Detail", "css:finder"],
+        ["xpath=//input[@id='Detail']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "ตึกC"
+    }, {
+      "id": "f91c735c-f4a7-488c-a4f2-a053f6cf5260",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "css=.MuiInputBase-root > #GuardID",
+      "targets": [
+        ["css=.MuiInputBase-root > #GuardID", "css:finder"],
+        ["xpath=//div[@id='GuardID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "13f08255-40fe-480b-aec2-4075910321a3",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "29069604-ff36-4f1e-ab76-d5bae6ef35de",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de4da65f-e6a8-45c1-88ca-8734a6b921ec",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-GuardID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'นายมะม่วง หวาน')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "513c2662-1d75-449a-89de-fd6ca3735c60",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=CompanyID",
+      "targets": [
+        ["id=CompanyID", "id"],
+        ["css=#CompanyID", "css:finder"],
+        ["xpath=//div[@id='CompanyID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[4]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4f1d2dc-9cb3-4a94-89ce-fd601aa1dfa7",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d71b543-19b5-47d4-88f3-b23fbfc3e548",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "85cc1d8c-65ca-4767-8022-39c791b5a26d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(1)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(1)", "css:finder"],
+        ["xpath=//div[@id='menu-CompanyID']/div[3]/ul/li", "xpath:idRelative"],
+        ["xpath=//li", "xpath:position"],
+        ["xpath=//li[contains(.,'บริษัท ซินเท็ค คอนสตรัคชั่น จำกัด(มหาชน)')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a0256039-3cbd-470d-8da4-b0d1b9f4f303",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4107ea15-47b0-4f23-b3bf-f67d0aef66ae",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[5]/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "AAA"
+    }, {
+      "id": "07084658-92fc-4055-ba1e-1f26ccd712a1",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e70fdc00-6011-48bd-9ebe-583207bfedc6",
+      "comment": "",
+      "command": "click",
+      "target": "id=:r9:",
+      "targets": [
+        ["id=:r9:", "id"],
+        ["css=#\\3Ar9\\3A", "css:finder"],
+        ["xpath=//input[@id=':r9:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[6]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "04facf95-eb5d-47db-8158-4bdef131c107",
+      "comment": "",
+      "command": "type",
+      "target": "id=:r9:",
+      "targets": [
+        ["id=:r9:", "id"],
+        ["css=#\\3Ar9\\3A", "css:finder"],
+        ["xpath=//input[@id=':r9:']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[6]/div/div/input", "xpath:idRelative"],
+        ["xpath=//div[6]/div/div/input", "xpath:position"]
+      ],
+      "value": "02/11/2021 08:51 pm"
+    }, {
+      "id": "d3f6b557-097a-40de-abda-1309ac36a7b9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[5]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0fe80418-391f-4fd5-9f8f-6785325b2445",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButtonBase-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiButtonBase-root:nth-child(2)", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "48e37c02-c594-4bc7-996a-f328161ae75f",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ เวลาที่อนุมัติไม่ถูกต้อง"
+    }]
+  }],
+  "suites": [{
+    "id": "a6b14f4c-5129-43e9-a3d6-9bccbefa0cbd",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["dd0151b2-797c-4204-b2c4-e79196f9a268"]
+  }],
+  "urls": ["http://localhost:3000/building/create"],
+  "plugins": []
+}

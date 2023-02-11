@@ -17,7 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import {ListGenders, ListRoles, ListEducationLevels, UpdateUser} from "../services/HttpClientService";
+import {ListGenders, ListRoles, ListEducationLevels, UpdateUser, GetUser} from "../services/HttpClientService";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -93,38 +93,53 @@ function UserUpdate() {
       else{ console.log("Load EducationLevel InComplete!!!!");}
     };
 
+    const getUser = async () => {
+      const uid = localStorage.getItem("userID")
+      let res = await GetUser(uid);
+      if (res.status) {
+        setUser(res.data);
+        console.log("Load User Complete");
+        console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      }
+      else{
+        console.log("Load User InComplete!!!!");
+      }
+    };
+
     React.useEffect(() => {
       listGenders();
       listEducationLevels();
+      getUser();
     }, []);
 
     
     async function  submit() {
-        let data = {
-            FirstName: user.FirstName,
-            LastName: user.LastName,
-            Email: user.Email,
-            Phonenumber: user.PhoneNumber,
-            IdentificationNumber: user.IdentificationNumber,
-            StudentID: user.StudentID,
-            Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
-            Password: user.Password,
-            BirthDay: date,
-            
-            EducationLevelID: convertType(user.EducationLevelID),
-            RoleID: 1,
-            GenderID: convertType(user.GenderID),
-        };
-        // console.log(data)
-        // let res = await UpdateUser(data);
-        // if (res.status) {
-        //   setErrorMessage("แก้ไขข้อมูลสำเร็จ");
-        //   setSuccess(true);
-        // } 
-        // else {
-        //   setErrorMessage(res.data);
-        //   setError(true);
-        // }
+      let data = {
+        FirstName: user.FirstName,
+        LastName: user.LastName,
+        Email: user.Email,
+        Phonenumber: user.PhoneNumber,
+        IdentificationNumber: user.IdentificationNumber,
+        StudentID: user.StudentID,
+        Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
+        Password: user.Password,
+        BirthDay: date,
+        
+        EducationLevelID: convertType(user.EducationLevelID),
+        RoleID: 1,
+        GenderID: convertType(user.GenderID),
+    };
+    console.log(data)
+      let res = await UpdateUser(data);
+      console.log(res)
+      if (res.status) {
+          setSuccess(true);
+          setErrorMessage("แก้ไขข้อมูลส่วนตัวสำเร็จ");
+      } else {
+          setError(true);
+          setErrorMessage(res.data);
+          
+      }
     }
 
 
@@ -194,7 +209,7 @@ function UserUpdate() {
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>อีเมลล์</p>
+             <p>อีเมล</p>
              <TextField
                id="Email"
                variant="outlined"
