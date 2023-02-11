@@ -995,7 +995,7 @@ async function ListFood_and_Drinks() {
   return res;
 }
 
-async function UpdateFood_and_Drink(data: ApprovesInterface) {
+async function UpdateFood_and_Drink(data: Food_and_DrinksInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -1004,6 +1004,7 @@ async function UpdateFood_and_Drink(data: ApprovesInterface) {
     },
     body: JSON.stringify(data),
   };
+  
 
   let res = await fetch(`${apiUrl}/food_and_drink`, requestOptions)
     .then((response) => response.json())
@@ -1267,7 +1268,7 @@ async function GetUserRole() {
   return res;
 }
 
-async function UpdateUser(data: ApprovesInterface) {
+async function UpdateUser(data: UsersInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {

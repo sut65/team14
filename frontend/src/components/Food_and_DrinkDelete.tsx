@@ -56,8 +56,8 @@ function Food_and_DrinkDelete() {
     const onChangeFood_and_Drink = async(event: SelectChangeEvent) => {
       const id = event.target.value;
       let res = await GetFood_and_Drinks(id);
-      if (res.status) { setFood_and_Drink(res.data); console.log("Load Foodtype Complete");}
-      else{ console.log("Load Foodtype InComplete!!!!");}
+      if (res.status) { setFood_and_Drink(res.data); console.log("Load Food_and_Drink Complete");}
+      else{ console.log("Load Food_and_Drink InComplete!!!!");}
     };
 
     const handleInputChange = (
@@ -119,7 +119,7 @@ function Food_and_DrinkDelete() {
       console.log(res)
       if (res.status) {
           setSuccess(true);
-          setErrorMessage("");
+          setErrorMessage("ลบรายการอาหารและเครื่องดื่มสำเร็จ");
       } else {
           setError(true);
           setErrorMessage(res.data);
@@ -142,7 +142,8 @@ return (
           </Box>
         </Box>
         <Divider />
-        <Grid item xs={6}>
+        <Grid container spacing={3} sx={{ padding: 2 }}>
+        <Grid item xs={8}>
           <FormControl fullWidth variant="outlined">   
             <p>รายการอาหาร</p>
             <Select required defaultValue={"0"} onChange={onChangeFood_and_Drink} inputProps={{ name: "Food_and_DrinkID", }}>
@@ -152,7 +153,6 @@ return (
             </Select>
           </FormControl>
           </Grid>
-        <Grid container spacing={3} sx={{ padding: 2 }}>
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
