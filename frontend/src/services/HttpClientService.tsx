@@ -19,11 +19,12 @@ async function Login(data: SigninInterface) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
-
+  console.log(data)
   let res = await fetch(`${apiUrl}/login`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
+        console.log(res.data)
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userID", res.data.id);
         return res.data;
@@ -990,12 +991,34 @@ async function DeleteFood_and_Drink(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 
   return res;
 }
+
+async function GetFood_and_Drinks(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/food_and_drink/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}  
+
 
 async function ListGuards() {
   const requestOptions = {
@@ -1672,7 +1695,7 @@ export{
 
     GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole, UpdateUser, DeleteUser,
 
-    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink,
+    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink, GetFood_and_Drinks,
 
     ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
 

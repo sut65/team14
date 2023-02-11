@@ -73,13 +73,7 @@ function OrderCreate(){
         setValue(event.target.value === '' ? '' : Number(event.target.value));        
       };
     
-      const handleBlur = () => {
-        if (totold < 1) {               
-          setValue(1);
-        } else if (totold > 100) {
-          setValue(100);
-        }
-      };
+
 
     
  const handleChange_Text = (
@@ -346,12 +340,9 @@ return (
           <Input
             value={totold}
             size= "medium"
-            onChange={handleInputChange}
-            onBlur={handleBlur}
+            onChange={handleInputChange}           
             inputProps={{
-              step: 1,
-              min: 1,
-              max: 100,
+              step: 1,             
               type: 'number',
               
             }}

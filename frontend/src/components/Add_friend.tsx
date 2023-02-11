@@ -30,7 +30,7 @@ function Add_friend() {
             width: 200,
             valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},    
         { 
-          field: "AddfriendTime", headerName: "เวลาที่อนุมัติ", width: 200,
+          field: "AddfriendTime", headerName: "เวลาบันทึก", width: 200,
           valueFormatter: (params) => `${new Date(params.value)}`,
         },
         { field: "Note", headerName: "Note", width: 150 },    

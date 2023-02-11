@@ -16,7 +16,7 @@ import { Food_and_DrinksInterface } from "../models/IFood_and_Drink";
 import { FoodtypesInterface } from "../models/IFood_and_Drink";
 import { ShopsInterface } from "../models/IFood_and_Drink";
 import { UsersInterface } from "../models/IUser";
-import { CreateFood_and_Drink, GetUser } from "../services/HttpClientService";
+import { CreateFood_and_Drink, GetUser, DeleteFood_and_Drink, ListFood_and_Drinks, GetFood_and_Drinks } from "../services/HttpClientService";
 import {ListFoodtypes, ListShops, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
 
@@ -26,6 +26,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 
 function Food_and_DrinkDelete() {
     const [food_and_drink, setFood_and_Drink] = React.useState<Partial<Food_and_DrinksInterface>>({});
+    const [food_and_drinks, setFood_and_Drinks] = React.useState<Food_and_DrinksInterface[]>([]);
     const [foodtypes, setFoodtypes] = React.useState<FoodtypesInterface[]>([]);
     const [shops, setShops] = React.useState<ShopsInterface[]>([]);
     const [user, setUser] = React.useState<UsersInterface>({});
@@ -50,6 +51,13 @@ function Food_and_DrinkDelete() {
         ...food_and_drink,
         [name]: value,
       });
+    };
+
+    const onChangeFood_and_Drink = async(event: SelectChangeEvent) => {
+      const id = event.target.value;
+      let res = await GetFood_and_Drinks(id);
+      if (res.status) { setFood_and_Drink(res.data); console.log("Load Foodtype Complete");}
+      else{ console.log("Load Foodtype InComplete!!!!");}
     };
 
     const handleInputChange = (
@@ -79,6 +87,12 @@ function Food_and_DrinkDelete() {
       if (res) { setShops(res); console.log("Load Shop Complete");}
       else{ console.log("Load Shop InComplete!!!!");}
     };
+
+    const listFood_and_Drinks = async () => {
+      let res = await ListFood_and_Drinks();
+      if (res) { setFood_and_Drinks(res); console.log("Load Food_and_Drink Complete");}
+      else{ console.log("Load Food_and_Drink InComplete!!!!");}
+    };
     
     const getUser = async () => {
       const uid = localStorage.getItem("userID")
@@ -97,30 +111,20 @@ function Food_and_DrinkDelete() {
       listFoodtypes();
       listShops();
       getUser();
+      listFood_and_Drinks();
     }, []);
 
     async function submit() {
-      let data = {
-          Menu: food_and_drink.Menu,
-          Address: food_and_drink.Address,
-          Tel: food_and_drink.Tel,
-
-          FoodtypeID: (food_and_drink.FoodtypeID),
-          ShopID: (food_and_drink.ShopID),  
-          AdminID: (user.ID),
-      };
-      console.log(data);
-      
-      let res = await CreateFood_and_Drink(data);
-      console.log(res);
+      let res = await DeleteFood_and_Drink(food_and_drink.ID);
+      console.log(res)
       if (res.status) {
-        setErrorMessage("บันทึกรายการอาหารและเครื่องดื่มสำเร็จ");
-        setSuccess(true);
+          setSuccess(true);
+          setErrorMessage("");
       } else {
-        setErrorMessage(res.data);
-        setError(true);
+          setError(true);
+          setErrorMessage(res.data);
+          
       }
-
   }
 
 return (
@@ -138,43 +142,39 @@ return (
           </Box>
         </Box>
         <Divider />
+        <Grid item xs={6}>
+          <FormControl fullWidth variant="outlined">   
+            <p>รายการอาหาร</p>
+            <Select required defaultValue={"0"} onChange={onChangeFood_and_Drink} inputProps={{ name: "Food_and_DrinkID", }}>
+              <MenuItem value={"0"}>กรุณาเลือกรายการอาหาร</MenuItem>
+                {food_and_drinks?.map((item: Food_and_DrinksInterface) => 
+                  <MenuItem key={item.ID} value={item.ID} > {item.Menu} </MenuItem>)}
+            </Select>
+          </FormControl>
+          </Grid>
         <Grid container spacing={3} sx={{ padding: 2 }}>
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
-            <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
-              <MenuItem value={"0"}>กรุณาเลือกประเภทอาหาร</MenuItem>
-                {foodtypes?.map((item: FoodtypesInterface) => 
-                  <MenuItem key={item.ID} value={item.ID} > {item.Name} </MenuItem>)}
-            </Select>
+            <TextField  id="Foodtype" disabled variant="outlined" type="string" size="medium" label="ประเภทอาหาร" inputProps={{name: "Foodtype",}} value={food_and_drink.Foodtype?.Name || ""}/>
           </FormControl>
           </Grid>
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
               <p>ร้านค้า</p>
-              <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "ShopID", }}>
-              <MenuItem value={"0"}>กรุณาเลือกร้านค้า</MenuItem>
-                {shops?.map((item: ShopsInterface) => 
-                  <MenuItem key={item.ID} value={item.ID}> {item.Name} </MenuItem>)}
-              </Select>
-          </FormControl>
-          </Grid>
-          <Grid item xs={8} >  
-          <FormControl fullWidth variant="outlined">
-              <p>ชื่ออาหาร</p>
-              <TextField  id="Menu" variant="outlined" type="string" size="medium" label="เมนูอาหาร" inputProps={{name: "Menu",}} value={food_and_drink.Menu || ""} onChange={handleInputChange}/>
+              <TextField  id="Shop" disabled variant="outlined" type="string" size="medium" label="ร้านค้า" inputProps={{name: "Shop",}} value={food_and_drink.Shop?.Name || ""}/>
           </FormControl>
           </Grid>
           <Grid item xs={6} >  
           <FormControl fullWidth variant="outlined">
               <p>เบอร์โทรศัพท์</p>
-              <TextField  id="Tel" variant="outlined" type="string" size="medium" label="เบอร์โทรศัพท์" inputProps={{name: "Tel",}} value={food_and_drink.Tel || ""} onChange={handleInputChange}/>
+              <TextField  id="Tel" disabled variant="outlined" type="string" size="medium" label="เบอร์โทรศัพท์" inputProps={{name: "Tel",}} value={food_and_drink.Tel || ""}/>
           </FormControl>
           </Grid>
           <Grid item xs={6} >  
           <FormControl fullWidth variant="outlined">
               <p>ที่อยู่</p>
-              <TextField  id="Address" variant="outlined" type="string" size="medium" label="ที่อยู่" inputProps={{name: "Address",}} value={food_and_drink.Address || ""} onChange={handleInputChange}/>
+              <TextField  id="Address" disabled variant="outlined" type="string" size="medium" label="ที่อยู่" inputProps={{name: "Address",}} value={food_and_drink.Address || ""}/>
           </FormControl>
           </Grid>
           <Grid item xs={8}>
