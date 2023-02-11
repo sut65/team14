@@ -119,6 +119,7 @@ function UserCreate() {
         let res = await CreateUser(data);
         if (res.status) {
           setErrorMessage("ลงทะเบียนสมาชิกสำเร็จ");
+          console.log(res.data)
           setSuccess(true);
       } else {
           setErrorMessage(res.data);
@@ -211,13 +212,14 @@ function UserCreate() {
              <p>รหัสผ่าน</p>
              <OutlinedInput
               id="Password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? 'text' : 'password'} onChange={handleInputChange}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     edge="end"
+            
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>

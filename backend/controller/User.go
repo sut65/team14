@@ -102,9 +102,9 @@ func ListRoles(c *gin.Context) {
 
 // GET /User/StudentID/:StudentID ---------- add friend ----------------
 func GetUserByStudentID(c *gin.Context) {
-	var user entity.User	
-	studentID := c.Param("studentID")
-	if err := entity.DB().Preload("Role").Preload("Gender").Preload("EducationLevel").Raw("SELECT * FROM users WHERE studentID = ?", studentID).Find(&user).Error; err != nil {
+	var user entity.User
+	studentID := c.Param("StudentID")
+	if err := entity.DB().Preload("Role").Preload("Gender").Preload("EducationLevel").Raw("SELECT * FROM users WHERE student_id = ?", studentID).Find(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

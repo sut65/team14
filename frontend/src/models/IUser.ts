@@ -7,7 +7,7 @@ export interface UsersInterface {
     IdentificationNumber?: string | null;
 	StudentID?: string | null;
     Age?: number | null;
-    Password?: string | null;
+    Password?: string;
     BirthDay?: Date | null;
 
     EducationLevelID?: number;

@@ -319,10 +319,10 @@ return (
         <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={7} >
           <p>รายการอาหาร</p>
-          <FormControl required fullWidth >
+          <FormControl  fullWidth >
             <InputLabel id="Food_and_DrinkID">กรุณารายการอาหาร</InputLabel>
             <Select
-              labelId="Food_and_DrinkID"
+              id = "Food_and_DrinkID"              
               label="กรุณารายการอาหาร *"
               onChange={ (e: SelectChangeEvent) => (setFood_DrinkID(e.target.value)) }
               inputProps={{
@@ -377,7 +377,7 @@ return (
           <Grid item xs={12}>
             <p>เวลาบันทึกรายการ</p>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DateTimePicker
+              <DateTimePicker                
                 label="กรอกเวลาที่อนุมัติ"
                 value={order_food.OrderTime}
                 onChange={(newValue) => {

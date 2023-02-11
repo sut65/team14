@@ -41,7 +41,7 @@ func CreateAdding_Friend(c *gin.Context) {
 
 	//สร้าง Adding Friend
 	bod := entity.Adding_Friend{
-		Note:       add_friend.Note,
+		Note:          add_friend.Note,
 		AddfriendTime: add_friend.AddfriendTime,
 
 		Approve: approve,
@@ -52,6 +52,20 @@ func CreateAdding_Friend(c *gin.Context) {
 	// ขั้นตอนการ validate
 	if _, err := govalidator.ValidateStruct(bod); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	var checkFrind entity.Adding_Friend
+	if err := entity.DB().
+		Raw("select ad.* from adding_friends ad "+
+			"inner join approves a on a.id = ad.approve_id and a.deleted_at is null "+
+			"where ad.user_id = ? and a.id = ?", user.ID, approve.ID).
+		Scan(&checkFrind).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if checkFrind.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ผู้ใช้ถูกเพิ่มเข้าไปแล้ว"})
 		return
 	}
 

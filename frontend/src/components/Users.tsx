@@ -16,6 +16,7 @@ function Users() {
     let res = await ListUsers();
     if (res) {
       setUsers(res);
+      console.log(res)
     }
   };
 

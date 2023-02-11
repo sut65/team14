@@ -157,6 +157,12 @@ func UpdateOrder_food(c *gin.Context) {
 	tmp.Totold = order.Totold
 	tmp.Note = order.Note
 
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(tmp); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := entity.DB().Save(&tmp).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
