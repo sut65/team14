@@ -194,7 +194,7 @@ function UserCreate() {
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>อีเมลล์</p>
+             <p>อีเมล</p>
              <TextField
                id="Email"
                variant="outlined"
@@ -342,32 +342,9 @@ function UserCreate() {
              </LocalizationProvider>
            </FormControl>
          </Grid>
-
-          {/* <Grid item xs={3}>
-            <FormControl fullWidth variant="outlined">
-              <p>สถานะ</p>
-              <Select
-                required
-                defaultValue={"0"}
-                onChange={handleChange}
-                inputProps={{name: "RoleID",}}
-              >
-                <MenuItem value={"0"}>กรุณาเลือกบทบาท</MenuItem>
-                {roles?.map((item: RolesInterface) =>
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Grid> */}
-
          <Grid item xs={12}>
            <Button component={RouterLink} to="/users" variant="contained">
-             Back
+             ยกเลิก
            </Button>
 
            <Button
@@ -376,7 +353,7 @@ function UserCreate() {
              variant="contained"
              color="primary"
            >
-             Submit
+             บันทึก
            </Button>
          </Grid>
          

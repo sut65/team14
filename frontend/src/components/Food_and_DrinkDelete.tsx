@@ -24,7 +24,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
 
-function Food_and_DrinkCreate() {
+function Food_and_DrinkDelete() {
     const [food_and_drink, setFood_and_Drink] = React.useState<Partial<Food_and_DrinksInterface>>({});
     const [foodtypes, setFoodtypes] = React.useState<FoodtypesInterface[]>([]);
     const [shops, setShops] = React.useState<ShopsInterface[]>([]);
@@ -190,5 +190,5 @@ return (
     </Container>
 );
 }
-export default Food_and_DrinkCreate;
+export default Food_and_DrinkDelete;
 

@@ -33,6 +33,8 @@ import SignIn from "./components/SignIn";
 import Home from "./components/Home";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import UserCreate from "./components/UserCreate";
+import UserUpdate from "./components/UserUpdate";
+import UserDelete from "./components/UserDelete";
 import User from "./components/Users";
 import BookingCreate from "./components/BookingCreate";
 import Approve from "./components/Approve";
@@ -64,6 +66,8 @@ import Admin from "./components/Admin";
 import AdminCreate from "./components/AdminCreate";
 import OrderUpdate from "./components/OrderUpdate";
 import BorrowDelete from "./components/BorrowDelete";
+import Food_and_DrinkUpdate from "./components/Food_and_DrinkUpdate";
+import Food_and_DrinkDelete from "./components/Food_and_DrinkDelete";
 
 const drawerWidth = 260;
 
@@ -255,6 +259,8 @@ return (
 
                 <Route path="/users" element={<User />} />
                 <Route path="/user/create" element={<UserCreate />} />
+                <Route path="/user/update" element={<UserUpdate />} />
+                <Route path="/user/delete" element={<UserDelete />} />
 
                 <Route path="/add_friends" element={<Add_friend />} />
                 <Route path="/add_friend/create" element={<Add_friendCreate />} />
@@ -271,6 +277,8 @@ return (
 
                 <Route path="/food_and_drinks" element={<Food_and_Drink />} />
                 <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />
+                <Route path="/food_and_drink/update" element={<Food_and_DrinkUpdate />} />
+                <Route path="/food_and_drink/delete" element={<Food_and_DrinkDelete />} />
 
                 <Route path="/order_foods" element={< Order_food />} />
                 <Route path="/order_food/create" element={< OrderCreate />} />
