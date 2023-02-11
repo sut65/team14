@@ -248,9 +248,9 @@ async function UpdateBooking(data: BookingsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -269,10 +269,10 @@ async function DeleteBooking(id: any) {
   let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -380,11 +380,9 @@ async function UpdateApprove(data: ApprovesInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
-        
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -403,10 +401,10 @@ async function DeleteApprove(id: any) {
   let res = await fetch(`${apiUrl}/approve/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -607,6 +605,52 @@ async function DeleteBorrow(id: any) {
         return {status: true,data: res.data};
       } else {
         return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
+async function GetDevice(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/device/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function UpdateDevice(data:  DevicesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/device`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.error};
       }
     });
 
@@ -951,7 +995,7 @@ async function ListFood_and_Drinks() {
   return res;
 }
 
-async function UpdateFood_and_Drink(data: ApprovesInterface) {
+async function UpdateFood_and_Drink(data: Food_and_DrinksInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -960,6 +1004,7 @@ async function UpdateFood_and_Drink(data: ApprovesInterface) {
     },
     body: JSON.stringify(data),
   };
+  
 
   let res = await fetch(`${apiUrl}/food_and_drink`, requestOptions)
     .then((response) => response.json())
@@ -1121,10 +1166,10 @@ async function CreateRoom(data: RoomsInterface) {
   let res = await fetch(`${apiUrl}/room`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 
@@ -1167,9 +1212,9 @@ async function ListRooms() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
+        return {status: true ,data: res.data};
       } else {
-        return false;
+        return {status: false ,data: res.error};
       }
     });
 
@@ -1223,7 +1268,7 @@ async function GetUserRole() {
   return res;
 }
 
-async function UpdateUser(data: ApprovesInterface) {
+async function UpdateUser(data: UsersInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -1649,7 +1694,7 @@ async function UpdateRoom(data: RoomsInterface) {
       if (res.data) {
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 
@@ -1699,7 +1744,7 @@ export{
 
     ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
 
-    ListDevices,ListTypebyDevice,ListDeviceType,
+    GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 
     CreatePayback,ListPaybacks,GetPayback,
     

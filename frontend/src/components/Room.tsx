@@ -35,8 +35,8 @@ function Rooms() {
    
     const listRooms = async () => {
         let res = await ListRooms();
-        if (res) {
-            setRooms(res);
+        if (res.status) {
+            setRooms(res.data);
         }
         console.log(res)
     };

@@ -99,6 +99,17 @@ func ListAdd_friend(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": add_friends})
 }
 
+// GET /add_friends/Booking/:BookingID
+func ListAdd_friendByBookingCode(c *gin.Context) {
+	var add_friends []entity.Adding_Friend
+	code := c.Param("code")
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends",code).Find(&add_friends).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": add_friends})
+}
+
 // function สำหรับลบ เพื่อน ด้วย ID
 // DELETE /add_friends/:id
 func DeleteAdd_friend(c *gin.Context) {

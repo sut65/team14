@@ -34,7 +34,7 @@ func CreateDevice(c *gin.Context) {
 	// }
 
 	bod := entity.Device{
-		Brand:   brand,
+		Brand:      brand,
 		DeviceType: devicetype,
 		//Guard:   guard,
 		Detail: device.Detail,
@@ -128,22 +128,47 @@ func DeleteDevice(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /devices
+// PUT /devices
 func UpdateDevice(c *gin.Context) {
 	var device entity.Device
+	var tmp entity.Device
 	if err := c.ShouldBindJSON(&device); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", device.ID).First(&device); tx.RowsAffected == 0 {
+	if tx := entity.DB().Where("id = ?", device.ID).First(&tmp); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "device not found"})
 		return
 	}
-	if err := entity.DB().Save(&device).Error; err != nil {
+
+	var devicetype entity.DeviceType
+	var brand entity.Brand
+
+	if tx := entity.DB().Where("id = ?", device.BrandID).First(&brand); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", device.DeviceTypeID).First(&devicetype); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบบริษัท]"})
+		return
+	}
+
+	tmp.Brand = brand
+	tmp.DeviceType = devicetype
+
+	tmp.StatusDevice = device.StatusDevice
+
+	// ขั้นตอนการ validate
+	if _, err := govalidator.ValidateStruct(tmp); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": device})
+	// update
+	if err := entity.DB().Save(&tmp).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": tmp})
 }
 
 // GET /Device
@@ -156,3 +181,5 @@ func GetDevice(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": device})
 }
+
+// Update /Devicestats

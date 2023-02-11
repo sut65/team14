@@ -38,7 +38,7 @@ function OrderUpateOrder(){
       OrderTime: new Date(),});     
     const [food_drink, setFood_Drink] = useState<Food_and_DrinksInterface>({});
     const [totold, setValue] = useState<number | string | Array<number | string>>(
-        1,
+        0,
       );
       const [key, setKey] = useState(true);
       const [success, setSuccess] = useState(false);
@@ -50,14 +50,7 @@ function OrderUpateOrder(){
         setValue(event.target.value === '' ? '' : Number(event.target.value));     
                
       };
-    
-      // const handleBlur = () => {
-      //   if (totold < 1) {
-      //     setValue(1);          
-      //   } else if (totold > 100) {
-      //     setValue(100);          
-      //   }
-      // };
+
 
       const handleChange_Text = (
   event: React.ChangeEvent<{ id?: string; value: any }>
