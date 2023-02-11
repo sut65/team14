@@ -15,7 +15,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import {  
   
-  GetUser,
+  GetUser,GetUserByStudentID,ListUsers
  
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers";
@@ -28,7 +28,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 
 function Add_friendCreate(){
     const [user, setUser] = useState<UsersInterface>({
-      ID:"User ID",FirstName: "User name",LastName:  "",
+      StudentID:"Student ID",FirstName: "User name",LastName:  "",
     });
     const [admin, setAdmin] = useState<UsersInterface>({}); 
     const [approve, setApprove] = useState<ApprovesInterface>({});   
@@ -45,7 +45,7 @@ function Add_friendCreate(){
     
     
     const [code, setCode] = useState("");
-    const [userID, setUserID] = useState("");
+    const [studentID, setstudentID] = useState("");
 
     const [key, setKey] = useState(true);
     const [success, setSuccess] = useState(false);
@@ -102,7 +102,7 @@ function Add_friendCreate(){
     }
   };   
   const getUser = async () => {    
-    let res = await GetUser(userID);
+    let res = await GetUserByStudentID(studentID);
     if (res.status) {
       setUser(res.data);
       console.log("Load User Complete");  
@@ -139,12 +139,12 @@ function Add_friendCreate(){
     
 
   async function search_u(){
-    if (userID === ""){
+    if (studentID === ""){
       setErrorSearch_u(true);
       setErrorMessage_u("กรุณากรอกรหัสผู้ใช้เพื่อค้นหา");
       return
     }
-    let res = await GetUser(userID);
+    let res = await GetUserByStudentID(studentID);
     if (res.status){
       setUser(res.data);      
       handleClose()
@@ -169,12 +169,14 @@ function Add_friendCreate(){
     };
     console.log(data)
     let res = await CreateAdd_friend(data);
-    if (res) {
+    if (res.status) {
       setSuccess(true);
       setErrorMessage("");     
   } else {
       setError(true);
       setErrorMessage(res.data);
+      console.log(res);
+      
   }
   setAdd_friend({
     Note: "",
@@ -345,25 +347,25 @@ return (
            autoComplete="off"
             >
             <TextField id="outlined-basic" 
-            label="User ID" 
+            label="student ID" 
             variant="outlined" 
             type="string" 
             size="medium" 
-            placeholder="User ID"
-            value={userID}
-              onChange={(e) => {setUserID(e.target.value)              
-                console.log(userID)
+            placeholder="studentID"
+            value={studentID}
+              onChange={(e) => {setstudentID(e.target.value)              
+                console.log(studentID)
                 }
               }
             /> 
             <TextField id="outlined-basic" 
-            label="UserID " 
+            label="student ID" 
             variant="outlined"
             disabled  
             type="string" 
             size="medium" 
-            placeholder="UserID"
-            value={user.ID +""}
+            placeholder="studentID"
+            value={user.StudentID +""}
                       
             />   
              <TextField id="outlined-basic" 

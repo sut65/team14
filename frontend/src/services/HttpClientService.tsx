@@ -511,7 +511,7 @@ async function GetUserByStudentID(StudentID: any) {
       "Content-Type": "application/json",
     },
   };
-  let res = await fetch(`${apiUrl}/User/StudentID//${StudentID}`, requestOptions)
+  let res = await fetch(`${apiUrl}/User/StudentID/${StudentID}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1352,10 +1352,10 @@ async function CreateAdd_friend(data: Add_friendInterface) {
   let res = await fetch(`${apiUrl}/add_friend`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -1376,10 +1376,10 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
   let res = await fetch(`${apiUrl}/add_friends/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 }

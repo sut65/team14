@@ -51,13 +51,13 @@ function OrderUpateOrder(){
                
       };
     
-      const handleBlur = () => {
-        if (totold < 1) {
-          setValue(1);          
-        } else if (totold > 100) {
-          setValue(100);          
-        }
-      };
+      // const handleBlur = () => {
+      //   if (totold < 1) {
+      //     setValue(1);          
+      //   } else if (totold > 100) {
+      //     setValue(100);          
+      //   }
+      // };
 
       const handleChange_Text = (
   event: React.ChangeEvent<{ id?: string; value: any }>
@@ -107,7 +107,10 @@ const listFood_and_Drink = async () => {
     if (res.status) {
       setOrder_food(res.data);
       console.log(res.data);
-      console.log("Load order Complete");  
+      console.log("Load order Complete");
+      console.log(order_food)
+      console.log(res.data?.Totold )  
+      setValue(res.data?.Totold || 0)
     }
     else{
       console.log("Load Order InComplete!!!!");
@@ -202,7 +205,7 @@ return (
           <Input 
             id = "tolold"                   
             size= "medium"            
-            onBlur={handleBlur}
+            //onBlur={handleBlur}
             inputProps={{
               step: 1,
               min: 0,
