@@ -31,7 +31,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 });
 
 
-function UserUpdate() {
+function UserDelete() {
     const [date, setDate] = React.useState<Date | null>(null);
     const [user, setUser] = React.useState<Partial<UsersInterface>>({});
     const [genders, setGenders] = React.useState<GendersInterface[]>([]);
@@ -69,7 +69,7 @@ function UserUpdate() {
       event: React.ChangeEvent<{ id?: string; value: any }>
 
   ) => {
-      const id = event.target.id as keyof typeof UserUpdate;
+      const id = event.target.id as keyof typeof UserDelete;
       const { value } = event.target;
       setUser({ ...user, [id]: value });
   };
@@ -389,4 +389,4 @@ function UserUpdate() {
 }
 
 
-export default UserUpdate;
+export default UserDelete;
