@@ -23,6 +23,7 @@ function Devices() {
         let res = await ListDevices();
         if (res) {
             setDevices(res);
+            console.log(res)
         }
     };
     // const listdevicetypes = async () => {

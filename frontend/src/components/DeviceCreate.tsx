@@ -72,6 +72,7 @@ function DeviceCreate(){
         if (res) {
             setBrands(res);
             console.log("Load Brands Complete");
+            console.log(res.data);
         }
         else{
           console.log("Load Brands InComplete!!!!");
