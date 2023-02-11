@@ -21,11 +21,10 @@ function Add_friend() {
         }
     };  
     const columns: GridColDef[] = [
-        //{ field: "ApproveID", headerName: "Approve ID", width: 150  },
+        
         { field: "Approve", 
         headerName: "รหัสการอนุมัติ", width: 140,
-        valueFormatter: (params) => `${(params.value.Code)}`,  },
-        { field: "UserID", headerName: "User ID", width: 100 },
+        valueFormatter: (params) => `${(params.value.Code)}`,  },        
         {field: "User",
             headerName: "เพื่อนที่เพิ่มเข้า",
             width: 200,
@@ -35,7 +34,6 @@ function Add_friend() {
           valueFormatter: (params) => `${new Date(params.value)}`,
         },
         { field: "Note", headerName: "Note", width: 150 },    
-        { field: "AdminID", headerName: "Admin ID", width: 150 },
         { field: "Admin", headerName: "ผู้ที่เพิ่มเข้า",
             width: 200,
         valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
