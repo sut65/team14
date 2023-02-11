@@ -19,11 +19,12 @@ async function Login(data: SigninInterface) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   };
-
+  console.log(data)
   let res = await fetch(`${apiUrl}/login`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
+        console.log(res.data)
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("userID", res.data.id);
         return res.data;
@@ -247,9 +248,9 @@ async function UpdateBooking(data: BookingsInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -268,10 +269,10 @@ async function DeleteBooking(id: any) {
   let res = await fetch(`${apiUrl}/booking/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -379,11 +380,9 @@ async function UpdateApprove(data: ApprovesInterface) {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        console.log(res.data);
-        
-        return {status:true, data:res.data};
-      } else {
-        return {status:false, data:res.data};
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -402,10 +401,10 @@ async function DeleteApprove(id: any) {
   let res = await fetch(`${apiUrl}/approve/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {       
-        return {status: true,data: res.data};
-      } else {
-        return {status: false,data: res.data};
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -511,7 +510,7 @@ async function GetUserByStudentID(StudentID: any) {
       "Content-Type": "application/json",
     },
   };
-  let res = await fetch(`${apiUrl}/User/StudentID//${StudentID}`, requestOptions)
+  let res = await fetch(`${apiUrl}/User/StudentID/${StudentID}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -606,6 +605,52 @@ async function DeleteBorrow(id: any) {
         return {status: true,data: res.data};
       } else {
         return {status: false,data: res.data};
+      }
+    });
+
+  return res;
+}
+
+async function GetDevice(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/device/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function UpdateDevice(data:  DevicesInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/device`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        console.log(res.data);
+        
+        return {status:true, data:res.data};
+      } else {
+        return {status:false, data:res.error};
       }
     });
 
@@ -990,12 +1035,34 @@ async function DeleteFood_and_Drink(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 
   return res;
 }
+
+async function GetFood_and_Drinks(id: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/food_and_drink/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}  
+
 
 async function ListGuards() {
   const requestOptions = {
@@ -1098,10 +1165,10 @@ async function CreateRoom(data: RoomsInterface) {
   let res = await fetch(`${apiUrl}/room`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 
@@ -1144,9 +1211,9 @@ async function ListRooms() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
-        return res.data;
+        return {status: true ,data: res.data};
       } else {
-        return false;
+        return {status: false ,data: res.error};
       }
     });
 
@@ -1352,10 +1419,10 @@ async function CreateAdd_friend(data: Add_friendInterface) {
   let res = await fetch(`${apiUrl}/add_friend`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -1376,10 +1443,10 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
   let res = await fetch(`${apiUrl}/add_friends/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 }
@@ -1626,7 +1693,7 @@ async function UpdateRoom(data: RoomsInterface) {
       if (res.data) {
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 
@@ -1672,11 +1739,11 @@ export{
 
     GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole, UpdateUser, DeleteUser,
 
-    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink,
+    ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink, GetFood_and_Drinks,
 
     ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
 
-    ListDevices,ListTypebyDevice,ListDeviceType,
+    GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 
     CreatePayback,ListPaybacks,GetPayback,
     

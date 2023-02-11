@@ -119,6 +119,7 @@ function UserCreate() {
         let res = await CreateUser(data);
         if (res.status) {
           setErrorMessage("ลงทะเบียนสมาชิกสำเร็จ");
+          console.log(res.data)
           setSuccess(true);
       } else {
           setErrorMessage(res.data);
@@ -194,7 +195,7 @@ function UserCreate() {
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>อีเมลล์</p>
+             <p>อีเมล</p>
              <TextField
                id="Email"
                variant="outlined"
@@ -211,13 +212,14 @@ function UserCreate() {
              <p>รหัสผ่าน</p>
              <OutlinedInput
               id="Password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? 'text' : 'password'} onChange={handleInputChange}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     edge="end"
+            
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -342,32 +344,9 @@ function UserCreate() {
              </LocalizationProvider>
            </FormControl>
          </Grid>
-
-          {/* <Grid item xs={3}>
-            <FormControl fullWidth variant="outlined">
-              <p>สถานะ</p>
-              <Select
-                required
-                defaultValue={"0"}
-                onChange={handleChange}
-                inputProps={{name: "RoleID",}}
-              >
-                <MenuItem value={"0"}>กรุณาเลือกบทบาท</MenuItem>
-                {roles?.map((item: RolesInterface) =>
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Grid> */}
-
          <Grid item xs={12}>
            <Button component={RouterLink} to="/users" variant="contained">
-             Back
+             ยกเลิก
            </Button>
 
            <Button
@@ -376,7 +355,7 @@ function UserCreate() {
              variant="contained"
              color="primary"
            >
-             Submit
+             บันทึก
            </Button>
          </Grid>
          

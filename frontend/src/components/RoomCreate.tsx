@@ -133,18 +133,19 @@ function RoomCreate(){
             Time: room.Time,
         };
         let res = await CreateRoom(data);
-      console.log(res);
-      if (res) {
+      console.log(data);
+      if (res.status) {
           setSuccess(true);
           setErrorMessage("");
 
           setRoom({
+            Detail:"",
             Note: "",
             Time: new Date(),
           })
       } else {
           setError(true);
-          setErrorMessage(res);
+          setErrorMessage(res.data);
       }
 
     }
@@ -158,6 +159,7 @@ function RoomCreate(){
       return (
         <Container maxWidth="md">
           <Snackbar
+            id="success" 
             open={success}
             autoHideDuration={6000}
             onClose={handleClose}
@@ -168,9 +170,9 @@ function RoomCreate(){
             </Alert>
           </Snackbar>
      
-          <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ
+              บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
             </Alert>
           </Snackbar>
      
@@ -198,7 +200,7 @@ function RoomCreate(){
           <FormControl required fullWidth >
             <InputLabel id="BuildingID">กรุณาเลือกตึก</InputLabel>
             <Select
-              labelId="BuildingID"
+              id="BuildingID"
               label="กรุณาเลือกตึก *"
               value={room?.BuildingID || ""}
               onChange={ (handleChange) }
@@ -244,7 +246,7 @@ function RoomCreate(){
           <FormControl required fullWidth >
             <InputLabel id="TyperoomID">กรุณาเลือกประเภทห้อง</InputLabel>
             <Select
-              labelId="TyperoomID"
+              id="TyperoomID"
               label="กรุณาเลือกประเภทห้อง *"
               onChange={ (handleChange) }
               inputProps={{

@@ -16,6 +16,7 @@ function Users() {
     let res = await ListUsers();
     if (res) {
       setUsers(res);
+      console.log(res)
     }
   };
 
@@ -23,7 +24,7 @@ function Users() {
       { field: "ID", headerName: "ID", width: 50 },
       { field: "FirstName", headerName: "ชื่อ", width: 150 },
       { field: "LastName", headerName: "นามสกุล", width: 150 },
-      { field: "Email", headerName: "อีเมลล์", width: 150 },
+      { field: "Email", headerName: "อีเมล", width: 150 },
       { field: "PhoneNumber", headerName: "เบอร์โทรศัพท์", width: 120 },
       { field: "IdentificationNumber", headerName: "เลขบัตรประชาชน", width: 150 },
       { field: "StudentID", headerName: "รหัสนักศึกษา", width: 100 },

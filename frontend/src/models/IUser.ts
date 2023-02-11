@@ -1,12 +1,12 @@
 export interface UsersInterface {
-    ID?: string,
-    FirstName?: string;
-    LastName?: string;
-    Email?: string;
-    PhoneNumber?: string;
-    IdentificationNumber?: string;
-	StudentID?: string;
-    Age?: number;
+    ID?: string ,
+    FirstName?: string | null;
+    LastName?: string | null;
+    Email?: string | null;
+    PhoneNumber?: string | null;
+    IdentificationNumber?: string | null;
+	StudentID?: string | null;
+    Age?: number | null;
     Password?: string;
     BirthDay?: Date | null;
 

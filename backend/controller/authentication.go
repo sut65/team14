@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -19,14 +20,14 @@ type LoginPayload struct {
 
 // SignUpPayload signup body
 type SignUpPayload struct {
-	FirstName            string `json:"firstName"`
-	LastName             string `json:"lastName"`
-	Email                string `json:"email"`
-	Password             string `json:"password"`
-	PhoneNumber          string `json:"PhoneNumber"`
-	IdentificationNumber string `json:"IdentificationNumber"`
-	StudentID            string `json:"StudentID"`
-	Age                  uint8  `json:"Age"`
+	FirstName            string    `json:"firstName"`
+	LastName             string    `json:"lastName"`
+	Email                string    `json:"email"`
+	Password             string    `json:"password"`
+	PhoneNumber          string    `json:"PhoneNumber"`
+	IdentificationNumber string    `json:"IdentificationNumber"`
+	StudentID            string    `json:"StudentID"`
+	Age                  uint8     `json:"Age"`
 	BirthDay             time.Time `json:"BirthDay"`
 
 	RoleID           uint `json:"RoleID"`
@@ -117,8 +118,9 @@ func CreateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "educationLevel not found"})
 		return
 	}
+	fmt.Println(payload.Password)
 	// เข้ารหัสลับรหัสผ่านที่ผู้ใช้กรอกก่อนบันทึกลงฐานข้อมูล
-	hashPassword, err := bcrypt.GenerateFromPassword([]byte(payload.Password), 14)
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(string(payload.Password)), 14)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
 		return
@@ -139,6 +141,8 @@ func CreateUser(c *gin.Context) {
 		Password:             string(hashPassword),
 		BirthDay:             payload.BirthDay,
 	}
+
+	fmt.Println(us.Password)
 
 	// ขั้นตอนการ validate
 	if _, err := govalidator.ValidateStruct(us); err != nil {

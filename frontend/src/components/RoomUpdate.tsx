@@ -150,17 +150,12 @@ function RoomUpdate(){
         };
         let res = await UpdateRoom(data);
       console.log(res);
-      if (res) {
+      if (res.status) {
           setSuccess(true);
           setErrorMessage("");
-
-          setRoom({
-            Note: "",
-            Time: new Date(),
-          })
       } else {
           setError(true);
-          setErrorMessage(res);
+          setErrorMessage(res.data);
       }
 
     }
@@ -253,7 +248,7 @@ function RoomUpdate(){
           <FormControl required fullWidth >
             <InputLabel id="TyperoomID">กรุณาเลือกประเภทห้อง</InputLabel>
             <Select
-              labelId="TyperoomID"
+              id="TyperoomID"
               label="กรุณาเลือกประเภทห้อง *"
               value={room.TyperoomID+""}
               onChange={ (handleChange) }
