@@ -114,7 +114,8 @@ func main() {
 			r.GET("/devices", controller.ListDevices)
 			r.DELETE("/device/:id", controller.DeleteDevice)
 			r.PUT("/device", controller.UpdateDevice)
-			
+
+			r.GET("/brands", controller.ListBrands)
 
 			//DeviceType use by borrow
 			r.GET("/device_types", controller.ListDeviceType)
