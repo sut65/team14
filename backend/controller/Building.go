@@ -126,6 +126,10 @@ func UpdateBuilding(c *gin.Context) {
 	tmp.Detail = building.Detail
 	tmp.Note = building.Note
 
+	if _, err := govalidator.ValidateStruct(tmp); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 
 	if err := entity.DB().Save(&building).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

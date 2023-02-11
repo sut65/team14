@@ -1122,10 +1122,10 @@ async function CreateBuilding(data: BuildingsInterface) {
   let res = await fetch(`${apiUrl}/building`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 
@@ -1143,10 +1143,10 @@ async function GetBuilding(id: any) {
   let res = await fetch(`${apiUrl}/building/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 

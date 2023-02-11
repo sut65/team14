@@ -80,7 +80,7 @@ function BuildingUpdate(){
       const getBuilding = async (id : any) => {
         let res = await GetBuilding(id);
         if (res) {
-          setBuilding(res);
+          setBuilding(res.data);
           console.log("Load Building Complete"); 
           console.log (res);
         }
@@ -141,18 +141,13 @@ function BuildingUpdate(){
         
         let res = await UpdateBuilding(data);
         console.log(res);
-        if (res) {
+        if (res.status) {
             setSuccess(true);
             setErrorMessage("");
 
-            setBuilding({
-              Detail:"",
-              Note: "",
-              Time: new Date(),
-            })
         } else {
             setError(true);
-            setErrorMessage(res);
+            setErrorMessage(res.data);
         }
 
     }
@@ -230,7 +225,7 @@ function BuildingUpdate(){
           <FormControl required fullWidth >
             <InputLabel id="GuardID">กรุณาเลือกผู้รักษาความปลอดภัย</InputLabel>
             <Select
-              labelId="GuardID"
+              id="GuardID"
               label="กรุณาเลือกผู้รักษาความปลอดภัย *"
               value={building.GuardID+""}
               onChange={ (handleChange) }
@@ -255,7 +250,7 @@ function BuildingUpdate(){
           <FormControl required fullWidth >
             <InputLabel id="GuardID">กรุณาเลือกบริษัท</InputLabel>
             <Select
-              labelId="CompanyID"
+              id="CompanyID"
               label="กรุณาเลือกบริษัท *"
               value={building.CompanyID+""}
               onChange={ (handleChange) }
