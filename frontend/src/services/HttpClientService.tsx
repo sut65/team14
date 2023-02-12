@@ -579,10 +579,10 @@ async function GetBorrow(id: any) {
   let res = await fetch(`${apiUrl}/borrow/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -604,7 +604,7 @@ async function DeleteBorrow(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 

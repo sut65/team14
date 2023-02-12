@@ -50,7 +50,7 @@ func CreateBorrow(c *gin.Context) {
 	bod := entity.Borrow{
 		Timeofborrow: borrow.Timeofborrow,
 
-		BorrowNote1: borrow.BorrowNote1,
+		BorrowNote1:  borrow.BorrowNote1,
 		BorrowAPNote: borrow.BorrowAPNote,
 
 		Admin:   admin,
@@ -64,7 +64,7 @@ func CreateBorrow(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	
+
 	// บันทึก
 	if err := entity.DB().Create(&bod).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -77,8 +77,16 @@ func CreateBorrow(c *gin.Context) {
 func GetBorrow(c *gin.Context) {
 	var Borrow entity.Borrow
 	id := c.Param("id")
-	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Approve").Raw("SELECT * FROM borrows WHERE id = ?", id).Find(&Borrow).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Approve").
+		Raw("select * from borrows where "+
+			"id not in ( select borrow_id from paybacks where deleted_at is null and id = ?) "+
+			"and id = ? ", id, id).
+		Find(&Borrow).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if Borrow.ID == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "อุปกรณ์นี้ถูกคืนแล้ว"})
 		return
 	}
 
@@ -88,7 +96,9 @@ func GetBorrow(c *gin.Context) {
 // GET /Borrows
 func ListBorrows(c *gin.Context) {
 	var Borrows []entity.Borrow
-	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Approve").Raw("SELECT * FROM borrows").Find(&Borrows).Error; err != nil {
+	if err := entity.DB().Preload("Admin").Preload("Device").Preload("Approve").
+		Raw("select * from borrows where id not in ( select borrow_id from paybacks where deleted_at is null)").
+		Find(&Borrows).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -99,8 +109,17 @@ func ListBorrows(c *gin.Context) {
 // DELETE /Borrows/:id
 func DeleteBorrow(c *gin.Context) {
 	id := c.Param("id")
+	var Payback entity.Payback
+	if err := entity.DB().Raw("SELECT * FROM paybacks WHERE borrow_id = ? ", id).Find(&Payback).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if Payback.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "อุปกรณ์นี้ถูกคืนแล้ว"})
+		return
+	}
 	if tx := entity.DB().Exec("DELETE FROM borrows WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Borrow not found"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "borrows not found"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": id})
