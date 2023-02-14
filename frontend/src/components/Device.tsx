@@ -88,7 +88,7 @@ function Devices() {
                   variant="contained"
                   color="primary"
                 >
-                  Update Device
+                  Create Device
                 </Button>
               </Box>
             </Box>
