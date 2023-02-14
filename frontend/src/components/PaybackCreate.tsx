@@ -176,20 +176,20 @@ function PaybackCreate() {
       }
 
       let res1 = await GetDevice(data.DeviceID)
-    if(res1){
-      res1.StatusDevice=true
+      if(res1){
+        res1.StatusDevice=true
+      }
+      console.log(res1)
+      let res2 = await UpdateDevice(res1)
+      console.log(res2)
+      if (res2.status) {
+        //setAlertMessage("บันทึกสำเร็จ")
+        setSuccess(true);
+        setErrorMessage("");
+    } else {
+        setError(true);
+        setErrorMessage(res2.data);
     }
-  console.log(res1)
-  let res2 = await UpdateDevice(res1)
-  console.log(res2)
-  if (res2.status) {
-    //setAlertMessage("บันทึกสำเร็จ")
-    setSuccess(true);
-    setErrorMessage("");
- } else {
-    setError(true);
-    setErrorMessage(res2.data);
- }
   }
 
   useEffect(() => {
@@ -254,10 +254,7 @@ return (
                   }
                 }
               />
-          </Box> 
-
-                {/* //////////////////////////// */}
-      
+            </Box> 
             <Button
               style={{ float: "right" }}
                 size="small"
@@ -266,7 +263,7 @@ return (
               color="primary"
           >
               Search BorrowID
-          </Button> 
+            </Button> 
           
             <Grid item xs={12}>
               <FormControl fullWidth variant="outlined">
