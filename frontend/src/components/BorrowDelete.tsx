@@ -14,7 +14,9 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { GetUser,ListBorrows, DeleteBorrow, GetBorrow, GetBooking, GetDevice,} from "../services/HttpClientService";
+import { GetUser,ListBorrows, DeleteBorrow, 
+    GetBorrow, GetBooking, GetDevice,UpdateDevice,
+} from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
@@ -144,6 +146,22 @@ function BorrowDelete() {
         setError(true);
         setErrorMessage(res.data);
     } 
+
+    let res1 = await GetDevice(res.data.DeviceID)
+    if(res1){
+      res1.StatusDevice=true
+    }
+  console.log(res1)
+  let res2 = await UpdateDevice(res1)
+  console.log(res2)
+  if (res2.status) {
+    //setAlertMessage("บันทึกสำเร็จ")
+    setSuccess(true);
+    setErrorMessage("");
+ } else {
+    setError(true);
+    setErrorMessage(res2.data);
+ }
     }
       ///////////////////////////////search/////////////////////////
 useEffect(() => {
@@ -169,11 +187,11 @@ return (
     </Alert>
 </Snackbar>
 
-{/* <Snackbar open={searcherror} autoHideDuration={6000} onClose={handleClose}>
-    <Alert onClose={handleClose} severity="error">
-    ค้นหาไม่สำเร็จ: {errorMessage}
-    </Alert>
-</Snackbar> */}
+<Snackbar open={searcherror} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+        ค้นหาไม่สำเร็จ: {errorMessage}
+        </Alert>
+    </Snackbar>
 
 <Paper>
     <Box
