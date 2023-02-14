@@ -1,7 +1,7 @@
 package entity
 
 import (
-	//"github.com/asaskevich/govalidator"
+	
 	"gorm.io/gorm"
 	"time"
 )
@@ -9,7 +9,7 @@ import (
 type Adding_Friend struct {
 	gorm.Model
 
-	Note        string    `valid:"required~กรุณากรอกหมายเหตุ"`
+	Note        string    `valid:"required~กรุณากรอกหมายเหตุ,stringlength(1|30)~กรุณากรอกตัวอักษรไม่เกิน 30 ตัวอักษร"`
 	AddfriendTime time.Time `valid:"IsnotPast~เวลาไม่ถูกต้อง"`
 
 	// การจองห้อง .

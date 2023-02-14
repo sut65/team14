@@ -21,7 +21,7 @@ func TestAddfreindPass(t *testing.T) {
 
 	// ตรวจสอบด้วย govalidator
 	ok, err := govalidator.ValidateStruct(add_friend)
-
+	
 	// ok ต้องเป็น true แปลว่าไม่มี error
 	g.Expect(ok).To(BeTrue())
 
@@ -50,6 +50,20 @@ func TestAddfriendNote_Null(t *testing.T) {
 
 	// err.Error() ต้องมี message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("กรุณากรอกหมายเหตุ"))
+}
+
+func TestAddfriendNote_stringlength(t *testing.T){
+	g := NewGomegaWithT(t)
+
+	add_friend := Adding_Friend{
+		Note:  "aaaaabbbbbccccccddddddqqqqqqqwe",
+		AddfriendTime: time.Now().Add(22 * time.Hour),
+	}
+	ok,err := govalidator.ValidateStruct(add_friend)
+
+	g.Expect(ok).ToNot(BeTrue())
+	g.Expect(err).NotTo(BeNil())
+	g.Expect(err.Error()).To(Equal("กรุณากรอกตัวอักษรไม่เกิน 30 ตัวอักษร"))
 }
 
 
