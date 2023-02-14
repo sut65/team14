@@ -16,7 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
-import { CreateBorrow,
+import { CreateBorrow,GetDevice,UpdateDevice,
   ListDevices,ListBorrows,
   GetUser,ListApproves,GetBorrow,
   GetBooking,CreatePayback,
@@ -40,6 +40,7 @@ function PaybackCreate() {
   Timeofpayback: new Date(),});
   const [user, setUser] = useState<UsersInterface>({});    
   
+  const [device, setDevice] = React.useState<DevicesInterface>({});
   const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
   const [booking, setBooking] = React.useState<BookingsInterface>({});
   const [approves, setApproves] = React.useState<ApprovesInterface>({});
@@ -49,6 +50,7 @@ function PaybackCreate() {
 
   const [success, setSuccess] = React.useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [searcherror, setSearcherror] = React.useState(false);
   const [error, setError] = React.useState(false);
 
 
@@ -63,6 +65,7 @@ function PaybackCreate() {
       }
       setSuccess(false);
       setError(false);
+      setSearcherror(false);
   }; 
 
   const handleChange_Text = (
@@ -132,10 +135,13 @@ function PaybackCreate() {
     async function searchBorrowid() {
       let res = await GetBorrow(borrowid);
       console.log(res);
-      if (res) {
-          setBorrows(res);
-          searchBookingid(res.Approve?.BookingID);
-      } 
+      if (res.status) {
+          setBorrows(res.data);
+          searchBookingid(res.data.Approve?.BookingID);
+      } else{
+        setSearcherror(true);
+        setErrorMessage(res.data);
+    }
     }
 
     async function searchBookingid(id: any) {
@@ -159,6 +165,7 @@ function PaybackCreate() {
       console.log(data)
       let res = await CreatePayback(data);
       console.log(res)
+
         if (res.status) {
           //setAlertMessage("บันทึกสำเร็จ")
           setSuccess(true);
@@ -168,6 +175,21 @@ function PaybackCreate() {
           setErrorMessage(res.data);
       }
 
+      let res1 = await GetDevice(data.DeviceID)
+      if(res1){
+        res1.StatusDevice=true
+      }
+      console.log(res1)
+      let res2 = await UpdateDevice(res1)
+      console.log(res2)
+      if (res2.status) {
+        //setAlertMessage("บันทึกสำเร็จ")
+        setSuccess(true);
+        setErrorMessage("");
+    } else {
+        setError(true);
+        setErrorMessage(res2.data);
+    }
   }
 
   useEffect(() => {
@@ -194,6 +216,12 @@ return (
       <Alert onClose={handleClose} severity="error">
         บันทึกข้อมูลไม่สำเร็จ
       </Alert>
+    </Snackbar>
+
+    <Snackbar open={searcherror} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+        ค้นหาไม่สำเร็จ: {errorMessage}
+        </Alert>
     </Snackbar>
 
     <Paper>
@@ -226,10 +254,7 @@ return (
                   }
                 }
               />
-          </Box> 
-
-                {/* //////////////////////////// */}
-      
+            </Box> 
             <Button
               style={{ float: "right" }}
                 size="small"
@@ -238,7 +263,7 @@ return (
               color="primary"
           >
               Search BorrowID
-          </Button> 
+            </Button> 
           
             <Grid item xs={12}>
               <FormControl fullWidth variant="outlined">

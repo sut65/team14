@@ -215,7 +215,7 @@ return (
        </Alert>
      </Snackbar>
      <Snackbar
-       open={successU}
+       open={successU }
        autoHideDuration={6000}
        onClose={handleClose}
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}

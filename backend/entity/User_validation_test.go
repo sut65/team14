@@ -147,7 +147,7 @@ func TestUserEmailNull(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Email: กรุณากรอกอีเมลล์"))
+	g.Expect(err.Error()).To(Equal("Email: กรุณากรอกอีเมล"))
 }
 
 func TestUserPhonenumber(t *testing.T) {

@@ -14,7 +14,9 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { GetUser,ListBorrows, DeleteBorrow, GetBorrow, GetBooking, GetDevice,} from "../services/HttpClientService";
+import { GetUser,ListBorrows, DeleteBorrow, 
+    GetBorrow, GetBooking, GetDevice,UpdateDevice,
+} from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import { DevicesInterface } from "../models/IDevice";
@@ -45,6 +47,7 @@ function BorrowDelete() {
 
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
+    const [searcherror, setSearcherror] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
     const handleClose = (
@@ -57,22 +60,23 @@ function BorrowDelete() {
       }
       setSuccess(false);
       setError(false);
+      setSearcherror(false);
     };  
             
    const onChangeBorrow = async (e: SelectChangeEvent) =>{
     const borrowid = e.target.value;
     let res = await GetBorrow(borrowid);
-    if (res) {
-        setBorrow(res);
+    if (res.status) {
+        setBorrow(res.data);
         console.log("Load BookingUser Complete");
         console.log(res);
-        searchBorrowid(res.ID);
+        searchBorrowid(res.data.ID);
     }
     else{
         console.log("Load Borrow Incomplete!!!");
     }   
 
-    let res1 = await GetDevice(res.DeviceID);
+    let res1 = await GetDevice(res.data.DeviceID);
     if (res1){
         setDevice(res1);
         console.log(res1);
@@ -82,10 +86,13 @@ function BorrowDelete() {
     async function searchBorrowid(id: any) {
     let res = await GetBorrow(id);
     console.log(res);
-    if (res) {
-        setBorrow(res);
-        searchBookingid(res.Approve?.BookingID);
-    } 
+    if (res.status) {
+        setBorrow(res.data);
+        searchBookingid(res.data.Approve?.BookingID);
+    } else{
+        setSearcherror(true);
+        setErrorMessage(res.data);
+    }
     }
 
     async function searchBookingid(id: any) {
@@ -128,15 +135,36 @@ function BorrowDelete() {
     if (res.status) {
         setSuccess(true);
         setErrorMessage("");
-        ListBorrows();
+        //ListBorrows();
+        setBorrow({
+            BorrowAPNote:"",
+            BorrowNote1: "",
+            Timeofborrow:new Date(),
+        })
+        console.log(res.data)
     } else {
         setError(true);
         setErrorMessage(res.data);
     } 
+
+    let res1 = await GetDevice(res.data.DeviceID)
+    if(res1){
+      res1.StatusDevice=true
+    }
+  console.log(res1)
+  let res2 = await UpdateDevice(res1)
+  console.log(res2)
+  if (res2.status) {
+    //setAlertMessage("บันทึกสำเร็จ")
+    setSuccess(true);
+    setErrorMessage("");
+ } else {
+    setError(true);
+    setErrorMessage(res2.data);
+ }
     }
       ///////////////////////////////search/////////////////////////
 useEffect(() => {
-
     listBorrows();
     getUser();},[]);
 
@@ -158,6 +186,12 @@ return (
     บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
     </Alert>
 </Snackbar>
+
+<Snackbar open={searcherror} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error">
+        ค้นหาไม่สำเร็จ: {errorMessage}
+        </Alert>
+    </Snackbar>
 
 <Paper>
     <Box

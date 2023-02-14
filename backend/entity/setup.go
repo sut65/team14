@@ -153,18 +153,70 @@ func SetupDatabase() {
 	// db.Raw("SELECT * FROM devices WHERE status_device = ?", "true").Scan(&statusdevice2)
 
 
-	db.Model(&Device{}).Create(&Device{Detail: "ปากกา4",StatusDevice: true , Brand: brand1, DeviceType: devicetype1})
-	var device1 Device
-	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา4").Scan(&device1)
-	db.Model(&Device{}).Create(&Device{Detail: "บอล1",StatusDevice: true , Brand: brand2,DeviceType: devicetype2})
-	var device2 Device
-	db.Raw("SELECT * FROM devices WHERE detail = ?", "บอล1").Scan(&device2)
-	db.Model(&Device{}).Create(&Device{Detail: "ตู้เพลง2", StatusDevice: true ,Brand: brand3,DeviceType: devicetype3})
-	var device3 Device
-	db.Raw("SELECT * FROM devices WHERE detail = ?", "ตู้เพลง2").Scan(&device3)
-	db.Model(&Device{}).Create(&Device{Detail: "ปากกา41", StatusDevice: false ,Brand: brand4,DeviceType: devicetype1})
-	var device4 Device
-	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา41").Scan(&device4)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา4",StatusDevice: true ,Number_of_Device: 5, Brand: brand1, DeviceType: devicetype1,
+	Note:"-"})
+	var device14 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา4").Scan(&device14)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา3",StatusDevice: true ,Number_of_Device: 5, Brand: brand1, DeviceType: devicetype1,
+	Note:"-"})
+	var device13 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา3").Scan(&device13)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา2",StatusDevice: true ,Number_of_Device: 5, Brand: brand1, DeviceType: devicetype1,
+	Note:"-"})
+	var device12 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา2").Scan(&device12)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา1",StatusDevice: true ,Number_of_Device: 5, Brand: brand1, DeviceType: devicetype1,
+	Note:"-"})
+	var device11 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา1").Scan(&device11)
+
+
+	db.Model(&Device{}).Create(&Device{Detail: "บอล1",StatusDevice: true ,Number_of_Device: 5, Brand: brand2,DeviceType: devicetype2,
+	Note:"-"})
+	var device21 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "บอล1").Scan(&device21)
+	db.Model(&Device{}).Create(&Device{Detail: "บอล2",StatusDevice: true ,Number_of_Device: 5, Brand: brand2,DeviceType: devicetype2,
+	Note:"-"})
+	var device22 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "บอล2").Scan(&device22)
+	db.Model(&Device{}).Create(&Device{Detail: "บอล3",StatusDevice: true ,Number_of_Device: 5, Brand: brand2,DeviceType: devicetype2,
+	Note:"-"})
+	var device23 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "บอล3").Scan(&device23)
+	db.Model(&Device{}).Create(&Device{Detail: "บอล4",StatusDevice: true ,Number_of_Device: 5, Brand: brand2,DeviceType: devicetype2,
+	Note:"-"})
+	var device24 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "บอล4").Scan(&device24)
+
+	db.Model(&Device{}).Create(&Device{Detail: "ตู้เพลง4", StatusDevice: true ,Number_of_Device: 5,Brand: brand3,DeviceType: devicetype3,
+	Note:"-"})
+	var device34 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ตู้เพลง4").Scan(&device34)
+	db.Model(&Device{}).Create(&Device{Detail: "ตู้เพลง3", StatusDevice: true ,Number_of_Device: 5,Brand: brand3,DeviceType: devicetype3,
+	Note:"-"})
+	var device33 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ตู้เพลง3").Scan(&device33)
+	db.Model(&Device{}).Create(&Device{Detail: "ตู้เพลง2", StatusDevice: true ,Number_of_Device: 5,Brand: brand3,DeviceType: devicetype3,
+	Note:"-"})
+	var device32 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ตู้เพลง2").Scan(&device32)
+	db.Model(&Device{}).Create(&Device{Detail: "ตู้เพลง1", StatusDevice: true ,Number_of_Device: 5,Brand: brand3,DeviceType: devicetype3,
+	Note:"-"})
+	var device31 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ตู้เพลง1").Scan(&device31)
+
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา41", StatusDevice: false ,Number_of_Device: 5,Brand: brand4,DeviceType: devicetype1,
+	Note:"-"})
+	var device41 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา41").Scan(&device41)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา41", StatusDevice: false ,Number_of_Device: 5,Brand: brand4,DeviceType: devicetype2,
+	Note:"-"})
+	var device42 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา41").Scan(&device42)
+	db.Model(&Device{}).Create(&Device{Detail: "ปากกา41", StatusDevice: false ,Number_of_Device: 5,Brand: brand4,DeviceType: devicetype3,
+	Note:"-"})
+	var device43 Device
+	db.Raw("SELECT * FROM devices WHERE detail = ?", "ปากกา41").Scan(&device43)
 
 
 	db.Model(&Typeroom{}).Create(&Typeroom{Detail: "ห้องพัดลม"})

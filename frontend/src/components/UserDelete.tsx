@@ -17,7 +17,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import {ListGenders, ListRoles, ListEducationLevels, UpdateUser} from "../services/HttpClientService";
+import {ListGenders, ListRoles, ListEducationLevels, UpdateUser, GetUser, ListUsers, DeleteUser} from "../services/HttpClientService";
 import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -34,6 +34,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 function UserDelete() {
     const [date, setDate] = React.useState<Date | null>(null);
     const [user, setUser] = React.useState<Partial<UsersInterface>>({});
+    const [users, setUsers] = React.useState<UsersInterface[]>([]);
     const [genders, setGenders] = React.useState<GendersInterface[]>([]);
     const [educationlevels, setEducationLevels] = React.useState<EducationLevelsInterface[]>([]);
     const [success, setSuccess] = React.useState(false);
@@ -62,6 +63,13 @@ function UserDelete() {
         [name]: value,
       });
       console.log(`[${name}]: ${value}`);
+    };
+
+    const onChangeUser = async(event: SelectChangeEvent) => {
+      const id = event.target.value;
+      let res = await GetUser(id);
+      if (res.status) { setUser(res.data); console.log("Load User Complete");}
+      else{ console.log("Load User InComplete!!!!");}
     };
 
     const handleInputChange = (
@@ -93,40 +101,41 @@ function UserDelete() {
       else{ console.log("Load EducationLevel InComplete!!!!");}
     };
 
+    const getUser = async () => {
+      const uid = localStorage.getItem("userID")
+      let res = await GetUser(uid);
+      if (res.status) {
+        setUser(res.data);
+        console.log("Load User Complete");
+        console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      }
+      else{
+        console.log("Load User InComplete!!!!");
+      }
+    };
+
+
     React.useEffect(() => {
       listGenders();
       listEducationLevels();
+      getUser();
     }, []);
 
     
     async function  submit() {
-        let data = {
-            FirstName: user.FirstName,
-            LastName: user.LastName,
-            Email: user.Email,
-            Phonenumber: user.PhoneNumber,
-            IdentificationNumber: user.IdentificationNumber,
-            StudentID: user.StudentID,
-            Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
-            Password: user.Password,
-            BirthDay: date,
-            
-            EducationLevelID: convertType(user.EducationLevelID),
-            RoleID: 1,
-            GenderID: convertType(user.GenderID),
-        };
-        // console.log(data)
-        // let res = await UpdateUser(data);
-        // if (res.status) {
-        //   setErrorMessage("แก้ไขข้อมูลสำเร็จ");
-        //   setSuccess(true);
-        // } 
-        // else {
-        //   setErrorMessage(res.data);
-        //   setError(true);
-        // }
+      let res = await DeleteUser(user.ID);
+      console.log(res)
+      if (res.status) {
+          setSuccess(true);
+          setErrorMessage("ลบบัญชีผู้ใช้สำเร็จ");
+          //localStorage.clear();
+          //window.location.href = "/";
+      } else {
+          setError(true);
+          setErrorMessage(res.data);
+          
+      }
     }
-
 
  return (
    <Container maxWidth="md">
@@ -154,7 +163,7 @@ function UserDelete() {
                     color="primary"
                     gutterBottom
                 >
-                    แก้ไขข้อมูลส่วนตัว
+                    ลบบัญชีผู้ใช้
                 </Typography>
             </Box>
        </Box>
@@ -174,6 +183,7 @@ function UserDelete() {
                inputProps={{name: "FirstName",}}
                value={user.FirstName || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
@@ -188,13 +198,14 @@ function UserDelete() {
                size="medium"
                value={user.LastName || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
-             <p>อีเมลล์</p>
+             <p>อีเมล</p>
              <TextField
                id="Email"
                variant="outlined"
@@ -202,6 +213,7 @@ function UserDelete() {
                size="medium"
                value={user.Email || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
@@ -211,6 +223,7 @@ function UserDelete() {
              <p>รหัสผ่าน</p>
              <OutlinedInput
               id="Password"
+              disabled
               type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
@@ -237,6 +250,7 @@ function UserDelete() {
                size="medium"
                value={user.StudentID || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
@@ -253,6 +267,7 @@ function UserDelete() {
                InputLabelProps={{ shrink: true,}}
                value={user.Age || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
@@ -260,22 +275,7 @@ function UserDelete() {
          <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
-              <Select
-                required
-                defaultValue={"0"}
-                onChange={handleChange}
-                inputProps={{name: "GenderID",}}
-              >
-                <MenuItem value={"0"}>กรุณาเลือกเพศ</MenuItem>
-                {genders?.map((item: GendersInterface) =>
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-              </Select>
+              <TextField  id="Gender" disabled variant="outlined" type="string" size="medium" label="เพศ" inputProps={{name: "Gender",}} value={user.Gender?.Name || ""}/>
             </FormControl>
           </Grid>
 
@@ -290,6 +290,7 @@ function UserDelete() {
                size="medium"
                value={user.PhoneNumber || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
@@ -304,6 +305,7 @@ function UserDelete() {
                size="medium"
                value={user.IdentificationNumber || ""}
                onChange={handleInputChange}
+               disabled
              />
            </FormControl>
          </Grid>
@@ -311,60 +313,16 @@ function UserDelete() {
          <Grid item xs={6}>
             <FormControl fullWidth variant="outlined">
               <p>ระดับการศึกษา</p>
-              <Select
-                required
-                defaultValue={"0"}
-                onChange={handleChange}
-                inputProps={{name: "EducationLevelID",}}
-              >
-                <MenuItem value={"0"}>กรุณาเลือกระดับการศึกษา</MenuItem>
-                {educationlevels?.map((item: EducationLevelsInterface) =>
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-              </Select>
+              <TextField  id="EducationLevel" disabled variant="outlined" type="string" size="medium" label="ระดับการศึกษา" inputProps={{name: "EducationLevel",}} value={user.EducationLevel?.Name || ""}/>
             </FormControl>
           </Grid>
 
          <Grid item xs={6}>
            <FormControl fullWidth variant="outlined">
              <p>วัน/เดือน/ปีเกิด</p>
-             <LocalizationProvider dateAdapter={AdapterDateFns}>
-               <DatePicker
-                 value={date}
-                 onChange={(newValue) => {setDate(newValue);}}
-                 renderInput={(params) => <TextField {...params} />}
-               />
-             </LocalizationProvider>
+             <TextField  id="BirthDay" disabled variant="outlined" type="string" size="medium" label="วัน/เดือน/ปีเกิด" inputProps={{name: "BirthDay",}} value={user.BirthDay || ""}/>
            </FormControl>
          </Grid>
-
-          {/* <Grid item xs={3}>
-            <FormControl fullWidth variant="outlined">
-              <p>สถานะ</p>
-              <Select
-                required
-                defaultValue={"0"}
-                onChange={handleChange}
-                inputProps={{name: "RoleID",}}
-              >
-                <MenuItem value={"0"}>กรุณาเลือกบทบาท</MenuItem>
-                {roles?.map((item: RolesInterface) =>
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Grid> */}
-
          <Grid item xs={12}>
            <Button component={RouterLink} to="/users" variant="contained">
              ยกเลิก
@@ -379,7 +337,6 @@ function UserDelete() {
              ยืนยัน
            </Button>
          </Grid>
-         
        </Grid>
      </Paper>
    </Container>

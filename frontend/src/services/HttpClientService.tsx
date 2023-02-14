@@ -579,10 +579,10 @@ async function GetBorrow(id: any) {
   let res = await fetch(`${apiUrl}/borrow/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
-      } else {
-        return false;
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -604,7 +604,7 @@ async function DeleteBorrow(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 
@@ -995,7 +995,7 @@ async function ListFood_and_Drinks() {
   return res;
 }
 
-async function UpdateFood_and_Drink(data: ApprovesInterface) {
+async function UpdateFood_and_Drink(data: Food_and_DrinksInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {
@@ -1004,6 +1004,7 @@ async function UpdateFood_and_Drink(data: ApprovesInterface) {
     },
     body: JSON.stringify(data),
   };
+  
 
   let res = await fetch(`${apiUrl}/food_and_drink`, requestOptions)
     .then((response) => response.json())
@@ -1121,10 +1122,10 @@ async function CreateBuilding(data: BuildingsInterface) {
   let res = await fetch(`${apiUrl}/building`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 
@@ -1142,10 +1143,10 @@ async function GetBuilding(id: any) {
   let res = await fetch(`${apiUrl}/building/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
-      if (res.data) {
-        return res.data;
+      if (res.data) {       
+        return {status: true,data: res.data};
       } else {
-        return false;
+        return {status: false,data: res.error};
       }
     });
 
@@ -1267,7 +1268,7 @@ async function GetUserRole() {
   return res;
 }
 
-async function UpdateUser(data: ApprovesInterface) {
+async function UpdateUser(data: UsersInterface) {
   const requestOptions = {
     method: "PUT",
     headers: {

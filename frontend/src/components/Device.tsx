@@ -23,6 +23,7 @@ function Devices() {
         let res = await ListDevices();
         if (res) {
             setDevices(res);
+            console.log(res)
         }
     };
     // const listdevicetypes = async () => {
@@ -87,7 +88,7 @@ function Devices() {
                   variant="contained"
                   color="primary"
                 >
-                  Update Device
+                  Create Device
                 </Button>
               </Box>
             </Box>

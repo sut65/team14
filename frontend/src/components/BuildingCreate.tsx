@@ -122,18 +122,19 @@ function BuildingCreate(){
         console.log(data);
         
         let res = await CreateBuilding(data);
-        console.log(res);
-        if (res) {
+        console.log(data);
+        if (res.status) {
             setSuccess(true);
             setErrorMessage("");
 
             setBuilding({
+              Detail: "",
               Note: "",
               Time: new Date(),
             })
         } else {
             setError(true);
-            setErrorMessage(res);
+            setErrorMessage(res.data);
         }
 
     }
@@ -150,6 +151,7 @@ function BuildingCreate(){
       return (
         <Container maxWidth="md">
           <Snackbar
+            id="success"
             open={success}
             autoHideDuration={6000}
             onClose={handleClose}
@@ -160,7 +162,7 @@ function BuildingCreate(){
             </Alert>
           </Snackbar>
      
-          <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+          <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="error">
               บันทึกข้อมูลไม่สำเร็จ  {errorMessage}
             </Alert>
@@ -211,7 +213,7 @@ function BuildingCreate(){
           <FormControl required fullWidth >
             <InputLabel id="GuardID">กรุณาเลือกผู้รักษาความปลอดภัย</InputLabel>
             <Select
-              labelId="GuardID"
+              id="GuardID"
               label="กรุณาเลือกผู้รักษาความปลอดภัย *"
               onChange={ (handleChange) }
               inputProps={{
@@ -235,7 +237,7 @@ function BuildingCreate(){
           <FormControl required fullWidth >
             <InputLabel id="GuardID">กรุณาเลือกบริษัท</InputLabel>
             <Select
-              labelId="CompanyID"
+              id="CompanyID"
               label="กรุณาเลือกบริษัท *"
               onChange={ (handleChange) }
               inputProps={{

@@ -200,14 +200,14 @@ async function submit() {
   } else {
       setError(true);
       setErrorMessage(res.data);
+      return
   }
   let res1 = await GetDevice(data.DeviceID)
     if(res1){
-      setDevice(res1);
-      setDevice({...device,"StatusDevice": false,});
+      res1.StatusDevice=false
     }
-  setDevice({...device,"StatusDevice": false,});
-  let res2 = await UpdateDevice(device)
+  console.log(res1)
+  let res2 = await UpdateDevice(res1)
   console.log(res2)
   if (res2.status) {
     //setAlertMessage("บันทึกสำเร็จ")

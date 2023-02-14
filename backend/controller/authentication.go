@@ -138,17 +138,17 @@ func CreateUser(c *gin.Context) {
 		IdentificationNumber: payload.IdentificationNumber,
 		StudentID:            payload.StudentID,
 		Age:                  payload.Age,
-		Password:             string(hashPassword),
+		Password:             payload.Password,
 		BirthDay:             payload.BirthDay,
 	}
-
-	fmt.Println(us.Password)
 
 	// ขั้นตอนการ validate
 	if _, err := govalidator.ValidateStruct(us); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	us.Password = string(hashPassword)
 
 	// x: บันทึก
 	if err := entity.DB().Create(&us).Error; err != nil {

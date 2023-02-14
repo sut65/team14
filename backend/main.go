@@ -98,7 +98,7 @@ func main() {
 			r.POST("/borrow", controller.CreateBorrow)
 			r.GET("/borrow/:id", controller.GetBorrow)
 			r.GET("/borrows", controller.ListBorrows)
-			r.DELETE("/borrow", controller.DeleteBorrow)
+			r.DELETE("/borrow/:id", controller.DeleteBorrow)
 			r.PATCH("/borrow/:id", controller.UpdateBorrow)
 
 			// Payback
@@ -114,7 +114,8 @@ func main() {
 			r.GET("/devices", controller.ListDevices)
 			r.DELETE("/device/:id", controller.DeleteDevice)
 			r.PUT("/device", controller.UpdateDevice)
-			
+
+			r.GET("/brands", controller.ListBrands)
 
 			//DeviceType use by borrow
 			r.GET("/device_types", controller.ListDeviceType)
