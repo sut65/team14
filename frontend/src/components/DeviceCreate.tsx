@@ -1,253 +1,194 @@
-import React, { useEffect, useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import TextField from "@mui/material/TextField";
+import React from "react";
 import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { BrandsInterface } from "../models/IBrand";
+import Grid from "@mui/material/Grid";
+import Divider from "@mui/material/Divider";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Link as RouterLink } from "react-router-dom";
+import MenuItem from '@mui/material/MenuItem';
 import { DevicesInterface } from "../models/IDevice";
-//import { GuardsInterface } from "../models/IGuard";
 import { DeviceTypesInterface } from "../models/IDeviceType";
-import { InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { CreateDevice, ListDeviceType, ListBrand } from "../services/HttpClientService";
+import { BrandsInterface } from "../models/IBrand";
+import { UsersInterface } from "../models/IUser";
+import { CreateDevice, GetUser } from "../services/HttpClientService";
+import {ListDeviceType, ListBrand, ListUsers,} from "../services/HttpClientService";
+import TextField from "@mui/material/TextField";
 
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-    props, ref
-) {
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+  });
 
-function DeviceCreate(){
-    const [device, setDevice] = React.useState<DevicesInterface>({Detail:""});
-    const [brands, setBrands] = React.useState<BrandsInterface[]>([]);    
-
-    const [devicetypes, setDeviceTypes] = React.useState<DeviceTypesInterface[]>([]); 
-
+function DeviceCreate() {
+    const [device, setDevice] = React.useState<Partial<DevicesInterface>>({});
+    const [devicetypes, setDeviceTypes] = React.useState<DeviceTypesInterface[]>([]);
+    const [brands, setBrands] = React.useState<BrandsInterface[]>([]);
+    const [user, setUser] = React.useState<UsersInterface>({});
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
-    const [errorMessage, setErrorMessage] = useState("");
-
-    const handleChange_Text = (
-        event: React.ChangeEvent<{ id?: string; value: any }>
-      ) => {
-        const id = event.target.id as keyof typeof device;
-        const { value } = event.target;
-        setDevice({ ...device, [id]: value, });
-        console.log(`[${id}]: ${value}`);
-      };
-
+    const [errorMessage, setErrorMessage] = React.useState("");
     const handleClose = (
-        event?: React.SyntheticEvent | Event,
-        reason?: string
+      event?: React.SyntheticEvent | Event,
+      reason?: string
     ) => {
-        if (reason === "clickaway") 
-        {
-            return;
-        }
-        setSuccess(false);
-        setError(false);
-    };  
+      if (reason === "clickaway") {
+        return;
+      }
+      setSuccess(false);
+      setError(false);
+    };
 
     const handleChange = (event: SelectChangeEvent) => {
-        const name = event.target.name as keyof typeof device;
-        const value = event.target.value;
-        setDevice({
-          ...device,
-          [name]: value,
-        });
-        console.log(`[${name}]: ${value}`);
-      };
+      const name = event.target.name as keyof typeof device;
+      const value = event.target.value;
+      setDevice({
+        ...device,
+        [name]: value,
+      });
+    };
 
-      const listBrands = async () => {
-        let res = await ListBrand();
-        if (res) {
-            setBrands(res);
-            console.log("Load Brands Complete");
-            console.log(res.data);
-        }
-        else{
-          console.log("Load Brands InComplete!!!!");
-        }
-      };
+    const handleInputChange = (
+      event: React.ChangeEvent<{ id?: string; value: any }>
+    ) => {
+      const id = event.target.id as keyof typeof device;
+      const { value } = event.target;
+      setDevice({ ...device, [id]: value });
+      console.log(`[${id}]: ${value}`);
+    };
+  
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
 
-      const listDeviceType = async () => {
-        let res = await ListDeviceType();
-        if (res) {
-          setDeviceTypes(res);
-          console.log("Load devicetype Complete");
-        }
-        else{
-          console.log("Load devicetype InComplete!!!!");
-        }
-      };
+    //ดึงข้อมูล DeviceTypes
+    const listDeviceTypes = async () => {
+      let res = await ListDeviceType();
+      if (res) { setDeviceTypes(res); console.log("Load DeviceType Complete");}
+      else{ console.log("Load DeviceType InComplete!!!!");}
+    };
 
-      async function submit() {
-        let data = {
-            
-            Detail: device.Detail,
+    //ดึงข้อมูล Brands
+    const listBrands = async () => {
+      let res = await ListBrand();
+      if (res) { setBrands(res); console.log("Load Brand Complete");}
+      else{ console.log("Load Brand InComplete!!!!");}
+    };
+    
+    const getUser = async () => {
+      const uid = localStorage.getItem("userID")
+      let res = await GetUser(uid);
+      if (res.status) {
+        setUser(res.data);
+        console.log("Load User Complete");
+        console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      }
+      else{
+        console.log("Load User InComplete!!!!");
+      }
+    };
 
-            BrandID: (device.BrandID),
-            DeviceTypeID: (device.DeviceTypeID),  
-        };
-        console.log(data);
-        
-        let res = await CreateDevice(data);
-        console.log(res);
-        if (res) {
-            setSuccess(true);
-            setErrorMessage("");
-        } else {
-            setError(true);
-            setErrorMessage(res);
-        }
-
-    }
-
-    useEffect(() => {
-        listBrands();
-        listDeviceType();
+    React.useEffect(() => {
+      listDeviceTypes();
+      listBrands();
+      getUser();
     }, []);
 
+    async function submit() {
+      let data = {
+          Detail: device.Detail,
+          Number_of_Device: device.Number_of_Device,
+          Note: device.Note,
 
-    
+          DeviceTypeID: (device.DeviceTypeID),
+          BrandID: (device.BrandID),  
+          AdminID: (user.ID),
+      };
+      console.log(data);
+      
+      let res = await CreateDevice(data);
+      console.log(res);
+      if (res.status) {
+        setErrorMessage("บันทึกรายการอุปกรณ์สำเร็จ");
+        setSuccess(true);
+      } else {
+        setErrorMessage(res.data);
+        setError(true);
+      }
 
-      return (
-        <Container maxWidth="md">
-          <Snackbar
-            open={success}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          >
-            <Alert onClose={handleClose} severity="success">
-              บันทึกข้อมูลสำเร็จ
-            </Alert>
-          </Snackbar>
-     
-          <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="error">
-              บันทึกข้อมูลไม่สำเร็จ  {errorMessage}
-            </Alert>
-          </Snackbar>
-     
-          <Paper>
-             <Box
-                 display="flex"
-                 sx={{
-                 marginTop: 2,
-                 }}
-             >
-                 <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                     <Typography
-                         component="h2"
-                         variant="h6"
-                         color="primary"
-                         gutterBottom
-                     >
-                         Create Device
-                     </Typography>
-                 </Box>
-            </Box>
-     
+  }
 
-            <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <FormControl fullWidth variant="outlined">
-                      <p>ชื่ออุปกรณ์</p>
-                      <TextField
-                       required
-                       id="Detail"
-                       type="string"
-                       label="อุปกรณ์"
-                       inputProps={{
-                         name: "Detail",
-                       }}
-                       value={device.Detail + ""}
-                       onChange={handleChange_Text}
-                      />
-                    </FormControl>
-                  </Grid> 
-                </Grid>               
-                
-    
-          <Grid item xs={6} >
-          <p>ประเภท</p>
-          <FormControl required fullWidth >
-            <InputLabel id="DeviceTypeID">กรุณาเลือกประเภทของอุปกรณ์</InputLabel>
-            <Select
-              labelId="DeviceTypeID"
-              label="กรุณาเลือกประเภทของอุปกรณ์ *"
-              onChange={ (handleChange) }
-              inputProps={{
-                name: "DeviceTypeID",
-              }}
-            >
-              {devicetypes.map((item: DeviceTypesInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.DeviceTypeDetail}
-                </MenuItem>
-              ))}
+return (
+    <Container maxWidth="md">
+      <Snackbar id="success" open={success} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert onClose={handleClose} severity="success"> {errorMessage} </Alert>
+      </Snackbar>
+      <Snackbar id="error" open={error} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="error"> {errorMessage} </Alert>
+      </Snackbar>
+      <Paper>
+        <Box display="flex" sx={{ marginTop: 2, }}>
+          <Box sx={{ paddingX: 2, paddingY: 1 }}>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom > เพิ่มรายการอุปกรณ์ </Typography>
+          </Box>
+        </Box>
+        <Divider />
+        <Grid container spacing={3} sx={{ padding: 2 }}>
+          <Grid item xs={6}>
+          <FormControl fullWidth variant="outlined">   
+            <p>ประเภทอุปกรณ์</p>
+            <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "DeviceTypeID", }}>
+              <MenuItem value={"0"}>กรุณาเลือกประเภทอุปกรณ์</MenuItem>
+                {devicetypes?.map((item: DeviceTypesInterface) => 
+                  <MenuItem key={item.ID} value={item.ID} > {item.DeviceTypeDetail} </MenuItem>)}
             </Select>
           </FormControl>
-          </Grid>  
-
-          <Grid item xs={6} >
-          <p>ชื่อแบรนด์</p>
-          <FormControl required fullWidth >
-            <InputLabel id="BrandID">กรุณาเลือกแบรนด์</InputLabel>
-            <Select
-              labelId="BrandID"
-              label="กรุณาเลือกแบรนด์ *"
-              onChange={ (handleChange) }
-              inputProps={{
-                name: "BrandID",
-              }}
-            >
-              {brands.map((item: BrandsInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.BrandDetail}
-                </MenuItem>
-              ))}
-            </Select>
+          </Grid>
+          <Grid item xs={6}>
+          <FormControl fullWidth variant="outlined">   
+              <p>ยี่ห้อ</p>
+              <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "BrandID", }}>
+              <MenuItem value={"0"}>กรุณาเลือกยี่ห้อ</MenuItem>
+                {brands?.map((item: BrandsInterface) => 
+                  <MenuItem key={item.ID} value={item.ID}> {item.BrandDetail} </MenuItem>)}
+              </Select>
           </FormControl>
-          </Grid> 
-
-               <Grid item xs={12}>
-                <Button component={RouterLink} to="/devices" variant="contained">
-                  Back
-                </Button>
-     
-                <Button
-                  style={{ float: "right" }}
-                  onClick={submit}
-                  variant="contained"
-                  color="primary"
-                >
-                  Submit
-                </Button>
-               </Grid>
-              
-          </Paper>
-        </Container>
-     
-      );
-
-     
+          </Grid>
+          <Grid item xs={8} >  
+          <FormControl fullWidth variant="outlined">
+              <p>ชื่ออุปกรณ์</p>
+              <TextField  id="Detail" variant="outlined" type="string" size="medium" label="ชื่ออุปกรณ์" inputProps={{name: "Detail",}} value={device.Detail || ""} onChange={handleInputChange}/>
+          </FormControl>
+          </Grid>
+          <Grid item xs={6} >  
+          <FormControl fullWidth variant="outlined">
+              <p>จำนวน</p>
+              <TextField  id="Number_of_Device" variant="outlined" type="string" size="medium" label="จำนวน" inputProps={{name: "Number_of_Device",}} value={device.Number_of_Device || ""} onChange={handleInputChange}/>
+          </FormControl>
+          </Grid>
+          <Grid item xs={6} >  
+          <FormControl fullWidth variant="outlined">
+              <p>หมายเหตุ</p>
+              <TextField  id="Note" variant="outlined" type="string" size="medium" label="หมายเหตุ" inputProps={{name: "Note",}} value={device.Note || ""} onChange={handleInputChange}/>
+          </FormControl>
+          </Grid>
+          <Grid item xs={8}>
+          <FormControl fullWidth variant="outlined">  
+          </FormControl>
+          </Grid>
+          <Grid item xs={12}>
+            <Button component={RouterLink} to="/devices" variant="contained"> ยกเลิก </Button>
+            <Button style={{ float: "right" }} onClick={submit} variant="contained" color="success" > บันทึก </Button>
+          </Grid>
+        </Grid>
+      </Paper>
+    </Container>
+);
 }
-
 export default DeviceCreate;
+

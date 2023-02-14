@@ -58,6 +58,8 @@ import Order_food from "./components/Order_food";
 import OrderCreate from "./components/OrderCreate";
 import BookingDelete from "./components/BookingDelete";
 import DeviceCreate from "./components/DeviceCreate";
+import DeviceUpdate from "./components/DeviceUpdate";
+//import DeviceDelete from "./components/DeviceDelete";
 import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
 import RoomUpdate from "./components/RoomUpdate";
@@ -299,6 +301,8 @@ return (
 
                 <Route path="/devices" element={<Device />} />
                 <Route path="/device/create" element={<DeviceCreate />} />
+                <Route path="/device/update" element={<DeviceUpdate />} />
+                {/* <Route path="/device/delete" element={<DeviceDelete />} /> */}
 
                 <Route path="/admins" element={<Admin />} />
                 <Route path="/admin/create" element={<AdminCreate />} />
