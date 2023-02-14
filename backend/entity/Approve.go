@@ -37,11 +37,6 @@ func init() {
 		return t.After(time.Now())
 	})
 
-	govalidator.CustomTypeTagMap.Set("IsPresent", func(i interface{}, _ interface{}) bool {
-		t := i.(time.Time)
-		return t.After(time.Now().AddDate(0, 0, -1)) && t.Before(time.Now().AddDate(0, 0, 1))
-	})
-
 	govalidator.CustomTypeTagMap.Set("IsPast", func(i interface{}, _ interface{}) bool {
 		t := i.(time.Time)
 		return t.Before(time.Now())
