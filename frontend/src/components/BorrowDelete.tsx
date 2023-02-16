@@ -132,36 +132,42 @@ function BorrowDelete() {
         ////////////////////////////////////////search///////////////////
     async function submit() {
     let res = await DeleteBorrow(borrow.ID);
+    
     if (res.status) {
         setSuccess(true);
         setErrorMessage("");
-        //ListBorrows();
         setBorrow({
             BorrowAPNote:"",
             BorrowNote1: "",
             Timeofborrow:new Date(),
         })
-        console.log(res.data)
+        console.log(res.data) //borrow id
     } else {
         setError(true);
         setErrorMessage(res.data);
+        return
     } 
-
-    let res1 = await GetDevice(res.data.DeviceID)
+    let resbor = await GetBorrow(res.data);
+    console.log(resbor.data)
+    console.log(resbor)
+    // let resbor = await GetBorrow(res.data);
+    // console.log(resbor)
+    
+    let res1 = await GetDevice(resbor.data.DeviceID)
     if(res1){
       res1.StatusDevice=true
     }
-  console.log(res1)
-  let res2 = await UpdateDevice(res1)
-  console.log(res2)
-  if (res2.status) {
-    //setAlertMessage("บันทึกสำเร็จ")
-    setSuccess(true);
-    setErrorMessage("");
- } else {
-    setError(true);
-    setErrorMessage(res2.data);
- }
+    console.log(res1)
+    let res2 = await UpdateDevice(res1)
+    console.log(res2)
+    if (res2.status) {
+        //setAlertMessage("บันทึกสำเร็จ")
+        setSuccess(true);
+        setErrorMessage("");
+    } else {
+        setError(true);
+        setErrorMessage(res2.data);
+    }
     }
       ///////////////////////////////search/////////////////////////
 useEffect(() => {
@@ -341,7 +347,7 @@ return (
             type="string"
             disabled
             variant="filled"
-            value={ borrow?.Device?.Detail || ""}
+            value={ device?.Detail || ""}
             /> 
             </FormControl>
         </Grid> 
