@@ -6,7 +6,6 @@ import { UsersInterface } from "../models/IUser";
 import { GetUser } from "../services/HttpClientService";
 
 function Home() {
-  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
   const uid = parseInt(localStorage.getItem("userID")+"")
   
   const [user, setUser] = useState<UsersInterface>({});

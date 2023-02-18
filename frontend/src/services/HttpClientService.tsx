@@ -1280,7 +1280,7 @@ async function GetUserRole() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
-        localStorage.setItem("roleID", res.data.RoleID);  
+        localStorage.setItem("role", res.data.Role.Name);  
         return res.data;
       } else {
         return false;

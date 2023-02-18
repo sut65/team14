@@ -21,13 +21,13 @@ import {
     GetUser,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
 import { RoomsInterface } from "../models/IRoom";
 import { ObjectivesInterface } from "../models/IObjective";
+import AccessDenied from "./AccessDenied";
 import { UsersInterface } from "../models/IUser";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -164,6 +164,12 @@ function BookingCreate() {
     const min = 10000, max = 99999;
     const random = Math.floor(Math.random() * (max - min + 1)) + min;
     setBooking({ ...booking, ["Code"]: `Bk${random}`, });
+  }
+
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "User") {
+    return <AccessDenied />
   }
 
  return (
