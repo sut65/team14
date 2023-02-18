@@ -23,6 +23,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import SignIn from "./SignIn";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -121,6 +122,7 @@ function UserCreate() {
           setErrorMessage("ลงทะเบียนสมาชิกสำเร็จ");
           console.log(res.data)
           setSuccess(true);
+          return <SignIn/>
       } else {
           setErrorMessage(res.data);
           setError(true);
@@ -346,7 +348,7 @@ function UserCreate() {
            </FormControl>
          </Grid>
          <Grid item xs={12}>
-           <Button component={RouterLink} to="/users" variant="contained">
+           <Button component={RouterLink} to="/" variant="contained">
              ยกเลิก
            </Button>
 

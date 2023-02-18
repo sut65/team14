@@ -61,9 +61,9 @@ func main() {
 			api.GET("/users", controller.ListUsers)
 			api.GET("/user/:id", controller.GetUser)
 			api.GET("/User/StudentID/:StudentID", controller.GetUserByStudentID)
-			api.GET("/educationlevels", controller.ListEducationLevels)
-			api.GET("/genders", controller.ListGenders)
-			api.GET("/roles", controller.ListRoles)
+			// api.GET("/educationlevels", controller.ListEducationLevels)
+			// api.GET("/genders", controller.ListGenders)
+			// api.GET("/roles", controller.ListRoles)
 			api.DELETE("/user/:id", controller.DeleteUser)
 			api.PUT("/user", controller.UpdateUser)
 
@@ -141,6 +141,9 @@ func main() {
 	}
 	// Create User For Login
 	r.POST("/user", controller.CreateUser)
+	r.GET("/educationlevels", controller.ListEducationLevels)
+	r.GET("/genders", controller.ListGenders)
+	r.GET("/roles", controller.ListRoles)
 
 	// login User Route
 	r.POST("/login", controller.Login)
