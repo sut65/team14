@@ -57,6 +57,7 @@ function SignIn() {
   };
 
   const submit = async () => {
+    console.log(signin)
     let res = await Login(signin);
     let tmp = await GetUserRole();
     if (res || tmp) {
@@ -178,9 +179,31 @@ function SignIn() {
               >
                 Sign In
               </Button>
-              
-              <p>test@gmail.com 123456</p>
-              <p>CD@gmail.com 123456</p>
+              <Grid container spacing={1} sx={{ padding: 2 }}  alignItems="center">
+                <Grid item xs={6} >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={()=>setSignin({Email:"user@gmail.com", Password:"123456"})}
+                  >
+                    user@gmail.com 123456
+                  </Button>
+                </Grid>
+
+                <Grid item xs={6} >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={()=>setSignin({Email:"admin@gmail.com", Password:"123456"})}
+                  >
+                    admin@gmail.com 123456
+                  </Button>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Grid>
