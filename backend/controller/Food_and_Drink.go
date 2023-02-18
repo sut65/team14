@@ -111,8 +111,10 @@ func ListFoodtypes(c *gin.Context) {
 
 // DELETE /food_and_drinks/:id
 func DeleteFood_and_Drink(c *gin.Context) {
+	var Food_and_Drink entity.Food_and_Drink
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM food_and_drinks WHERE id = ?", id); tx.RowsAffected == 0 {
+	// UPDATE food_and_drink SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&Food_and_Drink); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "food_and_drink not found"})
 		return
 	}
