@@ -216,6 +216,7 @@ function UserUpdate() {
                type="string"
                size="medium"
                value={user.Email || ""}
+               disabled
                onChange={handleInputChange}
              />
            </FormControl>
@@ -226,6 +227,8 @@ function UserUpdate() {
              <p>รหัสผ่าน</p>
              <OutlinedInput
               id="Password"
+              value={user.Password || ""}
+              onChange={handleInputChange}
               type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
@@ -276,8 +279,8 @@ function UserUpdate() {
             <FormControl fullWidth variant="outlined">
               <p>เพศ</p>
               <Select
-                required
-                defaultValue={"0"}
+                id="GenderID"
+                value={user.GenderID + ""}
                 onChange={handleChange}
                 inputProps={{name: "GenderID",}}
               >
@@ -327,8 +330,8 @@ function UserUpdate() {
             <FormControl fullWidth variant="outlined">
               <p>ระดับการศึกษา</p>
               <Select
-                required
-                defaultValue={"0"}
+                id="EducationLevelID"
+                value={user.EducationLevelID + ""}
                 onChange={handleChange}
                 inputProps={{name: "EducationLevelID",}}
               >
@@ -350,35 +353,13 @@ function UserUpdate() {
              <p>วัน/เดือน/ปีเกิด</p>
              <LocalizationProvider dateAdapter={AdapterDateFns}>
                <DatePicker
-                 value={date}
-                 onChange={(newValue) => {setDate(newValue);}}
+                 value={user.BirthDay + ""}
+                 onChange={(newValue) => {setDate(date);}} //ยังแก้ไม่ได้
                  renderInput={(params) => <TextField {...params} />}
                />
              </LocalizationProvider>
            </FormControl>
          </Grid>
-
-          {/* <Grid item xs={3}>
-            <FormControl fullWidth variant="outlined">
-              <p>สถานะ</p>
-              <Select
-                required
-                defaultValue={"0"}
-                onChange={handleChange}
-                inputProps={{name: "RoleID",}}
-              >
-                <MenuItem value={"0"}>กรุณาเลือกบทบาท</MenuItem>
-                {roles?.map((item: RolesInterface) =>
-                  <MenuItem
-                    key={item.ID}
-                    value={item.ID}
-                  >
-                    {item.Name}
-                  </MenuItem>
-                )}
-              </Select>
-            </FormControl>
-          </Grid> */}
 
          <Grid item xs={12}>
            <Button component={RouterLink} to="/users" variant="contained">
