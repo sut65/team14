@@ -16,7 +16,7 @@ import { DevicesInterface } from "../models/IDevice";
 import { DeviceTypesInterface } from "../models/IDeviceType";
 import { BrandsInterface } from "../models/IBrand";
 import { UsersInterface } from "../models/IUser";
-import { CreateDevice, GetUser } from "../services/HttpClientService";
+import { CreateDevice, GetUser, ListDevices, UpdateDevice, GetDevice } from "../services/HttpClientService";
 import {ListDeviceType, ListBrand, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
 
@@ -26,6 +26,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,
 
 function DeviceCreate() {
     const [device, setDevice] = React.useState<Partial<DevicesInterface>>({});
+    const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
     const [devicetypes, setDeviceTypes] = React.useState<DeviceTypesInterface[]>([]);
     const [brands, setBrands] = React.useState<BrandsInterface[]>([]);
     const [user, setUser] = React.useState<UsersInterface>({});
@@ -50,6 +51,13 @@ function DeviceCreate() {
         ...device,
         [name]: value,
       });
+    };
+
+    const onChangeDevice = async(event: SelectChangeEvent) => {
+        const id = event.target.value;
+        let res = await GetDevice(id);
+        if (res.status) { setDevice(res.data); console.log("Load Device Complete");}
+        else{ console.log("Load Food_and_Drink InComplete!!!!");}
     };
 
     const handleInputChange = (
@@ -79,7 +87,13 @@ function DeviceCreate() {
       if (res) { setBrands(res); console.log("Load Brand Complete");}
       else{ console.log("Load Brand InComplete!!!!");}
     };
-    
+
+    const listDevices = async () => {
+        let res = await ListDevices();
+        if (res) { setDevices(res); console.log("Load Device Complete");}
+        else{ console.log("Load Device InComplete!!!!");}
+    };
+
     const getUser = async () => {
       const uid = localStorage.getItem("userID")
       let res = await GetUser(uid);
@@ -97,6 +111,7 @@ function DeviceCreate() {
       listDeviceTypes();
       listBrands();
       getUser();
+      listDevices();
     }, []);
 
     async function submit() {
@@ -111,10 +126,10 @@ function DeviceCreate() {
       };
       console.log(data);
       
-      let res = await CreateDevice(data);
+      let res = await UpdateDevice(data);
       console.log(res);
       if (res.status) {
-        setErrorMessage("บันทึกรายการอุปกรณ์สำเร็จ");
+        setErrorMessage("แก้ไขรายการอุปกรณ์สำเร็จ");
         setSuccess(true);
       } else {
         setErrorMessage(res.data);
@@ -139,6 +154,16 @@ return (
         </Box>
         <Divider />
         <Grid container spacing={3} sx={{ padding: 2 }}>
+        <Grid item xs={8}>
+          <FormControl fullWidth variant="outlined">   
+            <p>รายการอาหาร</p>
+            <Select required defaultValue={"0"} onChange={onChangeDevice} inputProps={{ name: "DeviceID", }}>
+              <MenuItem value={"0"}>กรุณาเลือกรายการอุปกรณ์</MenuItem>
+                {devices?.map((item: DevicesInterface) => 
+                  <MenuItem key={item.ID} value={item.ID} > {item.Detail} </MenuItem>)}
+            </Select>
+          </FormControl>
+          </Grid>
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอุปกรณ์</p>

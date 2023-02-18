@@ -19,14 +19,12 @@ import {
     GetBooking,
     GetBuilding,
     DeleteBooking,
-    GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
-import { RolesInterface } from "../models/IUser";
 import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -66,10 +64,7 @@ function BookingDelete() {
     const bid = e.target.value;
     let res = await GetBooking(bid);
     if (res) {
-      setBookingUser(res);
-      console.log("Load BookingUser Complete");
-      console.log(res);
-      
+      setBookingUser(res);  
     }
     else{
       console.log("Load BookingUser Incomplete!!!");
@@ -77,7 +72,6 @@ function BookingDelete() {
     res = await GetBuilding(res.Room.BuildingID); 
     if (res) {
       setBuilding(res);
-      console.log("Load Building Complete");
     }
     else{
       console.log("Load Building Incomplete!!!");
@@ -88,9 +82,6 @@ function BookingDelete() {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       setBookings(res.data)
-      console.log(res.data);
-      
-      console.log("Load Bookings Complete");
     }
     else{
       console.log("Load Bookings InComplete!!!!");
@@ -113,24 +104,11 @@ function BookingDelete() {
     listBookingbyUser();
   }, []);
 
-    //Check Role
-    const [role, setRole] = useState<RolesInterface>({});
-    const getUserRole = async () => {
-      let res = await GetUserRole();
-      if (res) {
-        setRole(res);
-      }
-      else {
-        console.log("Load RoleUser InComplete!!!!");
-      }
-    }
-    useEffect(() => {
-      getUserRole(); 
-    }, []);
-    
-    if (role.Name != "User") {
-      return <AccessDenied />
-    }
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "User") {
+    return <AccessDenied />
+  }
 
  return (
    <Container maxWidth="md">

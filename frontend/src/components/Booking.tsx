@@ -3,11 +3,10 @@ import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
 import { BookingsInterface } from "../models/IBooking";
 import { 
   GetRoom,
-  GetUserRole,
   ListBookingbyRoom, ListBookingbyUser, ListBookings, ListBuildings, ListRoomsbyBuilding, 
 } from "../services/HttpClientService";
 import moment from "moment";
@@ -27,7 +26,6 @@ import { BuildingsInterface } from "../models/IBuilding";
 import { RoomsInterface } from "../models/IRoom";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import AccessDenied from "./AccessDenied";
-import { RolesInterface } from "../models/IUser";
 
 function Bookings() {
   const uid = localStorage.getItem("userID")
@@ -165,7 +163,6 @@ function Bookings() {
         notes:  notes,
       };
       setData((data) => [...data, x]) // push data
-      console.log(item)
     }); 
     
   }
@@ -216,21 +213,8 @@ function Bookings() {
   )
 
   //Check Role
-  const [role, setRole] = useState<RolesInterface>({});
-  const getUserRole = async () => {
-    let res = await GetUserRole();
-    if (res) {
-      setRole(res);
-    }
-    else {
-      console.log("Load RoleUser InComplete!!!!");
-    }
-  }
-  useEffect(() => {
-    getUserRole(); 
-  }, []);
-  
-  if (role.Name != "User") {
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "User") {
     return <AccessDenied />
   }
   

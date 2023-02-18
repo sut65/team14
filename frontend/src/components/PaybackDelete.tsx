@@ -11,11 +11,16 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
+import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { GetUser,ListBorrows, DeleteBorrow, 
-    GetBorrow, GetBooking, GetDevice,UpdateDevice,
+
+import { CreateBorrow,
+ListDevices,ListDeviceType,
+GetUser,GetDevice,UpdateDevice,ListPaybacks,
+ListApproves,GetApprovebyCode,
+GetApprove,ListTypebyDevice, GetPayback, GetBorrow,DeletePayback,
 } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
@@ -23,21 +28,23 @@ import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { DeviceTypesInterface } from "../models/IDeviceType";
 import { BookingsInterface } from "../models/IBooking";
-import Borrows from "./Borrow";
+import { PaybacksInterface } from "../models/IPayback";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
 ) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-function BorrowDelete() {
+function PaybackDelete() {
     const uid = localStorage.getItem("userID")
 
-    const [borrows, setBorrows] = useState<BorrowsInterface[]>([]);
-    const [borrow, setBorrow] = React.useState<BorrowsInterface>({
-      BorrowNote1: "",BorrowAPNote:"",
-      Timeofborrow: new Date(),});
+    const [paybacks, setPaybacks] = useState<PaybacksInterface[]>([]);
+    const [payback, setPayback] = React.useState<PaybacksInterface>({
+      PBADNote:"",PBusNote:"",
+      Timeofpayback: new Date(),});
+
+    const [borrow, setBorrow] = React.useState<BorrowsInterface>({});
 
     const [user, setUser] = useState<UsersInterface>({});    
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
@@ -63,14 +70,14 @@ function BorrowDelete() {
       setSearcherror(false);
     };  
             
-   const onChangeBorrow = async (e: SelectChangeEvent) =>{
-    const borrowid = e.target.value;
-    let res = await GetBorrow(borrowid);
+   const onChangePayback = async (e: SelectChangeEvent) =>{
+    const paybackid = e.target.value;
+    let res = await GetPayback(paybackid);
     if (res.status) {
-        setBorrow(res.data);
+        setPayback(res.data);
         console.log("Load BookingUser Complete");
         console.log(res);
-        searchBorrowid(res.data.ID);
+        searchPaybackid(res.data.ID);
     }
     else{
         console.log("Load Borrow Incomplete!!!");
@@ -83,27 +90,15 @@ function BorrowDelete() {
     }
   }
 
-    async function searchBorrowid(id: any) {
-    let res = await GetBorrow(id);
+    async function searchPaybackid(id: any) {
+    let res = await GetPayback(id);
     console.log(res);
     if (res.status) {
-        setBorrow(res.data);
-        searchBookingid(res.data.Approve?.BookingID);
+        setPayback(res.data);
     } else{
         setSearcherror(true);
         setErrorMessage(res.data);
     }
-    }
-
-    async function searchBookingid(id: any) {
-    let res = await GetBooking(id);     
-    console.log(res);
-        if (res) {
-            setBooking(res);
-        }
-        else{
-            console.log("Load booking InComplete!!!!");
-        } 
     }
   
     const getUser = async () => {
@@ -119,10 +114,10 @@ function BorrowDelete() {
     }
     };
 
-    const listBorrows = async () => {
-        let res = await ListBorrows();
+    const listPaybacks = async () => {
+        let res = await ListPaybacks();
         if (res) {
-          setBorrows(res); 
+          setPaybacks(res); 
         }
         else{
           console.log("Load Approves InComplete!!!!");
@@ -130,18 +125,30 @@ function BorrowDelete() {
       };
 
         ////////////////////////////////////////search///////////////////
- 
     async function submit() {
-    //let res = await DeleteBorrow(borrow.ID);
-    //let res = await GetBorrow(borrow.ID);
-
-    let res = await GetBorrow(borrow.ID);
-    console.log(res.data)
-    console.log(res)
-    // let res = await GetBorrow(res.data);
-    // console.log(res)
+    let res = await DeletePayback(payback.ID);
     
-    let res1 = await GetDevice(res.data.DeviceID)
+    if (res.status) {
+        setSuccess(true);
+        setErrorMessage("");
+        setBorrow({
+            BorrowAPNote:"",
+            BorrowNote1: "",
+            Timeofborrow:new Date(),
+        })
+        console.log(res.data) //borrow id
+    } else {
+        setError(true);
+        setErrorMessage(res.data);
+        return
+    } 
+    let resbor = await GetPayback(res.data);
+    console.log(resbor.data)
+    console.log(resbor)
+    // let resbor = await GetPayback(res.data);
+    // console.log(resbor)
+    
+    let res1 = await GetDevice(resbor.data.DeviceID)
     if(res1){
       res1.StatusDevice=true
     }
@@ -155,28 +162,11 @@ function BorrowDelete() {
     } else {
         setError(true);
         setErrorMessage(res2.data);
-        return
     }
-    let res3 = await DeleteBorrow(borrow.ID);
-    if (res3.status) {
-        setSuccess(true);
-        setErrorMessage("");
-        setBorrow({
-            BorrowAPNote:"",
-            BorrowNote1: "",
-            Timeofborrow:new Date(),
-        })
-        console.log(res3.data) //borrow id
-        console.log(res3.data) //borrow id
-    } else {
-        setError(true);
-        setErrorMessage(res3.data);
-        return
-    } 
     }
       ///////////////////////////////search/////////////////////////
 useEffect(() => {
-    listBorrows();
+    listPaybacks();
     getUser();},[]);
 
 return (
@@ -228,17 +218,17 @@ return (
     <Grid item xs={12}>รหัสการยืมอุปกรณ์</Grid>
         <Grid item xs={12} >  
         <FormControl required fullWidth> 
-              <InputLabel id="menu-BorrowID">กรุณาเลือกรหัสการยืมอุปกรณ์</InputLabel>
+              <InputLabel id="menu-PaybackID">กรุณาเลือกรหัสการยืมอุปกรณ์</InputLabel>
               <Select
-                id="BorrowID"
+                id="PaybackID"
                 value={borrow.ID || ""}
                 label="กรุณาเลือกรหัสการยืมอุปกรณ์ *"
-                onChange={onChangeBorrow}
+                onChange={onChangePayback}
                 inputProps={{
                   name: "ID",
                 }}
               >
-                {borrows?.map((item: BorrowsInterface) => 
+                {paybacks?.map((item: BorrowsInterface) => 
                   <MenuItem
                     key={item.ID}
                     value={item.ID}
@@ -376,5 +366,6 @@ return (
 </Paper>
 </Container>
  );
+
 }
-export default BorrowDelete;
+export default PaybackDelete;

@@ -12,8 +12,10 @@ func TestDevicePass(t *testing.T) {
 
 	// ข้อมูลทั้งหมดถูกต้องหมดทุก field
 	device := Device{
-		Detail:       "ยางลบ",
-		StatusDevice: true,
+		Detail:           "ยางลบ",
+		Number_of_Device: 10,
+		Note:             "test",
+		StatusDevice:     true,
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -31,8 +33,10 @@ func TestDeviceDetailNull(t *testing.T) {
 
 	// ข้อมูล Detail ไม่ถูกต้องตาม Format
 	device := Device{
-		Detail:       "",
-		StatusDevice: true,
+		Detail:           "",
+		Number_of_Device: 10,
+		Note:             "test",
+		StatusDevice:     true,
 	}
 
 	// ตรวจสอบด้วย govalidator

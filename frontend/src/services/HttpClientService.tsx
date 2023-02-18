@@ -816,6 +816,28 @@ async function GetPayback(id: any) {
   return res;
 }
 
+async function DeletePayback(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/payback/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.error};
+      }
+    });
+
+  return res;
+}
+
 //////////////////////////////////Payback/////////////////
 
 async function ListUsers() {
@@ -1258,7 +1280,7 @@ async function GetUserRole() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
-        localStorage.setItem("roleID", res.data.RoleID);  
+        localStorage.setItem("role", res.data.Role.Name);  
         return res.data;
       } else {
         return false;
@@ -1746,7 +1768,7 @@ export{
 
     GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 
-    CreatePayback,ListPaybacks,GetPayback,
+    CreatePayback,ListPaybacks,GetPayback,DeletePayback,
     
     ListStatusBooks, GetStatusBook,
 

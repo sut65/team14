@@ -22,7 +22,6 @@ import {
     GetBuilding,
     ListObjectives,
     GetObjective,
-    GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -31,7 +30,6 @@ import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
 import { UsersInterface } from "../models/IUser";
 import { ObjectivesInterface } from "../models/IObjective";
-import { RolesInterface } from "../models/IUser";
 import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
@@ -86,9 +84,6 @@ function BookingUpdate() {
     let res = await GetBooking(bid);
     if (res) {
       setBookingUser(res);
-      console.log("Load BookingUser Complete");
-      console.log(res);
-      
     }
     else{
       console.log("Load BookingUser Incomplete!!!");
@@ -96,7 +91,6 @@ function BookingUpdate() {
     res = await GetBuilding(res.Room.BuildingID); 
     if (res) {
       setBuilding(res);
-      console.log("Load Building Complete");
     }
     else{
       console.log("Load Building Incomplete!!!");
@@ -106,9 +100,7 @@ function BookingUpdate() {
   const getUser = async () => {   
     let res = await GetUser(uid);
     if (res.status) {
-      setUser(res.data);
-      console.log("Load User Complete");
-      console.log(`UserName: ${res.data.FirstName} + ${res.data.LastName}`);    
+      setUser(res.data); 
     }
     else{
       console.log("Load User InComplete!!!!");
@@ -120,7 +112,6 @@ function BookingUpdate() {
     let res = await GetObjective(id);
     if (res) {
       setObjectiveOne(res);
-      console.log("Load Objective Complete");
     }
     else{
       console.log("Load Objective InComplete!!!!");
@@ -131,8 +122,6 @@ function BookingUpdate() {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       setBookings(res.data)
-      console.log(res.data)
-      console.log("Load Bookings Complete");
     }
     else{
       console.log("Load Bookings InComplete!!!!");
@@ -143,7 +132,6 @@ function BookingUpdate() {
     let res = await ListObjectives();
     if (res) {
       setObjectives(res);
-      console.log("Load Objectives Complete");
     }
     else{
       console.log("Load Objectives InComplete!!!!");
@@ -180,24 +168,12 @@ function BookingUpdate() {
     listObjectives();
   }, []);
 
-     //Check Role
-     const [role, setRole] = useState<RolesInterface>({});
-     const getUserRole = async () => {
-       let res = await GetUserRole();
-       if (res) {
-         setRole(res);
-       }
-       else {
-         console.log("Load RoleUser InComplete!!!!");
-       }
-     }
-     useEffect(() => {
-       getUserRole(); 
-     }, []);
-     
-     if (role.Name != "User") {
-       return <AccessDenied />
-     }
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "User") {
+    return <AccessDenied />
+  }
+
 
  return (
    <Container maxWidth="md">

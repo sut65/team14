@@ -22,7 +22,6 @@ import {
   ListApproves,
   GetApprove,
   GetStatusBook,
-  GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -32,7 +31,6 @@ import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
 import AccessDenied from "./AccessDenied";
-import { RolesInterface } from "../models/IUser";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -118,7 +116,6 @@ function ApproveUpdate() {
     let res = await ListStatusBooks();
     if (res) {
       setStatusBooks(res);
-      console.log("Load StatusBooks Complete");
     }
     else{
       console.log("Load StatusBooks InComplete!!!!");
@@ -140,8 +137,6 @@ function ApproveUpdate() {
     let res = await GetStatusBook(id);
     if (res) {
       setStatusBook(res);
-      console.log(res);
-      
     }
     else{
       console.log("Load Status Book InComplete!!!!");
@@ -209,21 +204,8 @@ function ApproveUpdate() {
   }, []);
 
   //Check Role
-  const [role, setRole] = useState<RolesInterface>({});
-  const getUserRole = async () => {
-    let res = await GetUserRole();
-    if (res) {
-      setRole(res);
-    }
-    else {
-      console.log("Load RoleUser InComplete!!!!");
-    }
-  }
-  useEffect(() => {
-    getUserRole(); 
-  }, []);
-  
-  if (role.Name != "Admin") {
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
     return <AccessDenied />
   }
 

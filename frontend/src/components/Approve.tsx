@@ -6,13 +6,11 @@ import Container from "@mui/material/Container";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
     ListApproves, 
-    GetUserRole,
 } from "../services/HttpClientService";
 import { ApprovesInterface } from "../models/IApprove";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import AccessDenied from "./AccessDenied";
-import { RolesInterface } from "../models/IUser";
 
 function Approves() {
 
@@ -22,7 +20,6 @@ function Approves() {
       let res = await ListApproves();
       if (res) {
           setApproves(res);
-          console.log(res)
       }
   };
 
@@ -59,23 +56,11 @@ function Approves() {
   }, []);
 
   //Check Role
-  const [role, setRole] = useState<RolesInterface>({});
-  const getUserRole = async () => {
-    let res = await GetUserRole();
-    if (res) {
-      setRole(res);
-    }
-    else {
-      console.log("Load RoleUser InComplete!!!!");
-    }
-  }
-  useEffect(() => {
-    getUserRole(); 
-  }, []);
-  
-  if (role.Name != "Admin") {
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
     return <AccessDenied />
   }
+ 
 
  return (
 
