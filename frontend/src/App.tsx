@@ -73,6 +73,7 @@ import Food_and_DrinkDelete from "./components/Food_and_DrinkDelete";
 import BorrowUpdate from "./components/BorrowUpdate";
 import PaybackUpdate from "./components/PaybackUpdate";
 import PaybackDelete from "./components/PaybackDelete";
+import image from "./images/one.jpg";
 
 const drawerWidth = 260;
 
@@ -133,7 +134,7 @@ const menu = [
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends", role: "Admin"},
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods", role: "Admin"},  
 
-  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "All"},
+  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "User"},
   { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows", role: "Admin"},
 
   { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks", role: "Admin"},
@@ -156,8 +157,6 @@ export default function App() {
   };
 
   const roleLevel = (localStorage.getItem("role")+"");
-  const uid = parseInt(localStorage.getItem("userID")+"")
-  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -168,7 +167,6 @@ export default function App() {
 
   if (!token) {
     return (
-      //<SignIn />
       <div>
         <Router>
           <Routes>
@@ -260,6 +258,8 @@ return (
           <Box
             component="main"
             sx={{
+              backgroundImage: `url(${image})`,
+              backgroundRepeat: "no-repeat",
               backgroundColor: (theme) =>
                 theme.palette.mode === "light"
                   ? theme.palette.grey[100]
@@ -267,6 +267,8 @@ return (
               flexGrow: 1,
               height: "100vh",
               overflow: "auto",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           >
             <Toolbar />
