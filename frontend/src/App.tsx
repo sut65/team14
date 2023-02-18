@@ -258,8 +258,8 @@ return (
           <Box
             component="main"
             sx={{
-              backgroundImage: `url(${image})`,
-              backgroundRepeat: "no-repeat",
+              // backgroundImage: `url(${image})`,
+              // backgroundRepeat: "no-repeat",
               backgroundColor: (theme) =>
                 theme.palette.mode === "light"
                   ? theme.palette.grey[100]
