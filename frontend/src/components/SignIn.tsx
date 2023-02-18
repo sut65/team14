@@ -14,7 +14,10 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
-import { Login, GetUserRole } from "../services/HttpClientService";
+import { Login, GetUserRole, CreateUser } from "../services/HttpClientService";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import UserCreate from "./UserCreate";
+import { Container, Toolbar } from "@mui/material";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -29,6 +32,7 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [User, setUser] = React.useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -36,6 +40,10 @@ function SignIn() {
     const id = event.target.id as keyof typeof signin;
     const { value } = event.target;
     setSignin({ ...signin, [id]: value });
+  };
+
+  const handleChangeCreateUser = () => {
+    return (<UserCreate />);
   };
 
   const handleClose = (
@@ -55,7 +63,7 @@ function SignIn() {
     if (res || tmp) {
       setSuccess(true);  
       setTimeout(() => {
-        window.location.reload();
+        window.location.href = "/home";
       }, 1000);
     } else {
       setError(true);
@@ -63,6 +71,8 @@ function SignIn() {
   };
 
   return (
+
+    
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
         <Snackbar
@@ -150,6 +160,14 @@ function SignIn() {
                 label="Remember me"
               />
               <Button
+                component={Link}
+                to="/user/create"
+                variant="contained"
+                color="primary"
+              >
+                ลงทะเบียนสมาชิก
+              </Button>
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -158,12 +176,16 @@ function SignIn() {
               >
                 Sign In
               </Button>
+              
               <p>test@gmail.com 123456</p>
               <p>CD@gmail.com 123456</p>
             </Box>
           </Box>
         </Grid>
       </Grid>
+
+
+
     </ThemeProvider>
   );
 }
