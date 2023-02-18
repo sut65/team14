@@ -82,7 +82,7 @@ func GetFood_and_Drink(c *gin.Context) {
 // GET /food_and_drinks
 func ListFood_and_Drinks(c *gin.Context) {
 	var food_and_drinks []entity.Food_and_Drink
-	if err := entity.DB().Preload("Foodtype").Preload("Shop").Preload("Admin").Raw("SELECT * FROM food_and_drinks").Find(&food_and_drinks).Error; err != nil {
+	if err := entity.DB().Preload("Foodtype").Preload("Shop").Preload("Admin").Raw("SELECT * FROM food_and_drinks where deleted_at is null").Find(&food_and_drinks).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -122,7 +122,7 @@ func DeleteFood_and_Drink(c *gin.Context) {
 // PATCH /food_and_drinks
 func UpdateFood_and_Drink(c *gin.Context) {
 	var food_and_drink entity.Food_and_Drink
-	
+
 	if err := c.ShouldBindJSON(&food_and_drink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -132,7 +132,6 @@ func UpdateFood_and_Drink(c *gin.Context) {
 	var admin entity.User
 	var foodtype entity.Foodtype
 	var shop entity.Shop
-
 
 	if tx := entity.DB().Where("id = ?", food_and_drink.ID).First(&fad); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรายการอาหาร"})
@@ -150,9 +149,10 @@ func UpdateFood_and_Drink(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบร้าน"})
 		return
 	}
-	
+
 	fad.Admin = admin
 	fad.Foodtype = foodtype
+	fad.Menu = food_and_drink.Menu
 	fad.Shop = shop
 	fad.Address = food_and_drink.Address
 	fad.Tel = food_and_drink.Tel

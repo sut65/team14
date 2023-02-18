@@ -1036,7 +1036,7 @@ async function UpdateFood_and_Drink(data: Food_and_DrinksInterface) {
         
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 
@@ -1308,7 +1308,7 @@ async function UpdateUser(data: UsersInterface) {
         
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 
@@ -1330,7 +1330,7 @@ async function DeleteUser(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 
