@@ -276,7 +276,7 @@ func TestUserStudentID(t *testing.T) {
 		Email:                "bbb@gmail.com",
 		PhoneNumber:          "0555555555",
 		IdentificationNumber: "1234567890123",
-		StudentID:            "B123456",
+		StudentID:            "M123456",
 		Age:                  20,
 		Password:             "123456",
 		BirthDay:             time.Now().AddDate(2002, 04, 20),

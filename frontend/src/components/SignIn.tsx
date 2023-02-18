@@ -15,6 +15,7 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
 import { Login, GetUserRole } from "../services/HttpClientService";
+import { Link as RouterLink } from "react-router-dom";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -150,6 +151,14 @@ function SignIn() {
                 label="Remember me"
               />
               <Button
+                //component={RouterLink}
+                //to="/user/create"
+                variant="contained"
+                color="primary"
+              >
+                Sign Up
+              </Button>
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -158,6 +167,7 @@ function SignIn() {
               >
                 Sign In
               </Button>
+              
               <p>test@gmail.com 123456</p>
               <p>CD@gmail.com 123456</p>
             </Box>

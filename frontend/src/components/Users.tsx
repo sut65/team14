@@ -61,7 +61,7 @@ function Users() {
              </Typography>
            </Grid>
 
-           <Grid item xs={2}>
+           {/* <Grid item xs={2}>
            <Button
              component={RouterLink}
              to="/user/create"
@@ -70,7 +70,7 @@ function Users() {
            >
              ลงทะเบียนสมาชิก
            </Button>
-           </Grid>
+           </Grid> */}
 
            <Grid item xl={2}>
            <Button
