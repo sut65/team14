@@ -115,18 +115,19 @@ function UserUpdate() {
     
     async function  submit() {
       let data = {
+        ID: user.ID,
         FirstName: user.FirstName,
         LastName: user.LastName,
         Email: user.Email,
         Phonenumber: user.PhoneNumber,
         IdentificationNumber: user.IdentificationNumber,
         StudentID: user.StudentID,
-        Age: typeof user.Age === "string" ? parseInt(user.Age) : 0,
+        Age: typeof user.Age === "string" ? parseInt(user.Age) : user.Age,
         Password: user.Password,
-        BirthDay: date,
+        BirthDay: user.BirthDay,
         
         EducationLevelID: convertType(user.EducationLevelID),
-        RoleID: 1,
+        RoleID: convertType(user.RoleID),
         GenderID: convertType(user.GenderID),
     };
     console.log(data)
@@ -353,8 +354,13 @@ function UserUpdate() {
              <p>วัน/เดือน/ปีเกิด</p>
              <LocalizationProvider dateAdapter={AdapterDateFns}>
                <DatePicker
-                 value={user.BirthDay + ""}
-                 onChange={(newValue) => {setDate(date);}} //ยังแก้ไม่ได้
+                 value={user.BirthDay}
+                 onChange={(newValue) => {
+                  setUser({
+                    ...user,
+                    BirthDay: newValue,
+                  });
+                }}
                  renderInput={(params) => <TextField {...params} />}
                />
              </LocalizationProvider>

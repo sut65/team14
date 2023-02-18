@@ -164,8 +164,8 @@ function SignIn() {
               <Button
                 component={Link}
                 to="/user/create"
-                variant="contained"
-                color="primary"
+                variant="outlined"
+                color="inherit"
               >
                 ลงทะเบียนสมาชิก
               </Button>
