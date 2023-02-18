@@ -65,7 +65,7 @@ func main() {
 			api.GET("/genders", controller.ListGenders)
 			api.GET("/roles", controller.ListRoles)
 			api.DELETE("/user/:id", controller.DeleteUser)
-			api.PATCH("/user", controller.UpdateUser)
+			api.PUT("/user", controller.UpdateUser)
 
 			// Appprove Routes
 			api.GET("/approves", controller.ListApproves)
@@ -135,7 +135,8 @@ func main() {
 			api.GET("/shops", controller.ListShops)
 			api.GET("/foodtypes", controller.ListFoodtypes)
 			api.DELETE("/food_and_drink/:id", controller.DeleteFood_and_Drink)
-			api.PATCH("/food_and_drink", controller.UpdateFood_and_Drink)
+			api.PUT("/food_and_drink", controller.UpdateFood_and_Drink)
+			
 		}
 	}
 	// Create User For Login
