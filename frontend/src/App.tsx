@@ -163,8 +163,10 @@ export default function App() {
   }
 
   const signout = () => {
-    localStorage.clear();
-    window.location.href = "/";
+    setTimeout(() => {
+      localStorage.clear();
+      window.location.href = "/";
+    }, 1000);
   };
 return (
   <Router>

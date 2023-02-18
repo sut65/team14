@@ -1,60 +1,81 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { 
     ListApproves, 
+    GetUserRole,
 } from "../services/HttpClientService";
 import { ApprovesInterface } from "../models/IApprove";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import AccessDenied from "./AccessDenied";
+import { RolesInterface } from "../models/IUser";
 
 function Approves() {
 
-    const [approves, setApproves] = React.useState<ApprovesInterface[]>([]);
+  const [approves, setApproves] = React.useState<ApprovesInterface[]>([]);
 
-    const listApproves = async () => {
-        let res = await ListApproves();
-        if (res) {
-            setApproves(res);
-            console.log(res)
-        }
-    };
+  const listApproves = async () => {
+      let res = await ListApproves();
+      if (res) {
+          setApproves(res);
+          console.log(res)
+      }
+  };
 
-    const columns: GridColDef[] = [
-        { field: "ID", headerName: "ID", width: 100 },
-        { field: "Code", headerName: "รหัสการอนุมัติ", width: 120 },
-        {
-          field: "Booking",
-          headerName: "รหัสการจองใช้ห้อง",
-          width: 140,
-          valueFormatter: (params) => `${(params.value.Code)}`,
-        },
-        { 
-          field: "ApproveTime", headerName: "เวลาที่อนุมัติ", width: 200,
-          valueFormatter: (params) => `${new Date(params.value)}`,
-        },
-        { field: "Note", headerName: "Note", width: 150 },
-        {
-            field: "User",
-            headerName: "ผู้อนุมัติ",
-            width: 120,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
-        },
-        {
-            field: "StatusBook",
-            headerName: "สถานะการจอง",
-            width: 120,
-            valueFormatter: (params) => params.value.Detail,
-        },
-    ];
+  const columns: GridColDef[] = [
+      { field: "ID", headerName: "ID", width: 100 },
+      { field: "Code", headerName: "รหัสการอนุมัติ", width: 120 },
+      {
+        field: "Booking",
+        headerName: "รหัสการจองใช้ห้อง",
+        width: 140,
+        valueFormatter: (params) => `${(params.value.Code)}`,
+      },
+      { 
+        field: "ApproveTime", headerName: "เวลาที่อนุมัติ", width: 200,
+        valueFormatter: (params) => `${new Date(params.value)}`,
+      },
+      { field: "Note", headerName: "Note", width: 150 },
+      {
+          field: "User",
+          headerName: "ผู้อนุมัติ",
+          width: 120,
+          valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,
+      },
+      {
+          field: "StatusBook",
+          headerName: "สถานะการจอง",
+          width: 120,
+          valueFormatter: (params) => params.value.Detail,
+      },
+  ];
 
-    useEffect(() => {
-        listApproves();
-    }, []);
+  useEffect(() => {
+      listApproves();
+  }, []);
+
+  //Check Role
+  const [role, setRole] = useState<RolesInterface>({});
+  const getUserRole = async () => {
+    let res = await GetUserRole();
+    if (res) {
+      setRole(res);
+    }
+    else {
+      console.log("Load RoleUser InComplete!!!!");
+    }
+  }
+  useEffect(() => {
+    getUserRole(); 
+  }, []);
+  
+  if (role.Name != "Admin") {
+    return <AccessDenied />
+  }
 
  return (
 

@@ -22,6 +22,7 @@ import {
   ListApproves,
   GetApprove,
   GetStatusBook,
+  GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -30,7 +31,8 @@ import { StatusBooksInterface } from "../models/IStatusBook";
 import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
-import { log } from "console";
+import AccessDenied from "./AccessDenied";
+import { RolesInterface } from "../models/IUser";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -205,6 +207,25 @@ function ApproveUpdate() {
     getUser();
     listApprove();
   }, []);
+
+  //Check Role
+  const [role, setRole] = useState<RolesInterface>({});
+  const getUserRole = async () => {
+    let res = await GetUserRole();
+    if (res) {
+      setRole(res);
+    }
+    else {
+      console.log("Load RoleUser InComplete!!!!");
+    }
+  }
+  useEffect(() => {
+    getUserRole(); 
+  }, []);
+  
+  if (role.Name != "Admin") {
+    return <AccessDenied />
+  }
 
  return (
    <Container maxWidth="lg">

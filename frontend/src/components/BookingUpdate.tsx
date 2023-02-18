@@ -22,6 +22,7 @@ import {
     GetBuilding,
     ListObjectives,
     GetObjective,
+    GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -30,6 +31,8 @@ import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
 import { UsersInterface } from "../models/IUser";
 import { ObjectivesInterface } from "../models/IObjective";
+import { RolesInterface } from "../models/IUser";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -176,6 +179,25 @@ function BookingUpdate() {
     listBookingbyUser();
     listObjectives();
   }, []);
+
+     //Check Role
+     const [role, setRole] = useState<RolesInterface>({});
+     const getUserRole = async () => {
+       let res = await GetUserRole();
+       if (res) {
+         setRole(res);
+       }
+       else {
+         console.log("Load RoleUser InComplete!!!!");
+       }
+     }
+     useEffect(() => {
+       getUserRole(); 
+     }, []);
+     
+     if (role.Name != "User") {
+       return <AccessDenied />
+     }
 
  return (
    <Container maxWidth="md">

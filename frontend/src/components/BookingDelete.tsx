@@ -15,20 +15,19 @@ import { BookingsInterface } from "../models/IBooking";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
-    GetUser,
     ListBookingbyUser,
     GetBooking,
     GetBuilding,
-    ListObjectives,
     DeleteBooking,
+    GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
-import { UsersInterface } from "../models/IUser";
-import { ObjectivesInterface } from "../models/IObjective";
+import { RolesInterface } from "../models/IUser";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -113,6 +112,25 @@ function BookingDelete() {
   useEffect(() => {
     listBookingbyUser();
   }, []);
+
+    //Check Role
+    const [role, setRole] = useState<RolesInterface>({});
+    const getUserRole = async () => {
+      let res = await GetUserRole();
+      if (res) {
+        setRole(res);
+      }
+      else {
+        console.log("Load RoleUser InComplete!!!!");
+      }
+    }
+    useEffect(() => {
+      getUserRole(); 
+    }, []);
+    
+    if (role.Name != "User") {
+      return <AccessDenied />
+    }
 
  return (
    <Container maxWidth="md">

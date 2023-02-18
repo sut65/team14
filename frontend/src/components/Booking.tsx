@@ -7,6 +7,7 @@ import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, M
 import { BookingsInterface } from "../models/IBooking";
 import { 
   GetRoom,
+  GetUserRole,
   ListBookingbyRoom, ListBookingbyUser, ListBookings, ListBuildings, ListRoomsbyBuilding, 
 } from "../services/HttpClientService";
 import moment from "moment";
@@ -25,24 +26,25 @@ import {
 import { BuildingsInterface } from "../models/IBuilding";
 import { RoomsInterface } from "../models/IRoom";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import AccessDenied from "./AccessDenied";
+import { RolesInterface } from "../models/IUser";
 
 function Bookings() {
   const uid = localStorage.getItem("userID")
   const [data, setData] = useState<AppointmentModel[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [allBookings, setAllBookings] = useState<BookingsInterface[]>([]);
-  const [roomBookings, setRoomBookings] = useState<BookingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [roomOne, setRoomOne] = useState<RoomsInterface>({});
   const [currentDate, setCurrentDate] = useState(
-    //new Date()
-    (moment("2023-02-02T06:00:00Z", "YYYY-MM-DDTHH:mm:ssZ").toDate())
+    new Date(),
   );
-  console.log(currentDate)
   const [checkedAll, setCheckedAll] = useState(false);
   const [checkedUser, setCheckedUser] = useState(false);
   const [checkedRoom, setCheckedRoom] = useState(false);
   const [key, setKey] = useState(false);
+
+  
 
   const currentDateChange = (currentDate: Date) => {
       setCurrentDate(currentDate);
@@ -51,7 +53,6 @@ function Bookings() {
   const listBookingRoom = async (id: any) => {
     let res = await ListBookingbyRoom(id);
       if (res) {
-        console.log(`Load BookingRoom: ${id} Complete`);
         schedule(res)
       }
       else {
@@ -62,7 +63,6 @@ function Bookings() {
   const listBookingAll = async () => {
     let res = await ListBookings();
     if (res) {
-      console.log("Load BookingAll Complete");
       setAllBookings(res)
       schedule(res)        
     }
@@ -75,7 +75,6 @@ function Bookings() {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       schedule(res.data);
-      console.log("Load BookingUser Complete");
     }
     else {
       console.log("Load BookingUser InComplete!!!!");
@@ -95,7 +94,6 @@ function Bookings() {
     else{ 
       listBookingRoom(0);
     }
-    
   };
 
   const onChangeBuilding = async (e: SelectChangeEvent) =>{
@@ -104,7 +102,6 @@ function Bookings() {
     if (res) {
       setRooms(res);
       setRoomOne({});
-      console.log("Load Rooms Complete");
     }
     else{
       console.log("Load Rooms Incomplete!!!");
@@ -117,7 +114,6 @@ function Bookings() {
     let res = await GetRoom(rid);
     if (res) {
       setRoomOne(res);
-      console.log("Load Room Complete");
     }
     else{
       console.log("Load Room Incomplete!!!");
@@ -129,7 +125,6 @@ function Bookings() {
     let res = await ListBuildings();
     if (res) {
       setBuildings(res);
-      console.log("Load Buildings Complete");
     }
     else{
       console.log("Load Buildings InComplete!!!!");
@@ -219,6 +214,25 @@ function Bookings() {
         )
     }
   )
+
+  //Check Role
+  const [role, setRole] = useState<RolesInterface>({});
+  const getUserRole = async () => {
+    let res = await GetUserRole();
+    if (res) {
+      setRole(res);
+    }
+    else {
+      console.log("Load RoleUser InComplete!!!!");
+    }
+  }
+  useEffect(() => {
+    getUserRole(); 
+  }, []);
+  
+  if (role.Name != "User") {
+    return <AccessDenied />
+  }
   
  return (
 <div>

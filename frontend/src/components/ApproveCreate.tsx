@@ -20,6 +20,7 @@ import {
     GetUser,
     GetBookingbyCodeThatNotApprove,
     ListBookings,
+    GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
@@ -28,6 +29,8 @@ import { StatusBooksInterface } from "../models/IStatusBook";
 import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
+import AccessDenied from "./AccessDenied";
+import { RolesInterface } from "../models/IUser";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -188,6 +191,26 @@ function ApproveCreate() {
     const min = 10000, max = 99999;
     const random = Math.floor(Math.random() * (max - min + 1)) + min;
     setApprove({ ...approve, ["Code"]: `Ap${random}`, });
+  }
+
+  //Check Role
+  const [role, setRole] = useState<RolesInterface>({});
+  const getUserRole = async () => {
+    let res = await GetUserRole();
+    if (res) {
+      setRole(res);
+      console.log(res)
+    }
+    else {
+      console.log("Load RoleUser InComplete!!!!");
+    }
+  }
+  useEffect(() => {
+    getUserRole(); 
+  }, []);
+  
+  if (role.Name != "Admin") {
+    return <AccessDenied />
   }
 
  return (

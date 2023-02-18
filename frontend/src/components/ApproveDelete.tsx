@@ -19,12 +19,15 @@ import {
   GetBookingbyCode,
   ListApproves,
   GetApprove,
+  GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
+import AccessDenied from "./AccessDenied";
+import { RolesInterface } from "../models/IUser";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -113,6 +116,25 @@ function ApproveDelete() {
   useEffect(() => {
     listApprove();
   }, []);
+
+  //Check Role
+  const [role, setRole] = useState<RolesInterface>({});
+  const getUserRole = async () => {
+    let res = await GetUserRole();
+    if (res) {
+      setRole(res);
+    }
+    else {
+      console.log("Load RoleUser InComplete!!!!");
+    }
+  }
+  useEffect(() => {
+    getUserRole(); 
+  }, []);
+  
+  if (role.Name != "Admin") {
+    return <AccessDenied />
+  }
 
  return (
    <Container maxWidth="lg">

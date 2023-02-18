@@ -98,7 +98,7 @@
       "id": "2c072684-b525-4020-b613-6555e37d86ac",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "target": "xpath=//li[contains(.,'ตึกB')]",
       "targets": [
         ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='menu-BuildingID']/div[3]/ul/li[2]", "xpath:idRelative"],
@@ -188,7 +188,7 @@
       "id": "c9241c14-17de-4a78-9a25-e2e1e8f2191d",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root:nth-child(1)",
+      "target": "xpath=//li[contains(.,'เล่น')]",
       "targets": [
         ["css=.MuiMenuItem-root:nth-child(1)", "css:finder"],
         ["xpath=//div[@id='menu-ObjectiveID']/div[3]/ul/li", "xpath:idRelative"],
@@ -315,7 +315,7 @@
       "id": "a465d355-d2e5-43ab-8fc3-3ffce5ff2774",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "target": "xpath=//li[contains(.,'ตึกA')]",
       "targets": [
         ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='menu-BuildingID']/div[3]/ul/li[2]", "xpath:idRelative"],
@@ -360,7 +360,7 @@
       "id": "5ad81cec-5d60-4bf4-a151-7e91d141776b",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root",
+      "target": "xpath=//li[contains(.,'A4101')]",
       "targets": [
         ["css=.MuiMenuItem-root", "css:finder"],
         ["xpath=//div[@id='menu-RoomID']/div[3]/ul/li", "xpath:idRelative"],
@@ -1183,7 +1183,7 @@
       "id": "de0c6a6a-6a3d-429d-9b59-6ef03e6cb848",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "target": "xpath=//li[contains(.,'ตึกA')]",
       "targets": [
         ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
         ["xpath=//div[@id='menu-BuildingID']/div[3]/ul/li[2]", "xpath:idRelative"],
@@ -1228,7 +1228,7 @@
       "id": "602e0ca2-d0c7-4ed1-be1d-04a542042deb",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root",
+      "target": "xpath=//li[contains(.,'A4101')]",
       "targets": [
         ["css=.MuiMenuItem-root", "css:finder"],
         ["xpath=//div[@id='menu-RoomID']/div[3]/ul/li", "xpath:idRelative"],
@@ -1273,7 +1273,7 @@
       "id": "a04d7830-58a5-434c-830a-db9ee250a77e",
       "comment": "",
       "command": "click",
-      "target": "css=.MuiMenuItem-root:nth-child(1)",
+      "target": "xpath=//li[contains(.,'เล่น')]",
       "targets": [
         ["css=.MuiMenuItem-root:nth-child(1)", "css:finder"],
         ["xpath=//div[@id='menu-ObjectiveID']/div[3]/ul/li", "xpath:idRelative"],

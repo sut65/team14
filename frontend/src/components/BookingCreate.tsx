@@ -19,16 +19,17 @@ import {
     ListBuildings, ListRoomsbyBuilding,
     ListObjectives,
     GetUser,
+    GetUserRole,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-import format from "date-fns/format";
 import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
 import { RoomsInterface } from "../models/IRoom";
 import { ObjectivesInterface } from "../models/IObjective";
-import { UsersInterface } from "../models/IUser";
+import { RolesInterface, UsersInterface } from "../models/IUser";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -165,6 +166,25 @@ function BookingCreate() {
     const random = Math.floor(Math.random() * (max - min + 1)) + min;
     setBooking({ ...booking, ["Code"]: `Bk${random}`, });
   }
+
+    //Check Role
+    const [role, setRole] = useState<RolesInterface>({});
+    const getUserRole = async () => {
+      let res = await GetUserRole();
+      if (res) {
+        setRole(res);
+      }
+      else {
+        console.log("Load RoleUser InComplete!!!!");
+      }
+    }
+    useEffect(() => {
+      getUserRole(); 
+    }, []);
+    
+    if (role.Name != "User") {
+      return <AccessDenied />
+    }
 
  return (
    <Container maxWidth="md">
