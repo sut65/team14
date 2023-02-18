@@ -125,7 +125,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/", role: "All" },
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/home", role: "All" },
 
   { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings", role: "User" }, 
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <AssignmentTurnedInIcon />, path: "/approves", role: "Admin" },
@@ -167,7 +167,18 @@ export default function App() {
   }, []);
 
   if (!token) {
-    return <SignIn />;
+    return (
+      //<SignIn />
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/user/create" element={<UserCreate />} />
+            <Route path="*" element={<SignIn />} />
+          </Routes>
+        </Router>
+      </div>
+    );
   }
 
   const signout = () => {
@@ -260,8 +271,10 @@ return (
           >
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
               <Routes>
-                <Route path="/" element={<Home />} />
+                {/* <Route path="/" element={<SignIn />} /> */}
+                <Route path="/home" element={<Home />} />
 
                 <Route path="/bookings" element={<Booking />} />
                 <Route path="/booking/create" element={<BookingCreate />} />
@@ -269,7 +282,7 @@ return (
                 <Route path="/booking/delete" element={<BookingDelete />} />
 
                 <Route path="/users" element={<User />} />
-                <Route path="/user/create" element={<UserCreate />} />
+                
                 <Route path="/user/update" element={<UserUpdate />} />
                 <Route path="/user/delete" element={<UserDelete />} />
 
