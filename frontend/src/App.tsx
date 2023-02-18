@@ -70,6 +70,9 @@ import OrderUpdate from "./components/OrderUpdate";
 import BorrowDelete from "./components/BorrowDelete";
 import Food_and_DrinkUpdate from "./components/Food_and_DrinkUpdate";
 import Food_and_DrinkDelete from "./components/Food_and_DrinkDelete";
+import BorrowUpdate from "./components/BorrowUpdate";
+import PaybackUpdate from "./components/PaybackUpdate";
+import PaybackDelete from "./components/PaybackDelete";
 
 const drawerWidth = 260;
 
@@ -274,7 +277,7 @@ return (
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
-                {/* <Route path="/borrow/update" element={<BorrowUpdate />} /> */}
+                <Route path="/borrow/update" element={<BorrowUpdate />} />
                 <Route path="/borrow/delete" element={<BorrowDelete />} />
 
                 <Route path="/food_and_drinks" element={<Food_and_Drink />} />
@@ -298,6 +301,8 @@ return (
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />
+                {/* <Route path="/payback/update" element={<PaybackUpdate />} />
+                <Route path="/payback/delete" element={<PaybackDelete />} /> */}
 
                 <Route path="/devices" element={<Device />} />
                 <Route path="/device/create" element={<DeviceCreate />} />

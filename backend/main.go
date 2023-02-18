@@ -105,7 +105,7 @@ func main() {
 			r.POST("/paybacks", controller.CreatePayback)
 			r.GET("/payback/:id", controller.GetPayback)
 			r.GET("/paybacks", controller.ListPaybacks)
-			r.DELETE("/payback", controller.DeletePayback)
+			r.DELETE("/payback/:id", controller.DeletePayback)
 			r.PATCH("/payback/:id", controller.UpdatePayback)
 
 			// Device
