@@ -122,14 +122,46 @@ func DeleteFood_and_Drink(c *gin.Context) {
 // PATCH /food_and_drinks
 func UpdateFood_and_Drink(c *gin.Context) {
 	var food_and_drink entity.Food_and_Drink
+	
 	if err := c.ShouldBindJSON(&food_and_drink); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", food_and_drink.ID).First(&food_and_drink); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "objective not found"})
+
+	var fad entity.Food_and_Drink
+	var admin entity.User
+	var foodtype entity.Foodtype
+	var shop entity.Shop
+
+
+	if tx := entity.DB().Where("id = ?", food_and_drink.ID).First(&fad); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรายการอาหาร"})
 		return
 	}
+	if tx := entity.DB().Where("id = ?", food_and_drink.AdminID).First(&admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบสมาชิก"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", food_and_drink.FoodtypeID).First(&foodtype); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบประเภทอาหาร]"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", food_and_drink.ShopID).First(&shop); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบร้าน"})
+		return
+	}
+	
+	fad.Admin = admin
+	fad.Foodtype = foodtype
+	fad.Shop = shop
+	fad.Address = food_and_drink.Address
+	fad.Tel = food_and_drink.Tel
+
+	if _, err := govalidator.ValidateStruct(fad); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	if err := entity.DB().Save(&food_and_drink).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

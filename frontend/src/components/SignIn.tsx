@@ -14,9 +14,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
-import { Login, GetUserRole, CreateUser } from "../services/HttpClientService";
-import { Link, Link as RouterLink } from "react-router-dom";
-import UserCreate from "./UserCreate";
+import { Login, GetUserRole } from "../services/HttpClientService";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -31,7 +29,6 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [User, setUser] = React.useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -39,10 +36,6 @@ function SignIn() {
     const id = event.target.id as keyof typeof signin;
     const { value } = event.target;
     setSignin({ ...signin, [id]: value });
-  };
-
-  const handleChangeCreateUser = () => {
-    setUser(true);
   };
 
   const handleClose = (
@@ -156,17 +149,6 @@ function SignIn() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              <Button>
-                    <Link
-                      to="/user/create"
-                      style={{
-                        color: "#252525",
-                        textDecoration: "none",
-                      }}
-                    >
-                      Sign up
-                    </Link>
-                  </Button>
               <Button
                 type="submit"
                 fullWidth
@@ -176,26 +158,12 @@ function SignIn() {
               >
                 Sign In
               </Button>
-              
               <p>test@gmail.com 123456</p>
               <p>CD@gmail.com 123456</p>
             </Box>
           </Box>
         </Grid>
       </Grid>
-      {User && <Box sx={{ mb: 2, display: "flex", justifyContent: "center" }}>
-                  <Button>
-                    <Link
-                      to="/user/create"
-                      style={{
-                        color: "#252525",
-                        textDecoration: "none",
-                      }}
-                    >
-                      Sign up
-                    </Link>
-                  </Button>
-                </Box>}
     </ThemeProvider>
   );
 }
