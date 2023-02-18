@@ -116,6 +116,7 @@ function Food_and_DrinkUpdate() {
 
     async function submit() {
       let data = {
+          ID: food_and_drink.ID,
           Menu: food_and_drink.Menu,
           Address: food_and_drink.Address,
           Tel: food_and_drink.Tel,
