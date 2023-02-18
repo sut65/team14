@@ -3,8 +3,10 @@ package controller
 import (
 	"net/http"
 
+	"github.com/asaskevich/govalidator"
 	"github.com/gin-gonic/gin"
 	"github.com/sut65/team14/entity"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // // POST /users
@@ -44,8 +46,10 @@ func ListUsers(c *gin.Context) {
 
 // DELETE /users/:id
 func DeleteUser(c *gin.Context) {
+	var User entity.User
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM users WHERE id = ?", id); tx.RowsAffected == 0 {
+	// UPDATE user SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&User); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
 		return
 	}
@@ -59,15 +63,65 @@ func UpdateUser(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if tx := entity.DB().Where("id = ?", user.ID).First(&user); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+
+	var us entity.User
+	var gender entity.Gender
+	var educationlevel entity.EducationLevel
+	var role entity.Role
+
+	if tx := entity.DB().Where("id = ?", user.ID).First(&us); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบรายชื่อสมาชิก"})
 		return
 	}
-	if err := entity.DB().Save(&user).Error; err != nil {
+	if tx := entity.DB().Where("id = ?", user.RoleID).First(&role); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบบทบาท]"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", user.GenderID).First(&gender); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบเพศ"})
+		return
+	}
+	if tx := entity.DB().Where("id = ?", user.EducationLevelID).First(&educationlevel); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่พบระดับการศึกษา"})
+		return
+	}
+
+	hashPassword, err := bcrypt.GenerateFromPassword([]byte(string(user.Password)), 14)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "error hashing password"})
+		return
+	}
+
+	us.Gender = gender
+	us.Role = role
+	us.EducationLevel = educationlevel
+	us.FirstName = user.FirstName
+	us.LastName = user.LastName
+	us.Email = user.Email
+	us.PhoneNumber = user.PhoneNumber
+	us.IdentificationNumber = user.IdentificationNumber
+	us.StudentID = user.StudentID
+	us.Age = user.Age
+
+	if user.Password != "" {
+		us.Password = user.Password
+	}
+
+	us.BirthDay = user.BirthDay
+
+	if _, err := govalidator.ValidateStruct(us); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"data": user})
+	if user.Password != "" {
+		us.Password = string(hashPassword)
+	}
+
+	if err := entity.DB().Save(&us).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": us})
 }
 
 // GET /Genders

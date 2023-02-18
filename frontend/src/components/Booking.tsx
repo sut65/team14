@@ -219,10 +219,9 @@ function Bookings() {
   }
   
  return (
-<div>
   <Container maxWidth="lg">
-    <Paper>
-    <Grid container spacing={1} sx={{ padding: 2 }}>
+    {/* <Paper> */}
+    <Grid container spacing={3} sx={{ padding: 2 }}>
       <Grid item xs={12}> {/* ปุ่ม */}
       <Paper>
         <Grid container spacing={1} sx={{ padding: 2 }} >
@@ -381,7 +380,7 @@ function Bookings() {
       </Paper>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} >
       <Paper>
         <Scheduler 
             data={data}
@@ -429,6 +428,7 @@ function Bookings() {
           }
           
           tr:nth-child(even){background-color: #bebebe;}
+          tr:nth-child(odd){background-color: #fff;}
           tr:hover {background-color: #ddd;}
           th {
             padding-top: 12px;
@@ -451,10 +451,9 @@ function Bookings() {
         </table>
       </Grid>
     </Grid>
-    </Paper>
+    {/* </Paper> */}
     
   </Container>
-</div>
 );
 
 }
