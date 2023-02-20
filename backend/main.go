@@ -99,7 +99,7 @@ func main() {
 			api.GET("/borrow/:id", controller.GetBorrow)
 			api.GET("/borrows", controller.ListBorrows)
 			api.DELETE("/borrow/:id", controller.DeleteBorrow)
-			api.PATCH("/borrow/:id", controller.UpdateBorrow)
+			api.PUT("/borrow", controller.UpdateBorrow)
 
 			// Payback
 			api.POST("/paybacks", controller.CreatePayback)
@@ -136,7 +136,7 @@ func main() {
 			api.GET("/foodtypes", controller.ListFoodtypes)
 			api.DELETE("/food_and_drink/:id", controller.DeleteFood_and_Drink)
 			api.PUT("/food_and_drink", controller.UpdateFood_and_Drink)
-			
+
 		}
 	}
 	// Create User For Login
