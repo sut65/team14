@@ -70,6 +70,9 @@ function Paybacks() {
                 </Typography>
               </Grid>
 
+              <Grid item xs={2}></Grid>
+              <Grid item xs={1}></Grid>
+
               <Grid item xs={2}>
               <Button
                 component={RouterLink}
@@ -81,7 +84,7 @@ function Paybacks() {
               </Button>
               </Grid>
 
-              <Grid item xs={2}>
+              {/* <Grid item xs={2}>
               <Button
                 component={RouterLink}
                 to="/payback/update"
@@ -90,7 +93,7 @@ function Paybacks() {
               >
                 Update Payback
               </Button>
-              </Grid>
+              </Grid>*/}
 
               <Grid item xs={2}>
               <Button
@@ -101,7 +104,8 @@ function Paybacks() {
               >
                 Delete Payback
               </Button>
-              </Grid>
+              </Grid> 
+            
             </Grid>
           </Paper>
         </Grid>

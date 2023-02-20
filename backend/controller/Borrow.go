@@ -128,20 +128,61 @@ func DeleteBorrow(c *gin.Context) {
 // PATCH /Borrows
 func UpdateBorrow(c *gin.Context) {
 	var Borrow entity.Borrow
+	var tmp entity.Borrow
+
 	if err := c.ShouldBindJSON(&Borrow); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-
-	if tx := entity.DB().Where("id = ?", Borrow.ID).First(&Borrow); tx.RowsAffected == 0 {
+	// ค้นหา Borrow ด้วย ID
+	if tx := entity.DB().Where("id = ?", Borrow.ID).First(&tmp); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Borrow not found"})
 		return
 	}
 
-	if err := entity.DB().Save(&Borrow).Error; err != nil {
+	// var BorrowNote1 entity.Borrow
+	// var BorrowAPNote entity.Borrow
+
+	var Admin entity.User
+	var Device entity.Device
+	var DeviceType entity.DeviceType
+
+	// ค้นหา user ด้วย id
+	if tx := entity.DB().Where("id = ?", Borrow.Admin).First(&Admin); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "user not found"})
+		return
+	}
+
+	// ค้นหา devicetype ด้วย id
+	if tx := entity.DB().Where("id = ?", Borrow.Device.DeviceTypeID).First(&DeviceType); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Booking not found"})
+		return
+	}
+
+	// ค้นหา device ด้วย id
+	if tx := entity.DB().Where("id = ?", Borrow.DeviceID).First(&Device); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Device not found"})
+		return
+	}
+
+
+	tmp.Device = Device
+	tmp.Device.DeviceTypeID = Device.DeviceTypeID
+	tmp.Admin = Admin
+	tmp.BorrowAPNote = Borrow.BorrowAPNote
+	tmp.BorrowNote1 = Borrow.BorrowNote1
+
+	if err := entity.DB().Save(&tmp).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": Borrow})
+	c.JSON(http.StatusOK, gin.H{"data": tmp})
+	
+	// if err := entity.DB().Save(&Borrow).Error; err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
+
+	// c.JSON(http.StatusOK, gin.H{"data": Borrow})
 }

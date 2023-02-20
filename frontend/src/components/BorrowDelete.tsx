@@ -68,7 +68,7 @@ function BorrowDelete() {
     let res = await GetBorrow(borrowid);
     if (res.status) {
         setBorrow(res.data);
-        console.log("Load BookingUser Complete");
+        console.log("Load Payback Complete");
         console.log(res);
         searchBorrowid(res.data.ID);
     }
@@ -86,13 +86,13 @@ function BorrowDelete() {
     async function searchBorrowid(id: any) {
     let res = await GetBorrow(id);
     console.log(res);
-    if (res.status) {
-        setBorrow(res.data);
-        searchBookingid(res.data.Approve?.BookingID);
-    } else{
-        setSearcherror(true);
-        setErrorMessage(res.data);
-    }
+        if (res.status) {
+            setBorrow(res.data);
+            searchBookingid(res.data.Approve?.BookingID);
+        } else{
+            setSearcherror(true);
+            setErrorMessage(res.data);
+        }
     }
 
     async function searchBookingid(id: any) {
@@ -132,24 +132,18 @@ function BorrowDelete() {
         ////////////////////////////////////////search///////////////////
  
     async function submit() {
-    //let res = await DeleteBorrow(borrow.ID);
-    //let res = await GetBorrow(borrow.ID);
-
     let res = await GetBorrow(borrow.ID);
     console.log(res.data)
     console.log(res)
-    // let res = await GetBorrow(res.data);
-    // console.log(res)
-    
     let res1 = await GetDevice(res.data.DeviceID)
     if(res1){
       res1.StatusDevice=true
     }
     console.log(res1)
+
     let res2 = await UpdateDevice(res1)
     console.log(res2)
     if (res2.status) {
-        //setAlertMessage("บันทึกสำเร็จ")
         setSuccess(true);
         setErrorMessage("");
     } else {
@@ -218,7 +212,7 @@ return (
         color="primary"
         gutterBottom
     >
-    Delete Borrow
+    ยกเลิกการยืมอุปกรณ์
     </Typography>
     </Box>
     </Box>
@@ -368,7 +362,7 @@ return (
         variant="contained"
         color="primary"
         >
-        ยกเลิกการยืมอุปกรณ์
+        ยืนยันการยกเลิกการยืมอุปกรณ์
         </Button>
         </Grid>
     

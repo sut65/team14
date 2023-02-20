@@ -611,6 +611,32 @@ async function DeleteBorrow(id: any) {
   return res;
 }
 
+async function UpdateBorrow(data: BorrowsInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/borrow`, requestOptions)
+  .then((response) => response.json())
+  .then((res) => {
+    
+    if (res.data) {
+      console.log(res.data);
+      return {data: res.data, status: true};
+    } else {     
+      console.log(res.data);
+      return {data: res.error, status: false};
+    }
+    });
+
+  return res;
+}
+
 async function GetDevice(id: any) {
   const requestOptions = {
     method: "GET",
@@ -1764,7 +1790,7 @@ export{
 
     ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink, GetFood_and_Drinks,
 
-    ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
+    ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,UpdateBorrow,
 
     GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 

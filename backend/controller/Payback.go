@@ -10,7 +10,7 @@ import (
 
 // POST /Payback
 func CreatePayback(c *gin.Context) {
-	
+
 	var payback entity.Payback
 	var borrow entity.Borrow
 	var device entity.Device
@@ -43,11 +43,11 @@ func CreatePayback(c *gin.Context) {
 	//สร้าง Payback
 	pbc := entity.Payback{
 		Timeofpayback: payback.Timeofpayback,
-		PBADNote: payback.PBADNote,
-		PBusNote: payback.PBusNote,
+		PBADNote:      payback.PBADNote,
+		PBusNote:      payback.PBusNote,
 
-		Admin:   admin,
-		Device:  device,
+		Admin:  admin,
+		Device: device,
 		Borrow: borrow,
 	}
 
@@ -64,9 +64,6 @@ func CreatePayback(c *gin.Context) {
 	}
 	c.JSON(http.StatusOK, gin.H{"data": pbc})
 }
-
-
-
 
 // GET /Payback/:id
 func GetPayback(c *gin.Context) {
@@ -91,8 +88,6 @@ func ListPaybacks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": Paybacks})
 }
 
-
-
 // DELETE /Paybacks/:id
 func DeletePayback(c *gin.Context) {
 	id := c.Param("id")
@@ -100,7 +95,7 @@ func DeletePayback(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Payback not found"})
 		return
 	}
-	
+
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
@@ -122,8 +117,6 @@ func DeletePayback(c *gin.Context) {
 // 	}
 // 	c.JSON(http.StatusOK, gin.H{"data": id})
 // }
-
-
 
 // PATCH /Paybacks
 func UpdatePayback(c *gin.Context) {

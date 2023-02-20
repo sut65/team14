@@ -322,8 +322,8 @@ return (
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />
-                {/* <Route path="/payback/update" element={<PaybackUpdate />} />
-                <Route path="/payback/delete" element={<PaybackDelete />} /> */}
+                {/* <Route path="/payback/update" element={<PaybackUpdate />} /> */}
+                <Route path="/payback/delete" element={<PaybackDelete />} />
 
                 <Route path="/devices" element={<Device />} />
                 <Route path="/device/create" element={<DeviceCreate />} />

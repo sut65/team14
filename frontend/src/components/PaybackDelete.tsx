@@ -19,7 +19,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { CreateBorrow,
 ListDevices,ListDeviceType,
 GetUser,GetDevice,UpdateDevice,ListPaybacks,
-ListApproves,GetApprovebyCode,
+ListApproves,GetApprovebyCode,GetBooking,
 GetApprove,ListTypebyDevice, GetPayback, GetBorrow,DeletePayback,
 } from "../services/HttpClientService";
 import { UsersInterface } from "../models/IUser";
@@ -45,6 +45,7 @@ function PaybackDelete() {
       Timeofpayback: new Date(),});
 
     const [borrow, setBorrow] = React.useState<BorrowsInterface>({});
+    const [borrows, setBorrows] = React.useState<BorrowsInterface[]>([]);
 
     const [user, setUser] = useState<UsersInterface>({});    
     const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
@@ -75,32 +76,63 @@ function PaybackDelete() {
     let res = await GetPayback(paybackid);
     if (res.status) {
         setPayback(res.data);
-        console.log("Load BookingUser Complete");
+        console.log("Load Payback Complete");
         console.log(res);
-        searchPaybackid(res.data.ID);
+        searchPaybackid(paybackid);
     }
     else{
-        console.log("Load Borrow Incomplete!!!");
+        console.log("Load Payback Incomplete!!!");
     }   
 
-    let res1 = await GetDevice(res.data.DeviceID);
-    if (res1){
-        setDevice(res1);
-        console.log(res1);
-    }
+    // let res0 = await GetBorrow(res.data.borrowID);
+    // if (res0){
+    //     setBorrows(res0);
+    //     console.log(res0);
+    // }
+
+    // //////
+    // let res1 = await GetDevice(res0.data.DeviceID);
+    // if (res1){
+    //     setDevice(res1);
+    //     console.log(res1);
+    // }
   }
 
     async function searchPaybackid(id: any) {
-    let res = await GetPayback(id);
-    console.log(res);
-    if (res.status) {
-        setPayback(res.data);
-    } else{
-        setSearcherror(true);
-        setErrorMessage(res.data);
+        let res = await GetPayback(id);
+        console.log(res);
+        if (res.status) {
+            setPayback(res.data);
+            searchBorrowid(res.data.payback.BorrowID);
+        } else{
+            setSearcherror(true);
+            setErrorMessage(res.data);
+        }
     }
+    
+    async function searchBorrowid(id: any) {
+        let res = await GetBorrow(id);
+        console.log(res);
+        if (res.status) {
+            setBorrow(res.data);
+            searchBookingid(res.data.Approve?.BookingID);
+        } else{
+            setSearcherror(true);
+            setErrorMessage(res.data);
+            console.log("Load booking InComplete!!!!");
+        }
     }
-  
+    async function searchBookingid(id: any) {
+        let res = await GetBooking(id);     
+        console.log(res);
+        if (res) {
+            setBooking(res);
+        }
+        else{
+            console.log("Load booking InComplete!!!!");
+        } 
+    }
+
     const getUser = async () => {
     const uid = localStorage.getItem("userID")
     let res = await GetUser(uid);
@@ -120,14 +152,35 @@ function PaybackDelete() {
           setPaybacks(res); 
         }
         else{
-          console.log("Load Approves InComplete!!!!");
+          console.log("List Paybacks InComplete!!!!");
         }
       };
 
         ////////////////////////////////////////search///////////////////
     async function submit() {
-    let res = await DeletePayback(payback.ID);
+    let resbor = await GetPayback(payback.ID);
+    console.log(resbor.data)
+    console.log(resbor)
+    // let resbor = await GetPayback(res.data);
+    // console.log(resbor)
     
+    let res1 = await GetDevice(resbor.data.DeviceID)
+    if(res1){
+      res1.StatusDevice=false
+    }
+    console.log(res1)
+    let res2 = await UpdateDevice(res1)
+    console.log(res2)
+    if (res2.status) {
+        //setAlertMessage("บันทึกสำเร็จ")
+        setSuccess(true);
+        setErrorMessage("");
+    } else {
+        setError(true);
+        setErrorMessage(res2.data);
+    }
+
+    let res = await DeletePayback(payback.ID);
     if (res.status) {
         setSuccess(true);
         setErrorMessage("");
@@ -141,27 +194,6 @@ function PaybackDelete() {
         setError(true);
         setErrorMessage(res.data);
         return
-    } 
-    let resbor = await GetPayback(res.data);
-    console.log(resbor.data)
-    console.log(resbor)
-    // let resbor = await GetPayback(res.data);
-    // console.log(resbor)
-    
-    let res1 = await GetDevice(resbor.data.DeviceID)
-    if(res1){
-      res1.StatusDevice=true
-    }
-    console.log(res1)
-    let res2 = await UpdateDevice(res1)
-    console.log(res2)
-    if (res2.status) {
-        //setAlertMessage("บันทึกสำเร็จ")
-        setSuccess(true);
-        setErrorMessage("");
-    } else {
-        setError(true);
-        setErrorMessage(res2.data);
     }
     }
       ///////////////////////////////search/////////////////////////
@@ -208,27 +240,27 @@ return (
         color="primary"
         gutterBottom
     >
-    Delete Borrow
+    ยกเลิกการคืนอุปกรณ์
     </Typography>
     </Box>
     </Box>
 
     <Divider />
     <Grid container spacing={3} sx={{ padding: 2 }}>
-    <Grid item xs={12}>รหัสการยืมอุปกรณ์</Grid>
+    <Grid item xs={12}>รหัสการคืนอุปกรณ์</Grid>
         <Grid item xs={12} >  
         <FormControl required fullWidth> 
-              <InputLabel id="menu-PaybackID">กรุณาเลือกรหัสการยืมอุปกรณ์</InputLabel>
+              <InputLabel id="menu-PaybackID">กรุณาเลือกรหัสการคืนอุปกรณ์</InputLabel>
               <Select
                 id="PaybackID"
-                value={borrow.ID || ""}
-                label="กรุณาเลือกรหัสการยืมอุปกรณ์ *"
+                value={payback.ID || ""}
+                label="กรุณาเลือกรหัสการคืนอุปกรณ์ *"
                 onChange={onChangePayback}
                 inputProps={{
                   name: "ID",
                 }}
               >
-                {paybacks?.map((item: BorrowsInterface) => 
+                {paybacks?.map((item: PaybacksInterface) => 
                   <MenuItem
                     key={item.ID}
                     value={item.ID}
@@ -249,7 +281,7 @@ return (
             type="string"
             disabled
             variant="filled"
-            value={ borrow?.BorrowAPNote || ""}  
+            value={ payback?.Borrow?.BorrowAPNote || ""}  
             />
             </FormControl>
         </Grid>
@@ -262,7 +294,7 @@ return (
             type="string"
             disabled
             variant="filled"
-            value={ borrow?.BorrowNote1 || ""}  
+            value={ payback?.Borrow?.BorrowNote1 || ""}  
             />
             </FormControl>
         </Grid>
