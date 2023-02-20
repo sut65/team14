@@ -44,11 +44,11 @@ function BorrowUpdate() {
   const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
   const [devicetypes, setDevicetypes] = useState<DeviceTypesInterface[]>([]);
   const [device, setDevice] = React.useState<DevicesInterface>({});
+  const [deviceOld, setDeviceOld] = React.useState<DevicesInterface>({});
   const [booking, setBooking] = React.useState<BookingsInterface>({});
   
   const [approves, setApproves] = React.useState<ApprovesInterface>({}); 
   const [appid, setAppid] = React.useState("");
-  const [code, setCode] = useState("")
   
   const [success, setSuccess] = React.useState(false);
   const [searcherror, setSearcherror] = React.useState(false);
@@ -82,21 +82,14 @@ function BorrowUpdate() {
   console.log(`[${id}]: ${value}`);
   }; 
 
-  // const handleChange = (event: SelectChangeEvent) => {
-  //       const name = event.target.name as keyof typeof borrow;
-  //       const value = event.target.value;
-  //       setBorrow({...borrow,[name]: value,});
-  //       console.log(`[${name}]: ${value}`);
-  //     };
       
   const onChangeBorrow = async (e: SelectChangeEvent) =>{
   const borrowid = e.target.value;
   let res = await GetBorrow(borrowid);
   if (res.status) {
       setBorrow(res.data);
-      console.log("Load BookingUser Complete");
-      console.log(res);
       searchBorrowid(res.data.ID);
+      setDeviceOld(res.data.Device);
   }
   else{
       console.log("Load Borrow Incomplete!!!");
@@ -110,10 +103,10 @@ function BorrowUpdate() {
   }
 
   const handleChange = (event: SelectChangeEvent) => {
-  const name = event.target.name as keyof typeof borrow;
-  const value = event.target.value;
-  setBorrow({...borrow,[name]: value,});
-  console.log(`[${name}]: ${value}`);
+    const name = event.target.name as keyof typeof borrow;
+    const value = event.target.value;
+    setBorrow({...borrow,[name]: value,});
+    console.log(`[${name}]: ${value}`);
   };
 
   async function searchBorrowid(id: any) {
@@ -231,76 +224,59 @@ function BorrowUpdate() {
 
 
 async function submit() {
-let bres = await GetBorrow(borrow.ID);
-console.log(bres.data)
-console.log(bres)
-// let res = await GetBorrow(res.data);
-// console.log(res)
-
-let bres1 = await GetDevice(bres.data.DeviceID)
-if(bres1){
-  bres1.StatusDevice=true
-}
-console.log(bres1)
-
-let bres2 = await UpdateDevice(bres1)
-console.log(bres2)
-//console.log("update device status be true finish")
-if (bres2.status) {
-    //setAlertMessage("บันทึกสำเร็จ")
-    setSuccess(true);
-    setErrorMessage("");
-} else {
+  // update Old Device
+  console.log("Device Old: Before")
+  console.log(deviceOld)
+  deviceOld.StatusDevice = true
+  let bres2 = await UpdateDevice(deviceOld)
+  //console.log("update device status be true finish")
+  if (!bres2.status) {
     setError(true);
     setErrorMessage(bres2.data);
-}
-
-//new data
-
-let data = {
-  Timeofborrow: borrow.Timeofborrow,
-
-  BorrowNote1: borrow.BorrowNote1,
-  BorrowAPNote:borrow.BorrowAPNote,
-
-  AdminID: (user.ID),
-  DeviceID: (borrow.DeviceID),
-
-};
-console.log(data)
-
-let res1 = await GetDevice(data.DeviceID)
-  if(res1){
-    res1.StatusDevice=false
-  }
-console.log(res1)
-console.log("res1")
-let res2 = await UpdateDevice(res1)
-console.log(res2)
-if (res2.status) {
-  //setAlertMessage("บันทึกสำเร็จ")
-  setSuccess(true);
-  setErrorMessage("");
-} else {
-  setError(true);
-  setErrorMessage(res2.data);
-}
-console.log(res2)
-console.log("54444444444444444444444444")
-console.log(res2.data)
-//cant update but have last data i need still cant update
-
-let res3 = await UpdateBorrow(res2.data);
-console.log(res3)
-  if (res3.status) {
-    //setAlertMessage("บันทึกสำเร็จ")
-    setSuccess(true);
-    setErrorMessage("");
-} else {
-    setError(true);
-    setErrorMessage(res3.data);
     return
-}
+  } 
+  console.log("Device Old: After")
+  console.log(deviceOld)
+
+  //new data Borrow
+  let data = {
+    ID: borrow.ID,
+    Timeofborrow: borrow.Timeofborrow,
+    BorrowNote1: borrow.BorrowNote1,
+    BorrowAPNote:borrow.BorrowAPNote,
+
+    AdminID: user.ID,
+    DeviceID: (borrow.DeviceID),
+    ApproveID: (borrow.ApproveID),
+  };
+
+  // new Device Update
+  let res1 = await GetDevice(data.DeviceID)
+  console.log("Device New: Before")
+  console.log(res1)
+  res1.StatusDevice=false
+  let res2 = await UpdateDevice(res1)
+  if (!res2.status) {
+    setError(true);
+    setErrorMessage(res2.data);
+    return
+  } 
+  console.log("Device New: After")
+  console.log(res1)
+  //cant update but have last data i need still cant update
+  console.log("Borrow")
+  console.log(data)
+  let res3 = await UpdateBorrow(data);
+  if (res3.status) {
+      setSuccess(true);
+      setErrorMessage("");
+  } else {
+      setError(true);
+      setErrorMessage(res3.data);
+      return
+  }
+  
+  
 }
 
 useEffect(() => {
