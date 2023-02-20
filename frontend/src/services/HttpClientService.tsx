@@ -706,6 +706,28 @@ async function ListDevices() {
   return res;
 }
 
+async function DeleteDevice(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/device/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.error};
+      }
+    });
+
+  return res;
+}
+
 async function ListDeviceType() {
   const requestOptions = {
     method: "GET",
@@ -1792,7 +1814,7 @@ export{
 
     ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,UpdateBorrow,
 
-    GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
+    GetDevice,UpdateDevice,DeleteDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 
     CreatePayback,ListPaybacks,GetPayback,DeletePayback,
     

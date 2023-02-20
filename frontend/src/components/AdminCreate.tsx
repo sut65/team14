@@ -35,6 +35,7 @@ function UserCreate() {
     const [date, setDate] = React.useState<Date | null>(null);
     const [user, setUser] = React.useState<Partial<UsersInterface>>({});
     const [genders, setGenders] = React.useState<GendersInterface[]>([]);
+    const [roles, setRoles] = React.useState<RolesInterface[]>([]);
     const [educationlevels, setEducationLevels] = React.useState<EducationLevelsInterface[]>([]);
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
@@ -85,6 +86,12 @@ function UserCreate() {
       if (res) { setGenders(res); console.log("Load Gender Complete");}
       else{ console.log("Load Gender InComplete!!!!");}
     };
+
+    const listRoles = async () => {
+      let res = await ListRoles();
+      if (res) { setRoles(res); console.log("Load Role Complete");}
+      else{ console.log("Load Role InComplete!!!!");}
+    };
     
     //ดึงข้อมูล EducationLevels
     const listEducationLevels = async () => {
@@ -96,6 +103,7 @@ function UserCreate() {
     React.useEffect(() => {
       listGenders();
       listEducationLevels();
+      listRoles();
     }, []);
 
     
@@ -349,7 +357,7 @@ function UserCreate() {
            </FormControl>
          </Grid>
 
-          {/* <Grid item xs={3}>
+          <Grid item xs={3}>
             <FormControl fullWidth variant="outlined">
               <p>สถานะ</p>
               <Select
@@ -369,7 +377,7 @@ function UserCreate() {
                 )}
               </Select>
             </FormControl>
-          </Grid> */}
+          </Grid>
 
          <Grid item xs={12}>
            <Button component={RouterLink} to="/admins" variant="contained">
