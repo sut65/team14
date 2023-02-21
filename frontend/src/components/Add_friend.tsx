@@ -59,26 +59,7 @@ function Add_friend() {
           setErrorSearch(true);
           setErrorMessage(res);
         }
-    };
-    const columns: GridColDef[] = [
-        
-        { field: "Approve", 
-        headerName: "รหัสการอนุมัติ", width: 140,
-        valueFormatter: (params) => `${(params.value.Code)}`,  },        
-        {field: "User",
-            headerName: "เพื่อนที่เพิ่มเข้า",
-            width: 200,
-            valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},    
-        { 
-          field: "AddfriendTime", headerName: "เวลาบันทึก", width: 200,
-          valueFormatter: (params) => `${new Date(params.value)}`,
-        },
-        { field: "Note", headerName: "Note", width: 150 },    
-        { field: "Admin", headerName: "ผู้ที่เพิ่มเข้า",
-            width: 200,
-        valueFormatter: (params) => `${params.value.FirstName} ${params.value.LastName}`,},        
-        
-    ];
+    };    
     useEffect(() => {
         listAdd_friends();
       }, []);
@@ -115,18 +96,7 @@ function Add_friend() {
              Create Add friend
            </Button>
          </Box>
-       </Box>
-
-       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-         <DataGrid
-           rows={add_friend}
-           getRowId={(row) => row.ID}
-           columns={columns}
-           pageSize={5}
-           rowsPerPageOptions={[5]}
-         />
-       </div>
-       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+       </Box>      
        <Paper
             component="form"
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
@@ -149,6 +119,8 @@ function Add_friend() {
               <SearchIcon />
             </IconButton>      
         </Paper> 
+       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+       
        <TableContainer component={Paper}>
       <Table sx={{ height: 400, width: "100%", marginTop: '20px'}} aria-label="simple table">
         <TableHead>
@@ -170,7 +142,7 @@ function Add_friend() {
             >
               <TableCell component="th" scope="row">{row.ID}</TableCell>
               <TableCell align="center">{row.Approve?.Code}</TableCell>              
-              <TableCell align="right">{row.Admin?.FirstName} {row.Admin?.LastName} </TableCell>             
+              <TableCell align="right">{row.User?.FirstName} {row.User?.LastName} </TableCell>             
               <TableCell align="left">{row.Note}</TableCell>
               <TableCell align="right">{row.AddfriendTime?.toString()}</TableCell>               
               <TableCell align="right">{row.Admin?.FirstName} {row.Admin?.LastName} </TableCell>
@@ -178,10 +150,7 @@ function Add_friend() {
                                           disableElevation                                          
                                           aria-label="Disabled elevation buttons"
                                           size="small"
-                                        >
-                                          <Button variant="contained" 
-                                                  component={RouterLink}
-                                                  to={`/order_food/update/${row.ID}`}>Edit</Button>
+                                        >                                          
                                           <Button variant="outlined" 
                                                   color="error" 
                                                   onClick={() =>(row.ID)}>Del</Button>
