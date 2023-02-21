@@ -77,17 +77,6 @@ function PaybackCreate() {
     console.log(`[${id}]: ${value}`);
   }; 
 
-  // const handleInputChange = (
-  //     event: React.ChangeEvent<{ id?: string; value: any }>
-  // ) => {
-  //     const id = event.target.id as keyof typeof payback;
-  //     const { value } = event.target.value;
-  //     setPayback({ 
-  //         ...payback , 
-  //         [id]: value 
-  //     }); console.log(`[${id}]: ${value}`);
-  // };
-
   const handleChange = (event: SelectChangeEvent) => {
     const name = event.target.name as keyof typeof payback;
     const value = event.target.value;
@@ -129,8 +118,6 @@ function PaybackCreate() {
       console.log("Load User InComplete!!!!");
     }
   };
-
-                                                      ////////////////////////////////////////search///////////////////
 
     async function searchBorrowid() {
       let res = await GetBorrow(borrowid);

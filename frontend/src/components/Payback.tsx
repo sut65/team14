@@ -93,7 +93,7 @@ function Paybacks() {
               >
                 Update Payback
               </Button>
-              </Grid>*/}
+              </Grid>
 
               <Grid item xs={2}>
               <Button
@@ -104,7 +104,7 @@ function Paybacks() {
               >
                 Delete Payback
               </Button>
-              </Grid> 
+              </Grid> */}
             
             </Grid>
           </Paper>
