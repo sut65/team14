@@ -26,7 +26,7 @@ import ShoppingCartCheckoutTwoToneIcon from '@mui/icons-material/ShoppingCartChe
 import FolderSharedIcon from '@mui/icons-material/FolderShared';
 import ApartmentIcon from '@mui/icons-material/Apartment';
 import MeetingRoomIcon from '@mui/icons-material/MeetingRoom';
-
+import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 
 import Booking from "./components/Booking";
 import SignIn from "./components/SignIn";
@@ -58,6 +58,8 @@ import Order_food from "./components/Order_food";
 import OrderCreate from "./components/OrderCreate";
 import BookingDelete from "./components/BookingDelete";
 import DeviceCreate from "./components/DeviceCreate";
+import DeviceUpdate from "./components/DeviceUpdate";
+//import DeviceDelete from "./components/DeviceDelete";
 import ApproveUpdate from "./components/ApproveUpdate";
 import ApproveDelete from "./components/ApproveDelete";
 import RoomUpdate from "./components/RoomUpdate";
@@ -68,6 +70,10 @@ import OrderUpdate from "./components/OrderUpdate";
 import BorrowDelete from "./components/BorrowDelete";
 import Food_and_DrinkUpdate from "./components/Food_and_DrinkUpdate";
 import Food_and_DrinkDelete from "./components/Food_and_DrinkDelete";
+import BorrowUpdate from "./components/BorrowUpdate";
+import PaybackUpdate from "./components/PaybackUpdate";
+import PaybackDelete from "./components/PaybackDelete";
+import image from "./images/one.jpg";
 
 const drawerWidth = 260;
 
@@ -120,19 +126,24 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/" },
-  { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings"}, 
-  { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <TextSnippetIcon />, path: "/approves"},
-  { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends"},
-  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods"},  
-  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users"},
-  { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows"},
-  { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks"},
-  { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks"},
-  { name: "จัดการตึก", icon: <ApartmentIcon />, path: "/buildings"},
-  { name: "จัดการห้อง", icon: <MeetingRoomIcon />, path: "/rooms"},
-  { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices"},
-  { name: "ข้อมูลแอดมิน", icon: <TextSnippetIcon />, path: "/admins"},
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/home", role: "All" },
+
+  { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings", role: "User" }, 
+  { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <AssignmentTurnedInIcon />, path: "/approves", role: "Admin" },
+
+  { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends", role: "Admin"},
+  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods", role: "Admin"},  
+
+  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "All"},
+  { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows", role: "Admin"},
+
+  { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks", role: "Admin"},
+  { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks", role: "Admin"},
+  { name: "จัดการตึก", icon: <ApartmentIcon />, path: "/buildings", role: "Admin"},
+  { name: "จัดการห้อง", icon: <MeetingRoomIcon />, path: "/rooms", role: "Admin"},
+
+  { name: "จัดการอุปกรณ์", icon: <TextSnippetIcon />, path: "/devices", role: "Admin"},
+  { name: "ข้อมูลแอดมิน", icon: <TextSnippetIcon />, path: "/admins", role: "Admin"},
 ];
 
 const mdTheme = createTheme();
@@ -145,11 +156,7 @@ export default function App() {
     setOpen(!open);
   };
 
-  const roleLevel = parseInt(localStorage.getItem("roleID")+"");
-  const uid = parseInt(localStorage.getItem("userID")+"")
-  console.log(`User Role Level: ${roleLevel}`);
-  console.log(`User ID: ${uid}`);
-  
+  const roleLevel = (localStorage.getItem("role")+"");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -159,12 +166,24 @@ export default function App() {
   }, []);
 
   if (!token) {
-    return <SignIn />;
+    return (
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<SignIn />} />
+            <Route path="/user/create" element={<UserCreate />} />
+            <Route path="*" element={<SignIn />} />
+          </Routes>
+        </Router>
+      </div>
+    );
   }
 
   const signout = () => {
-    localStorage.clear();
-    window.location.href = "/";
+    setTimeout(() => {
+      localStorage.clear();
+      window.location.href = "/";
+    }, 1000);
   };
 return (
   <Router>
@@ -219,18 +238,19 @@ return (
             <Divider />
             <List>
               {menu.map((item, index) => {
+                if(item.role === roleLevel || item.role === "All"){
                   return (
-                <Link
-                  to={item.path}
-                  key={item.name}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <ListItem button>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.name} />
-                  </ListItem>
-                </Link>
-              )
+                  <Link
+                    to={item.path}
+                    key={item.name}
+                    style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                    <ListItem button>
+                      <ListItemIcon>{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.name} />
+                    </ListItem>
+                  </Link>
+              )}
               
               })}
             </List>
@@ -238,6 +258,8 @@ return (
           <Box
             component="main"
             sx={{
+              // backgroundImage: `url(${image})`,
+              // backgroundRepeat: "no-repeat",
               backgroundColor: (theme) =>
                 theme.palette.mode === "light"
                   ? theme.palette.grey[100]
@@ -245,12 +267,16 @@ return (
               flexGrow: 1,
               height: "100vh",
               overflow: "auto",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
           >
             <Toolbar />
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+
               <Routes>
-                <Route path="/" element={<Home />} />
+                {/* <Route path="/" element={<SignIn />} /> */}
+                <Route path="/home" element={<Home />} />
 
                 <Route path="/bookings" element={<Booking />} />
                 <Route path="/booking/create" element={<BookingCreate />} />
@@ -258,7 +284,7 @@ return (
                 <Route path="/booking/delete" element={<BookingDelete />} />
 
                 <Route path="/users" element={<User />} />
-                <Route path="/user/create" element={<UserCreate />} />
+                
                 <Route path="/user/update" element={<UserUpdate />} />
                 <Route path="/user/delete" element={<UserDelete />} />
 
@@ -272,7 +298,7 @@ return (
 
                 <Route path="/borrows" element={<Borrow />} />
                 <Route path="/borrow/create" element={<BorrowCreate />} />
-                {/* <Route path="/borrow/update" element={<BorrowUpdate />} /> */}
+                <Route path="/borrow/update" element={<BorrowUpdate />} />
                 <Route path="/borrow/delete" element={<BorrowDelete />} />
 
                 <Route path="/food_and_drinks" element={<Food_and_Drink />} />
@@ -296,9 +322,13 @@ return (
 
                 <Route path="/paybacks" element={<Paybacks />} />
                 <Route path="/payback/create" element={<PaybackCreate />} />
+                {/* <Route path="/payback/update" element={<PaybackUpdate />} /> */}
+                <Route path="/payback/delete" element={<PaybackDelete />} />
 
                 <Route path="/devices" element={<Device />} />
                 <Route path="/device/create" element={<DeviceCreate />} />
+                <Route path="/device/update" element={<DeviceUpdate />} />
+                {/* <Route path="/device/delete" element={<DeviceDelete />} /> */}
 
                 <Route path="/admins" element={<Admin />} />
                 <Route path="/admin/create" element={<AdminCreate />} />

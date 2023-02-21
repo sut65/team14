@@ -6,10 +6,10 @@ import (
 
 type Device struct {
 	gorm.Model
-	Detail string `valid:"required~กรุณากรอกชื่ออุปกรณ์"`
-	Number_of_Device uint8 `valid:"required~กรุณาใส่จำนวน"`
-	Note   string    `valid:"required~กรุณากรอกหมายเหตุ"`
-	StatusDevice bool
+	Detail           string `gorm:"uniqueIndex" valid:"required~กรุณากรอกชื่ออุปกรณ์"`
+	Number_of_Device uint8  `valid:"required~กรุณาใส่จำนวน"`
+	Note             string `valid:"required~กรุณากรอกหมายเหตุ"`
+	StatusDevice     bool
 
 	Brand   Brand `gorm:"references:id" valid:"-"`
 	BrandID *uint

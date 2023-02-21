@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import { Checkbox, FormControl, FormControlLabel, FormGroup, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
+import { Checkbox, FormControl, FormControlLabel, Grid, InputLabel, MenuItem, Paper } from "@mui/material";
 import { BookingsInterface } from "../models/IBooking";
 import { 
   GetRoom,
@@ -25,24 +25,24 @@ import {
 import { BuildingsInterface } from "../models/IBuilding";
 import { RoomsInterface } from "../models/IRoom";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import AccessDenied from "./AccessDenied";
 
 function Bookings() {
   const uid = localStorage.getItem("userID")
   const [data, setData] = useState<AppointmentModel[]>([]);
   const [buildings, setBuildings] = useState<BuildingsInterface[]>([]);
   const [allBookings, setAllBookings] = useState<BookingsInterface[]>([]);
-  const [roomBookings, setRoomBookings] = useState<BookingsInterface[]>([]);
   const [rooms, setRooms] = useState<RoomsInterface[]>([]);
   const [roomOne, setRoomOne] = useState<RoomsInterface>({});
   const [currentDate, setCurrentDate] = useState(
-    //new Date()
-    (moment("2023-02-02T06:00:00Z", "YYYY-MM-DDTHH:mm:ssZ").toDate())
+    new Date(),
   );
-  console.log(currentDate)
   const [checkedAll, setCheckedAll] = useState(false);
   const [checkedUser, setCheckedUser] = useState(false);
   const [checkedRoom, setCheckedRoom] = useState(false);
   const [key, setKey] = useState(false);
+
+  
 
   const currentDateChange = (currentDate: Date) => {
       setCurrentDate(currentDate);
@@ -51,7 +51,6 @@ function Bookings() {
   const listBookingRoom = async (id: any) => {
     let res = await ListBookingbyRoom(id);
       if (res) {
-        console.log(`Load BookingRoom: ${id} Complete`);
         schedule(res)
       }
       else {
@@ -62,7 +61,6 @@ function Bookings() {
   const listBookingAll = async () => {
     let res = await ListBookings();
     if (res) {
-      console.log("Load BookingAll Complete");
       setAllBookings(res)
       schedule(res)        
     }
@@ -75,7 +73,6 @@ function Bookings() {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       schedule(res.data);
-      console.log("Load BookingUser Complete");
     }
     else {
       console.log("Load BookingUser InComplete!!!!");
@@ -95,7 +92,6 @@ function Bookings() {
     else{ 
       listBookingRoom(0);
     }
-    
   };
 
   const onChangeBuilding = async (e: SelectChangeEvent) =>{
@@ -104,7 +100,6 @@ function Bookings() {
     if (res) {
       setRooms(res);
       setRoomOne({});
-      console.log("Load Rooms Complete");
     }
     else{
       console.log("Load Rooms Incomplete!!!");
@@ -117,7 +112,6 @@ function Bookings() {
     let res = await GetRoom(rid);
     if (res) {
       setRoomOne(res);
-      console.log("Load Room Complete");
     }
     else{
       console.log("Load Room Incomplete!!!");
@@ -129,7 +123,6 @@ function Bookings() {
     let res = await ListBuildings();
     if (res) {
       setBuildings(res);
-      console.log("Load Buildings Complete");
     }
     else{
       console.log("Load Buildings InComplete!!!!");
@@ -170,7 +163,6 @@ function Bookings() {
         notes:  notes,
       };
       setData((data) => [...data, x]) // push data
-      console.log(item)
     }); 
     
   }
@@ -219,12 +211,17 @@ function Bookings() {
         )
     }
   )
+
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "User") {
+    return <AccessDenied />
+  }
   
  return (
-<div>
   <Container maxWidth="lg">
-    <Paper>
-    <Grid container spacing={1} sx={{ padding: 2 }}>
+    {/* <Paper> */}
+    <Grid container spacing={3} sx={{ padding: 2 }}>
       <Grid item xs={12}> {/* ปุ่ม */}
       <Paper>
         <Grid container spacing={1} sx={{ padding: 2 }} >
@@ -383,7 +380,7 @@ function Bookings() {
       </Paper>
       </Grid>
 
-      <Grid item xs={12}>
+      <Grid item xs={12} >
       <Paper>
         <Scheduler 
             data={data}
@@ -431,6 +428,7 @@ function Bookings() {
           }
           
           tr:nth-child(even){background-color: #bebebe;}
+          tr:nth-child(odd){background-color: #fff;}
           tr:hover {background-color: #ddd;}
           th {
             padding-top: 12px;
@@ -453,10 +451,9 @@ function Bookings() {
         </table>
       </Grid>
     </Grid>
-    </Paper>
+    {/* </Paper> */}
     
   </Container>
-</div>
 );
 
 }

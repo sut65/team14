@@ -30,7 +30,7 @@ import { StatusBooksInterface } from "../models/IStatusBook";
 import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
-import { log } from "console";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -116,7 +116,6 @@ function ApproveUpdate() {
     let res = await ListStatusBooks();
     if (res) {
       setStatusBooks(res);
-      console.log("Load StatusBooks Complete");
     }
     else{
       console.log("Load StatusBooks InComplete!!!!");
@@ -138,8 +137,6 @@ function ApproveUpdate() {
     let res = await GetStatusBook(id);
     if (res) {
       setStatusBook(res);
-      console.log(res);
-      
     }
     else{
       console.log("Load Status Book InComplete!!!!");
@@ -205,6 +202,12 @@ function ApproveUpdate() {
     getUser();
     listApprove();
   }, []);
+
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
  return (
    <Container maxWidth="lg">

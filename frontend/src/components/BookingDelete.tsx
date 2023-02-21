@@ -15,11 +15,9 @@ import { BookingsInterface } from "../models/IBooking";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { 
-    GetUser,
     ListBookingbyUser,
     GetBooking,
     GetBuilding,
-    ListObjectives,
     DeleteBooking,
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -27,8 +25,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { BuildingsInterface } from "../models/IBuilding";
 import MenuItem from "@mui/material/MenuItem";
-import { UsersInterface } from "../models/IUser";
-import { ObjectivesInterface } from "../models/IObjective";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -67,10 +64,7 @@ function BookingDelete() {
     const bid = e.target.value;
     let res = await GetBooking(bid);
     if (res) {
-      setBookingUser(res);
-      console.log("Load BookingUser Complete");
-      console.log(res);
-      
+      setBookingUser(res);  
     }
     else{
       console.log("Load BookingUser Incomplete!!!");
@@ -78,7 +72,6 @@ function BookingDelete() {
     res = await GetBuilding(res.Room.BuildingID); 
     if (res) {
       setBuilding(res);
-      console.log("Load Building Complete");
     }
     else{
       console.log("Load Building Incomplete!!!");
@@ -89,9 +82,6 @@ function BookingDelete() {
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       setBookings(res.data)
-      console.log(res.data);
-      
-      console.log("Load Bookings Complete");
     }
     else{
       console.log("Load Bookings InComplete!!!!");
@@ -113,6 +103,12 @@ function BookingDelete() {
   useEffect(() => {
     listBookingbyUser();
   }, []);
+
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "User") {
+    return <AccessDenied />
+  }
 
  return (
    <Container maxWidth="md">

@@ -1,114 +1,113 @@
 import React, { useEffect } from "react";
-import { Link as RouterLink } from "react-router-dom";
-
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import { DataGrid, GridColDef} from '@mui/x-data-grid';
 import Typography from "@mui/material/Typography";
-
 import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import Box from "@mui/material/Box";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { DevicesInterface } from "../models/IDevice";
-import { DeviceTypesInterface } from "../models/IDeviceType";
-import { BrandsInterface } from "../models/IBrand";
+import { Link as RouterLink } from "react-router-dom";
 import { ListDevices } from "../services/HttpClientService";
-import { ListDeviceType } from "../services/HttpClientService";
-
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
 
 function Devices() {
+  const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
+  const listDevices = async () => {
+    let res = await ListDevices();
+    if (res) {
+        setDevices(res);
+    }
+  };
 
-    const [device, setDevices] = React.useState<DevicesInterface[]>([]);
-   
-   
-    const listdevices = async () => {
-        let res = await ListDevices();
-        if (res) {
-            setDevices(res);
-            console.log(res)
-        }
-    };
-    // const listdevicetypes = async () => {
-    //   let res = await ListDeviceType();
-    //   if (res) {
-    //       setDevices(res);
-    //   }
-    // };
-   
-   
-      
-    ;
-    const columns: GridColDef[] = [
+useEffect(() => {
+  listDevices();
+}, []);
+console.log(devices);
 
-        { field: "ID", headerName: "ไอดี", width: 100},
-     
-        { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 100},
-     
-        { field: "StatusDevice", headerName: "สถานะ", width: 200 },
-     
-        { field: "DeviceType", headerName: "ประเภท", width: 200, valueFormatter: (params) => params.value.DeviceTypeDetail },
 
-        { field: "Brand", headerName: "ยี่ห้อ", width: 200, valueFormatter: (params) => params.value.BrandDetail},
-     
-        
-      ];
-     
-     
-      useEffect(() => {
-     
-        listdevices();
-        //listdevicetypes();
-     
-      }, [])
+const columns: GridColDef[] = [
+    { field: "ID", headerName: "ID", width: 50},
+    { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 150, valueFormatter: (params) => params.value.Detail},
+    //{ field: "Number_of_Device", headerName: "จำนวน", width: 150, valueFormatter: (params) => params.value.Number_of_Device},
+    { field: "StatusDevice", headerName: "สถานะ", width: 150, valueFormatter: (params) => params.value.StatusDevice },
+    { field: "DeviceType", headerName: "ประเภท", width: 150, valueFormatter: (params) => params.value.DeviceTypeDetail},
+    { field: "Brand", headerName: "ยี่ห้อ", width: 200, valueFormatter: (params) => params.value.BrandDetail},
+    //{ field: "Admin", headerName: "ผู้ดูแล", width: 200, valueFormatter: (params) => params.value.FirstName},
+    //{ field: "Note", headerName: "หมายเหตุ", width: 100, valueFormatter: (params) => params.value.Note },
+];
 
-      return (
-
-        <div>
-          <Container maxWidth="md">
-            <Box
-              display="flex"
-              sx={{
-                marginTop: 2,
-              }}
-            >
-     
-              <Box flexGrow={1}>
+return (
+  <div>
+     <Container maxWidth="lg">
+     <Paper>
+     <Grid container spacing={1} sx={{ padding: 2 }} >
+         <Grid item xs={12}>
+          <Paper>
+            <Grid container spacing={1} sx={{ padding: 2 }} >
+              <Grid item xs={6}>
                 <Typography
                   component="h2"
                   variant="h6"
                   color="primary"
                   gutterBottom
                 >
-                  การจัดอุปกรณ์
+                  รายการอุปกรณ์
                 </Typography>
-              </Box>
-     
-              <Box>
-                <Button
-                  component={RouterLink}
-                  to="/device/create"
-                  variant="contained"
-                  color="primary"
-                >
-                  Create Device
-                </Button>
-              </Box>
-            </Box>
-     
-            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
-              <DataGrid
-                rows={device}
-                getRowId={(row) => row.ID}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-              />
-            </div>
-            
-          </Container>
-        </div>
-     
-      );
-            }
-     
-     
-     
-     export default Devices;
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/device/create"
+                variant="contained"
+                color="primary"
+              >
+                สร้างรายการอุปกรณ์
+              </Button>
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/device/update"
+                variant="contained"
+                color="primary"
+              >
+                แก้ไขรายการอุปกรณ์
+              </Button>
+              </Grid>
+
+              <Grid item xs={2}>
+              <Button
+                component={RouterLink}
+                to="/device/delete"
+                variant="contained"
+                color="primary"
+              >
+                ลบรายการอุปกรณ์
+              </Button>
+              </Grid>
+            </Grid>
+          </Paper>
+        </Grid>
+         
+       <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+         <DataGrid
+           rows={devices}
+           getRowId={(row) => row.ID}
+           columns={columns}
+           pageSize={5}
+           rowsPerPageOptions={[5]}
+         />
+       </div>
+       
+      </Grid>
+     </Paper>
+     </Container>
+   </div>
+
+ );
+
+}
+
+export default Devices;

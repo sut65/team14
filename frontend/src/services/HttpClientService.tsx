@@ -611,6 +611,32 @@ async function DeleteBorrow(id: any) {
   return res;
 }
 
+async function UpdateBorrow(data: BorrowsInterface) {
+  const requestOptions = {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  let res = await fetch(`${apiUrl}/borrow`, requestOptions)
+  .then((response) => response.json())
+  .then((res) => {
+    
+    if (res.data) {
+      console.log(res.data);
+      return {data: res.data, status: true};
+    } else {     
+      console.log(res.data);
+      return {data: res.error, status: false};
+    }
+    });
+
+  return res;
+}
+
 async function GetDevice(id: any) {
   const requestOptions = {
     method: "GET",
@@ -674,6 +700,28 @@ async function ListDevices() {
         return res.data;
       } else {
         return false;
+      }
+    });
+
+  return res;
+}
+
+async function DeleteDevice(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/device/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.error};
       }
     });
 
@@ -810,6 +858,28 @@ async function GetPayback(id: any) {
         return res.data;
       } else {
         return false;
+      }
+    });
+
+  return res;
+}
+
+async function DeletePayback(id: any) {
+  const requestOptions = {
+    method: "DELETE",
+    headers: { 
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json" 
+    },
+  };
+
+  let res = await fetch(`${apiUrl}/payback/${id}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {status: true,data: res.data};
+      } else {
+        return {status: false,data: res.error};
       }
     });
 
@@ -1014,7 +1084,7 @@ async function UpdateFood_and_Drink(data: Food_and_DrinksInterface) {
         
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 
@@ -1258,7 +1328,7 @@ async function GetUserRole() {
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
-        localStorage.setItem("roleID", res.data.RoleID);  
+        localStorage.setItem("role", res.data.Role.Name);  
         return res.data;
       } else {
         return false;
@@ -1286,7 +1356,7 @@ async function UpdateUser(data: UsersInterface) {
         
         return {status:true, data:res.data};
       } else {
-        return {status:false, data:res.data};
+        return {status:false, data:res.error};
       }
     });
 
@@ -1308,7 +1378,7 @@ async function DeleteUser(id: any) {
       if (res.data) {       
         return {status: true,data: res.data};
       } else {
-        return {status: false,data: res.data};
+        return {status: false,data: res.error};
       }
     });
 
@@ -1401,6 +1471,26 @@ async function ListAdd_friends() {
         return res.data;
       } else {
         return false;
+      }
+    });
+
+  return res;
+}
+async function ListAddFriendByBookingCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/add_friend/Booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
       }
     });
 
@@ -1742,17 +1832,17 @@ export{
 
     ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink, GetFood_and_Drinks,
 
-    ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,
+    ListBorrows, CreateBorrow, GetBorrow,DeleteBorrow,UpdateBorrow,
 
-    GetDevice,UpdateDevice,ListDevices,ListTypebyDevice,ListDeviceType,
+    GetDevice,UpdateDevice,DeleteDevice,ListDevices,ListTypebyDevice,ListDeviceType,
 
-    CreatePayback,ListPaybacks,GetPayback,
+    CreatePayback,ListPaybacks,GetPayback,DeletePayback,
     
     ListStatusBooks, GetStatusBook,
 
     ListGuards,ListCompanies, ListTyperooms,
 
-    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
+    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,ListAddFriendByBookingCode,
 
     ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID,UpdateOrder,GetUserByStudentID
 }

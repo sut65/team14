@@ -116,6 +116,7 @@ function Food_and_DrinkUpdate() {
 
     async function submit() {
       let data = {
+          ID: food_and_drink.ID,
           Menu: food_and_drink.Menu,
           Address: food_and_drink.Address,
           Tel: food_and_drink.Tel,
@@ -167,7 +168,7 @@ return (
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
             <p>ประเภทอาหาร</p>
-            <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
+            <Select id="FoodtypeID" value={food_and_drink.FoodtypeID + ""} onChange={handleChange} inputProps={{ name: "FoodtypeID", }}>
               <MenuItem value={"0"}>กรุณาเลือกประเภทอาหาร</MenuItem>
                 {foodtypes?.map((item: FoodtypesInterface) => 
                   <MenuItem key={item.ID} value={item.ID} > {item.Name} </MenuItem>)}
@@ -177,7 +178,7 @@ return (
           <Grid item xs={6}>
           <FormControl fullWidth variant="outlined">   
               <p>ร้านค้า</p>
-              <Select required defaultValue={"0"} onChange={handleChange} inputProps={{ name: "ShopID", }}>
+              <Select id="ShopID" value={food_and_drink.ShopID + ""} onChange={handleChange} inputProps={{ name: "ShopID", }}>
               <MenuItem value={"0"}>กรุณาเลือกร้านค้า</MenuItem>
                 {shops?.map((item: ShopsInterface) => 
                   <MenuItem key={item.ID} value={item.ID}> {item.Name} </MenuItem>)}

@@ -15,7 +15,9 @@ import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
 import { Login, GetUserRole } from "../services/HttpClientService";
-
+import { Link } from "react-router-dom";
+import UserCreate from "./UserCreate";
+import image from "../images/one.jpg";
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
   ref
@@ -29,6 +31,7 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+  const [User, setUser] = React.useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -36,6 +39,10 @@ function SignIn() {
     const id = event.target.id as keyof typeof signin;
     const { value } = event.target;
     setSignin({ ...signin, [id]: value });
+  };
+
+  const handleChangeCreateUser = () => {
+    return (<UserCreate />);
   };
 
   const handleClose = (
@@ -50,12 +57,13 @@ function SignIn() {
   };
 
   const submit = async () => {
+    console.log(signin)
     let res = await Login(signin);
     let tmp = await GetUserRole();
     if (res || tmp) {
       setSuccess(true);  
       setTimeout(() => {
-        window.location.reload();
+        window.location.href = "/home";
       }, 1000);
     } else {
       setError(true);
@@ -63,8 +71,10 @@ function SignIn() {
   };
 
   return (
+
+    
     <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+      <Grid container component="main" sx={{ height: "100vh" }} >
         <Snackbar
           open={success}
           autoHideDuration={3000}
@@ -93,7 +103,8 @@ function SignIn() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: "url(https://source.unsplash.com/random)",
+            //backgroundImage: "url(https://source.unsplash.com/random)",
+            backgroundImage: `url(${image})`,
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -101,10 +112,12 @@ function SignIn() {
                 : t.palette.grey[900],
             backgroundSize: "cover",
             backgroundPosition: "center",
+            height: "100vh",
+
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+          <Box 
             sx={{
               my: 8,
               mx: 4,
@@ -150,6 +163,14 @@ function SignIn() {
                 label="Remember me"
               />
               <Button
+                component={Link}
+                to="/user/create"
+                variant="outlined"
+                color="inherit"
+              >
+                ลงทะเบียนสมาชิก
+              </Button>
+              <Button
                 type="submit"
                 fullWidth
                 variant="contained"
@@ -158,12 +179,36 @@ function SignIn() {
               >
                 Sign In
               </Button>
-              <p>test@gmail.com 123456</p>
-              <p>CD@gmail.com 123456</p>
+              <Grid container spacing={1} sx={{ padding: 2 }}  alignItems="center">
+                <Grid item xs={6} >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={()=>setSignin({Email:"user@gmail.com", Password:"123456"})}
+                  >
+                    user@gmail.com 123456
+                  </Button>
+                </Grid>
+
+                <Grid item xs={6} >
+                  <Button
+                    type="submit"
+                    fullWidth
+                    variant="outlined"
+                    sx={{ mt: 3, mb: 2 }}
+                    onClick={()=>setSignin({Email:"admin@gmail.com", Password:"123456"})}
+                  >
+                    admin@gmail.com 123456
+                  </Button>
+                </Grid>
+              </Grid>
             </Box>
           </Box>
         </Grid>
       </Grid>
+
     </ThemeProvider>
   );
 }

@@ -28,6 +28,7 @@ import { StatusBooksInterface } from "../models/IStatusBook";
 import MenuItem from "@mui/material/MenuItem";
 import { BookingsInterface } from "../models/IBooking";
 import { UsersInterface } from "../models/IUser";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -188,6 +189,12 @@ function ApproveCreate() {
     const min = 10000, max = 99999;
     const random = Math.floor(Math.random() * (max - min + 1)) + min;
     setApprove({ ...approve, ["Code"]: `Ap${random}`, });
+  }
+
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
   }
 
  return (
