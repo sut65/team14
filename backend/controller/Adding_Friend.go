@@ -103,12 +103,15 @@ func ListAdd_friend(c *gin.Context) {
 func ListAdd_friendByBookingCode(c *gin.Context) {
 	var add_friends []entity.Adding_Friend
 	code := c.Param("code")
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends",code).Find(&add_friends).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").
+	Raw("Select add.* from bookings b inner JOIN approves a inner JOIN adding_friends add on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and add.approve_id = a.id ",code).Find(&add_friends).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": add_friends})
 }
+
+
 
 // function สำหรับลบ เพื่อน ด้วย ID
 // DELETE /add_friends/:id

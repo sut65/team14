@@ -1476,6 +1476,26 @@ async function ListAdd_friends() {
 
   return res;
 }
+async function ListAddFriendByBookingCode(code: any) {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  let res = await fetch(`${apiUrl}/add_friend/Booking/code/${code}`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {       
+        return {data: res.data, status: true};
+      } else {     
+        return {data: res.error, status: false};
+      }
+    });
+
+  return res;
+}
 
 async function CreateAdd_friend(data: Add_friendInterface) {
   const requestOptions = {
@@ -1822,7 +1842,7 @@ export{
 
     ListGuards,ListCompanies, ListTyperooms,
 
-    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,
+    ListAdd_friends,CreateAdd_friend,DeleteAdd_friend,ListAddFriendByBookingCode,
 
     ListOrders,CreateOrder,DeleteOrder,CreateDevice,ListBrand,ListOrderByBookingCode,GetOrderByID,UpdateOrder,GetUserByStudentID
 }
