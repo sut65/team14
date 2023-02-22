@@ -81,7 +81,6 @@ func TestRoomDetail_Null(t *testing.T) {
 	// err.Error() ต้องมี message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("กรุณากรอกเลขห้อง"))
 }
-
 func TestRoom_Time(t *testing.T) {
 	g := NewGomegaWithT(t)
 
