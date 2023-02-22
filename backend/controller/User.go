@@ -44,6 +44,16 @@ func ListUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
+// GET /Users
+func ListOnlyUsers(c *gin.Context) {
+	var users []entity.User
+	if err := entity.DB().Preload("Gender").Preload("Role").Preload("EducationLevel").Raw("SELECT * FROM users WHERE role_id = 1").Find(&users).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": users})
+}
+
 // DELETE /users/:id
 func DeleteUser(c *gin.Context) {
 	var User entity.User

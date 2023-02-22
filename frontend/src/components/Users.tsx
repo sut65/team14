@@ -6,7 +6,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { UsersInterface } from "../models/IUser";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { ListUsers, } from "../services/HttpClientService";
+import { ListOnlyUsers, ListUsers, } from "../services/HttpClientService";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import AccessDenied from "./AccessDenied";
@@ -14,7 +14,7 @@ import AccessDenied from "./AccessDenied";
 function Users() {
   const [users, setUsers] = React.useState<UsersInterface[]>([]);
   const listUsers = async () => {
-    let res = await ListUsers();
+    let res = await ListOnlyUsers();
     if (res) {
       setUsers(res);
       console.log(res)
