@@ -10,6 +10,7 @@ import {
 } from "../services/HttpClientService";
 import { BorrowsInterface } from "../models/IBorrow";
 import { Grid, Paper } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 function Borrows() {
 
@@ -49,6 +50,12 @@ function Borrows() {
         listBorrows();
     }, []);
 
+    //Check Role
+    const roleLevel = localStorage.getItem('role')+""
+    if (roleLevel !== "Admin") {
+      return <AccessDenied />
+    }
+    
  return (
 
    <div>

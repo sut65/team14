@@ -27,6 +27,7 @@ import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { PaybacksInterface } from "../models/IPayback";
 import { BookingsInterface } from "../models/IBooking";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -186,6 +187,12 @@ function PaybackCreate() {
       getUser();
   }, []);
 
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
+  
 return (
   <Container maxWidth="lg">
     <Snackbar

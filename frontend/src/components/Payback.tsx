@@ -8,6 +8,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ListPaybacks,} from "../services/HttpClientService";
 import { PaybacksInterface } from "../models/IPayback";
 import { Grid, Paper } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 function Paybacks() {
 
@@ -49,6 +50,12 @@ function Paybacks() {
         listPaybacks();
     }, []);
 
+    //Check Role
+    const roleLevel = localStorage.getItem('role')+""
+    if (roleLevel !== "Admin") {
+      return <AccessDenied />
+    }
+    
  return (
 
    <div>

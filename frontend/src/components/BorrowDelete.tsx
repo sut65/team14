@@ -24,6 +24,7 @@ import { BorrowsInterface } from "../models/IBorrow";
 import { DeviceTypesInterface } from "../models/IDeviceType";
 import { BookingsInterface } from "../models/IBooking";
 import Borrows from "./Borrow";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -172,6 +173,12 @@ function BorrowDelete() {
 useEffect(() => {
     listBorrows();
     getUser();},[]);
+
+    //Check Role
+    const roleLevel = localStorage.getItem('role')+""
+    if (roleLevel !== "Admin") {
+    return <AccessDenied />
+    }
 
 return (
 <Container maxWidth="lg">

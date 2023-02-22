@@ -28,6 +28,7 @@ import { DevicesInterface } from "../models/IDevice";
 import { BorrowsInterface } from "../models/IBorrow";
 import { DeviceTypesInterface } from "../models/IDeviceType";
 import { BookingsInterface } from "../models/IBooking";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
 props, ref
@@ -214,6 +215,12 @@ useEffect(() => {
 listDeviceType();
 listApproves();
 getUser();},[]);
+
+//Check Role
+const roleLevel = localStorage.getItem('role')+""
+if (roleLevel !== "Admin") {
+  return <AccessDenied />
+}
 
 return (
 <Container maxWidth="lg">
