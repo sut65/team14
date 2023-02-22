@@ -19,6 +19,7 @@ import { UsersInterface } from "../models/IUser";
 import { CreateFood_and_Drink, GetFood_and_Drinks, GetUser, ListFood_and_Drinks, UpdateFood_and_Drink } from "../services/HttpClientService";
 import {ListFoodtypes, ListShops, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -87,7 +88,8 @@ function Food_and_DrinkUpdate() {
       if (res) { setShops(res); console.log("Load Shop Complete");}
       else{ console.log("Load Shop InComplete!!!!");}
     };
-
+    
+    //ดึงข้อมูล Fooa_and_Drinks
     const listFood_and_Drinks = async () => {
       let res = await ListFood_and_Drinks();
       if (res) { setFood_and_Drinks(res); console.log("Load Food_and_Drink Complete");}
@@ -138,6 +140,12 @@ function Food_and_DrinkUpdate() {
       }
 
   }
+
+//Check Role
+const roleLevel = localStorage.getItem('role')+""
+if (roleLevel !== "Admin") {
+  return <AccessDenied />
+}
 
 return (
     <Container maxWidth="md">

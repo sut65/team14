@@ -23,6 +23,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -74,10 +75,10 @@ function UserUpdate() {
       setUser({ ...user, [id]: value });
   };
 
-  const convertType = (data: string | number | undefined) => {
-    let val = typeof data === "string" ? parseInt(data) : data;
-    return val;
-  };
+    const convertType = (data: string | number | undefined) => {
+      let val = typeof data === "string" ? parseInt(data) : data;
+      return val;
+    };
 
     //ดึงข้อมูล Genders
     const listGenders = async () => {
@@ -143,7 +144,12 @@ function UserUpdate() {
       }
     }
 
-
+//Check Role
+    const roleLevel = localStorage.getItem('role')+""
+    if (roleLevel !== "User") {
+      return <AccessDenied />
+    }
+    
  return (
    <Container maxWidth="md">
      <Snackbar

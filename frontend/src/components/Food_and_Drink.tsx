@@ -9,6 +9,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { ListFood_and_Drinks } from "../services/HttpClientService";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import AccessDenied from "./AccessDenied";
 
 function Food_and_Drinks() {
   const [food_and_drinks, setFood_and_Drinks] = React.useState<Food_and_DrinksInterface[]>([]);
@@ -34,6 +35,12 @@ const columns: GridColDef[] = [
     { field: "Address", headerName: "ที่อยู่", width: 200, valueFormatter: (params) => params.value.Name},
     { field: "Admin", headerName: "แอดมิน", width: 100, valueFormatter: (params) => params.value.FirstName },
 ];
+
+//Check Role
+const roleLevel = localStorage.getItem('role')+""
+if (roleLevel !== "Admin") {
+  return <AccessDenied />
+}
 
 return (
   <div>
