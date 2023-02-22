@@ -11,6 +11,7 @@ import {
 } from "../services/HttpClientService";
 import { Add_friendInterface } from "../models/IAdd_friend";
 import { ButtonGroup, IconButton, InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 function Add_friend() {
 
@@ -90,7 +91,11 @@ function Add_friend() {
     useEffect(() => {
         listAdd_friends();
       }, []);
-
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
     
  return (
     <div>

@@ -20,6 +20,7 @@ import {
  
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -62,7 +63,6 @@ function Add_friendCreate(){
     const [errorMessage, setErrorMessage] = useState("");
     const [errorSearch_u, setErrorSearch_u] = useState(false);
     const [errorMessage_u, setErrorMessage_u] = useState("");
-
         
 
   const handleClose = (
@@ -190,7 +190,11 @@ useEffect(() => {
   getAdmin(); 
   getUser();
 }, []);
-
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
 return (  
     <div>
@@ -331,9 +335,10 @@ return (
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
           >      
           <InputBase
+            id="outlined-basic"
             sx={{ ml: 1, flex: 1 }}
-            placeholder="Booking Code"
-            inputProps={{ 'aria-label': 'Booking Code' }}
+            placeholder="student ID"
+            inputProps={{ 'aria-label': 'studentID' }}
             value={studentID}
               onChange={(e) => {setstudentID(e.target.value)              
                 console.log(studentID)

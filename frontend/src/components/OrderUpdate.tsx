@@ -19,6 +19,7 @@ import {
   GetUser,ListFood_and_Drinks
  
 } from "../services/HttpClientService";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -145,7 +146,11 @@ useEffect(() => {
   listFood_and_Drink();
   getAdmin();   
 }, []);
-
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
 return ( 
      

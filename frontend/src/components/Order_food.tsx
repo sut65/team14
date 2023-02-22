@@ -21,6 +21,7 @@ import TableHead from '@mui/material/TableHead';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Paper from '@mui/material/Paper';
 import { Grid, IconButton, InputBase, Snackbar, styled } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props, ref
@@ -102,6 +103,11 @@ function Order_food() {
       setErrorMessageDel(res);
     }
 }; 
+  //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
     
  return (
