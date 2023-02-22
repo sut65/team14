@@ -268,6 +268,11 @@ return (
               <SearchIcon />
             </IconButton>      
         </Paper> 
+      <div style={{ height: 200, width: "100%", marginTop: '20px'}}>
+      <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width:800 }}
+          >
       <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={9}>          
           <FormControl fullWidth variant="outlined">
@@ -319,7 +324,8 @@ return (
           </FormControl>
         </Grid>        
       </Grid> 
-      <hr></hr> 
+      </Paper>
+      </div>
       <Paper
             component="form"
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
@@ -341,7 +347,12 @@ return (
                         }}>
               <SearchIcon />
             </IconButton>      
-        </Paper>     
+        </Paper> 
+        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+        <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 800 }}
+          >   
       <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={3}>          
           <FormControl fullWidth variant="outlined">
@@ -427,7 +438,9 @@ return (
            
          </Grid>   
         </Grid>
-      </Grid>         
+      </Grid>
+       </Paper> 
+       </div>         
       </Container>
     </div>
   
