@@ -128,8 +128,8 @@ function UserDelete() {
       if (res.status) {
           setSuccess(true);
           setErrorMessage("ลบบัญชีผู้ใช้สำเร็จ");
-          //localStorage.clear();
-          //window.location.href = "/";
+          localStorage.clear();
+          window.location.href = "/";
       } else {
           setError(true);
           setErrorMessage(res.data);

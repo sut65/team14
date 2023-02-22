@@ -56,15 +56,15 @@ func SetupDatabase() {
 
 	db.Model(&Role{}).Create(&Role{Name: "User"})
 	db.Model(&Role{}).Create(&Role{Name: "Admin"})
-	db.Model(&Gender{}).Create(&Gender{Name: "Male"})
-	db.Model(&Gender{}).Create(&Gender{Name: "Female"})
+	db.Model(&Gender{}).Create(&Gender{Name: "ชาย"})
+	db.Model(&Gender{}).Create(&Gender{Name: "หญิง"})
 	var r_user, r_admin Role
 	db.Raw("SELECT * FROM roles WHERE name = ?", "User").Scan(&r_user)
 	db.Raw("SELECT * FROM roles WHERE name = ?", "Admin").Scan(&r_admin)
 
 	var male, female Gender
-	db.Raw("SELECT * FROM genders WHERE name = ?", "Male").Scan(&male)
-	db.Raw("SELECT * FROM genders WHERE name = ?", "Female").Scan(&female)
+	db.Raw("SELECT * FROM genders WHERE name = ?", "ชาย").Scan(&male)
+	db.Raw("SELECT * FROM genders WHERE name = ?", "หญิง").Scan(&female)
 
 	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาเอก"})
 	db.Model(&EducationLevel{}).Create(&EducationLevel{Name: "ปริญญาโท"})

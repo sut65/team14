@@ -50,7 +50,7 @@ function Users() {
       <Grid item xs={12}>
        <Paper>
          <Grid container spacing={1} sx={{ padding: 2 }} >
-           <Grid item xs={6}>
+           <Grid item xs={8}>
              <Typography
                component="h2"
                variant="h6"
