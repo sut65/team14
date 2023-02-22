@@ -59,10 +59,13 @@ func TestAddfriendNote_stringlength(t *testing.T){
 		Note:  "aaaaabbbbbccccccddddddqqqqqqqwe",
 		AddfriendTime: time.Now().Add(22 * time.Hour),
 	}
+	// ตรวจสอบด้วย govalidator
 	ok,err := govalidator.ValidateStruct(add_friend)
-
+	// ok ต้องไม่เป็น true แปลว่าต้องจับ error ได้
 	g.Expect(ok).ToNot(BeTrue())
+	// err ต้องไม่เป็น nil แปลว่าต้องจับ error ได้
 	g.Expect(err).NotTo(BeNil())
+	// err.Error() ต้องมี message แสดงออกมา
 	g.Expect(err.Error()).To(Equal("กรุณากรอกตัวอักษรไม่เกิน 30 ตัวอักษร"))
 }
 
