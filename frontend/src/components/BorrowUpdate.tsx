@@ -146,17 +146,6 @@ function BorrowUpdate() {
 
   }
 
-  const listApproves = async () => {
-    let res = await ListApproves();
-    if (res) {
-        setApproves(res);
-        console.log("Load Approves Complete");
-    }
-    else{
-      console.log("Load Approves InComplete!!!!");
-    }
-  };
-
   const listDeviceType = async () => {
     let res = await ListDeviceType();  /////////////////////////
     if (res) {
@@ -180,14 +169,7 @@ function BorrowUpdate() {
       console.log("Load User InComplete!!!!");
     }
   };
-  ////////////////////////////////////////search///////////////////
-  async function searchAPID() {
-    let res = await GetApprove(appid);
-    console.log(res);
-    if (res) {
-        setApproves(res);
-    } 
-  }
+
   const listBorrows = async () => {
     let res = await ListBorrows();
     if (res) {
@@ -256,7 +238,6 @@ async function submit() {
 
 useEffect(() => {
   listDeviceType();
-  listApproves();
   listBorrows();
   getUser();},[]);
 
