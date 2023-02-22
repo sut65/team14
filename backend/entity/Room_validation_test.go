@@ -59,7 +59,6 @@ func TestRoomNote_Null(t *testing.T) {
 
 func TestRoomDetail_Null(t *testing.T) {
 	g := NewGomegaWithT(t)
-
 	// ข้อมูล Note เป็น Null
 	room := Room{
 		Note:       "5555",
