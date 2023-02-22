@@ -54,7 +54,7 @@ const handleClose = (
  
 };
    
-async function DelBuilding(id:any) {
+async function DelBuilding(id:any) { //สร้าง Delete Building
   let res = await DeleteBuilding((id));
   if (res.status) {
 
