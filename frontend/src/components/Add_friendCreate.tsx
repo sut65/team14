@@ -3,11 +3,12 @@ import { Link as RouterLink } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import {  Button, Container, FormControl, Grid, Snackbar, TextField } from "@mui/material";
+import {  Button, Container, FormControl, Grid, IconButton, InputBase, Paper, Snackbar, TextField } from "@mui/material";
 import { UsersInterface } from "../models/IUser";
 import { ApprovesInterface } from "../models/IApprove";
 import {BookingsInterface } from "../models/IBooking";
 import { Add_friendInterface } from "../models/IAdd_friend";
+import SearchIcon from '@mui/icons-material/Search';
 
 import { CreateAdd_friend, GetBookingbyCodeThatApprove} from "../services/HttpClientService";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -193,7 +194,7 @@ useEffect(() => {
 
 return (  
     <div>
-<Container maxWidth="md">
+<Container maxWidth="md" sx={{ bgcolor: '#EAEDED' }} >
      <Snackbar
        open={success}
        autoHideDuration={6000}
@@ -244,46 +245,29 @@ return (
           </Alert>
       </Snackbar>    
 
-        <p>ระบบจัดการเพิ่มเพื่อนเข้าห้อง</p>
-      <Grid container spacing={1} sx={{ padding: 1 }}>
-        <Grid item xs={6}>          
-          <FormControl fullWidth variant="outlined">
-            <Box
+        <p>ระบบจัดการเพิ่มเพื่อนเข้าห้อง</p>      
+      <Paper
             component="form"
-            sx={{ '& > :not(style)': { m: 1, width: '25ch' },
-            }}
-           noValidate
-           autoComplete="off"
-            >
-            <TextField id="outlined-basic" 
-            label="Booking Code " 
-            variant="outlined" 
-            type="string" 
-            size="medium" 
-            placeholder="Code ID"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+          >      
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Booking Code"
+            inputProps={{ 'aria-label': 'Booking Code' }}
             value={code + ""}
-              onChange={(e) => {setCode(e.target.value)                              
-                console.log(code)
-                }
-              }
-            />            
-              </Box>
-          </FormControl>
-        </Grid>
-        <Grid item xs={2}>
-          <Button
-             style={{ float: "right" }}
-             size="large"
-              onClick= {() => {
-               search();
-               }}
-             variant="contained"
-             color="primary"
-          >
-            Search
-          </Button>
-        </Grid>
-      </Grid>
+                  onChange={(e) => {setCode(e.target.value)                              
+                    console.log(code)
+                    }
+                  }
+          />
+            <IconButton type="button" sx={{ p: '10px' }} 
+                        aria-label="search" size="large"
+                        onClick= {() => {
+                        search();
+                        }}>
+              <SearchIcon />
+            </IconButton>      
+        </Paper> 
       <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={9}>          
           <FormControl fullWidth variant="outlined">
@@ -296,7 +280,7 @@ return (
             >
             <TextField id="outlined-basic" 
             label="Booking ID" 
-            variant="outlined" 
+            variant="outlined"           
             disabled 
             type="string" 
             size="medium" 
@@ -335,7 +319,29 @@ return (
           </FormControl>
         </Grid>        
       </Grid> 
-      <hr></hr>     
+      <hr></hr> 
+      <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
+          >      
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Booking Code"
+            inputProps={{ 'aria-label': 'Booking Code' }}
+            value={studentID}
+              onChange={(e) => {setstudentID(e.target.value)              
+                console.log(studentID)
+                }
+              }
+          />
+            <IconButton type="button" sx={{ p: '10px' }} 
+                        aria-label="search" size="large"
+                        onClick= {() => {
+                        search_u();
+                        }}>
+              <SearchIcon />
+            </IconButton>      
+        </Paper>     
       <Grid container spacing={1} sx={{ padding: 1 }}>
         <Grid item xs={3}>          
           <FormControl fullWidth variant="outlined">
@@ -345,19 +351,7 @@ return (
             }}
            noValidate
            autoComplete="off"
-            >
-            <TextField id="outlined-basic" 
-            label="studentID" 
-            variant="outlined" 
-            type="string" 
-            size="medium" 
-            placeholder="studentID"
-            value={studentID}
-              onChange={(e) => {setstudentID(e.target.value)              
-                console.log(studentID)
-                }
-              }
-            /> 
+            >           
             <TextField id="outlined-basic" 
             label="student ID" 
             variant="outlined"
@@ -380,19 +374,7 @@ return (
               </Box>
           </FormControl>
         </Grid>
-        <Grid item xs={5}>
-          <Button
-             style={{ float: "right" }}
-             size="large"
-             onClick= {() => {
-              search_u();
-              }}
-             variant="contained"
-             color="primary"
-          >
-            Search
-          </Button>
-        </Grid>
+        
         <Grid container spacing={1} sx={{ padding: 1 }}>
           
          <Grid item xs={12} >

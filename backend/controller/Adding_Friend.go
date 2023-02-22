@@ -59,7 +59,7 @@ func CreateAdding_Friend(c *gin.Context) {
 	if err := entity.DB().
 		Raw("select ad.* from adding_friends ad "+
 			"inner join approves a on a.id = ad.approve_id and a.deleted_at is null "+
-			"where ad.user_id = ? and a.id = ?", user.ID, approve.ID).
+			"where ad.user_id = ? and a.id = ? and  ad.deleted_at is null", user.ID, approve.ID).
 		Scan(&checkFrind).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -69,19 +69,19 @@ func CreateAdding_Friend(c *gin.Context) {
 		return
 	}
 
-	var checklimit_Frind entity.Adding_Friend
+	/*var checklimit_Friend entity.Adding_Friend
 	if err := entity.DB().
 		Raw("select ad.* from adding_friends ad "+
 			"inner join approves a on a.id = ad.approve_id and a.deleted_at is null "+
-			"where ad.user_id = ? and a.id = ?", user.ID, approve.ID).
+			"where ad.user_id = ? and a.id = ? and ad.deleted_at is not null", user.ID, approve.ID).
 		Scan(&checkFrind).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	if checklimit_Frind.ID != 0 {
+	if checklimit_Friend.ID != 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่สามารถเพิ่มได้เนื่องจากมีจำนวนคนที่อยู่ในห้องเต็มจำนวนที่ตั้งไว้"})
 		return
-	}
+	}*/
 
 	// บันทึก
 	if err := entity.DB().Create(&bod).Error; err != nil {
