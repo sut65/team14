@@ -48,7 +48,7 @@ function Bookings() {
       setCurrentDate(currentDate);
   }
 
-  const listBookingRoom = async (id: any) => {
+  const listBookingRoom = async (id: any) => { // Transaction #1
     let res = await ListBookingbyRoom(id);
       if (res) {
         schedule(res)
@@ -58,7 +58,7 @@ function Bookings() {
       }
   }
 
-  const listBookingAll = async () => {
+  const listBookingAll = async () => { // Transaction #2
     let res = await ListBookings();
     if (res) {
       setAllBookings(res)
@@ -69,7 +69,7 @@ function Bookings() {
     } 
   }
 
-  const listUserBooking = async () => {
+  const listUserBooking = async () => { // Transaction #3
     let res = await ListBookingbyUser(uid);
     if (res.status) {
       schedule(res.data);
@@ -94,7 +94,7 @@ function Bookings() {
     }
   };
 
-  const onChangeBuilding = async (e: SelectChangeEvent) =>{
+  const onChangeBuilding = async (e: SelectChangeEvent) =>{ // Transaction #4
     const bid = e.target.value;
     let res = await ListRoomsbyBuilding(bid);
     if (res) {
@@ -107,7 +107,7 @@ function Bookings() {
     
   } 
 
-  const onChangeRoom = async (e: SelectChangeEvent) =>{
+  const onChangeRoom = async (e: SelectChangeEvent) =>{ // Transaction #5
     const rid = e.target.value;
     let res = await GetRoom(rid);
     if (res) {
@@ -119,7 +119,7 @@ function Bookings() {
     
   } 
 
-  const listBuildings = async () => {
+  const listBuildings = async () => { // Transaction #6
     let res = await ListBuildings();
     if (res) {
       setBuildings(res);

@@ -17,7 +17,7 @@ function Approves() {
   const [approves, setApproves] = React.useState<ApprovesInterface[]>([]);
 
   const listApproves = async () => {
-      let res = await ListApproves();
+      let res = await ListApproves(); // Transaction #1
       if (res) {
           setApproves(res);
       }

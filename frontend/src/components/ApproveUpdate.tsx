@@ -51,7 +51,6 @@ function ApproveUpdate() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [statusBooks, setStatusBooks] = useState<StatusBooksInterface[]>([]);
-  const [statusBook, setStatusBook] = useState<StatusBooksInterface>({});
   const [approves, setApproves] = useState<ApprovesInterface[]>([]);
   const [booking, setBooking] = useState<BookingsInterface>({
     Objective: {Detail: ""},
@@ -81,7 +80,7 @@ function ApproveUpdate() {
     console.log(`[${name}]: ${value}`);
   };
 
-  const onChangeApprove = async (e: SelectChangeEvent) =>{
+  const onChangeApprove = async (e: SelectChangeEvent) =>{ // Transaction #1
     const appid = e.target.value;
     let res = await GetApprove(appid);
     if (res) {
@@ -97,7 +96,6 @@ function ApproveUpdate() {
       };
       setApprove(data);
       search(res.Booking?.Code);
-      getStatusBook(data.StatusBookID);
     } else{
       console.log("Load Approve InComplete");
     }
@@ -112,7 +110,7 @@ function ApproveUpdate() {
     console.log(`[${id}]: ${value}`);
   }; 
 
-  const listStatusBooks = async () => {
+  const listStatusBooks = async () => { // Transaction #2
     let res = await ListStatusBooks();
     if (res) {
       setStatusBooks(res);
@@ -122,7 +120,7 @@ function ApproveUpdate() {
     }
   };
 
-  const getUser = async () => {
+  const getUser = async () => { // Transaction #3
     const uid = localStorage.getItem("userID")
     let res = await GetUser(uid);
     if (res.status) {
@@ -133,17 +131,7 @@ function ApproveUpdate() {
     }
   };
 
-  const getStatusBook = async (id:any) => {
-    let res = await GetStatusBook(id);
-    if (res) {
-      setStatusBook(res);
-    }
-    else{
-      console.log("Load Status Book InComplete!!!!");
-    }
-  };
-
-  const listApprove = async () => {
+  const listApprove = async () => { // Transaction #4
     let res = await ListApproves();
     if (res) {
       setApproves(res); 
@@ -160,19 +148,15 @@ function ApproveUpdate() {
       Note: approve.Note,
       ApproveTime: approve.ApproveTime,
 
-      User: user,
       UserID: user.ID,
-      Booking: booking,
       BookingID: booking.ID,
-      StatusBook: statusBook,
       StatusBookID: approve.StatusBookID,
     };
     console.log(data)
-    let res = await UpdateApprove(data);
+    let res = await UpdateApprove(data); // Transaction #5
     if (res.status) {
       setSuccess(true);
       setErrorMessage("");
-      setStatusBook({});
       setBooking({
         Objective: {Detail: ""},
         User: {FirstName: "", LastName: "",},
@@ -189,7 +173,7 @@ function ApproveUpdate() {
   }
 
   async function search(code : any){
-    let res = await GetBookingbyCode(code);
+    let res = await GetBookingbyCode(code); // Transaction #6
     if (res){
       setBooking(res);      
     } else {
@@ -261,7 +245,7 @@ function ApproveUpdate() {
               <InputLabel id="menu-ApproveID">กรุณาเลือกรหัสการอนุมัติ</InputLabel>
               <Select
                 id="ApproveID"
-                value={statusBook.ID || ""}
+                value={approve.StatusBookID || ""}
                 label="กรุณาเลือกรหัสการอนุมัติ *"
                 onChange={onChangeApprove}
                 inputProps={{
@@ -291,7 +275,6 @@ function ApproveUpdate() {
                 label="กรุณาเลือกสถานะการจองใช้ห้อง *"
                 onChange={(e: SelectChangeEvent) => {
                   handleChange(e);
-                  getStatusBook(e.target.value);
                 }}
                 inputProps={{
                   name: "StatusBookID",

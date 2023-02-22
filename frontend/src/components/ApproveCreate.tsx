@@ -88,7 +88,7 @@ function ApproveCreate() {
     console.log(`[${id}]: ${value}`);
   }; 
 
-  const listStatusBooks = async () => {
+  const listStatusBooks = async () => { // Transaction #1
     let res = await ListStatusBooks();
     if (res) {
       setStatusBooks(res);
@@ -99,7 +99,7 @@ function ApproveCreate() {
     }
   };
 
-  const getUser = async () => {
+  const getUser = async () => { // Transaction #2
     const uid = localStorage.getItem("userID")
     let res = await GetUser(uid);
     if (res.status) {
@@ -111,7 +111,7 @@ function ApproveCreate() {
     }
   };
 
-  const listBookings = async () => {
+  const listBookings = async () => { // Transaction #3
     let res = await ListBookings();
     if (res) {
       setBookings(res);
@@ -134,7 +134,7 @@ function ApproveCreate() {
       StatusBookID: (approve.StatusBookID),
     };
     console.log(data)
-    let res = await CreateApprove(data);
+    let res = await CreateApprove(data); // Transaction #4
     if (res.status) {
       setSuccess(true);
       setErrorMessage("");
@@ -163,7 +163,7 @@ function ApproveCreate() {
       setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
     }
-    let res = await GetBookingbyCodeThatNotApprove(code);
+    let res = await GetBookingbyCodeThatNotApprove(code); // Transaction #5
     if (res.status){
       setApprove({
         ...approve,
