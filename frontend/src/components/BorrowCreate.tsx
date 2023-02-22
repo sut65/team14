@@ -122,17 +122,6 @@ else{
 }
 };
 
-// const listDevices = async () => {
-//   let res = await ListDevices();
-//   if (res) {
-//     setDevices(res);
-//     console.log("Load Devices Complete");
-//   }
-//   else{
-//     console.log("Load Devices InComplete!!!!");
-//   }
-// };
-
 const getUser = async () => {
 const uid = localStorage.getItem("userID")
 let res = await GetUser(uid);
@@ -202,6 +191,7 @@ console.log(res)
     setErrorMessage(res.data);
     return
 }
+  /////////////
 let res1 = await GetDevice(data.DeviceID)
   if(res1){
     res1.StatusDevice=false
@@ -209,6 +199,7 @@ let res1 = await GetDevice(data.DeviceID)
 console.log(res1)
 let res2 = await UpdateDevice(res1)
 console.log(res2)
+///////////////
 if (res2.status) {
   //setAlertMessage("บันทึกสำเร็จ")
   setSuccess(true);
