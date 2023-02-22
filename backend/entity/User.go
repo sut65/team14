@@ -13,9 +13,9 @@ type User struct {
 	Email                string `gorm:"uniqueIndex" valid:"email, required~Email: กรุณากรอกอีเมล"`
 	PhoneNumber          string `gorm:"uniqueIndex" valid:"matches(^\\d{10}$)~เบอร์โทรศัพท์ต้องมีตัวเลข 10 หลัก, required~กรุณากรอกเบอร์โทรศัพท์"`
 	IdentificationNumber string `gorm:"uniqueIndex" valid:"matches(^\\d{13}$)~เลขบัตรประชาชนต้องมีตัวเลข 13 หลัก, required~กรุณากรอกเลขบัตรประชาชน"`
-	StudentID            string `gorm:"uniqueIndex" valid:"matches(^[B||M||D]\\d{7}$)~รหัสนักศึกษาต้องขึ้นต้นด้วย B ตามด้วยตัวเลข 7 หลัก, required~กรุณากรอกรหัสนักศึกษา"`
+	StudentID            string `gorm:"uniqueIndex" valid:"matches(^[B||M||D]\\d{7}$)~รหัสนักศึกษาต้องขึ้นต้นด้วย B หรือ M หรือ D ตามด้วยตัวเลข 7 หลัก, required~กรุณากรอกรหัสนักศึกษา"`
 	Age                  uint8  `valid:"range(18|100)~อายุไม่ต่ำกว่า 18"`
-	Password             string `json:"password" valid:"minstringlength(6), required~กรุณากรอกรหัสผ่าน"`
+	Password             string `json:"password" valid:"minstringlength(6)~รหัสผ่านต้องมีจำนวนอย่างน้อย 6 ตัว, required~กรุณากรอกรหัสผ่าน"`
 	BirthDay             time.Time
 	RoleID               *uint
 	GenderID             *uint
