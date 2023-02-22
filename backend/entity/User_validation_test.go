@@ -292,7 +292,7 @@ func TestUserStudentID(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("รหัสนักศึกษาต้องขึ้นต้นด้วย B ตามด้วยตัวเลข 7 หลัก"))
+	g.Expect(err.Error()).To(Equal("รหัสนักศึกษาต้องขึ้นต้นด้วย B หรือ M หรือ D ตามด้วยตัวเลข 7 หลัก"))
 }
 
 func TestUserStudentIDNull(t *testing.T) {
@@ -379,7 +379,7 @@ func TestPassword(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Password: 123 does not validate as minstringlength(6)"))
+	g.Expect(err.Error()).To(Equal("รหัสผ่านต้องมีจำนวนอย่างน้อย 6 ตัว"))
 }
 
 func TestPasswordNull(t *testing.T) {
