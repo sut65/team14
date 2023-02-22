@@ -197,32 +197,6 @@ function BorrowUpdate() {
     }
   };
 
-
-// async function searchAPbyCode() {
-//   if (code === ""){
-//     setErrorSearch(true);
-//     setErrorMessage("กรุณากรอกรหัส Approve ที่จะค้นหา");
-//     return
-//   }
-//   let res = await GetApprovebyCode(code);
-//   // let res = await GetApprove(appid);
-//   if (res.status){
-//     setBorrow({
-//       ...borrow,
-//       ["Approve"]: res.data.ID,
-//     });
-//     setApproves(res.data);
-//     handleClose()
-//     setErrorMessage("");
-//   } else {
-//     setErrorSearch(true);
-//     setErrorMessage(res.data);
-//   }
-// }
-    
-
-
-
 async function submit() {
   // update Old Device
   console.log("Device Old: Before")
