@@ -85,7 +85,7 @@ func main() {
 			api.GET("/add_friend/Booking/code/:code", controller.ListAdd_friendByBookingCode)
 			api.POST("/add_friend", controller.CreateAdding_Friend)
 			api.PATCH("/add_friend", controller.UpdateAddfriend)
-			api.DELETE("/add_friends/:id", controller.DeleteAdd_friend)
+			api.DELETE("/add_friend/:id", controller.DeleteAdd_friend)
 
 			// Order food Routes
 			api.GET("/order_foods", controller.ListOrder_food)

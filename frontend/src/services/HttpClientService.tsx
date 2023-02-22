@@ -1520,18 +1520,16 @@ async function CreateAdd_friend(data: Add_friendInterface) {
   return res;
 }
 
-async function DeleteAdd_friend(data: Add_friendInterface) {
-  const id = localStorage.getItem('add_freindID')
+async function DeleteAdd_friend(id: any) {  
   const requestOptions = {
     method: "DELETE",
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+    },    
   };
 
-  let res = await fetch(`${apiUrl}/add_friends/${id}`, requestOptions)
+  let res = await fetch(`${apiUrl}/add_friend/${id}`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {       
@@ -1540,6 +1538,7 @@ async function DeleteAdd_friend(data: Add_friendInterface) {
         return {data: res.error, status: false};
       }
     });
+    return res;
 }
 
 /***************************** Order ****************************************************/

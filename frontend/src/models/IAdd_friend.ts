@@ -10,7 +10,7 @@ export interface Add_friendInterface {
 
     Note?: string | "" | null;
     AddfriendTime?: Date | null;
-
+    deleted_at?: Date | null;
     User?: UsersInterface;
     Approve?: ApprovesInterface;
     Admin?: UsersInterface;

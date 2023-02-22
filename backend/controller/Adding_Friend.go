@@ -69,6 +69,20 @@ func CreateAdding_Friend(c *gin.Context) {
 		return
 	}
 
+	var checklimit_Frind entity.Adding_Friend
+	if err := entity.DB().
+		Raw("select ad.* from adding_friends ad "+
+			"inner join approves a on a.id = ad.approve_id and a.deleted_at is null "+
+			"where ad.user_id = ? and a.id = ?", user.ID, approve.ID).
+		Scan(&checkFrind).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	if checklimit_Frind.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่สามารถเพิ่มได้เนื่องจากมีจำนวนคนที่อยู่ในห้องเต็มจำนวนที่ตั้งไว้"})
+		return
+	}
+
 	// บันทึก
 	if err := entity.DB().Create(&bod).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -82,7 +96,7 @@ func CreateAdding_Friend(c *gin.Context) {
 func GetAdd_friend(c *gin.Context) {
 	var add_friend entity.Adding_Friend
 	id := c.Param("id")
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends WHERE id = ?", id).Find(&add_friend).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends WHERE id = ? and deleted_at is null", id).Find(&add_friend).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -92,7 +106,7 @@ func GetAdd_friend(c *gin.Context) {
 // GET /add_friends
 func ListAdd_friend(c *gin.Context) {
 	var add_friends []entity.Adding_Friend
-	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends").Find(&add_friends).Error; err != nil {
+	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").Raw("SELECT * FROM adding_friends where deleted_at is null").Find(&add_friends).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -104,7 +118,7 @@ func ListAdd_friendByBookingCode(c *gin.Context) {
 	var add_friends []entity.Adding_Friend
 	code := c.Param("code")
 	if err := entity.DB().Preload("User").Preload("Admin").Preload("Approve").
-		Raw("Select ad.* from bookings b inner JOIN approves a inner JOIN adding_friends ad on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and ad.approve_id = a.id ", code).Find(&add_friends).Error; err != nil {
+		Raw("Select ad.* from bookings b inner JOIN approves a inner JOIN adding_friends ad on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and ad.approve_id = a.id and ad.deleted_at is null", code).Find(&add_friends).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -114,9 +128,11 @@ func ListAdd_friendByBookingCode(c *gin.Context) {
 // function สำหรับลบ เพื่อน ด้วย ID
 // DELETE /add_friends/:id
 func DeleteAdd_friend(c *gin.Context) {
+	var add_Friend entity.Adding_Friend
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM adding_friend WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Adding friend not found"})
+	// UPDATE add_Friend SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&add_Friend); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Add Friend not found"})
 		return
 	}
 
