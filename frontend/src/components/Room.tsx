@@ -10,6 +10,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import {  DeleteRoom, ListRooms } from "../services/HttpClientService";
 import { RoomsInterface } from "../models/IRoom";
 import { Alert, ButtonGroup, Grid, Paper, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 
 function Rooms() {
@@ -29,8 +30,6 @@ function Rooms() {
 
     const [errorMessageDel, setErrorMessageDel] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-
-
 
    
     const listRooms = async () => {
@@ -79,6 +78,12 @@ function Rooms() {
         listRooms();
      
       }, [])
+
+          //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
       return (
 

@@ -10,6 +10,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { BuildingsInterface } from "../models/IBuilding";
 import { DeleteBuilding, ListBuildings } from "../services/HttpClientService";
 import { Alert, ButtonGroup, Grid, Paper, Snackbar, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 
 function Buildings() {
@@ -29,6 +30,7 @@ function Buildings() {
 
   const [errorMessageDel, setErrorMessageDel] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+
 
    
    
@@ -83,6 +85,12 @@ async function DelBuilding(id:any) { //สร้าง Delete Building
         listBuildings();
      
       }, [])
+
+          //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
       return (
 

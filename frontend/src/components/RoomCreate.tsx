@@ -20,6 +20,7 @@ import { CreateRoom, GetUser, ListBuildings, ListRoomsbyBuilding, ListTyperooms 
 import { RoomsInterface } from "../models/IRoom";
 import { TyperoomsInterface } from "../models/ITyperoom";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -41,6 +42,8 @@ function RoomCreate(){
     const [success, setSuccess] = React.useState(false);
     const [error, setError] = React.useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+ 
 
     const handleChange_Text = (
         event: React.ChangeEvent<{ id?: string; value: any }>
@@ -155,6 +158,12 @@ function RoomCreate(){
         listBuildings();
         getUser();
     }, []);
+
+        //Check Role
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
       return (
         <Container maxWidth="md">
