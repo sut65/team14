@@ -12,9 +12,9 @@ func TestFood_and_DrinkPass(t *testing.T) {
 
 	// ข้อมูลทั้งหมดถูกต้องหมดทุก field
 	food_and_drink := Food_and_Drink{
-		Menu: "ขนมปัง",
+		Menu:    "ขนมปัง",
 		Address: "999/999",
-		Tel: "099-9999999",
+		Tel:     "0999999999",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -32,9 +32,9 @@ func TestFood_and_DrinkMenuNull(t *testing.T) {
 
 	// ข้อมูล Menu ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
-		Menu: "",
+		Menu:    "",
 		Address: "999/999",
-		Tel: "099-9999999",
+		Tel:     "0999999999",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -55,9 +55,9 @@ func TestFood_and_DrinkAddressNull(t *testing.T) {
 
 	// ข้อมูล Address ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
-		Menu: "ขนมปัง",
+		Menu:    "ขนมปัง",
 		Address: "",
-		Tel: "099-9999999",
+		Tel:     "0999999999",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -78,9 +78,9 @@ func TestFood_and_DrinkTelNull(t *testing.T) {
 
 	// ข้อมูล tel ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
-		Menu: "ขนมปัง",
+		Menu:    "ขนมปัง",
 		Address: "999/999",
-		Tel: "",
+		Tel:     "",
 	}
 
 	// ตรวจสอบด้วย govalidator
@@ -101,9 +101,9 @@ func TestFood_and_DrinkTel(t *testing.T) {
 
 	// ข้อมูล tel ไม่ถูกต้องตาม Format
 	food_and_drink := Food_and_Drink{
-		Menu: "ขนมปัง",
+		Menu:    "ขนมปัง",
 		Address: "999/999",
-		Tel: "123456789",
+		Tel:     "123456789",
 	}
 
 	// ตรวจสอบด้วย govalidator
