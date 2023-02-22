@@ -99,25 +99,6 @@ func DeletePayback(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// // DELETE /Borrows/:id
-// func DeleteBorrow(c *gin.Context) {
-// 	id := c.Param("id")
-// 	var Payback entity.Payback
-// 	if err := entity.DB().Raw("SELECT * FROM paybacks WHERE borrow_id = ? ", id).Find(&Payback).Error; err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-// 	if Payback.ID != 0 {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": "อุปกรณ์นี้ถูกคืนแล้ว"})
-// 		return
-// 	}
-// 	if tx := entity.DB().Exec("DELETE FROM borrows WHERE id = ?", id); tx.RowsAffected == 0 {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": "borrows not found"})
-// 		return
-// 	}
-// 	c.JSON(http.StatusOK, gin.H{"data": id})
-// }
-
 // PATCH /Paybacks
 func UpdatePayback(c *gin.Context) {
 	var Payback entity.Borrow

@@ -77,7 +77,7 @@ function Borrows() {
                 variant="contained"
                 color="primary"
               >
-                Create Borrow
+                สร้างการยืมอุปกรณ์
               </Button>
               </Grid>
 
@@ -88,7 +88,7 @@ function Borrows() {
                 variant="contained"
                 color="primary"
               >
-                Update Borrow
+                แก้ไขการยืมอุปกรณ์
               </Button>
               </Grid>
 
@@ -99,7 +99,7 @@ function Borrows() {
                 variant="contained"
                 color="primary"
               >
-                Delete Borrow
+                ยกเลิกการยืมอุปกรณ์
               </Button>
               </Grid>
             </Grid>

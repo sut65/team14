@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import SearchIcon from '@mui/icons-material/Search';
 import { 
-  ListAdd_friends,ListAddFriendByBookingCode 
+  ListAdd_friends,ListAddFriendByBookingCode, DeleteAdd_friend
 } from "../services/HttpClientService";
 import { Add_friendInterface } from "../models/IAdd_friend";
 import { ButtonGroup, IconButton, InputBase, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
@@ -19,9 +19,10 @@ function Add_friend() {
     const [code, setCode] = React.useState("")
 
     const [success, setSuccess] = React.useState(false);
-    const [error, setError] = React.useState(false);
+    const [error, setError] = React.useState(false);   
     const [errorMessage, setErrorMessage] = React.useState("");   
-    const [errorSearch, setErrorSearch] = React.useState(false); 
+    const [errorSearch, setErrorSearch] = React.useState(false);
+     
    
   
     const listAdd_friends = async () => {
@@ -39,7 +40,9 @@ function Add_friend() {
           return;
       }
       setSuccess(false);
-      setError(false);
+      setError(false);   
+      
+   
  };
 
     async function search(){
@@ -59,7 +62,31 @@ function Add_friend() {
           setErrorSearch(true);
           setErrorMessage(res);
         }
-    };    
+    }; 
+    
+  const DelAdd  = async (id:any) => {
+      let res = await DeleteAdd_friend(id);
+      if (res != null) {
+        let res = await ListAddFriendByBookingCode(code);
+        if (res != null){
+          setAdd_friends(res.data);   
+          handleClose()
+          setSuccess(true);
+          setErrorMessage("");
+          console.log(res.data);
+         
+          } else {
+            setErrorSearch(true);
+            setErrorMessage(res);
+          }     
+        
+      }
+      else{
+        setError(true);
+        setErrorMessage(res);
+      }
+  }; 
+
     useEffect(() => {
         listAdd_friends();
       }, []);
@@ -82,7 +109,7 @@ function Add_friend() {
              color="primary"
              gutterBottom
            >
-             Add Friend
+             สมาชิกที่เข้าใช้ห้อง
            </Typography>
          </Box>
 
@@ -130,7 +157,8 @@ function Add_friend() {
             <TableCell align="center">Name</TableCell>
             <TableCell align="center">Note</TableCell>
             <TableCell align="center">เวลาที่บันทึก</TableCell>
-            <TableCell align="center">ผู้บันทึก</TableCell>
+            <TableCell align="center">เวลาที่ออก</TableCell>
+            <TableCell align="center">ผู้เพิ่ม</TableCell>
             <TableCell align="center">Option</TableCell>
           </TableRow>
         </TableHead>
@@ -144,7 +172,8 @@ function Add_friend() {
               <TableCell align="center">{row.Approve?.Code}</TableCell>              
               <TableCell align="right">{row.User?.FirstName} {row.User?.LastName} </TableCell>             
               <TableCell align="left">{row.Note}</TableCell>
-              <TableCell align="right">{row.AddfriendTime?.toString()}</TableCell>               
+              <TableCell align="right">{row.AddfriendTime?.toString()}</TableCell>  
+              <TableCell align="right">{row.deleted_at?.toString()}</TableCell>              
               <TableCell align="right">{row.Admin?.FirstName} {row.Admin?.LastName} </TableCell>
               <TableCell align="right"><ButtonGroup
                                           disableElevation                                          
@@ -153,7 +182,7 @@ function Add_friend() {
                                         >                                          
                                           <Button variant="outlined" 
                                                   color="error" 
-                                                  onClick={() =>(row.ID)}>Del</Button>
+                                                  onClick={() => DelAdd(row.ID)}>Del</Button>
                                         </ButtonGroup>
               </TableCell>  
             </TableRow>
