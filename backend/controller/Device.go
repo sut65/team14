@@ -95,7 +95,7 @@ func ListDeviceType(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": DeviceType})
 }
-
+//list devicewhere status = true
 func ListTypebyDevice(c *gin.Context) {
 	var device_id []entity.Device
 	devicetype := c.Param("id")
