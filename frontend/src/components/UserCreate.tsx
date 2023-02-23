@@ -131,12 +131,6 @@ function UserCreate() {
       }
     }
 
-//Check Role
-const roleLevel = localStorage.getItem('role')+""
-if (roleLevel !== "User") {
-  return <AccessDenied />
-}
-
  return (
    <Container maxWidth="md">
      <Snackbar

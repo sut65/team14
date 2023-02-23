@@ -60,16 +60,16 @@ function BookingDelete() {
       setError(false);
   };
 
-  const onChangeBooking = async (e: SelectChangeEvent) =>{
+  const onChangeBooking = async (e: SelectChangeEvent) =>{ 
     const bid = e.target.value;
-    let res = await GetBooking(bid);
+    let res = await GetBooking(bid); // Transaction #1
     if (res) {
       setBookingUser(res);  
     }
     else{
       console.log("Load BookingUser Incomplete!!!");
     }
-    res = await GetBuilding(res.Room.BuildingID); 
+    res = await GetBuilding(res.Room.BuildingID);  // Transaction #2
     if (res) {
       setBuilding(res);
     }
@@ -79,7 +79,7 @@ function BookingDelete() {
   }
 
   const listBookingbyUser = async () => {
-    let res = await ListBookingbyUser(uid);
+    let res = await ListBookingbyUser(uid); // Transaction #3
     if (res.status) {
       setBookings(res.data)
     }
@@ -89,7 +89,7 @@ function BookingDelete() {
   };
 
   async function submit() {
-      let res = await DeleteBooking(bookingUser.ID);
+      let res = await DeleteBooking(bookingUser.ID); // Transaction #4
       if (res.status) {
           setSuccess(true);
           setErrorMessage("");

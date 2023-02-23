@@ -11,10 +11,10 @@ import (
 // POST Order food
 func CreateOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
-	
+
 	var approve entity.Approve
 	var food_and_drink entity.Food_and_Drink
-	var admin entity.User	
+	var admin entity.User
 
 	// ผลลัพธ์ที่ได้จากขั้นตอนที่ x จะถูก bind เข้าตัวแปร order food
 	if err := c.ShouldBindJSON(&order_food); err != nil {
@@ -40,16 +40,14 @@ func CreateOrder_food(c *gin.Context) {
 		return
 	}
 
-	
-
 	//สร้าง Adding Friend
 	bod := entity.Order_Food{
 		Approve:        approve,
 		Admin:          admin,
 		Food_and_Drink: food_and_drink,
 
-		Totold: order_food.Totold,
-		Note:       order_food.Note,
+		Totold:    order_food.Totold,
+		Note:      order_food.Note,
 		OrderTime: order_food.OrderTime,
 	}
 
@@ -72,7 +70,7 @@ func CreateOrder_food(c *gin.Context) {
 func GetOrder_food(c *gin.Context) {
 	var order_food entity.Order_Food
 	id := c.Param("id")
-	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods WHERE id = ?", id).Find(&order_food).Error; err != nil {
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods WHERE id = ? and deleted_at is NULL", id).Find(&order_food).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -82,7 +80,7 @@ func GetOrder_food(c *gin.Context) {
 // GET /oder_foods
 func ListOrder_food(c *gin.Context) {
 	var order_foods []entity.Order_Food
-	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods ").Find(&order_foods).Error; err != nil {
+	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").Raw("SELECT * FROM order_foods where deleted_at is NULL ").Find(&order_foods).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -94,24 +92,24 @@ func ListOrderByBookingCode(c *gin.Context) {
 	var order_foods []entity.Order_Food
 	code := c.Param("code")
 	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").
-	Raw("Select O.* from bookings b inner JOIN approves a inner JOIN order_foods o on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and o.approve_id = a.id ",code).Find(&order_foods).Error; err != nil {
+		Raw("Select O.* from bookings b inner JOIN approves a inner JOIN order_foods o on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and o.approve_id = a.id and O.deleted_at is NULL", code).Find(&order_foods).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": order_foods})
 }
 
-
 // function สำหรับลบ oder ด้วย ID
 // DELETE /order_foods/:id
 func DeleteOrder_food(c *gin.Context) {
+	var order_food entity.Order_Food
 	id := c.Param("id")
-	if tx := entity.DB().Exec("DELETE FROM order_foods WHERE id = ?", id); tx.RowsAffected == 0 {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Order not found"})
+	// UPDATE add_Friend SET deleted_at="now" WHERE id = ?;
+	if tx := entity.DB().Where("id = ?", id).Delete(&order_food); tx.RowsAffected == 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Add Friend not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
 // PATCH /order_food
@@ -150,7 +148,6 @@ func UpdateOrder_food(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "food ID not found"})
 		return
 	}
-
 
 	tmp.Approve = approve
 	tmp.Admin = admin

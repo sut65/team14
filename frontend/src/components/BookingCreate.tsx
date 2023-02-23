@@ -84,7 +84,7 @@ function BookingCreate() {
     console.log(`[${name}]: ${value}`);
   };
 
-  const onChangeBuilding = async (e: SelectChangeEvent) =>{
+  const onChangeBuilding = async (e: SelectChangeEvent) =>{ // Transaction #1
     const bid = e.target.value;
     setBuildingID(bid);
     let res = await ListRoomsbyBuilding(bid);
@@ -98,7 +98,7 @@ function BookingCreate() {
     
   }
 
-  const listBuildings = async () => {
+  const listBuildings = async () => { // Transaction #2
     let res = await ListBuildings();
     if (res) {
       setBuildings(res);
@@ -109,7 +109,7 @@ function BookingCreate() {
     }
   };
 
-  const getUser = async () => {
+  const getUser = async () => { // Transaction #3
     const uid = localStorage.getItem("userID")
     let res = await GetUser(uid);
     if (res.status) {
@@ -122,7 +122,7 @@ function BookingCreate() {
     }
   };
 
-  const listObjectives = async () => {
+  const listObjectives = async () => { // Transaction #4
     let res = await ListObjectives();
     if (res) {
       setObjectives(res);
@@ -133,7 +133,7 @@ function BookingCreate() {
     }
   };
 
-  async function submit() {
+  async function submit() { 
       let data = {
           Code: booking.Code,
           Date_Start: booking.Date_Start,
@@ -143,7 +143,7 @@ function BookingCreate() {
           ObjectiveID: (booking.ObjectiveID),
           RoomID: (booking.RoomID),
       };
-      let res = await CreateBooking(data);
+      let res = await CreateBooking(data); // Transaction #5
       console.log(res.data);
       if (res.status) {
           setSuccess(true);

@@ -61,7 +61,7 @@ function ApproveDelete() {
       setError(false);
   };
 
-  const onChangeApprove = async (e: SelectChangeEvent) =>{
+  const onChangeApprove = async (e: SelectChangeEvent) =>{ // Transaction #1
     const appid = e.target.value;
     let res = await GetApprove(appid);
     if (res) {
@@ -72,7 +72,7 @@ function ApproveDelete() {
     }
   }
 
-  const listApprove = async () => {
+  const listApprove = async () => { // Transaction #2
     let res = await ListApproves();
     if (res) {
       setApproves(res); 
@@ -83,7 +83,7 @@ function ApproveDelete() {
   };
 
   async function submit() {
-    let res = await DeleteApprove(approve.ID);
+    let res = await DeleteApprove(approve.ID); // Transaction #3
     if (res.status) {
       setSuccess(true);
       setErrorMessage("");
@@ -103,7 +103,7 @@ function ApproveDelete() {
   }
 
   async function search(code : any){
-    let res = await GetBookingbyCode(code);
+    let res = await GetBookingbyCode(code); // Transaction #4
     if (res){
       setBooking(res);
     } else {

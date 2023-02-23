@@ -81,7 +81,7 @@ function BookingUpdate() {
 
   const onChangeBooking = async (e: SelectChangeEvent) =>{
     const bid = e.target.value;
-    let res = await GetBooking(bid);
+    let res = await GetBooking(bid); // Transaction #1
     if (res) {
       setBookingUser(res);
     }
@@ -90,7 +90,7 @@ function BookingUpdate() {
     }
     res = await GetBuilding(res.Room.BuildingID); 
     if (res) {
-      setBuilding(res);
+      setBuilding(res); // Transaction #2
     }
     else{
       console.log("Load Building Incomplete!!!");
@@ -98,7 +98,7 @@ function BookingUpdate() {
   }
 
   const getUser = async () => {   
-    let res = await GetUser(uid);
+    let res = await GetUser(uid); // Transaction #3
     if (res.status) {
       setUser(res.data); 
     }
@@ -109,7 +109,7 @@ function BookingUpdate() {
 
   const onChangeObjective = async (e: SelectChangeEvent) =>{
     const id = e.target.value;
-    let res = await GetObjective(id);
+    let res = await GetObjective(id); // Transaction #4
     if (res) {
       setObjectiveOne(res);
     }
@@ -119,7 +119,7 @@ function BookingUpdate() {
   };
 
   const listBookingbyUser = async () => {
-    let res = await ListBookingbyUser(uid);
+    let res = await ListBookingbyUser(uid); // Transaction #5
     if (res.status) {
       setBookings(res.data)
     }
@@ -129,7 +129,7 @@ function BookingUpdate() {
   };
 
   const listObjectives = async () => {
-    let res = await ListObjectives();
+    let res = await ListObjectives(); // Transaction #6
     if (res) {
       setObjectives(res);
     }
@@ -150,7 +150,7 @@ function BookingUpdate() {
           Objective: objectiveOne,
           RoomID: (bookingUser.RoomID),
       };
-      let res = await UpdateBooking(data);
+      let res = await UpdateBooking(data); // Transaction #7
       console.log("submit");
       console.log(data);
       if (res.status) {

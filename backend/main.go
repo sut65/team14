@@ -61,6 +61,7 @@ func main() {
 			api.GET("/users", controller.ListUsers)
 			api.GET("/user/:id", controller.GetUser)
 			api.GET("/User/StudentID/:StudentID", controller.GetUserByStudentID)
+			api.GET("/onlyuser", controller.ListOnlyUsers)
 			// api.GET("/educationlevels", controller.ListEducationLevels)
 			// api.GET("/genders", controller.ListGenders)
 			// api.GET("/roles", controller.ListRoles)

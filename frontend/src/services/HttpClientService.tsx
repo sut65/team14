@@ -896,9 +896,32 @@ async function ListUsers() {
       "Content-Type": "application/json",
     },
   };
-  
+ 
 
   let res = await fetch(`${apiUrl}/users`, requestOptions)
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.data) {
+        return res.data;
+      } else {
+        return false;
+      }
+    });
+
+  return res;
+}
+
+async function ListOnlyUsers() {
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      "Content-Type": "application/json",
+    },
+  };
+ 
+
+  let res = await fetch(`${apiUrl}/onlyuser`, requestOptions)
     .then((response) => response.json())
     .then((res) => {
       if (res.data) {
@@ -1827,7 +1850,7 @@ export{
 
     ListObjectives, GetObjective,
 
-    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole, UpdateUser, DeleteUser,
+    GetUser, ListUsers, CreateUser, ListRoles, ListEducationLevels, ListGenders,GetUserRole, UpdateUser, DeleteUser, ListOnlyUsers,
 
     ListFoodtypes, ListShops, CreateFood_and_Drink, ListFood_and_Drinks, UpdateFood_and_Drink, DeleteFood_and_Drink, GetFood_and_Drinks,
 
