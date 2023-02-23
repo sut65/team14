@@ -133,7 +133,6 @@ function ApproveCreate() {
       BookingID: (approve.BookingID),
       StatusBookID: (approve.StatusBookID),
     };
-    
     console.log(data)
     let res = await CreateApprove(data); // Transaction #4
     if (res.status) {
