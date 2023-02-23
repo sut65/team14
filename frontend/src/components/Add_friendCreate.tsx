@@ -16,7 +16,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 
 import {  
   
-  GetUser,GetUserByStudentID,ListUsers
+  GetUser,GetUserByStudentID
  
 } from "../services/HttpClientService";
 import { DateTimePicker } from "@mui/x-date-pickers";
@@ -32,37 +32,30 @@ function Add_friendCreate(){
     const [user, setUser] = useState<UsersInterface>({
       StudentID:"Student ID",FirstName: "User name",LastName:  "",
     });
-    const [admin, setAdmin] = useState<UsersInterface>({}); 
-    const [approve, setApprove] = useState<ApprovesInterface>({});   
+    const [admin, setAdmin] = useState<UsersInterface>({});       
     const [booking, setBooking] = useState<BookingsInterface>({
       ID: "Booking ID",       
        User: {FirstName: "Usesr name", LastName: "",}
       ,Room: {Detail: "", Building:{Detail: "",}}
      
     });
-    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({
-    Note: "",
-    AddfriendTime: new Date(),});    
-    
-    
-    
+    const [add_frind, setAdd_friend] = useState<Add_friendInterface>({   Note: "",    AddfriendTime: new Date(),});    
     const [code, setCode] = useState("");
     const [studentID, setstudentID] = useState("");
 
     const [key, setKey] = useState(true);
     const [success, setSuccess] = useState(false);
-    const [error, setError] = useState(false);
-    
-    const [successB, setSuccessB] = useState(false);
-    const [errorB, setErrorB] = useState(false);
+    const [error, setError] = useState(false); 
 
-    const [errorU, setErrorU] = useState(false);
-    const [successU, setSuccessU] = useState(false);
-    
-    const [errorSearch, setErrorSearch] = useState(false);
+    const [successu, setSuccessu] = useState(false);
+    const [errorSearchu, setErrorSearchu] = useState(false);
+    const [successb, setSuccessb] = useState(false);
+    const [errorSearchb, setErrorSearchb] = useState(false);
+
     const [errorMessage, setErrorMessage] = useState("");
-    const [errorSearch_u, setErrorSearch_u] = useState(false);
-    const [errorMessage_u, setErrorMessage_u] = useState("");
+    const [errorMessageb, setErrorMessageb] = useState("");
+    const [errorMessageu, setErrorMessageu] = useState("");
+    
         
 
   const handleClose = (
@@ -72,14 +65,13 @@ function Add_friendCreate(){
       if (reason === "clickaway") {
           return;
       }
-      setSuccess(false);
-      setError(false);
+      setSuccess(false);      
+      setSuccessb(false);      
+      setSuccessu(false);
 
-      setSuccessB(false);
-      setErrorB(false);
-
-      setSuccessU(false);
-      setErrorU(false);
+      setErrorSearchb(false);
+      setErrorSearchu(false);
+     
  };   
 
  const handleChange_Text = (
@@ -116,8 +108,8 @@ function Add_friendCreate(){
      
   async function search(){
     if (code === ""){
-      setErrorSearch(true);
-      setErrorMessage("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
+      setErrorSearchb(true);
+      setErrorMessageb("กรุณากรอกรหัสการจองห้องที่จะค้นหา");
       return
     }
     let res = await GetBookingbyCodeThatApprove(code);
@@ -129,31 +121,31 @@ function Add_friendCreate(){
       
       setBooking(res.data);
       handleClose()
-      setSuccessB(true);
-      setErrorMessage("");
+      setSuccessb(true);
+      setErrorMessageb("");
       console.log(res.data);
     } else {
-      setErrorSearch(true);
-      setErrorMessage(res.data);
+      setErrorSearchb(true);
+      setErrorMessageb(res.data);
     }
   }
     
 
   async function search_u(){
     if (studentID === ""){
-      setErrorSearch_u(true);
-      setErrorMessage_u("กรุณากรอกรหัสผู้ใช้เพื่อค้นหา");
+      setErrorSearchu(true);
+      setErrorMessageu("กรุณากรอกรหัสผู้ใช้เพื่อค้นหา");
       return
     }
     let res = await GetUserByStudentID(studentID);
     if (res.status){
       setUser(res.data);      
       handleClose()
-      setSuccessU(true);
-      setErrorMessage("");
+      setSuccessu(true);
+      setErrorMessageu("");
     } else {
-      setErrorSearch(true);
-      setErrorMessage(res.data);
+      setErrorSearchu(true);
+      setErrorMessageu(res.data);
     }
   }  
 
@@ -200,17 +192,8 @@ return (
     <div>
 <Container maxWidth="md" sx={{ bgcolor: '#EAEDED' }} >
      <Snackbar
-       open={success}
-       autoHideDuration={6000}
-       onClose={handleClose}
-       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-     >
-       <Alert onClose={handleClose} severity="success">
-         บันทึกข้อมูลสำเร็จ
-       </Alert>
-     </Snackbar>
-     <Snackbar
-       open={successB}
+     id = "successB" 
+       open={successb}
        autoHideDuration={6000}
        onClose={handleClose}
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -218,9 +201,16 @@ return (
        <Alert onClose={handleClose} severity="success">
          ค้นหาข้อมูลหาจองห้องสำเร็จ
        </Alert>
-     </Snackbar>
-     <Snackbar
-       open={successU }
+     </Snackbar> 
+     <Snackbar id = "errorSearch_b" open={errorSearchb} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+          <Alert onClose={handleClose} severity="error">
+          ค้นหาข้อมูลหาจองห้องไม่สำเร็จ: {errorMessageb}
+          </Alert>
+      </Snackbar>    
+
+      <Snackbar
+      id = "successU" 
+       open={successu}
        autoHideDuration={6000}
        onClose={handleClose}
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -229,25 +219,29 @@ return (
          ค้นหาข้อมูลผู้ใช้สำเร็จ
        </Alert>
      </Snackbar>
-     
 
-     <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
+      <Snackbar id = "errorSearch_u" open={errorSearchu} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+          <Alert onClose={handleClose} severity="error">
+            ค้นหาข้อมูลไม่สำเร็จ: {errorMessageu}
+          </Alert>
+      </Snackbar> 
+      <Snackbar
+     id = "success" 
+       open={success}
+       autoHideDuration={6000}
+       onClose={handleClose}
+       anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+     >
+       <Alert onClose={handleClose} severity="success">
+         บันทึกข้อมูลสำเร็จ
+       </Alert>
+     </Snackbar> 
+
+     <Snackbar id = "error" open={error} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>
-     </Snackbar>
-
-     <Snackbar open={errorSearch} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-          <Alert onClose={handleClose} severity="error">
-              ค้นหารายการไม่สำเร็จ: {errorMessage}
-          </Alert>
-      </Snackbar>
-
-      <Snackbar open={errorSearch_u} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-          <Alert onClose={handleClose} severity="error">
-            ค้นหาข้อมูลไม่สำเร็จ: {errorMessage}
-          </Alert>
-      </Snackbar>    
+     </Snackbar>   
 
         <p>ระบบจัดการเพิ่มเพื่อนเข้าห้อง</p>      
       <Paper
@@ -255,6 +249,7 @@ return (
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
           >      
           <InputBase
+          id = "booking code"
             sx={{ ml: 1, flex: 1 }}
             placeholder="Booking Code"
             inputProps={{ 'aria-label': 'Booking Code' }}
@@ -264,7 +259,9 @@ return (
                     }
                   }
           />
-            <IconButton type="button" sx={{ p: '10px' }} 
+            <IconButton
+            id = "booking button"
+             type="button" sx={{ p: '10px' }} 
                         aria-label="search" size="large"
                         onClick= {() => {
                         search();
@@ -335,7 +332,7 @@ return (
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}
           >      
           <InputBase
-            id="outlined-basic"
+            id="student id"
             sx={{ ml: 1, flex: 1 }}
             placeholder="student ID"
             inputProps={{ 'aria-label': 'studentID' }}
@@ -345,7 +342,8 @@ return (
                 }
               }
           />
-            <IconButton type="button" sx={{ p: '10px' }} 
+            <IconButton id = "student button" 
+                        type="button" sx={{ p: '10px' }} 
                         aria-label="search" size="large"
                         onClick= {() => {
                         search_u();
