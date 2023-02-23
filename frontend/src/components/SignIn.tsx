@@ -12,7 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
-import { createTheme, makeStyles, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
 import { Login, GetUserRole } from "../services/HttpClientService";
 import { Link } from "react-router-dom";
@@ -24,14 +24,6 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props
 });
 
 const theme = createTheme();
-
-const button = {
-  mt: 3, mb: 2, width: "80%", height: "40px",
-  borderRadius: "40px", background: "#fff",
-  border: "none", outline: "none",
-  cursor: "pointer", fontSize: "1em",
-  fontWeight: "600", left: '50%', transform: 'translate(-50%, -50%)',
-}
 
 function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
