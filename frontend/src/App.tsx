@@ -74,6 +74,7 @@ import BorrowUpdate from "./components/BorrowUpdate";
 import PaybackUpdate from "./components/PaybackUpdate";
 import PaybackDelete from "./components/PaybackDelete";
 import image from "./images/one.jpg";
+import NotFound404 from "./components/NotFound404";
 
 const drawerWidth = 260;
 
@@ -126,7 +127,7 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const menu = [
-  { name: "หน้าแรก", icon: <HomeIcon />, path: "/home", role: "All" },
+  { name: "หน้าแรก", icon: <HomeIcon />, path: "/", role: "All" },
 
   { name: "ข้อมูลการจองใช้ห้อง", icon: <MenuBookIcon />, path: "/bookings", role: "User" }, 
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <AssignmentTurnedInIcon />, path: "/approves", role: "Admin" },
@@ -275,16 +276,14 @@ return (
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
               <Routes>
-                {/* <Route path="/" element={<SignIn />} /> */}
-                <Route path="/home" element={<Home />} />
+                <Route path="/" element={<Home />} />
 
                 <Route path="/bookings" element={<Booking />} />
                 <Route path="/booking/create" element={<BookingCreate />} />
                 <Route path="/booking/update" element={<BookingUpdate />} />
                 <Route path="/booking/delete" element={<BookingDelete />} />
 
-                <Route path="/users" element={<User />} />
-                
+                <Route path="/users" element={<User />} />               
                 <Route path="/user/update" element={<UserUpdate />} />
                 <Route path="/user/delete" element={<UserDelete />} />
 
@@ -315,7 +314,6 @@ return (
                 <Route path="/building/create" element={<BuildingCreate />} />
                 <Route path="/building/update/:id" element={<BuildingUpdate />} />
 
-
                 <Route path="/rooms" element={<Room />} />
                 <Route path="/room/create" element={<RoomCreate />} />
                 <Route path="/room/update/:id" element={<RoomUpdate />} />
@@ -333,7 +331,7 @@ return (
                 <Route path="/admins" element={<Admin />} />
                 <Route path="/admin/create" element={<AdminCreate />} />
 
-
+                <Route path="*" element={<NotFound404 />} />
               </Routes> 
             </Container>
           </Box>

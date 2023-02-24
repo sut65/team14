@@ -1,7 +1,7 @@
 
 function AccessDenied () {
     setTimeout(() => {
-        window.location.href = "/home";
+        window.location.href = "/";
     }, 2000);
 	return (
 		<div className="AccessDenied">
