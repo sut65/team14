@@ -149,7 +149,6 @@ const listFood_and_Drink = async () => {
     }
   }
    
-
   async function Submit() {
     let data = { 
       AdminID: (admin.ID),     
