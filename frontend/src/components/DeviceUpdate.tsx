@@ -155,7 +155,7 @@ return (
       <Paper>
         <Box display="flex" sx={{ marginTop: 2, }}>
           <Box sx={{ paddingX: 2, paddingY: 1 }}>
-            <Typography component="h2" variant="h6" color="primary" gutterBottom > เพิ่มรายการอุปกรณ์ </Typography>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom > แก้ไขรายการอุปกรณ์ </Typography>
           </Box>
         </Box>
         <Divider />
@@ -200,12 +200,6 @@ return (
           <FormControl fullWidth variant="outlined">
               <p>จำนวน</p>
               <TextField  id="Number" variant="outlined" type="string" size="medium" label="จำนวน" inputProps={{name: "Number",}} value={device.Number || ""} onChange={handleInputChange}/>
-          </FormControl>
-          </Grid>
-          <Grid item xs={6} >  
-          <FormControl fullWidth variant="outlined">
-              <p>หมายเหตุ</p>
-              <TextField  id="Note" variant="outlined" type="string" size="medium" label="หมายเหตุ" inputProps={{name: "Note",}} value={device.Note || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={6} >  
