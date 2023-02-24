@@ -92,7 +92,7 @@ func ListOrderByBookingCode(c *gin.Context) {
 	var order_foods []entity.Order_Food
 	code := c.Param("code")
 	if err := entity.DB().Preload("Food_and_Drink").Preload("Admin").Preload("Approve").
-		Raw("Select O.* from bookings b inner JOIN approves a inner JOIN order_foods o on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and o.approve_id = a.id and O.deleted_at is NULL", code).Find(&order_foods).Error; err != nil {
+		Raw("Select O.* from bookings b inner JOIN approves a inner JOIN order_foods o INNER JOIN food_and_drinks f on a.booking_id = b.id and b.deleted_at is NULL AND  b.code = ? and o.approve_id = a.id and o.food_and_drink_id = f.id and O.deleted_at is NULL", code).Find(&order_foods).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

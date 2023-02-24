@@ -77,7 +77,7 @@ func CreateAdding_Friend(c *gin.Context) {
 		return
 	}
 
-	if x > 2 {
+	if x > 19 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "ไม่สามารถเพิ่มได้เนื่องจากมีจำนวนคนที่อยู่ในห้องเต็มจำนวนที่ตั้งไว้"})
 		return
 	}

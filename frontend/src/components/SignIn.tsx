@@ -16,12 +16,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { SigninInterface } from "../models/ISignin";
 import { Login, GetUserRole } from "../services/HttpClientService";
 import { Link } from "react-router-dom";
-import UserCreate from "./UserCreate";
 import image from "../images/one.jpg";
-const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
-  props,
-  ref
-) {
+
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert( props,  ref ) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
@@ -31,7 +29,6 @@ function SignIn() {
   const [signin, setSignin] = useState<Partial<SigninInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  const [User, setUser] = React.useState(false);
 
   const handleInputChange = (
     event: React.ChangeEvent<{ id?: string; value: any }>
@@ -39,10 +36,6 @@ function SignIn() {
     const id = event.target.id as keyof typeof signin;
     const { value } = event.target;
     setSignin({ ...signin, [id]: value });
-  };
-
-  const handleChangeCreateUser = () => {
-    return (<UserCreate />);
   };
 
   const handleClose = (
@@ -73,8 +66,9 @@ function SignIn() {
   return (
 
     
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }} >
+    
+    <ThemeProvider theme={theme} >
+      
         <Snackbar
           open={success}
           autoHideDuration={3000}
@@ -97,13 +91,8 @@ function SignIn() {
         </Snackbar>
         
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
+        <Paper
           sx={{
-            //backgroundImage: "url(https://source.unsplash.com/random)",
             backgroundImage: `url(${image})`,
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
@@ -113,82 +102,136 @@ function SignIn() {
             backgroundSize: "cover",
             backgroundPosition: "center",
             height: "100vh",
-
           }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box 
-            sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              alignSelf: "center",
-            }}
+        >
+        <Box
+          sx =  {{
+            position: "relative",
+            width: "400px",
+            height: "600px",
+            background: "transparent",
+            border: "2px solid rgba(255,255,255,0.5)",
+            borderRadius: "20px",
+            backdropFilter: "blur(10px)",
+
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+ 
+            left: '50%', 
+            top: '50%',
+            transform: 'translate(-50%, -50%)'
+            
+          }}
+        >
+          <Grid container component="main" spacing={0} 
+                //direction="row"
+                alignItems="center"
+                justifyContent="center"
+                //style={{ minHeight: '100vh' }} 
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
-            <Box sx={{ mt: 1 }}>
+            <Grid item xs={12} >
+              <Avatar sx={{  bgcolor: "secondary.main", left: '50%', transform: 'translate(-50%, -50%)' }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5" sx={{textAlign: "center",}}>
+                Sign in
+              </Typography>
+            </Grid>
+            <Grid item xs={12} >
               <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="Email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                value={signin.Email || ""}
-                onChange={handleInputChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="Password"
-                autoComplete="current-password"
-                value={signin.Password || ""}
-                onChange={handleInputChange}
-              />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                component={Link}
-                to="/user/create"
-                variant="outlined"
-                color="inherit"
-              >
-                ลงทะเบียนสมาชิก
-              </Button>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-                onClick={submit}
-              >
-                Sign In
-              </Button>
-              <Grid container spacing={1} sx={{ padding: 2 }}  alignItems="center">
-                <Grid item xs={6} >
+                  sx={{
+                    position: "relative",
+                    margin: "30px",
+                    width: "330px",
+                    borderBottom: "2px solid #fff",
+                  }}
+                  required
+                  fullWidth
+                  id="Email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  value={signin.Email || ""}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12} >
+                <TextField
+                  sx={{
+                    position: "relative",
+                    margin: "30px",
+                    width: "330px",
+                    borderBottom: "2px solid #fff",
+                  }}
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="Password"
+                  autoComplete="current-password"
+                  value={signin.Password || ""}
+                  onChange={handleInputChange}
+                />
+              </Grid>
+              <Grid item xs={12} md={10}>
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+              </Grid>
+              <Grid item xs={6} >
+                <Button 
+                  type="submit"
+                  sx={{ 
+                    mt: 3, mb: 2, width: "80%", height: "40px",
+                    borderRadius: "40px", background: "#fff",
+                    border: "none", outline: "none",
+                    cursor: "pointer", fontSize: "1em",
+                    fontWeight: "600", left: '50%', transform: 'translate(-50%, -50%)',
+                  }}
+                  onClick={submit}
+                  color="inherit"
+                >
+                  Sign In
+                </Button>
+              </Grid>
+
+              <Grid item xs={6} >
+                <Button
+                  type="submit"
+                  sx={{ 
+                    mt: 3, mb: 2, width: "80%", height: "40px",
+                    borderRadius: "40px", background: "#fff",
+                    border: "none", outline: "none",
+                    cursor: "pointer", fontSize: "1em",
+                    fontWeight: "600", left: '50%', transform: 'translate(-50%, -50%)',
+                  }}
+                  component={Link}
+                  to="/user/create"
+                  variant="outlined"
+                  color="inherit"
+                >
+                  Register
+                </Button>
+              </Grid>
+              <Grid item xs={6} >
                   <Button
                     type="submit"
                     fullWidth
                     variant="outlined"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ 
+                      mt: 3, mb: 2, width: "80%", height: "40px",
+                      borderRadius: "40px", background: "#fff",
+                      border: "none", outline: "none",
+                      cursor: "pointer", fontSize: "1em",
+                      fontWeight: "600", left: '50%', transform: 'translate(-50%, -50%)',
+                    }}
                     onClick={()=>setSignin({Email:"user@gmail.com", Password:"123456"})}
                   >
-                    user@gmail.com 123456
+                    user
                   </Button>
                 </Grid>
 
@@ -197,18 +240,22 @@ function SignIn() {
                     type="submit"
                     fullWidth
                     variant="outlined"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ 
+                      mt: 3, mb: 2, width: "80%", height: "40px",
+                      borderRadius: "40px", background: "#fff",
+                      border: "none", outline: "none",
+                      cursor: "pointer", fontSize: "1em",
+                      fontWeight: "600", left: '50%', transform: 'translate(-50%, -50%)',
+                    }}
                     onClick={()=>setSignin({Email:"admin@gmail.com", Password:"123456"})}
                   >
-                    admin@gmail.com 123456
+                    admin
                   </Button>
                 </Grid>
-              </Grid>
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
-
+          </Grid>
+        </Box>
+       
+        </Paper>
     </ThemeProvider>
   );
 }
