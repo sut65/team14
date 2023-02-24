@@ -8,8 +8,8 @@ type Food_and_Drink struct {
 	gorm.Model
 
 	Menu string `gorm:"uniqueIndex" valid:"required~กรุณากรอกชื่ออาหารและเครื่องดื่ม"`
-	Address string `gorm:"uniqueIndex" valid:"required~กรุณากรอกที่อยู่"`
-	Tel string `gorm:"uniqueIndex" valid:"matches(^\\d{10}$)~เบอร์โทรศัพท์ต้องมีตัวเลข 10 หลัก, required~กรุณากรอกเบอร์โทรศัพท์"`
+	Address string `valid:"required~กรุณากรอกที่อยู่"`
+	Tel string `valid:"matches(^\\d{10}$)~เบอร์โทรศัพท์ต้องมีตัวเลข 10 หลัก, required~กรุณากรอกเบอร์โทรศัพท์"`
 
 	Foodtype   Foodtype `gorm:"references:id"`
 	FoodtypeID *uint

@@ -1,0 +1,1182 @@
+{
+  "id": "0c398a2c-bfc3-4406-866d-5d1aaa4af555",
+  "version": "2.0",
+  "name": "B6323059_Food_and_Drink_Create",
+  "url": "http://localhost:3000/food_and_drinks",
+  "tests": [{
+    "id": "0df3f337-054d-4544-bd5f-6c6b24f6f700",
+    "name": "1.pass",
+    "commands": [{
+      "id": "1d4f50e5-e3c1-40e2-981c-6bd31cc97b91",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/food_and_drinks",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7b5863a6-51d0-4655-8ab7-4b9ec79ff94b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dc107e13-e6f9-446c-ac89-b5c6a6957511",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=สร้างรายการอาหาร",
+      "targets": [
+        ["linkText=สร้างรายการอาหาร", "linkText"],
+        ["css=.MuiGrid-root:nth-child(2) > .MuiButtonBase-root", "css:finder"],
+        ["xpath=//a[contains(text(),'สร้างรายการอาหาร')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/food_and_drink/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'สร้างรายการอาหาร')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7273a63-6e97-4fbe-a8c0-9fafcf27e7fa",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-FoodtypeID",
+      "targets": [
+        ["id=mui-component-select-FoodtypeID", "id"],
+        ["css=#mui-component-select-FoodtypeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-FoodtypeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7a9a179a-8a60-4bdb-8a11-79be91352986",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "41cff81c-64a4-4865-8d7d-d924f52072ea",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "636f65b4-f3fb-49ed-b223-b157a79818e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ประเภท A')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "6ffa0b5c-6eb7-4918-af27-98d15de889ba",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-ShopID",
+      "targets": [
+        ["id=mui-component-select-ShopID", "id"],
+        ["css=#mui-component-select-ShopID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-ShopID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8dc64017-4f84-48dd-8a96-7abb138c0298",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "83d6332e-cfa7-4a97-b7e1-ab455cd97944",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "49acf453-6e65-400d-8ea4-ebd943924fa1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ร้าน B')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "660fcbb1-64c6-4dbe-b74e-140828b7c199",
+      "comment": "",
+      "command": "click",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2ef2fff7-5acd-4813-9927-723b13290e29",
+      "comment": "",
+      "command": "type",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "กะเพราหมูสับ"
+    }, {
+      "id": "099610f8-355f-4a35-a1af-e4af99086199",
+      "comment": "",
+      "command": "click",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fd8616f-2d53-470d-b286-17efbc249133",
+      "comment": "",
+      "command": "type",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "0641548545"
+    }, {
+      "id": "e7824a8a-0a7a-42f0-ab2c-5a1e3fa49eb3",
+      "comment": "",
+      "command": "click",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a42e0494-a3a7-44a2-88cb-3cae7bf3b92f",
+      "comment": "",
+      "command": "type",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "บ้านเลขที่60 ถนน123/456"
+    }, {
+      "id": "9247235d-6c2a-4617-aaa8-eabe24483ba6",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-containedSuccess",
+      "targets": [
+        ["css=.MuiButton-containedSuccess", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึก')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f64ffcc0-6001-44ee-9a9b-90d3eff854b3",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกรายการอาหารและเครื่องดื่มสำเร็จ"
+    }]
+  }, {
+    "id": "ed5932aa-4bbb-4656-854e-31e23e4aed54",
+    "name": "2.menunull",
+    "commands": [{
+      "id": "8280c4d5-7beb-410e-9388-5b8d375b682d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/food_and_drinks",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d562c9d5-887f-4e98-8ca2-0290ba61259c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "2c4c787a-60a4-4206-8bc5-eb8ee263f5df",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=สร้างรายการอาหาร",
+      "targets": [
+        ["linkText=สร้างรายการอาหาร", "linkText"],
+        ["css=.MuiGrid-root:nth-child(2) > .MuiButtonBase-root", "css:finder"],
+        ["xpath=//a[contains(text(),'สร้างรายการอาหาร')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/food_and_drink/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'สร้างรายการอาหาร')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ad2e163d-dc3b-41d0-8ab4-d475f13d79a9",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-FoodtypeID",
+      "targets": [
+        ["id=mui-component-select-FoodtypeID", "id"],
+        ["css=#mui-component-select-FoodtypeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-FoodtypeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9eccf39d-fff7-45ee-8e36-9a34c21978ef",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ab414fb9-f17e-48c9-8d83-148ea508d4fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "89aa0926-8265-4bf1-a78b-74e59dfd3c9a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ประเภท A')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9031eafa-b3c9-4ef2-a17b-747b0da737a2",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-ShopID",
+      "targets": [
+        ["id=mui-component-select-ShopID", "id"],
+        ["css=#mui-component-select-ShopID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-ShopID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e4eefa7c-add5-4075-8783-d0e232a72596",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4d864f5e-f078-402f-bd95-37a90fbf219a",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8d445343-cc98-4fb5-a5c5-feb3a41b8620",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ร้าน B')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "bfa72669-f3a2-422e-a9fe-c8e2f93c2472",
+      "comment": "",
+      "command": "click",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "461c00c8-9830-4b34-b51a-a9c80a47999c",
+      "comment": "",
+      "command": "type",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1665f46-261c-4b60-ae6c-6db6d1265715",
+      "comment": "",
+      "command": "click",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c4a18ff-370d-4fef-927a-61a4cfb01e0b",
+      "comment": "",
+      "command": "type",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "0641548545"
+    }, {
+      "id": "adc78ccc-5fbf-4203-9af8-eaa28426e0b4",
+      "comment": "",
+      "command": "click",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6eed303b-659f-4495-8806-ddf9baf9bf8c",
+      "comment": "",
+      "command": "type",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "บ้านเลขที่60 ถนน123/456"
+    }, {
+      "id": "7a9a10ec-7eb0-47ba-a806-53da3b85c085",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-containedSuccess",
+      "targets": [
+        ["css=.MuiButton-containedSuccess", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึก')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "020f632b-55cd-43bf-a8c4-ecc9b3d7b0cb",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "กรุณากรอกชื่ออาหารและเครื่องดื่ม"
+    }]
+  }, {
+    "id": "1e663a86-daf7-43d6-a583-6ac1df8f1ce1",
+    "name": "3.addressnull",
+    "commands": [{
+      "id": "a6a75376-302a-4828-86b2-770f12630e3e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/food_and_drinks",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "4d02a3e2-97ef-42de-994b-a0ee6ee220a7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "86569403-0a32-4ffb-84eb-0e834bccb317",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=สร้างรายการอาหาร",
+      "targets": [
+        ["linkText=สร้างรายการอาหาร", "linkText"],
+        ["css=.MuiGrid-root:nth-child(2) > .MuiButtonBase-root", "css:finder"],
+        ["xpath=//a[contains(text(),'สร้างรายการอาหาร')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/food_and_drink/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'สร้างรายการอาหาร')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "afeb8118-f6df-44b3-b858-3060089f4dff",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-FoodtypeID",
+      "targets": [
+        ["id=mui-component-select-FoodtypeID", "id"],
+        ["css=#mui-component-select-FoodtypeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-FoodtypeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1daac237-f83e-499a-87e7-f7f589c9145b",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "65b32b1d-0cc4-4a19-9b71-8e4b7627e11f",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9db0b29b-1f91-4840-9033-0fa10bb859f5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ประเภท A')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e5b3cb5d-a215-41d6-930c-1cfbf0e6295a",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-ShopID",
+      "targets": [
+        ["id=mui-component-select-ShopID", "id"],
+        ["css=#mui-component-select-ShopID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-ShopID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe7443b0-ebe2-423a-94bd-cc00e19c59cb",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aee84974-9a09-4f0b-9fd1-e134652cfde8",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7508226f-1644-40f1-93dc-acfd768723b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ร้าน B')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "a23109b1-2cd1-4ca5-b230-f66013484d57",
+      "comment": "",
+      "command": "click",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "21b80f4c-f372-405b-974f-07586b23ab92",
+      "comment": "",
+      "command": "type",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "กะเพราหมูสับ"
+    }, {
+      "id": "d846e5a3-8918-496a-8172-298b3397a58f",
+      "comment": "",
+      "command": "click",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1de95e1-3a08-4a02-879f-23b3578412a0",
+      "comment": "",
+      "command": "type",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "0641548545"
+    }, {
+      "id": "44ba722b-3ebf-4f46-8046-7a7c540e2e14",
+      "comment": "",
+      "command": "click",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8bff960c-1acc-4a04-b32b-e031880bd660",
+      "comment": "",
+      "command": "type",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "322f70fd-cedc-42c1-8495-0ef7cabbfabd",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-containedSuccess",
+      "targets": [
+        ["css=.MuiButton-containedSuccess", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึก')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1b4a601-52fa-47fa-994e-3e36a19a35b8",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "กรุณากรอกที่อยู่"
+    }]
+  }, {
+    "id": "5d512cee-9247-472a-9523-0260501dd882",
+    "name": "4.telnull",
+    "commands": [{
+      "id": "7df36ccd-232b-401e-9520-6ee4d0fb52c9",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/food_and_drinks",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7ea27b82-7ff3-4a61-978b-60b62106e6e8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5c2e3dec-f68a-4592-af3a-111eff39f931",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=สร้างรายการอาหาร",
+      "targets": [
+        ["linkText=สร้างรายการอาหาร", "linkText"],
+        ["css=.MuiGrid-root:nth-child(2) > .MuiButtonBase-root", "css:finder"],
+        ["xpath=//a[contains(text(),'สร้างรายการอาหาร')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/food_and_drink/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'สร้างรายการอาหาร')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4628031d-4f18-4e85-8a9a-c8a64b0008d9",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-FoodtypeID",
+      "targets": [
+        ["id=mui-component-select-FoodtypeID", "id"],
+        ["css=#mui-component-select-FoodtypeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-FoodtypeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f4f64a4a-ab0b-489b-9bc4-c0d1c9ff9fbf",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "09bb76b5-a2a7-4ad3-a223-adaac4dd3bae",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "aa0af56e-8b0b-4ff2-ab7d-9e6d34a59950",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ประเภท A')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8f036153-3b22-4a46-93ac-844f2eb022f3",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-ShopID",
+      "targets": [
+        ["id=mui-component-select-ShopID", "id"],
+        ["css=#mui-component-select-ShopID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-ShopID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e3218c71-cec8-4174-9c59-dc34952fca34",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2af4809c-ba2a-4b57-a354-445c5599f302",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "21d783a0-388c-427e-ab16-45fb117526f0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ร้าน B')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f976b613-e52b-4278-8dbc-8db7cdeb9b60",
+      "comment": "",
+      "command": "click",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1318931-6eec-409c-9dbd-6ea4a210e721",
+      "comment": "",
+      "command": "type",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "กะเพราหมูสับ"
+    }, {
+      "id": "2b0c2892-0eb3-4d31-8cc7-8fe9e52ed00f",
+      "comment": "",
+      "command": "click",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "04bb90fc-212a-4cad-9497-d380c263432a",
+      "comment": "",
+      "command": "type",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "235d4b9d-1023-462c-a322-d3cbe2ae098a",
+      "comment": "",
+      "command": "click",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c4464917-e354-4543-bd5d-7ff08cd7bbbf",
+      "comment": "",
+      "command": "type",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "บ้านเลขที่60 ถนน123/456"
+    }, {
+      "id": "d7a6368b-656a-4d80-a602-210101f823c5",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-containedSuccess",
+      "targets": [
+        ["css=.MuiButton-containedSuccess", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึก')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "442fcfa4-efbd-4b5a-bf0d-72dc8f8f9640",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "กรุณากรอกเบอร์โทรศัพท์"
+    }]
+  }, {
+    "id": "5a86c782-03a7-4ad2-ad18-08041b34eb98",
+    "name": "5.tel",
+    "commands": [{
+      "id": "920506ac-7052-41f9-bd14-f13b8b0bef5d",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/food_and_drinks",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "675a6b08-ba65-4344-9d37-ac193b595fe0",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1536x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3e275a27-78e7-466f-8b33-83cbfd8bbe50",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=สร้างรายการอาหาร",
+      "targets": [
+        ["linkText=สร้างรายการอาหาร", "linkText"],
+        ["css=.MuiGrid-root:nth-child(2) > .MuiButtonBase-root", "css:finder"],
+        ["xpath=//a[contains(text(),'สร้างรายการอาหาร')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/food_and_drink/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'สร้างรายการอาหาร')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "453ea872-90e9-48b3-92d3-abd758eb6b19",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-FoodtypeID",
+      "targets": [
+        ["id=mui-component-select-FoodtypeID", "id"],
+        ["css=#mui-component-select-FoodtypeID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-FoodtypeID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "61a97224-6fd8-4c1e-a8be-cd3219d5f8f0",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f10d0ae2-48b0-497f-bbf5-ea3a7e8fd77a",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e1a8849b-75fc-44c0-b4de-70921cd5e323",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='menu-FoodtypeID']/div[3]/ul/li[2]", "xpath:idRelative"],
+        ["xpath=//li[2]", "xpath:position"],
+        ["xpath=//li[contains(.,'ประเภท A')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b1cbb2a0-b21e-415e-91d4-3afafa5899be",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=mui-component-select-ShopID",
+      "targets": [
+        ["id=mui-component-select-ShopID", "id"],
+        ["css=#mui-component-select-ShopID", "css:finder"],
+        ["xpath=//div[@id='mui-component-select-ShopID']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[2]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "60860468-02ee-40a0-8ea2-7b6647b687bf",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "css=.MuiBackdrop-root",
+      "targets": [
+        ["css=.MuiBackdrop-root", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div", "xpath:idRelative"],
+        ["xpath=//body/div[2]/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bf809e8a-16a6-46a2-b244-29ae9a072822",
+      "comment": "",
+      "command": "click",
+      "target": "css=body",
+      "targets": [
+        ["css=body", "css:finder"],
+        ["xpath=//body", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "499bb59b-a006-447e-99bb-b9215935abc3",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiMenuItem-root:nth-child(3)",
+      "targets": [
+        ["css=.MuiMenuItem-root:nth-child(3)", "css:finder"],
+        ["xpath=//div[@id='menu-ShopID']/div[3]/ul/li[3]", "xpath:idRelative"],
+        ["xpath=//li[3]", "xpath:position"],
+        ["xpath=//li[contains(.,'ร้าน B')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "540a1ff5-51d0-494e-ba6b-71962a1113d9",
+      "comment": "",
+      "command": "click",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "51e850f3-76e8-4d24-947c-cd0ca4bd90c7",
+      "comment": "",
+      "command": "type",
+      "target": "id=Menu",
+      "targets": [
+        ["id=Menu", "id"],
+        ["name=Menu", "name"],
+        ["css=#Menu", "css:finder"],
+        ["xpath=//input[@id='Menu']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.5919826108539967']/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "กะเพราหมูสับ"
+    }, {
+      "id": "66d9b61e-c2bc-4f80-9b54-1449a44a8ec1",
+      "comment": "",
+      "command": "click",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5c4831c1-7044-44bc-aa81-6671b08d9395",
+      "comment": "",
+      "command": "type",
+      "target": "id=Tel",
+      "targets": [
+        ["id=Tel", "id"],
+        ["name=Tel", "name"],
+        ["css=#Tel", "css:finder"],
+        ["xpath=//input[@id='Tel']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.775795773689024']/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "064154854"
+    }, {
+      "id": "f2701d87-bad1-4d61-90b3-e31a4200f9f5",
+      "comment": "",
+      "command": "click",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fe1ed90-2c73-4f56-91a7-cfce59b3af8a",
+      "comment": "",
+      "command": "type",
+      "target": "id=Address",
+      "targets": [
+        ["id=Address", "id"],
+        ["name=Address", "name"],
+        ["css=#Address", "css:finder"],
+        ["xpath=//input[@id='Address']", "xpath:attributes"],
+        ["xpath=//div[@id='abId0.9610931763236126']/input", "xpath:idRelative"],
+        ["xpath=//div[5]/div/div/div/input", "xpath:position"]
+      ],
+      "value": "บ้านเลขที่60 ถนน123/456"
+    }, {
+      "id": "a3a73489-3713-4c93-8ab9-3a46599f25d0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-containedSuccess",
+      "targets": [
+        ["css=.MuiButton-containedSuccess", "css:finder"],
+        ["xpath=(//button[@type='button'])[4]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/div[7]/button", "xpath:idRelative"],
+        ["xpath=//div[7]/button", "xpath:position"],
+        ["xpath=//button[contains(.,'บันทึก')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "557e02c0-4b04-4666-a06d-860545c4bb45",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "เบอร์โทรศัพท์ต้องมีตัวเลข 10 หลัก"
+    }]
+  }],
+  "suites": [{
+    "id": "1c56bee9-0843-4b5b-9d98-f50229c51eb3",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["0df3f337-054d-4544-bd5f-6c6b24f6f700"]
+  }],
+  "urls": ["http://localhost:3000/food_and_drinks"],
+  "plugins": []
+}

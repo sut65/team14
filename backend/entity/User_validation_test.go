@@ -118,7 +118,7 @@ func TestUserEmail(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	// err.Error() ต้องมี message แสดงออกมา
-	g.Expect(err.Error()).To(Equal("Email: bbb does not validate as email"))
+	g.Expect(err.Error()).To(Equal("Email: กรุณากรอกอีเมลให้ถูกต้อง"))
 }
 
 func TestUserEmailNull(t *testing.T) {

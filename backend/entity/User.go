@@ -10,7 +10,7 @@ type User struct {
 	gorm.Model
 	FirstName            string `valid:"required~กรุณากรอกชื่อ"`
 	LastName             string `valid:"required~กรุณากรอกนามสกุล"`
-	Email                string `gorm:"uniqueIndex" valid:"email, required~Email: กรุณากรอกอีเมล"`
+	Email                string `gorm:"uniqueIndex" valid:"email~Email: กรุณากรอกอีเมลให้ถูกต้อง, required~Email: กรุณากรอกอีเมล"`
 	PhoneNumber          string `gorm:"uniqueIndex" valid:"matches(^\\d{10}$)~เบอร์โทรศัพท์ต้องมีตัวเลข 10 หลัก, required~กรุณากรอกเบอร์โทรศัพท์"`
 	IdentificationNumber string `gorm:"uniqueIndex" valid:"matches(^\\d{13}$)~เลขบัตรประชาชนต้องมีตัวเลข 13 หลัก, required~กรุณากรอกเลขบัตรประชาชน"`
 	StudentID            string `gorm:"uniqueIndex" valid:"matches(^[B||M||D]\\d{7}$)~รหัสนักศึกษาต้องขึ้นต้นด้วย B หรือ M หรือ D ตามด้วยตัวเลข 7 หลัก, required~กรุณากรอกรหัสนักศึกษา"`
