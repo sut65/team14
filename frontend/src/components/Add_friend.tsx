@@ -161,8 +161,7 @@ function Add_friend() {
             <TableCell align="center">Approve Code</TableCell>           
             <TableCell align="center">Name</TableCell>
             <TableCell align="center">Note</TableCell>
-            <TableCell align="center">เวลาที่บันทึก</TableCell>
-            <TableCell align="center">เวลาที่ออก</TableCell>
+            <TableCell align="center">เวลาที่บันทึก</TableCell>        
             <TableCell align="center">ผู้เพิ่ม</TableCell>
             <TableCell align="center">Option</TableCell>
           </TableRow>
@@ -177,8 +176,7 @@ function Add_friend() {
               <TableCell align="center">{row.Approve?.Code}</TableCell>              
               <TableCell align="right">{row.User?.FirstName} {row.User?.LastName} </TableCell>             
               <TableCell align="left">{row.Note}</TableCell>
-              <TableCell align="right">{row.AddfriendTime?.toString()}</TableCell>  
-              <TableCell align="right">{row.deleted_at?.toString()}</TableCell>              
+              <TableCell align="right">{row.AddfriendTime?.toString()}</TableCell>
               <TableCell align="right">{row.Admin?.FirstName} {row.Admin?.LastName} </TableCell>
               <TableCell align="right"><ButtonGroup
                                           disableElevation                                          
