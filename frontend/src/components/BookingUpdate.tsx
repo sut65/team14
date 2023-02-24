@@ -195,28 +195,23 @@ function BookingUpdate() {
        </Alert>
      </Snackbar>
 
-     <Paper>
-        <Box
-            display="flex"
-            sx={{
-            marginTop: 2,
-            }}
+    <Grid container spacing={3} sx={{ padding: 2 }}>
+      <Grid item xs={12}>
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} display="flex">
+        <Typography
+            component="h2"
+            variant="h6"
+            color="primary"
+            gutterBottom
         >
-          <Box sx={{ paddingX: 2, paddingY: 1 }}>
-              <Typography
-                  component="h2"
-                  variant="h6"
-                  color="primary"
-                  gutterBottom
-              >
-                  Update Booking
-              </Typography>
-          </Box>
-       </Box>
+            Update Booking
+        </Typography>
+        </Grid>
+      </Grid>
 
-       <Divider />
-        <Grid container spacing={3} sx={{ padding: 2 }}>
-        <Grid item xs={12} >รหัสการจองใช้ห้อง</Grid>
+      <Grid item xs={12}>
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} display="flex">
+          <Grid item xs={12} >รหัสการจองใช้ห้อง</Grid>
           <Grid item xs={12} >
             <FormControl fullWidth variant="outlined">
               <InputLabel id="BookingID">กรุณารหัสการจองของคุณ</InputLabel>
@@ -241,106 +236,108 @@ function BookingUpdate() {
           </Grid>
 
           <Grid item xs={6}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateTimePicker
-              label="เวลาเริ่มต้นการจอง"
-              value={bookingUser.Date_Start}
-              onChange={(newValue) => {
-                setBookingUser({
-                  ...bookingUser,
-                  Date_Start: newValue,
-                });
-              }}
-              ampm={true}
-              disabled
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+            <p>เวลาเริ่มต้นการจอง</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรุณาเลือกเวลา"
+                value={bookingUser.Date_Start}
+                onChange={(newValue) => {
+                  setBookingUser({
+                    ...bookingUser,
+                    Date_Start: newValue,
+                  });
+                }}
+                ampm={true}
+                disabled
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
 
           <Grid item xs={6}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateTimePicker
-              label="เวลาสิ้นสุดการจอง"
-              value={bookingUser.Date_End}
-              minDateTime={bookingUser.Date_Start}
-              onChange={(newValue) => {
-                setBookingUser({
-                  ...bookingUser,
-                  Date_End: newValue,
-                });               
-              }}
-              disabled
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+            <p>เวลาสิ้นสุดการจอง</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรุณาเลือกเวลา"
+                value={bookingUser.Date_End}
+                minDateTime={bookingUser.Date_Start}
+                onChange={(newValue) => {
+                  setBookingUser({
+                    ...bookingUser,
+                    Date_End: newValue,
+                  });               
+                }}
+                disabled
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
 
           <Grid item xs={6} >
-          <p>ตึก</p>
-          <FormControl required fullWidth >
-            <TextField 
-              value={building?.Detail}
-              disabled
-            />
-          </FormControl>
+            <p>ตึก</p>
+            <FormControl required fullWidth >
+              <TextField 
+                value={building?.Detail}
+                disabled
+              />
+            </FormControl>
           </Grid>
 
           <Grid item xs={6} >
-          <p>ห้อง</p>
-          <FormControl required fullWidth >
-            <TextField 
-              value={bookingUser.Room?.Detail}
-              disabled
-            />
-          </FormControl>
+            <p>ห้อง</p>
+            <FormControl required fullWidth >
+              <TextField 
+                value={bookingUser.Room?.Detail}
+                disabled
+              />
+            </FormControl>
           </Grid>
 
           <Grid item xs={12} >
-          <p>จุดประสงค์ในการจอง</p>
-          <FormControl required fullWidth >
-            <InputLabel id="ObjectiveID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
-            <Select
-              labelId="ObjectiveID"
-              label="กรุณาเลือกจุดประสงค์ในการจอง *"
-              onChange={(e: SelectChangeEvent) => {
-                handleChange(e);
-                onChangeObjective(e);
-              }}
-              inputProps={{
-                name: "ObjectiveID",
-              }}
-              value={bookingUser.ObjectiveID+""}
-            >
-              {objectives.map((item: ObjectivesInterface) => (
-                <MenuItem 
-                  key={item.ID}
-                  value={item.ID}
-                >
-                  {item.Detail}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+            <p>จุดประสงค์ในการจอง</p>
+            <FormControl required fullWidth >
+              <InputLabel id="ObjectiveID">กรุณาเลือกจุดประสงค์ในการจอง</InputLabel>
+              <Select
+                labelId="ObjectiveID"
+                label="กรุณาเลือกจุดประสงค์ในการจอง *"
+                onChange={(e: SelectChangeEvent) => {
+                  handleChange(e);
+                  onChangeObjective(e);
+                }}
+                inputProps={{
+                  name: "ObjectiveID",
+                }}
+                value={bookingUser.ObjectiveID+""}
+              >
+                {objectives.map((item: ObjectivesInterface) => (
+                  <MenuItem 
+                    key={item.ID}
+                    value={item.ID}
+                  >
+                    {item.Detail}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </Grid>
 
           <Grid item xs={12}>
-           <Button component={RouterLink} to="/bookings" variant="contained">
-             Back
-           </Button>
+            <Button component={RouterLink} to="/bookings" variant="contained">
+              Back
+            </Button>
 
-           <Button
-             style={{ float: "right" }}
-             onClick={submit}
-             variant="contained"
-             color="primary"
-           >
-             Submit
-           </Button>
+            <Button
+              style={{ float: "right" }}
+              onClick={submit}
+              variant="contained"
+              color="primary"
+            >
+              Submit
+            </Button>
           </Grid>
-         
         </Grid>
-     </Paper>
+      </Grid>
+     </Grid>
    </Container>
 
  );

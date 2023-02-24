@@ -167,6 +167,13 @@ export default function App() {
     }
   }, []);
 
+  const signout = () => {
+    setTimeout(() => {
+      localStorage.clear();
+      window.location.href = "/";
+    }, 1000);
+  };
+
   if (!token) {
     return (
       <div>
@@ -180,164 +187,160 @@ export default function App() {
       </div>
     );
   }
-
-  const signout = () => {
-    setTimeout(() => {
-      localStorage.clear();
-      window.location.href = "/";
-    }, 1000);
-  };
-return (
-  <Router>
-      <ThemeProvider theme={mdTheme}>
-        <Box sx={{ display: "flex" }}>
-          <CssBaseline />
-          <AppBar position="absolute" open={open}>
-            <Toolbar
-              sx={{
-                pr: "24px", // keep right padding when drawer closed
-              }}
-            >
-              <IconButton
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                onClick={toggleDrawer}
+  else{
+  
+  return (
+    <Router>
+        <ThemeProvider theme={mdTheme}>
+          <Box sx={{ display: "flex" }}>
+            <CssBaseline />
+            <AppBar position="absolute" open={open}>
+              <Toolbar
                 sx={{
-                  marginRight: "36px",
-                  ...(open && { display: "none" }),
+                  pr: "24px", // keep right padding when drawer closed
                 }}
               >
-                <MenuIcon />
-              </IconButton>
-              <Typography
-                component="h1"
-                variant="h6"
-                color="inherit"
-                noWrap
-                sx={{ flexGrow: 1 }}
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={toggleDrawer}
+                  sx={{
+                    marginRight: "36px",
+                    ...(open && { display: "none" }),
+                  }}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  sx={{ flexGrow: 1 }}
+                >
+                  ระบบจองใช้ห้อง
+                </Typography>
+                <Button color="inherit" onClick={signout}>
+                  ออกจากระบบ
+                </Button>
+              </Toolbar>
+            </AppBar>
+            <Drawer variant="permanent" open={open}>
+              <Toolbar
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "flex-end",
+                  px: [1],
+                }}
               >
-                ระบบจองใช้ห้อง
-              </Typography>
-              <Button color="inherit" onClick={signout}>
-                ออกจากระบบ
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <Drawer variant="permanent" open={open}>
-            <Toolbar
+                <IconButton onClick={toggleDrawer}>
+                  <ChevronLeftIcon />
+                </IconButton>
+              </Toolbar>
+              <Divider />
+              <List>
+                {menu.map((item, index) => {
+                  if(item.role === roleLevel || item.role === "All"){
+                    return (
+                    <Link
+                      to={item.path}
+                      key={item.name}
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      <ListItem button>
+                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <ListItemText primary={item.name} />
+                      </ListItem>
+                    </Link>
+                )}
+                
+                })}
+              </List>
+            </Drawer>
+            <Box
+              component="main"
               sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "flex-end",
-                px: [1],
+                // backgroundImage: `url(${image})`,
+                // backgroundRepeat: "no-repeat",
+                backgroundColor: (theme) =>
+                  theme.palette.mode === "light"
+                    ? theme.palette.grey[100]
+                    : theme.palette.grey[900],
+                flexGrow: 1,
+                height: "100vh",
+                overflow: "auto",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
             >
-              <IconButton onClick={toggleDrawer}>
-                <ChevronLeftIcon />
-              </IconButton>
-            </Toolbar>
-            <Divider />
-            <List>
-              {menu.map((item, index) => {
-                if(item.role === roleLevel || item.role === "All"){
-                  return (
-                  <Link
-                    to={item.path}
-                    key={item.name}
-                    style={{ textDecoration: "none", color: "inherit" }}
-                  >
-                    <ListItem button>
-                      <ListItemIcon>{item.icon}</ListItemIcon>
-                      <ListItemText primary={item.name} />
-                    </ListItem>
-                  </Link>
-              )}
-              
-              })}
-            </List>
-          </Drawer>
-          <Box
-            component="main"
-            sx={{
-              // backgroundImage: `url(${image})`,
-              // backgroundRepeat: "no-repeat",
-              backgroundColor: (theme) =>
-                theme.palette.mode === "light"
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[900],
-              flexGrow: 1,
-              height: "100vh",
-              overflow: "auto",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <Toolbar />
-            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+              <Toolbar />
+              <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
 
-              <Routes>
-                <Route path="/" element={<Home />} />
+                <Routes>
+                  <Route path="/" element={<Home />} />
 
-                <Route path="/bookings" element={<Booking />} />
-                <Route path="/booking/create" element={<BookingCreate />} />
-                <Route path="/booking/update" element={<BookingUpdate />} />
-                <Route path="/booking/delete" element={<BookingDelete />} />
+                  <Route path="/bookings" element={<Booking />} />
+                  <Route path="/booking/create" element={<BookingCreate />} />
+                  <Route path="/booking/update" element={<BookingUpdate />} />
+                  <Route path="/booking/delete" element={<BookingDelete />} />
 
-                <Route path="/users" element={<User />} />               
-                <Route path="/user/update" element={<UserUpdate />} />
-                <Route path="/user/delete" element={<UserDelete />} />
+                  <Route path="/users" element={<User />} />               
+                  <Route path="/user/update" element={<UserUpdate />} />
+                  <Route path="/user/delete" element={<UserDelete />} />
 
-                <Route path="/add_friends" element={<Add_friend />} />
-                <Route path="/add_friend/create" element={<Add_friendCreate />} />
+                  <Route path="/add_friends" element={<Add_friend />} />
+                  <Route path="/add_friend/create" element={<Add_friendCreate />} />
 
-                <Route path="/approves" element={<Approve />} />
-                <Route path="/approve/create" element={<ApproveCreate />} />
-                <Route path="/approve/update" element={<ApproveUpdate />} />
-                <Route path="/approve/delete" element={<ApproveDelete />} />
+                  <Route path="/approves" element={<Approve />} />
+                  <Route path="/approve/create" element={<ApproveCreate />} />
+                  <Route path="/approve/update" element={<ApproveUpdate />} />
+                  <Route path="/approve/delete" element={<ApproveDelete />} />
 
-                <Route path="/borrows" element={<Borrow />} />
-                <Route path="/borrow/create" element={<BorrowCreate />} />
-                <Route path="/borrow/update" element={<BorrowUpdate />} />
-                <Route path="/borrow/delete" element={<BorrowDelete />} />
+                  <Route path="/borrows" element={<Borrow />} />
+                  <Route path="/borrow/create" element={<BorrowCreate />} />
+                  <Route path="/borrow/update" element={<BorrowUpdate />} />
+                  <Route path="/borrow/delete" element={<BorrowDelete />} />
 
-                <Route path="/food_and_drinks" element={<Food_and_Drink />} />
-                <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />
-                <Route path="/food_and_drink/update" element={<Food_and_DrinkUpdate />} />
-                <Route path="/food_and_drink/delete" element={<Food_and_DrinkDelete />} />
+                  <Route path="/food_and_drinks" element={<Food_and_Drink />} />
+                  <Route path="/food_and_drink/create" element={<Food_and_DrinkCreate />} />
+                  <Route path="/food_and_drink/update" element={<Food_and_DrinkUpdate />} />
+                  <Route path="/food_and_drink/delete" element={<Food_and_DrinkDelete />} />
 
-                <Route path="/order_foods" element={< Order_food />} />
-                <Route path="/order_food/create" element={< OrderCreate />} />
-                <Route path="/order_food/update/:id" element={< OrderUpdate />} />
-                
+                  <Route path="/order_foods" element={< Order_food />} />
+                  <Route path="/order_food/create" element={< OrderCreate />} />
+                  <Route path="/order_food/update/:id" element={< OrderUpdate />} />
+                  
 
-                <Route path="/buildings" element={<Building />} />
-                <Route path="/building/create" element={<BuildingCreate />} />
-                <Route path="/building/update/:id" element={<BuildingUpdate />} />
+                  <Route path="/buildings" element={<Building />} />
+                  <Route path="/building/create" element={<BuildingCreate />} />
+                  <Route path="/building/update/:id" element={<BuildingUpdate />} />
 
-                <Route path="/rooms" element={<Room />} />
-                <Route path="/room/create" element={<RoomCreate />} />
-                <Route path="/room/update/:id" element={<RoomUpdate />} />
+                  <Route path="/rooms" element={<Room />} />
+                  <Route path="/room/create" element={<RoomCreate />} />
+                  <Route path="/room/update/:id" element={<RoomUpdate />} />
 
-                <Route path="/paybacks" element={<Paybacks />} />
-                <Route path="/payback/create" element={<PaybackCreate />} />
-                {/* <Route path="/payback/update" element={<PaybackUpdate />} /> */}
-                <Route path="/payback/delete" element={<PaybackDelete />} />
+                  <Route path="/paybacks" element={<Paybacks />} />
+                  <Route path="/payback/create" element={<PaybackCreate />} />
+                  {/* <Route path="/payback/update" element={<PaybackUpdate />} /> */}
+                  <Route path="/payback/delete" element={<PaybackDelete />} />
 
-                <Route path="/devices" element={<Device />} />
-                <Route path="/device/create" element={<DeviceCreate />} />
-                <Route path="/device/update" element={<DeviceUpdate />} />
-                {/* <Route path="/device/delete" element={<DeviceDelete />} /> */}
+                  <Route path="/devices" element={<Device />} />
+                  <Route path="/device/create" element={<DeviceCreate />} />
+                  <Route path="/device/update" element={<DeviceUpdate />} />
+                  {/* <Route path="/device/delete" element={<DeviceDelete />} /> */}
 
-                <Route path="/admins" element={<Admin />} />
-                <Route path="/admin/create" element={<AdminCreate />} />
+                  <Route path="/admins" element={<Admin />} />
+                  <Route path="/admin/create" element={<AdminCreate />} />
 
-                <Route path="*" element={<NotFound404 />} />
-              </Routes> 
-            </Container>
+                  <Route path="*" element={<NotFound404 />} />
+                </Routes> 
+              </Container>
+            </Box>
           </Box>
-        </Box>
-      </ThemeProvider>
-    </Router>
+        </ThemeProvider>
+      </Router>
   );
+}
 }

@@ -198,7 +198,7 @@ function ApproveCreate() {
   }
 
  return (
-   <Container maxWidth="lg">
+  <Container maxWidth="md">
      <Snackbar
        id="success" 
        open={success}
@@ -223,14 +223,9 @@ function ApproveCreate() {
        </Alert>
      </Snackbar>
 
-     <Paper>
-        <Box
-          display="flex"
-          sx={{
-            marginTop: 2,
-          }}
-        >
-          <Box sx={{ paddingX: 2, paddingY: 2 }}>
+    <Grid container spacing={3} sx={{ padding: 2 }} >
+        <Grid item xs={12}>
+          <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} display="flex" >
             <Typography
               component="h2"
               variant="h6"
@@ -238,11 +233,12 @@ function ApproveCreate() {
             >
               บันทึกอนุมัติการจองใช้ห้อง
             </Typography>
-          </Box>
-       </Box>
+          </Grid>
+        </Grid>
 
-       <Divider />
-        <Grid container spacing={1} sx={{ padding: 2 }}>
+
+        <Grid item xs={12}>
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper}>
           <Grid item xs={12}>รหัสการอนุมัติ</Grid>
           <Grid item xs={10} >
             <FormControl fullWidth variant="outlined">
@@ -259,17 +255,23 @@ function ApproveCreate() {
               />
             </FormControl>
           </Grid>
-          <Grid item xs={2} justifyContent="center">
+
+          <Grid item xs={2}>
             <Button
-                style={{ float: "right" }}
                 size="medium"
                 onClick= {randomNumberInRange}
                 variant="contained"
                 color="primary"
+                sx={{
+                  left: '50%', 
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
             >
                 Random
             </Button>
           </Grid>
+          
           <Grid item xs={4} ><p>กรุณาเลือกสถานะการจองใช้ห้อง</p></Grid>
           <Grid item xs={8} ><p>รหัสการจองใช้ห้อง</p></Grid>
           <Grid item xs={4} >
@@ -295,22 +297,6 @@ function ApproveCreate() {
               </Select>
             </FormControl>
           </Grid>
-
-          {/* <Grid item xs={3} >
-            <FormControl fullWidth variant="outlined">
-              <TextField
-                required
-                id="BookingCode1"
-                type="string"
-                label="กรุณาเลือกรหัสการจองใช้ห้อง"
-                inputProps={{
-                  name: "Code",
-                }}
-                value={code + ""}
-                onChange={(e) => setCode(e.target.value)}
-              />
-            </FormControl>
-          </Grid> */}
 
           <Grid item xs={6} >
             <FormControl required fullWidth id="BookingCode">
@@ -488,9 +474,10 @@ function ApproveCreate() {
               Submit
             </Button>
           </Grid>
-          </Grid>
-        </Paper>
-   </Container>
+        </Grid>
+        </Grid>
+    </Grid>
+  </Container>
 
  );
 

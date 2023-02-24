@@ -194,7 +194,7 @@ function ApproveUpdate() {
   }
 
  return (
-   <Container maxWidth="lg">
+   <Container maxWidth="md">
      <Snackbar
        id="success" 
        open={success}
@@ -219,14 +219,9 @@ function ApproveUpdate() {
        </Alert>
      </Snackbar>
 
-     <Paper>
-        <Box
-          display="flex"
-          sx={{
-            marginTop: 2,
-          }}
-        >
-          <Box sx={{ paddingX: 2, paddingY: 2 }}>
+     <Grid container spacing={3} sx={{ padding: 2 }}>
+        <Grid item xs={12}>
+          <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} display="flex" >
             <Typography
               component="h2"
               variant="h6"
@@ -234,11 +229,12 @@ function ApproveUpdate() {
             >
               อัพเดทอนุมัติการจองใช้ห้อง
             </Typography>
-          </Box>
-       </Box>
+          </Grid>
+       </Grid>
 
        <Divider />
-        <Grid container spacing={1} sx={{ padding: 2 }}>
+       <Grid item xs={12}>
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} display="flex" >
           <Grid item xs={12}>รหัสการอนุมัติ</Grid>
           <Grid item xs={12} >
             <FormControl required fullWidth> 
@@ -441,7 +437,8 @@ function ApproveUpdate() {
             </Button>
           </Grid>
           </Grid>
-        </Paper>
+          </Grid>
+        </Grid>
    </Container>
 
  );

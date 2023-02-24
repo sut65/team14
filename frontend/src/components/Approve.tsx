@@ -17,10 +17,10 @@ function Approves() {
   const [approves, setApproves] = React.useState<ApprovesInterface[]>([]);
 
   const listApproves = async () => {
-      let res = await ListApproves(); // Transaction #1
-      if (res) {
-          setApproves(res);
-      }
+    let res = await ListApproves(); // Transaction #1
+    if (res) {
+        setApproves(res);
+    }
   };
 
   const columns: GridColDef[] = [
@@ -52,7 +52,7 @@ function Approves() {
   ];
 
   useEffect(() => {
-      listApproves();
+    listApproves();
   }, []);
 
   //Check Role
@@ -66,8 +66,7 @@ function Approves() {
 
    <div>
      <Container maxWidth="lg">
-     <Paper>
-      <Grid container spacing={1} sx={{ padding: 2 }} >
+      <Grid container spacing={3} sx={{ padding: 2 }} >
         <Grid item xs={12}>
           <Paper>
             <Grid container spacing={1} sx={{ padding: 2 }} >
@@ -121,7 +120,7 @@ function Approves() {
         <Grid item xs={12}>
         <Paper>
           <Grid container spacing={1} sx={{ padding: 2 }} >
-            <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
+            <div style={{ height: 450, width: "100%"}}>
             <DataGrid
               rows={approves}
               getRowId={(row) => row.ID}
@@ -135,7 +134,6 @@ function Approves() {
         </Grid>
 
       </Grid>
-    </Paper>
     
     </Container>
    </div>

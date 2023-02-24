@@ -192,29 +192,25 @@ function BookingCreate() {
        </Alert>
      </Snackbar>
 
-     <Paper>
-        <Box
-            display="flex"
-            sx={{
-            marginTop: 2,
-            }}
-        >
-            <Box sx={{ paddingX: 2, paddingY: 1 }}>
-                <Typography
-                    component="h2"
-                    variant="h6"
-                    color="primary"
-                    gutterBottom
-                >
-                    Create Booking
-                </Typography>
-            </Box>
-       </Box>
+    <Grid container spacing={3} sx={{ padding: 2 }}>
+      <Grid item xs={12} >
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} display="flex" >
+          <Typography
+              component="h2"
+              variant="h6"
+              color="primary"
+              gutterBottom
+          >
+              Create Booking
+          </Typography>
+        </Grid>
+      </Grid>
 
-       <Divider />
-        <Grid container spacing={3} sx={{ padding: 2 }}>
-        <Grid item xs={12} >รหัสการจองใช้ห้อง</Grid>
+      <Grid item xs={12} >
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} >
+          <Grid item xs={12}>รหัสการจองใช้ห้อง</Grid>
           <Grid item xs={10} >
+            
             <FormControl fullWidth variant="outlined">
               <TextField
                 required
@@ -230,50 +226,56 @@ function BookingCreate() {
             </FormControl>
           </Grid>
 
-          <Grid item xs={2} justifyContent="center">
+          <Grid item xs={2}>
             <Button
-                style={{ float: "right" }}
                 size="medium"
                 onClick= {randomNumberInRange}
                 variant="contained"
                 color="primary"
+                sx={{
+                  left: '50%', 
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
             >
                 Random
             </Button>
           </Grid>
-
+          
           <Grid item xs={6}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateTimePicker
-              label="เวลาเริ่มต้นการจอง"
-              value={booking.Date_Start}
-              onChange={(newValue) => {
-                setBooking({
-                  ...booking,
-                  Date_Start: newValue,
-                });
-              }}
-              ampm={true}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+            <p>เวลาเริ่มต้นการจอง</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรุณาเลือกเวลา"
+                value={booking.Date_Start}
+                onChange={(newValue) => {
+                  setBooking({
+                    ...booking,
+                    Date_Start: newValue,
+                  });
+                }}
+                ampm={true}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
 
           <Grid item xs={6}>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DateTimePicker
-              label="เวลาสิ้นสุดการจอง"
-              value={booking.Date_End}
-              minDateTime={booking.Date_Start}
-              onChange={(newValue) => {
-                setBooking({
-                  ...booking,
-                  Date_End: newValue,
-                });               
-              }}
-              renderInput={(params) => <TextField {...params} />}
-            />
-          </LocalizationProvider>
+            <p>เวลาสิ้นสุดการจอง</p>
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DateTimePicker
+                label="กรุณาเลือกเวลา"
+                value={booking.Date_End}
+                minDateTime={booking.Date_Start}
+                onChange={(newValue) => {
+                  setBooking({
+                    ...booking,
+                    Date_End: newValue,
+                  });               
+                }}
+                renderInput={(params) => <TextField {...params} />}
+              />
+            </LocalizationProvider>
           </Grid>
 
           <Grid item xs={6} >
@@ -352,22 +354,22 @@ function BookingCreate() {
           </Grid>
 
           <Grid item xs={12}>
-           <Button component={RouterLink} to="/bookings" variant="contained">
-             Back
-           </Button>
+          <Button component={RouterLink} to="/bookings" variant="contained">
+            Back
+          </Button>
 
-           <Button
-             style={{ float: "right" }}
-             onClick={submit}
-             variant="contained"
-             color="primary"
-           >
-             Submit
-           </Button>
+          <Button
+            style={{ float: "right" }}
+            onClick={submit}
+            variant="contained"
+            color="primary"
+          >
+            Submit
+          </Button>
           </Grid>
-         
         </Grid>
-     </Paper>
+      </Grid>
+    </Grid>
    </Container>
 
  );

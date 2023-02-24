@@ -439,7 +439,7 @@ function Bookings() {
           }
         `}
       </style>
-        <table>
+        <table >
           <thead>
               <tr>
                 {header.map(head => <th>{head}</th>)}
