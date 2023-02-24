@@ -133,13 +133,14 @@ const menu = [
   { name: "ข้อมูลอนุมัติการจองใช้ห้อง", icon: <AssignmentTurnedInIcon />, path: "/approves", role: "Admin" },
 
   { name: "จัดการเพิ่มเพื่อนเข้าห้อง", icon: <GroupsIcon />, path: "/add_friends", role: "Admin"},
-  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods", role: "Admin"},  
+  { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods", role: "Admin"},
 
-  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "All"},
-  { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows", role: "Admin"},
-
-  { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks", role: "Admin"},
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks", role: "Admin"},
+  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "All"},
+
+  { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows", role: "Admin"},
+  { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks", role: "Admin"},
+  
   { name: "จัดการตึก", icon: <ApartmentIcon />, path: "/buildings", role: "Admin"},
   { name: "จัดการห้อง", icon: <MeetingRoomIcon />, path: "/rooms", role: "Admin"},
 
