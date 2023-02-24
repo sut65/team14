@@ -165,16 +165,17 @@ function Add_friendCreate(){
     if (res.status) {
       setSuccess(true);
       setErrorMessage("");     
-  } else {
-      setError(true);
-      setErrorMessage(res.data);
-      console.log(res);
-      
+   
+      setAdd_friend({
+        Note: "",
+        AddfriendTime: new Date(),
+      })
+   }else {
+    setError(true);
+    setErrorMessage(res.data);
+    console.log(res);
+    
   }
-  setAdd_friend({
-    Note: "",
-    AddfriendTime: new Date(),
-  })
    
 }
 
@@ -194,7 +195,7 @@ return (
      <Snackbar
      id = "successB" 
        open={successb}
-       autoHideDuration={6000}
+       autoHideDuration={3000}
        onClose={handleClose}
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
@@ -202,7 +203,7 @@ return (
          ค้นหาข้อมูลหาจองห้องสำเร็จ
        </Alert>
      </Snackbar> 
-     <Snackbar id = "errorSearch_b" open={errorSearchb} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+     <Snackbar id = "errorSearch_b" open={errorSearchb} autoHideDuration={3000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
           ค้นหาข้อมูลหาจองห้องไม่สำเร็จ: {errorMessageb}
           </Alert>
@@ -211,7 +212,7 @@ return (
       <Snackbar
       id = "successU" 
        open={successu}
-       autoHideDuration={6000}
+       autoHideDuration={3000}
        onClose={handleClose}
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
@@ -219,8 +220,10 @@ return (
          ค้นหาข้อมูลผู้ใช้สำเร็จ
        </Alert>
      </Snackbar>
-
-      <Snackbar id = "errorSearch_u" open={errorSearchu} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+      <Snackbar id = "errorSearch_u" open={errorSearchu} 
+                autoHideDuration={3000} 
+                onClose={handleClose}  
+                anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
           <Alert onClose={handleClose} severity="error">
             ค้นหาข้อมูลไม่สำเร็จ: {errorMessageu}
           </Alert>
@@ -228,7 +231,7 @@ return (
       <Snackbar
      id = "success" 
        open={success}
-       autoHideDuration={6000}
+       autoHideDuration={3000}
        onClose={handleClose}
        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
      >
@@ -237,7 +240,7 @@ return (
        </Alert>
      </Snackbar> 
 
-     <Snackbar id = "error" open={error} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
+     <Snackbar id = "error" open={error} autoHideDuration={3000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
        <Alert onClose={handleClose} severity="error">
          บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
        </Alert>

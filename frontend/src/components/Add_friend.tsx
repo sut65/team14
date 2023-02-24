@@ -88,9 +88,9 @@ function Add_friend() {
       }
   }; 
 
-    useEffect(() => {
+   /* useEffect(() => {
         listAdd_friends();
-      }, []);
+      }, []);*/
   //Check Role
   const roleLevel = localStorage.getItem('role')+""
   if (roleLevel !== "Admin") {
