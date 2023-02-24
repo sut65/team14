@@ -158,7 +158,7 @@ return (
       <Paper>
         <Box display="flex" sx={{ marginTop: 2, }}>
           <Box sx={{ paddingX: 2, paddingY: 1 }}>
-            <Typography component="h2" variant="h6" color="primary" gutterBottom > เพิ่มรายการอาหาร </Typography>
+            <Typography component="h2" variant="h6" color="primary" gutterBottom > แก้ไขรายการอาหาร </Typography>
           </Box>
         </Box>
         <Divider />
@@ -217,7 +217,7 @@ return (
           </Grid>
           <Grid item xs={12}>
             <Button component={RouterLink} to="/food_and_drinks" variant="contained"> ยกเลิก </Button>
-            <Button style={{ float: "right" }} onClick={submit} variant="contained" color="success" > บันทึก </Button>
+            <Button style={{ float: "right" }} onClick={submit} variant="contained" color="success" > แก้ไข </Button>
           </Grid>
         </Grid>
       </Paper>
