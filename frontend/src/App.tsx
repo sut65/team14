@@ -77,6 +77,7 @@ import image from "./images/one.jpg";
 import NotFound404 from "./components/NotFound404";
 import AdminUpdate from "./components/AdminUpdate";
 import AdminDelete from "./components/AdminDelete";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 260;
 
@@ -223,7 +224,18 @@ export default function App() {
                 >
                   ระบบจองใช้ห้อง
                 </Typography>
-                <Button color="inherit" onClick={signout}>
+                <Button 
+                  onClick={signout} 
+                  type="submit"
+                  color="inherit"
+                  sx={{ 
+                      borderRadius: "40px", 
+                      border: "none", outline: "none",
+                      cursor: "pointer", 
+                      fontSize: "1em",fontWeight: "600",
+                    }}
+                >
+                <LogoutIcon/>
                   ออกจากระบบ
                 </Button>
               </Toolbar>

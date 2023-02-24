@@ -218,7 +218,7 @@ function SignIn() {
                   Register
                 </Button>
               </Grid>
-              <Grid item xs={6} >
+              {/* <Grid item xs={6} >
                   <Button
                     type="submit"
                     fullWidth
@@ -234,9 +234,9 @@ function SignIn() {
                   >
                     user
                   </Button>
-                </Grid>
+              </Grid>
 
-                <Grid item xs={6} >
+              <Grid item xs={6} >
                   <Button
                     type="submit"
                     fullWidth
@@ -252,7 +252,7 @@ function SignIn() {
                   >
                     admin
                   </Button>
-                </Grid>
+              </Grid> */}
           </Grid>
         </Box>
        
