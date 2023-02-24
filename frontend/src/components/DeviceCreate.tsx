@@ -19,6 +19,7 @@ import { UsersInterface } from "../models/IUser";
 import { CreateDevice, GetUser } from "../services/HttpClientService";
 import {ListDeviceType, ListBrand, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -99,10 +100,15 @@ function DeviceCreate() {
       getUser();
     }, []);
 
+    const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
+
     async function submit() {
       let data = {
           Detail: device.Detail,
-          Number_of_Device: device.Number_of_Device,
+          Number: device.Number,
           Note: device.Note,
 
           DeviceTypeID: (device.DeviceTypeID),
@@ -168,7 +174,7 @@ return (
           <Grid item xs={6} >  
           <FormControl fullWidth variant="outlined">
               <p>จำนวน</p>
-              <TextField  id="Number_of_Device" variant="outlined" type="string" size="medium" label="จำนวน" inputProps={{name: "Number_of_Device",}} value={device.Number_of_Device || ""} onChange={handleInputChange}/>
+              <TextField  id="Number" variant="outlined" type="string" size="medium" label="จำนวน" inputProps={{name: "Number",}} value={device.Number || ""} onChange={handleInputChange}/>
           </FormControl>
           </Grid>
           <Grid item xs={6} >  

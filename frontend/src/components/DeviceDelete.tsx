@@ -19,6 +19,7 @@ import { UsersInterface } from "../models/IUser";
 import { DeleteDevice, GetUser, ListDevices, GetDevice } from "../services/HttpClientService";
 import {ListDeviceType, ListBrand, ListUsers,} from "../services/HttpClientService";
 import TextField from "@mui/material/TextField";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(props,ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -111,7 +112,13 @@ function DeviceDelete() {
         listDeviceTypes();
         listBrands();
         getUser();
+        listDevices();
     }, []);
+
+    const roleLevel = localStorage.getItem('role')+""
+    if (roleLevel !== "Admin") {
+      return <AccessDenied />
+    }
 
     async function submit() {
       let res = await DeleteDevice(device.ID);
@@ -167,7 +174,7 @@ return (
           <Grid item xs={6} >  
           <FormControl fullWidth variant="outlined">
               <p>จำนวน</p>
-              <TextField  id="Number_of_Device" disabled variant="outlined" type="string" size="medium" label="จำนวน" inputProps={{name: "Number_of_Device",}} value={device.Number_of_Device || ""}/>
+              <TextField  id="Number" disabled variant="outlined" type="string" size="medium" label="จำนวน" inputProps={{name: "Number",}} value={device.Number || ""}/>
           </FormControl>
           </Grid>
           <Grid item xs={6} >  

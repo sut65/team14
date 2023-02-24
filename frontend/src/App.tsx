@@ -78,6 +78,7 @@ import NotFound404 from "./components/NotFound404";
 import AdminUpdate from "./components/AdminUpdate";
 import AdminDelete from "./components/AdminDelete";
 import LogoutIcon from '@mui/icons-material/Logout';
+import DeviceDelete from "./components/DeviceDelete";
 
 const drawerWidth = 260;
 
@@ -343,7 +344,7 @@ export default function App() {
                   <Route path="/devices" element={<Device />} />
                   <Route path="/device/create" element={<DeviceCreate />} />
                   <Route path="/device/update" element={<DeviceUpdate />} />
-                  {/* <Route path="/device/delete" element={<DeviceDelete />} /> */}
+                  <Route path="/device/delete" element={<DeviceDelete />} />
 
                 <Route path="/admins" element={<Admin />} />
                 <Route path="/admin/create" element={<AdminCreate />} />
