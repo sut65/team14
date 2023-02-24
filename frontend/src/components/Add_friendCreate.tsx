@@ -242,7 +242,7 @@ return (
 
      <Snackbar id = "error" open={error} autoHideDuration={3000} onClose={handleClose}  anchorOrigin={{ vertical: "bottom", horizontal: "center" }} >
        <Alert onClose={handleClose} severity="error">
-         บันทึกข้อมูลไม่สำเร็จ: {errorMessage}
+         บันทึกข้อมูลไม่สำเร็จ:{errorMessage}
        </Alert>
      </Snackbar>   
 

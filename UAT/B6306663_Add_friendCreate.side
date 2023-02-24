@@ -1,0 +1,1624 @@
+{
+  "id": "ee68fdaf-8c95-4fb1-8ecf-35b5234e590f",
+  "version": "2.0",
+  "name": "Add friend",
+  "url": "http://localhost:3000",
+  "tests": [{
+    "id": "13e5f19d-5ea3-4ccc-82a3-0d5d52641f03",
+    "name": "2.error_user",
+    "commands": [{
+      "id": "f83f38b2-216c-44ce-8e27-aabe75aa8941",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e16f8003-1823-4712-979a-19ced30e9113",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "794x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eaf749d1-7e71-499b-a7c3-6ed40bfd877c",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fdfa381-0809-40bf-ad5c-ffd751ddd838",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9e2722de-be57-4f4b-a563-3dda7e6e2925",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5ff4723a-affa-4890-befd-d708cf71db28",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Add friend')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/add_friend/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2d92421d-a53b-48c9-b8b1-f49c1f649670",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiPaper-root:nth-child(2)",
+      "targets": [
+        ["css=.MuiPaper-root:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form", "xpath:idRelative"],
+        ["xpath=//form", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2e9733cb-aa76-47ad-8990-3ef8063183a1",
+      "comment": "",
+      "command": "click",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2a806841-b46e-4118-a322-78fd38a1f60f",
+      "comment": "",
+      "command": "type",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Bk20059"
+    }, {
+      "id": "d1c49d12-3fde-46a3-bf6b-2b06f1058c90",
+      "comment": "",
+      "command": "click",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "30da2f3d-a8b0-483e-afb6-c8c94dac2139",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successB']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลหาจองห้องสำเร็จ"
+    }, {
+      "id": "2e5b5448-b94c-4dc3-bcab-94032c4cd51f",
+      "comment": "",
+      "command": "click",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a24bd22e-63f0-49fb-b119-6c382ee41a2a",
+      "comment": "",
+      "command": "type",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "B1234567"
+    }, {
+      "id": "a814a1ec-e3ac-458d-9433-c13d6459ffa9",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#student\\ button path",
+      "targets": [
+        ["css=#student\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "04f11dd8-ca27-430d-b2d1-63c9268b9a5b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#student\\ button path",
+      "targets": [
+        ["css=#student\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "70c5cefe-b3ad-4765-ac96-8fe01b81153e",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#student\\ button path",
+      "targets": [
+        ["css=#student\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "044b74fb-50b2-4bc1-bdb4-d327e024c7eb",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successU']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลผู้ใช้สำเร็จ"
+    }, {
+      "id": "ba062828-db15-4f72-aaf5-fc4dde8dd468",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "36d0292d-52f1-4b93-ae8d-eadbb8828793",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": "afkmld"
+    }, {
+      "id": "dc9b72c4-4d30-494c-a2c8-cc2a5833065c",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce8169bd-d2ea-4deb-8147-665ba31da486",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7f17444-1b46-4ea0-ab97-85de6a7abedd",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "29d05bff-5e75-4217-955d-5d965acc38be",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ:ผู้ใช้ถูกเพิ่มเข้าไปแล้ว"
+    }]
+  }, {
+    "id": "7a83e13e-0fc1-405e-af27-3c094c2e99a8",
+    "name": "1.pass",
+    "commands": [{
+      "id": "42b635bd-e8f3-4f30-97d5-0708ca893b71",
+      "comment": "",
+      "command": "open",
+      "target": "/add_friend/create",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d768ef49-5af4-445b-8263-af6a13d9d8a4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "dc39dc6a-c0ac-4a8d-9a91-52821038e198",
+      "comment": "",
+      "command": "click",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "908d6b14-164c-4841-9f4b-72d4ef17aa87",
+      "comment": "",
+      "command": "type",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Bk20059"
+    }, {
+      "id": "307e45cf-7868-47f0-826e-5a1f602584e8",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "f5ede1c7-a767-4148-81bf-b23701cdae7b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "4e9078c3-af36-47bb-b777-a76a69b55ff5",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "310b282e-c9ae-4e84-bcab-9a15c7a54a6c",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successB']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลหาจองห้องสำเร็จ"
+    }, {
+      "id": "7709dad1-5795-4099-ba3e-74689bedb29e",
+      "comment": "",
+      "command": "click",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "391ab90f-5199-45a0-b415-97a853acde48",
+      "comment": "",
+      "command": "type",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "B1234567"
+    }, {
+      "id": "abb786eb-a5aa-48d2-a9fe-12d579c69ea5",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a88f29d-56df-436d-a83d-3c42b02cf47a",
+      "comment": "",
+      "command": "click",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "977ff769-46e0-4a29-b1b1-b4f87cc4e955",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "71e30377-1fab-4853-81b4-bd8e2a47ba6c",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successU']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลผู้ใช้สำเร็จ"
+    }, {
+      "id": "363f26b4-9690-4310-9924-3c9cc72f1303",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "839f8492-5916-4c4c-a22c-3006f4eafa79",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": "น้ำเย็น"
+    }, {
+      "id": "e6425659-2feb-4051-bf8e-12768eb8a4e2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-item:nth-child(2)",
+      "targets": [
+        ["css=.MuiGrid-item:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7c848aaf-f93a-49c9-a7b9-1a30aa7ec05d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "91649f1a-e793-4e0e-9cfb-81e41bcedc7e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1c122844-7725-4ccf-ab72-0f082556bf50",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9c3ee98b-9564-4f30-9bca-084defb5fe8e",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='success']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลสำเร็จ"
+    }]
+  }, {
+    "id": "b1ba5bdf-0c9a-4afb-aa82-3bacd6f4e474",
+    "name": "3.error_booking_null",
+    "commands": [{
+      "id": "47695a9a-d759-41f4-8111-56e32c4329a0",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6ca41f07-2fd6-490e-a62b-70f200bcc6e4",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "794x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "36774fcd-0bfe-4c50-8855-d1b7e026d361",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e36a68a6-d300-4dc1-99b5-e7a2af16725e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Add friend')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/add_friend/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5d7d44d4-17a4-4314-aaed-707e38aca4c0",
+      "comment": "",
+      "command": "click",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b7697778-6152-4b2d-a4b8-4a0b85ea3407",
+      "comment": "",
+      "command": "type",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "B1234567"
+    }, {
+      "id": "8a065f97-03b7-4dc8-b431-8a2a7d56dcd0",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "b211800b-b5a3-48be-ac91-cf538448d0b2",
+      "comment": "",
+      "command": "click",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "e7967baa-d3ba-420c-baab-c78bf5e0208b",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "85cdca15-bce6-4d93-bd32-0ff19841a219",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiPaper-elevation6",
+      "targets": [
+        ["css=.MuiPaper-elevation6", "css:finder"],
+        ["xpath=//div[@id='successU']/div", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/div", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลผู้ใช้สำเร็จ"
+    }, {
+      "id": "5b1e9c15-a966-4d0f-b4ea-9f053b788b63",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d7f1ad6-3848-4fe4-aa69-a0ae4f56b190",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": "afkmld"
+    }, {
+      "id": "dad783c0-30e1-4924-a223-aa043c40ef04",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d974203-2faf-4def-99e3-af61bc6027e5",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ:approve ID not found"
+    }]
+  }, {
+    "id": "2cace181-ad3a-4824-a724-9bf6b44e4eb0",
+    "name": "4.error_user_null",
+    "commands": [{
+      "id": "54e74802-0694-4af8-b2ce-95963264c246",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "5cdf5b04-ba7a-49cc-87b7-497bc06a431f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "798x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d13dc27a-124f-4c03-b5f3-d639273c0aa4",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "5f4fa8c3-44f0-448a-abdb-4eab59ac6d31",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Add friend')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/add_friend/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0661c58f-799b-47e4-bffd-df5e76419b74",
+      "comment": "",
+      "command": "click",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a53691c-2582-4bc8-88dd-451e380f4ed9",
+      "comment": "",
+      "command": "type",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Bk20059"
+    }, {
+      "id": "240b9e71-29f3-47fe-8d55-af3099160edd",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb27575d-cc99-4e78-8910-b9b71e315c9b",
+      "comment": "",
+      "command": "click",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "7e699b15-f06f-44e8-9278-0d5746caf8bc",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "c5527170-8632-425e-8db5-f70475b2b43a",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successB']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลหาจองห้องสำเร็จ"
+    }, {
+      "id": "00e4caea-acea-4239-a845-2e7d95fe9aad",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bd7c1d9f-be77-48b0-b389-55d6d466d1bb",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": "afkmld"
+    }, {
+      "id": "f3a61f88-4b8c-40d7-81d8-1ed35f1767f0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "87000fa2-730b-4f4e-9338-aa2fdcda0191",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ:user ID not found"
+    }]
+  }, {
+    "id": "c6ca3a43-73f2-43e6-aaba-c8f0ff07df34",
+    "name": "5.error_note_null",
+    "commands": [{
+      "id": "030c01b8-d084-4b53-884e-f3f97ef4db49",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1bf25a24-027a-497a-91d5-5a15b1678104",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "802x816",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc4cd742-5f37-4b2f-90d1-e94e7597614e",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1461255b-9b92-4258-84df-0d6cf52d0a0b",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "caf3b240-6e5b-4f3a-a7bc-4d075e678db3",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "4f4742f0-e5e4-4f17-a017-d20a7f5e627a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Add friend')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/add_friend/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d54742fd-4e78-479c-afb5-0a1768651678",
+      "comment": "",
+      "command": "click",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a9eafa4c-ca0f-4e9b-929c-0413081f568a",
+      "comment": "",
+      "command": "type",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Bk20059"
+    }, {
+      "id": "5f6c2a3a-4a28-4caf-a82f-1cdf200cda6d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "6778baca-fd5f-400e-a0b1-bfb4b49a7663",
+      "comment": "",
+      "command": "click",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "8b27ab26-0392-4124-b29e-815b54a503e8",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#booking\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#booking\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "446af3b2-9fe4-4d14-bdc9-ad6a60086291",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successB']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลหาจองห้องสำเร็จ"
+    }, {
+      "id": "15972bb1-c037-4ebc-ba28-b2025a936065",
+      "comment": "",
+      "command": "click",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f43aed01-fe2b-45ed-8074-81f735f4227f",
+      "comment": "",
+      "command": "type",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "B6306663"
+    }, {
+      "id": "23e0b85a-8ca5-4852-a80d-1dc131a76344",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "32c9fa16-851e-4f43-892d-3d2a5e98d685",
+      "comment": "",
+      "command": "click",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "fc22a4ba-5c71-4973-9cd4-eca94ad5c283",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "b4098698-4c72-41b1-ba84-491e0e8086cb",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successU']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลผู้ใช้สำเร็จ"
+    }, {
+      "id": "cbe84c80-b2f0-4a3b-8754-b2831d2f50aa",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b20b9025-b12f-4e05-aaca-c8c05dd4e55a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiIconButton-edgeEnd",
+      "targets": [
+        ["css=.MuiIconButton-edgeEnd", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[2]/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ebc8bd1c-c796-4d5c-b5a9-d7b57390289d",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8ac846e3-7905-45e8-ab58-ab69e5753941",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "577f896b-0f5c-4e88-8424-92a176e7c68a",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4a43a29f-bd5c-48c1-9aa1-831e7ca661ed",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ:กรุณากรอกหมายเหตุ"
+    }]
+  }, {
+    "id": "c9cf33f6-3717-4c2a-a08a-b79fcef8d806",
+    "name": "6.error_time",
+    "commands": [{
+      "id": "c92e1b5c-d586-437c-a012-a3b7c9166606",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "072eae1f-9289-4134-b634-bddd893184ab",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "ff8eed44-595e-494f-b08b-618f8e54b193",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "f08e3884-8f26-4504-ab76-02072b93702b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Add friend')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/add_friend/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db013b3c-f060-41b1-8afc-664e774895cd",
+      "comment": "",
+      "command": "click",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3ee38b8-c8d8-4465-9987-576c0c36617c",
+      "comment": "",
+      "command": "type",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Bk20059"
+    }, {
+      "id": "1f963725-d1d3-41d2-bd97-6a2e1e715627",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "32fe5f0c-083f-444d-93b0-486118e1bbf8",
+      "comment": "",
+      "command": "click",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "29055d10-0ddc-4c37-b392-f758857907c9",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "0a5c5b92-4c81-47db-b65c-303268d7aaf8",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successB']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลหาจองห้องสำเร็จ"
+    }, {
+      "id": "6b2de902-57fc-43ac-a4ce-274edc543429",
+      "comment": "",
+      "command": "click",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "41f43510-a807-4bbf-9063-e91fdd64a75e",
+      "comment": "",
+      "command": "type",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "B1234567"
+    }, {
+      "id": "e93e3154-b92a-4253-b57b-1ba37c88290d",
+      "comment": "",
+      "command": "click",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "81fa9a9a-0a25-4247-95bd-2fc78eae5da4",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successU']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลผู้ใช้สำเร็จ"
+    }, {
+      "id": "0f572350-456b-4642-b2fe-374f6dba554c",
+      "comment": "",
+      "command": "click",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8a9a2f9f-5b48-4da6-a73b-ef4884bfd10d",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": "wgfjio"
+    }, {
+      "id": "4533afcf-6505-4d10-88d4-aa51f338985f",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiIconButton-edgeEnd",
+      "targets": [
+        ["css=.MuiIconButton-edgeEnd", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[2]/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e9c64784-597e-4f6f-a05f-82b4c4fb5c6c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiIconButton-edgeEnd",
+      "targets": [
+        ["css=.MuiIconButton-edgeEnd", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[2]/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "51863251-6942-48fd-8fe2-20aefe09e3d5",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root",
+      "targets": [
+        ["css=.css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root", "css:finder"],
+        ["xpath=(//button[@type='button'])[6]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[2]/div/div/div/button", "xpath:idRelative"],
+        ["xpath=//div[2]/div/div/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "884f5da4-7e96-42c3-a7d3-99e55314624a",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiDayPicker-weekContainer:nth-child(4) > .MuiButtonBase-root:nth-child(5)",
+      "targets": [
+        ["css=.MuiDayPicker-weekContainer:nth-child(4) > .MuiButtonBase-root:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='button'])[33]", "xpath:attributes"],
+        ["xpath=//div[4]/button[5]", "xpath:position"],
+        ["xpath=//button[contains(.,'23')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e8825ac2-8930-47c2-a2a6-4b6b6b06654a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiDayPicker-weekContainer:nth-child(4) > .MuiButtonBase-root:nth-child(5)",
+      "targets": [
+        ["css=.MuiDayPicker-weekContainer:nth-child(4) > .MuiButtonBase-root:nth-child(5)", "css:finder"],
+        ["xpath=(//button[@type='button'])[33]", "xpath:attributes"],
+        ["xpath=//div[4]/button[5]", "xpath:position"],
+        ["xpath=//button[contains(.,'23')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "591bd3c6-1648-4a85-b113-df7cd1a30c55",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiGrid-item:nth-child(2)",
+      "targets": [
+        ["css=.MuiGrid-item:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94b9e167-ec80-4e74-8d1b-c5ea9b468ff9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5db83145-2ef3-41e5-b04e-96251a59d82c",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ:เวลาไม่ถูกต้อง"
+    }]
+  }, {
+    "id": "6cadd567-7e3c-4519-aaf2-584b1fdaadfd",
+    "name": "7.error_limitUser",
+    "commands": [{
+      "id": "e46a6f86-aff1-49bf-8497-da7b8e174988",
+      "comment": "",
+      "command": "open",
+      "target": "/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "3898ed5c-3160-4ad4-8e9f-5ff7c2b06144",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1552x832",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d0c56278-9b2e-4422-ab33-204c961ad3e7",
+      "comment": "",
+      "command": "click",
+      "target": "css=a:nth-child(3) .MuiTypography-root",
+      "targets": [
+        ["css=a:nth-child(3) .MuiTypography-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/div/div/ul/a[3]/div/div[2]/span", "xpath:idRelative"],
+        ["xpath=//a[3]/div/div[2]/span", "xpath:position"],
+        ["xpath=//span[contains(.,'จัดการเพิ่มเพื่อนเข้าห้อง')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "37ebcb59-ef4b-43b3-8b2f-3b5b0697fc7d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=//a[contains(text(),'Create Add friend')]", "xpath:link"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div/div[2]/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/add_friend/create')]", "xpath:href"],
+        ["xpath=//div[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "94da9836-14c6-440e-a7a0-aff8ec2a832d",
+      "comment": "",
+      "command": "click",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f8478a54-c554-4b63-b477-7d3bb6b64e61",
+      "comment": "",
+      "command": "type",
+      "target": "id=booking code",
+      "targets": [
+        ["id=booking code", "id"],
+        ["css=#booking\\ code", "css:finder"],
+        ["xpath=//input[@id='booking code']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "Bk20059"
+    }, {
+      "id": "9f0607d5-b7f7-41e3-bb7f-94b87c5ed1b6",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "bb4a67df-27ee-4abb-91fc-197632deb7ef",
+      "comment": "",
+      "command": "click",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b3d9556-ac3c-4d70-ab4f-897dfe39c5a1",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=#booking\\ button path",
+      "targets": [
+        ["css=#booking\\ button path", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "a1857ed8-4027-4431-b51c-74ee8b113cf1",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successB']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลหาจองห้องสำเร็จ"
+    }, {
+      "id": "c74625ca-4971-42c5-ad05-2ec87f3278cf",
+      "comment": "",
+      "command": "click",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3a7de4ef-8b14-4c77-8dca-38c26dfbfcf5",
+      "comment": "",
+      "command": "type",
+      "target": "id=student id",
+      "targets": [
+        ["id=student id", "id"],
+        ["css=#student\\ id", "css:finder"],
+        ["xpath=//input[@id='student id']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/form[2]/div/input", "xpath:idRelative"],
+        ["xpath=//form[2]/div/input", "xpath:position"]
+      ],
+      "value": "B6111139"
+    }, {
+      "id": "f3654678-be23-418b-95a6-f6ad56ef0225",
+      "comment": "",
+      "command": "click",
+      "target": "css=#student\\ button > .MuiSvgIcon-root",
+      "targets": [
+        ["css=#student\\ button > .MuiSvgIcon-root", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "98030070-94ec-4e9a-95cd-641e8aa833b2",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='successU']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "ค้นหาข้อมูลผู้ใช้สำเร็จ"
+    }, {
+      "id": "96d09320-8b9d-4075-b56f-e84a0c0e06b4",
+      "comment": "",
+      "command": "mouseDown",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e21b6e1e-8d08-4f8d-aaea-ebccf7afa449",
+      "comment": "",
+      "command": "mouseUp",
+      "target": "id=Note-label",
+      "targets": [
+        ["id=Note-label", "id"],
+        ["css=#Note-label", "css:finder"],
+        ["xpath=//label[@id='Note-label']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div/label", "xpath:idRelative"],
+        ["xpath=//div/div/label", "xpath:position"],
+        ["xpath=//label[contains(.,'กรุณากรอกหมายเหตุ *')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8502ae9f-04e7-4c23-9e98-2a47d76f5667",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiFormControl-root > .MuiFormControl-root",
+      "targets": [
+        ["css=.MuiFormControl-root > .MuiFormControl-root", "css:finder"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div/div/div", "xpath:idRelative"],
+        ["xpath=//div/div[2]/div/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d6c0e32-0b3c-440b-a752-cab240406708",
+      "comment": "",
+      "command": "type",
+      "target": "id=Note",
+      "targets": [
+        ["id=Note", "id"],
+        ["name=Note", "name"],
+        ["css=#Note", "css:finder"],
+        ["xpath=//input[@id='Note']", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/div/input", "xpath:position"]
+      ],
+      "value": "123456"
+    }, {
+      "id": "5d158e7a-1c4c-46a9-86a2-acb0691239cc",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d1ca3604-3fef-47c7-929c-41e88b52c80b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[7]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[2]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d8ecebb9-d431-49f6-b690-c392a341acd9",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "css=.MuiButton-contained",
+      "targets": [
+        ["css=.MuiButton-contained", "css:finder"],
+        ["xpath=(//button[@type='button'])[8]", "xpath:attributes"],
+        ["xpath=//div[@id='root']/div/main/div[2]/div/div/div[3]/form/div/div[2]/div[4]/button", "xpath:idRelative"],
+        ["xpath=//div[4]/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "79d846a8-a440-494a-808b-afc81b7f8bdc",
+      "comment": "",
+      "command": "verifyText",
+      "target": "css=.MuiAlert-message",
+      "targets": [
+        ["css=.MuiAlert-message", "css:finder"],
+        ["xpath=//div[@id='error']/div/div[2]", "xpath:idRelative"],
+        ["xpath=//div/div/div[2]", "xpath:position"]
+      ],
+      "value": "บันทึกข้อมูลไม่สำเร็จ:ไม่สามารถเพิ่มได้เนื่องจากมีจำนวนคนที่อยู่ในห้องเต็มจำนวนที่ตั้งไว้"
+    }]
+  }],
+  "suites": [{
+    "id": "1000d262-eb6e-49ae-9205-b00f9b238224",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["13e5f19d-5ea3-4ccc-82a3-0d5d52641f03"]
+  }],
+  "urls": ["http://localhost:3000/"],
+  "plugins": []
+}
