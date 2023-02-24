@@ -356,9 +356,9 @@ function UserCreate() {
              style={{ float: "right" }}
              onClick={submit}
              variant="contained"
-             color="primary"
+             color="success"
            >
-             บันทึก
+             ลงทะเบียนสมาชิก
            </Button>
          </Grid>
          

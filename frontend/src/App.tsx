@@ -75,6 +75,8 @@ import PaybackUpdate from "./components/PaybackUpdate";
 import PaybackDelete from "./components/PaybackDelete";
 import image from "./images/one.jpg";
 import NotFound404 from "./components/NotFound404";
+import AdminUpdate from "./components/AdminUpdate";
+import AdminDelete from "./components/AdminDelete";
 
 const drawerWidth = 260;
 
@@ -331,8 +333,10 @@ export default function App() {
                   <Route path="/device/update" element={<DeviceUpdate />} />
                   {/* <Route path="/device/delete" element={<DeviceDelete />} /> */}
 
-                  <Route path="/admins" element={<Admin />} />
-                  <Route path="/admin/create" element={<AdminCreate />} />
+                <Route path="/admins" element={<Admin />} />
+                <Route path="/admin/create" element={<AdminCreate />} />
+                <Route path="/admin/update" element={<AdminUpdate />} />
+                <Route path="/admin/delete" element={<AdminDelete />} />
 
                   <Route path="*" element={<NotFound404 />} />
                 </Routes> 

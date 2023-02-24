@@ -190,7 +190,7 @@ return (
           </Grid>
           <Grid item xs={12}>
             <Button component={RouterLink} to="/food_and_drinks" variant="contained"> ยกเลิก </Button>
-            <Button style={{ float: "right" }} onClick={submit} variant="contained" color="success" > บันทึก </Button>
+            <Button style={{ float: "right" }} onClick={submit} variant="contained" color="success" > สร้างรายการอาหาร </Button>
           </Grid>
         </Grid>
       </Paper>

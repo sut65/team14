@@ -44,7 +44,7 @@ function Home() {
       </Grid>
           
         <Grid item xs={12}>
-        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper}>
+        <Grid container spacing={1} sx={{ padding: 2 }} component={Paper} style={{ height: 450, width: "100%"}}>
           <Grid item xs={4}>
             <FormControl fullWidth variant="outlined">
             <p>ชื่อ</p>

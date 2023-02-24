@@ -338,9 +338,9 @@ if (roleLevel !== "User") {
              style={{ float: "right" }}
              onClick={submit}
              variant="contained"
-             color="primary"
+             color="error"
            >
-             ยืนยัน
+             ลบบัญชี
            </Button>
          </Grid>
        </Grid>

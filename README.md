@@ -10,6 +10,5 @@
 </br> - B6318604 นายปฏิพัทธ์ พันชาด </br>
 </br> - B6311230 นายธนากร พรหมกูล </br>
 
-<br> การสร้างสร้าง UI </br>
-npm i --save @devexpress/dx-react-core @devexpress/dx-react-scheduler <hr/>
-npm i --save @devexpress/dx-react-scheduler-material-ui
+<br> ซ่อม Frontend </br>
+npm i package --force <hr/>
