@@ -56,7 +56,7 @@ function SignIn() {
     if (res || tmp) {
       setSuccess(true);  
       setTimeout(() => {
-        window.location.href = "/home";
+        window.location.href = "/";
       }, 1000);
     } else {
       setError(true);

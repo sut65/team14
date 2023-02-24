@@ -225,6 +225,7 @@ function UserCreate() {
              <p>รหัสผ่าน</p>
              <OutlinedInput
               id="Password"
+              onChange={handleInputChange}
               type={showPassword ? 'text' : 'password'}
               endAdornment={
                 <InputAdornment position="end">
