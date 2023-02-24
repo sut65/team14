@@ -138,7 +138,7 @@ const menu = [
   { name: "ร้องขออาหารและเครื่องดื่ม", icon: <FlatwareIcon />, path: "/order_foods", role: "Admin"},
 
   { name: "รายการอาหาร", icon: <FastfoodIcon />, path: "/food_and_drinks", role: "Admin"},
-  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "All"},
+  { name: "ข้อมูลสมาชิก", icon: <FolderSharedIcon />, path: "/users", role: "User"},
 
   { name: "จัดการยืมอุปกรณ์", icon: <AddShoppingCartTwoToneIcon />, path: "/borrows", role: "Admin"},
   { name: "จัดการคืนอุปกรณ์", icon: <ShoppingCartCheckoutTwoToneIcon />, path: "/paybacks", role: "Admin"},
