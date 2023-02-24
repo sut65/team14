@@ -23,6 +23,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import AccessDenied from "./AccessDenied";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref
@@ -133,6 +134,11 @@ function UserCreate() {
           setErrorMessage(res.data);
       }
     }
+
+    const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
 
  return (

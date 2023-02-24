@@ -9,9 +9,10 @@ import { Link as RouterLink } from "react-router-dom";
 import { ListDevices } from "../services/HttpClientService";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import AccessDenied from "./AccessDenied";
 
 function Devices() {
-  const [devices, setDevices] = React.useState<DevicesInterface[]>([]);
+  const [device, setDevices] = React.useState<DevicesInterface[]>([]);
   const listDevices = async () => {
     let res = await ListDevices();
     if (res) {
@@ -22,18 +23,23 @@ function Devices() {
 useEffect(() => {
   listDevices();
 }, []);
-console.log(devices);
+console.log(device);
+
+const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
 
 const columns: GridColDef[] = [
     { field: "ID", headerName: "ID", width: 50},
     { field: "Detail", headerName: "ชื่ออุปกรณ์", width: 150, valueFormatter: (params) => params.value.Detail},
-    //{ field: "Number_of_Device", headerName: "จำนวน", width: 150, valueFormatter: (params) => params.value.Number_of_Device},
+    { field: "Number_of_Device", headerName: "จำนวน", width: 150, valueFormatter: (params) => params.value.Number_of_Device},
     { field: "StatusDevice", headerName: "สถานะ", width: 150, valueFormatter: (params) => params.value.StatusDevice },
     { field: "DeviceType", headerName: "ประเภท", width: 150, valueFormatter: (params) => params.value.DeviceTypeDetail},
     { field: "Brand", headerName: "ยี่ห้อ", width: 200, valueFormatter: (params) => params.value.BrandDetail},
-    //{ field: "Admin", headerName: "ผู้ดูแล", width: 200, valueFormatter: (params) => params.value.FirstName},
-    //{ field: "Note", headerName: "หมายเหตุ", width: 100, valueFormatter: (params) => params.value.Note },
+    // { field: "Admin", headerName: "ผู้ดูแล", width: 200, valueFormatter: (params) => params.value.FirstName},
+    { field: "Note", headerName: "หมายเหตุ", width: 100, valueFormatter: (params) => params.value.Note },
 ];
 
 return (
@@ -93,7 +99,7 @@ return (
          
        <div style={{ height: 400, width: "100%", marginTop: '20px'}}>
          <DataGrid
-           rows={devices}
+           rows={device}
            getRowId={(row) => row.ID}
            columns={columns}
            pageSize={5}

@@ -8,6 +8,7 @@ import { UsersInterface } from "../models/IUser";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { ListUsers, } from "../services/HttpClientService";
 import { Grid, Paper } from "@mui/material";
+import AccessDenied from "./AccessDenied";
 
 function Users() {
   const [users, setUsers] = React.useState<UsersInterface[]>([]);
@@ -37,6 +38,11 @@ function Users() {
   useEffect(() => {
     listUsers();
   }, []);
+
+  const roleLevel = localStorage.getItem('role')+""
+  if (roleLevel !== "Admin") {
+    return <AccessDenied />
+  }
 
  return (
 
